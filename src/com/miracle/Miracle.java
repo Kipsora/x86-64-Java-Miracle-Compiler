@@ -4,8 +4,7 @@ import com.miracle.scanner.MiracleScanner;
 import java.io.IOException;
 
 public class Miracle {
-    public static void main(String args[]) throws IOException{
-        MiracleASTree tree = MiracleScanner.scan(System.in);
-
+    public static void main(String args[]) throws IOException {
+        MiracleScanner.scan(System.in);
     }
 }

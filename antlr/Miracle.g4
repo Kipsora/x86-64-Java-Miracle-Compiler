@@ -12,7 +12,6 @@ blockStatement: '{' statement* '}';
 
 statement: blockStatement
     | variableDeclarationStatement
-    | functionDeclarationStatement
     | selectionStatement
     | iterationStatement
     | controlStatement
