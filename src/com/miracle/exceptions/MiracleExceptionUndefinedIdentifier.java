@@ -1,7 +1,7 @@
 package com.miracle.exceptions;
 
 public class MiracleExceptionUndefinedIdentifier extends MiracleException {
-    private String identifier;
+    private final String identifier;
 
     public MiracleExceptionUndefinedIdentifier(String identifier) {
         this.identifier = identifier;
@@ -9,7 +9,7 @@ public class MiracleExceptionUndefinedIdentifier extends MiracleException {
 
     @Override
     public String toString() {
-        return "identifier " + identifier + " was not in environment.";
+        return "identifier \"" + identifier + "\" was not in environment.";
     }
 
 }

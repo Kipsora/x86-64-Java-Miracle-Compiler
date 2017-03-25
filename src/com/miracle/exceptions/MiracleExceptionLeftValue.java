@@ -1,7 +1,7 @@
 package com.miracle.exceptions;
 
 public class MiracleExceptionLeftValue extends MiracleException {
-    private String expression;
+    private final String expression;
 
     public MiracleExceptionLeftValue(String expression) {
         this.expression = expression;
@@ -9,6 +9,6 @@ public class MiracleExceptionLeftValue extends MiracleException {
 
     @Override
     public String toString() {
-        return "expression " + expression + " cannot be used as left-value.";
+        return "expression \"" + expression + "\" cannot be used as left-value.";
     }
 }

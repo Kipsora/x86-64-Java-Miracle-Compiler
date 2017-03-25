@@ -22,7 +22,11 @@ public final class MiracleMutableEnvironmentManager extends MiracleEnvironmentMa
                 throw new MiracleExceptionDuplicateDeclaration(
                         value.getIdentifierType(),
                         scopeIdMap.get(scope).get(identifier).getRight().getIdentifierType(),
-                        identifier);
+                        identifier
+                );int main(int a) {
+}
+
+int a;
             }
             identifierNumber++;
             scopeIdMap.get(scope).put(identifier, ImmutablePair.of(identifierNumber, value));

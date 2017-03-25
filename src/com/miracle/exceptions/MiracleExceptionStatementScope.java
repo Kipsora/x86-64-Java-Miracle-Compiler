@@ -1,8 +1,8 @@
 package com.miracle.exceptions;
 
 public class MiracleExceptionStatementScope extends MiracleException {
-    private String type;
-    private String scope;
+    private final String type;
+    private final String scope;
 
     public MiracleExceptionStatementScope(String type, String scope) {
         this.type = type;

@@ -1,10 +1,7 @@
 package com.miracle.scanner.listener;
 
 import com.miracle.cstree.MiracleParser;
-import com.miracle.scanner.environment.MiracleIdentifierClass;
-import com.miracle.scanner.environment.MiracleIdentifierFunction;
-import com.miracle.scanner.environment.MiracleIdentifierVariable;
-import com.miracle.scanner.environment.MiracleMutableEnvironmentManager;
+import com.miracle.scanner.environment.*;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.LinkedList;
@@ -40,7 +37,7 @@ public class MiracleDeclarationChecker extends MiracleScopeChecker {
     }
 
     @Override
-    public void exitFunctionDeclarationStatement(MiracleParser.FunctionDeclarationStatementContext ctx) {
+    public void enterFunctionDeclarationStatement(MiracleParser.FunctionDeclarationStatementContext ctx) {
         List<TerminalNode> tmp = ctx.IDENTIFIER();
         LinkedList<MiracleIdentifierVariable> arguments = new LinkedList<>();
         for (int i = 1; i < tmp.size(); i++) {
@@ -48,6 +45,12 @@ public class MiracleDeclarationChecker extends MiracleScopeChecker {
         }
         MiracleMutableEnvironmentManager.declare(ctx.IDENTIFIER(0).getText(),
                 new MiracleIdentifierFunction(ctx.typename(0).getText(), arguments));
-        super.exitFunctionDeclarationStatement(ctx);
+        super.enterFunctionDeclarationStatement(ctx);
+        MiracleMutableEnvironmentManager.declare(ctx.IDENTIFIER(0).getText(),
+                new MiracleIdentifierFunction(false, ctx.typename(0).getText(), arguments));
+        for (int i = 1; i < tmp.size(); i++) {
+            MiracleMutableEnvironmentManager.declare(tmp.get(i).getText(),
+                    new MiracleIdentifierVariable(false, ctx.typename(i).getText(), null));
+        }
     }
 }

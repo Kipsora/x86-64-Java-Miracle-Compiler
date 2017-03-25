@@ -1,7 +1,8 @@
 package com.miracle.exceptions;
 
 public class MiracleExceptionTypeError extends MiracleException {
-    private String typeLeft, typeRight;
+    private final String typeLeft;
+    private final String typeRight;
 
     public MiracleExceptionTypeError(String typeLeft, String typeRight) {
         this.typeLeft = typeLeft;
@@ -10,6 +11,6 @@ public class MiracleExceptionTypeError extends MiracleException {
 
     @Override
     public String toString() {
-        return "Cannot convert \"" + typeLeft + "\" to " + typeRight + "\".";
+        return "Cannot convert \"" + typeLeft + "\" to \"" + typeRight + "\".";
     }
 }

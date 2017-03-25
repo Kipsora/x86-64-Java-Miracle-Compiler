@@ -30,6 +30,8 @@ public class MiracleEnvironmentManager {
         return scopes.peek().getLeft();
     }
 
+    public static int getCurrentScopeNumber() { return scopes.peek().getRight(); }
+
     public static boolean inScope(ScopeType type) {
         return ((scopes.peek().getMiddle() >> type.ordinal()) & 1) == 1;
     }

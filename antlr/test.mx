@@ -1,4 +1,11 @@
-int main() {
-	class Main{
-	};
+class B{
 }
+
+int main() {
+B A;
+}
+
+int main() {
+}
+
+int a;

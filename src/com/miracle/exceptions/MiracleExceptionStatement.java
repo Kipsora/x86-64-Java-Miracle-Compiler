@@ -1,7 +1,7 @@
 package com.miracle.exceptions;
 
 public class MiracleExceptionStatement extends MiracleException {
-    private String type;
+    private final String type;
 
     public MiracleExceptionStatement(String type) {
         this.type = type;

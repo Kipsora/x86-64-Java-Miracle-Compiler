@@ -5,7 +5,7 @@ import com.miracle.cstree.MiracleParser;
 import com.miracle.scanner.environment.MiracleEnvironmentManager;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public class MiracleRuntimeMaintainer extends MiracleBaseListener {
+public abstract class MiracleRuntimeMaintainer extends MiracleBaseListener {
     protected final MiracleEnvironmentManager environment;
     private static int row;
     private static int column;
@@ -43,12 +43,6 @@ public class MiracleRuntimeMaintainer extends MiracleBaseListener {
 
     @Override
     public void exitMiracle(MiracleParser.MiracleContext ctx) {
-        this.environment.exitScope();
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
         this.environment.exitScope();
     }
 

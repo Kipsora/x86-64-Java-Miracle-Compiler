@@ -12,9 +12,21 @@ public class MiracleIdentifierVariable extends MiracleIdentifier {
         return value;
     }
 
+    public MiracleIdentifierVariable(boolean coverable, String type) {
+        super(coverable);
+        this.type = type;
+        this.value = null;
+    }
+
     public MiracleIdentifierVariable(String type) {
         this.type = type;
         this.value = null;
+    }
+
+    public MiracleIdentifierVariable(boolean coverable, String type, String value) {
+        super(coverable);
+        this.type = type;
+        this.value = value;
     }
 
     public MiracleIdentifierVariable(String type, String value) {

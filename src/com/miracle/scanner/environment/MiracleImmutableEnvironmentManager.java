@@ -1,5 +1,6 @@
 package com.miracle.scanner.environment;
 
+import com.miracle.exceptions.MiracleExceptionIdentifierUnshadowable;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
@@ -10,20 +11,37 @@ public final class MiracleImmutableEnvironmentManager extends MiracleEnvironment
     private static HashMap<String, ImmutablePair<Integer, MiracleIdentifier>> idMap = new HashMap<>();
     private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Integer, MiracleIdentifier>>> stack = new Stack<>();
 
-    @Override
-    public void enterScope(ScopeType type) {
-        scopeNumber++;
-        scopes.push(ImmutableTriple.of(type, (short) (scopes.peek().getMiddle() | (1 << type.ordinal())), scopeNumber));
-        if (scopeIdMap.containsKey(scopeNumber)) {
-            scopeIdMap.get(scopeNumber).forEach((key, value) -> {
-                stack.push(ImmutableTriple.of(key, scopeNumber, idMap.getOrDefault(key, null)));
+    private static void mergeMap(int scope) {
+        if (scopeIdMap.containsKey(scope)) {
+            scopeIdMap.get(scope).forEach((key, value) -> {
+                if (idMap.containsKey(key) && !idMap.get(key).getRight().getCoverable()) {
+                    throw new MiracleExceptionIdentifierUnshadowable(key);
+                }
+                stack.push(ImmutableTriple.of(key, scope, idMap.getOrDefault(key, null)));
                 idMap.put(key, value);
             });
         }
     }
 
+    @Override
+    public void initScope() {
+        super.initScope();
+        mergeMap(scopeNumber);
+    }
+
+    @Override
+    public void enterScope(ScopeType type) {
+        scopeNumber++;
+        scopes.push(ImmutableTriple.of(type, (short) (scopes.peek().getMiddle() | (1 << type.ordinal())), scopeNumber));
+        mergeMap(scopeNumber);
+    }
+
     public static boolean contain(String id) {
         return idMap.containsKey(id);
+    }
+
+    public static MiracleIdentifier get(String id) {
+        return idMap.get(id).getRight();
     }
 
     @Override
@@ -34,6 +52,7 @@ public final class MiracleImmutableEnvironmentManager extends MiracleEnvironment
             } else {
                 idMap.put(stack.peek().getLeft(), stack.peek().getRight());
             }
+            stack.pop();
         }
         scopes.pop();
     }

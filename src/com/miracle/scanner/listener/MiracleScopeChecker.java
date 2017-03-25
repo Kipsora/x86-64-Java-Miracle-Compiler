@@ -5,9 +5,17 @@ import com.miracle.exceptions.MiracleExceptionStatement;
 import com.miracle.exceptions.MiracleExceptionStatementScope;
 import com.miracle.scanner.environment.MiracleEnvironmentManager;
 
-public class MiracleScopeChecker extends MiracleRuntimeMaintainer {
+public abstract class MiracleScopeChecker extends MiracleRuntimeMaintainer {
     MiracleScopeChecker(MiracleEnvironmentManager environment) {
         super(environment);
+    }
+
+    @Override
+    public void exitFunctionDeclarationStatement(MiracleParser.FunctionDeclarationStatementContext ctx) {
+        if (MiracleEnvironmentManager.inScope(MiracleEnvironmentManager.ScopeType.SCOPE_BLOCK)) {
+            throw new MiracleExceptionStatement("function declaration");
+        }
+        super.exitFunctionDeclarationStatement(ctx);
     }
 
     @Override
@@ -278,13 +286,5 @@ public class MiracleScopeChecker extends MiracleRuntimeMaintainer {
         if (!MiracleEnvironmentManager.inScope(MiracleEnvironmentManager.ScopeType.SCOPE_FUNC)) {
             throw new MiracleExceptionStatement("assignment expression");
         }
-    }
-
-    @Override
-    public void exitFunctionDeclarationStatement(MiracleParser.FunctionDeclarationStatementContext ctx) {
-        if (MiracleEnvironmentManager.inScope(MiracleEnvironmentManager.ScopeType.SCOPE_BLOCK)) {
-            throw new MiracleExceptionStatement("function declaration");
-        }
-        super.exitFunctionDeclarationStatement(ctx);
     }
 }

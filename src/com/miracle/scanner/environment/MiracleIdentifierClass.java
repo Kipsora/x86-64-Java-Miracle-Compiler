@@ -7,6 +7,11 @@ public class MiracleIdentifierClass extends MiracleIdentifier {
         this.extendClass = extendClass;
     }
 
+    public MiracleIdentifierClass(boolean coverable, String extendClass) {
+        super(coverable);
+        this.extendClass = extendClass;
+    }
+
     public final String getExtendClass() {
         return extendClass;
     }

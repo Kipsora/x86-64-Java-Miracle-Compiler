@@ -3,9 +3,6 @@ package com.miracle.exceptions;
 import com.miracle.scanner.listener.MiracleRuntimeMaintainer;
 
 public abstract class MiracleException extends Error {
-    private int line;
-    private int column;
-
     public abstract String toString();
 
     @Override
