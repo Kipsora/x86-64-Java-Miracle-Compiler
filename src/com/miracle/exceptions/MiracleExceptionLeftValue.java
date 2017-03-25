@@ -9,6 +9,7 @@ public class MiracleExceptionLeftValue extends MiracleException {
         super(line, column);
         this.expression = expression;
     }
+
     public MiracleExceptionLeftValue(Token token, String expression) {
         super(token);
         this.expression = expression;

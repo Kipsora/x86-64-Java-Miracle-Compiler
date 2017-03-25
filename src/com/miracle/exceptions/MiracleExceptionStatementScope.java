@@ -2,9 +2,6 @@ package com.miracle.exceptions;
 
 import org.antlr.v4.runtime.Token;
 
-/**
- * Created by kipsora on 17-3-25.
- */
 public class MiracleExceptionStatementScope extends MiracleException {
     private String type;
     private String scope;
@@ -14,6 +11,7 @@ public class MiracleExceptionStatementScope extends MiracleException {
         this.type = type;
         this.scope = scope;
     }
+
     public MiracleExceptionStatementScope(Token token, String type, String scope) {
         super(token);
         this.type = type;
@@ -22,6 +20,6 @@ public class MiracleExceptionStatementScope extends MiracleException {
 
     @Override
     public String toString() {
-        return type + " statement should be in a " + scope + " scope.";
+        return "\"" + type + "\" statement should be in a " + scope + " scope.";
     }
 }
