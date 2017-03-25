@@ -1,12 +1,8 @@
-class Type{
-	int a;int b;
-};
+class Main{
+	public int a;
+	private void main() {
+	}
+}
 
 int main() {
-	int i = 0;
-	for (i = 0; i <= n; i++) {
-		printf("%d\n", i + i);
-	}
-	Type a;
-	return a;
 }

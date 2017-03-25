@@ -1,5 +1,5 @@
 package com.miracle.astree;
 
-public class MiracleASTree {
+public class MASTree {
 
 }
