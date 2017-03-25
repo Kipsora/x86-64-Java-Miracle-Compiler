@@ -73,7 +73,7 @@ public class MiracleScope {
     }
 
     public enum ScopeType {
-        SCOPE_CLASS, SCOPE_LOOP, SCOPE_FUNC, SCOPE_GLOBAL, SCOPE_BLOCK
+        SCOPE_CLASS, SCOPE_LOOP, SCOPE_FUNC, SCOPE_GLOBAL, SCOPE_BLOCK, SCOPE_VAR
     }
 
 }

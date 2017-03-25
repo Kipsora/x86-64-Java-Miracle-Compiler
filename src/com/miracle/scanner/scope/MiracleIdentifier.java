@@ -7,7 +7,13 @@ public abstract class MiracleIdentifier {
 
 class MiracleClassIdentifier extends MiracleIdentifier {
     private boolean declared = false;
-    public void declare() { this.declared = true; }
+    public boolean declare() {
+        if (this.declared) {
+            return false;
+        }
+        this.declared = true;
+        return true;
+    }
 }
 
 class MiracleVariableIdentifier extends MiracleIdentifier {
@@ -34,11 +40,12 @@ class MiracleFunctionIdentifier extends MiracleVariableIdentifier {
 
     public MiracleFunctionIdentifier(String type) { super(type); }
     public MiracleFunctionIdentifier(String type, String value) { super(type, value); }
-    public void declare() {
+    public boolean declare() {
         if (this.declared) {
-
+            return false;
         }
         this.declared = true;
+        return true;
     }
     public void appendArgument(MiracleVariableIdentifier parameter) { argumentList.addLast(parameter); }
 }

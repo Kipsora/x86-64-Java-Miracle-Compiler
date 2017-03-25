@@ -2,7 +2,7 @@ grammar Miracle;
 
 miracle: (classDeclarationStatement | functionDeclarationStatement | variableDeclarationStatement)*;
 
-classDeclarationStatement: 'class' IDENTIFIER (';' | (('extends' IDENTIFIER)? '{' blockStatement* '}'));
+classDeclarationStatement: 'class' IDENTIFIER (';' | (('extends' IDENTIFIER)? blockStatement));
 
 functionDeclarationStatement: DECORATOR? typename IDENTIFIER '(' (typename IDENTIFIER)?(',' typename IDENTIFIER)* ')' (';' | blockStatement);
 

@@ -1,8 +1,4 @@
-class Main{
-	public int a;
-	private void main() {
-	}
-}
-
 int main() {
+	class Main{
+	};
 }

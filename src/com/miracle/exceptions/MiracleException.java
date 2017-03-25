@@ -10,7 +10,7 @@ public abstract class MiracleException extends Error {
         this.line = line;
         this.column = column;
     }
-    public MiracleException(Token token, String message) {
+    public MiracleException(Token token) {
         this.line = token.getLine();
         this.column = token.getCharPositionInLine() + 1;
     }
