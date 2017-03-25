@@ -1,8 +1,8 @@
 package com.miracle.exceptions;
 
-public class MExceptionTypeError extends MException {
+public class MiracleExceptionTypeError extends MiracleException {
     private String typeLeft, typeRight;
-    public MExceptionTypeError(int line, int column, String typeLeft, String typeRight) {
+    public MiracleExceptionTypeError(int line, int column, String typeLeft, String typeRight) {
         super(line, column);
         this.typeLeft = typeLeft;
         this.typeRight = typeRight;

@@ -1,8 +1,8 @@
 package com.miracle.exceptions;
 
-public class MExceptionSyntaxError extends MException {
+public class MiracleExceptionSyntaxError extends MiracleException {
     private String message;
-    public MExceptionSyntaxError(int line, int column, String message) {
+    public MiracleExceptionSyntaxError(int line, int column, String message) {
         super(line, column);
         this.message = message;
     }

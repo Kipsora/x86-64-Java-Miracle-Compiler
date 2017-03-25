@@ -1,9 +1,9 @@
 package com.miracle.exceptions;
 
-public class MExceptionDuplicateDeclaration extends MException{
+public class MiracleExceptionDuplicateDeclaration extends MiracleException {
     private String type;
     private String identifier;
-    public MExceptionDuplicateDeclaration(int line, int column, String type, String identifier) {
+    public MiracleExceptionDuplicateDeclaration(int line, int column, String type, String identifier) {
         super(line, column);
         this.type = type;
         this.identifier = identifier;

@@ -1,8 +1,8 @@
 package com.miracle.exceptions;
 
-public class MExceptionUndefinedIdentifier extends MException {
+class MiracleExceptionUndefinedIdentifier extends MiracleException {
     private String identifier;
-    public MExceptionUndefinedIdentifier(int line, int column, String id) {
+    public MiracleExceptionUndefinedIdentifier(int line, int column, String id) {
         super(line, column);
         this.identifier = id;
     }
@@ -13,9 +13,9 @@ public class MExceptionUndefinedIdentifier extends MException {
 
 }
 
-class MExceptionDuplicatesIdentifier extends MException {
+class MiracleExceptionDuplicatesIdentifier extends MiracleException {
     private String identifier;
-    public MExceptionDuplicatesIdentifier(int line, int column, String id) {
+    public MiracleExceptionDuplicatesIdentifier(int line, int column, String id) {
         super(line, column);
         this.identifier = id;
     }

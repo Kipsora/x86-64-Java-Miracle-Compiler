@@ -6,12 +6,12 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 import java.util.HashMap;
 import java.util.Stack;
 
-public class MScope {
+public class MiracleScope {
     private static int scopeNumber = 0;
     private static int identifierNumber = 0;
     private static Stack<ImmutableTriple<ScopeType, Short, Integer>> scopes = new Stack<>();
-    private static HashMap<String, ImmutablePair<Integer, MIdentifier>> map = new HashMap<>();
-    private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Integer, MIdentifier>>> stack = new Stack<>();
+    private static HashMap<String, ImmutablePair<Integer, MiracleIdentifier>> map = new HashMap<>();
+    private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Integer, MiracleIdentifier>>> stack = new Stack<>();
 
     public static void initScope() {
         scopes.push(ImmutableTriple.of(ScopeType.SCOPE_GLOBAL, (short) (1 << ScopeType.SCOPE_GLOBAL.ordinal()), 0));
@@ -24,7 +24,7 @@ public class MScope {
 
     public static void exitScope() {
         while (!stack.empty() && stack.peek().getMiddle().equals(scopes.peek().getRight())) {
-            ImmutableTriple<String, Integer, ImmutablePair<Integer, MIdentifier>> tmp = stack.peek();
+            ImmutableTriple<String, Integer, ImmutablePair<Integer, MiracleIdentifier>> tmp = stack.peek();
             if (tmp.getRight() == null) {
                 map.remove(tmp.getLeft());
             }
@@ -53,9 +53,9 @@ public class MScope {
         return map.containsKey(id) && map.get(id).getLeft().equals(scopes.peek().getRight());
     }
 
-    public static boolean addIdentifier(String id, MIdentifier value) {
+    public static boolean addIdentifier(String id, MiracleIdentifier value) {
         if (map.containsKey(id)) {
-            ImmutablePair<Integer, MIdentifier> tmp = map.get(id);
+            ImmutablePair<Integer, MiracleIdentifier> tmp = map.get(id);
             if (tmp.getLeft().equals(scopes.peek().getRight())) {
                 return false;
             }
@@ -68,7 +68,7 @@ public class MScope {
         return true;
     }
 
-    public static ImmutablePair<ScopeType, ImmutablePair<Integer, MIdentifier>> getIdentifier(String id) {
+    public static ImmutablePair<ScopeType, ImmutablePair<Integer, MiracleIdentifier>> getIdentifier(String id) {
         return ImmutablePair.of(scopes.peek().getLeft(), map.getOrDefault(id, null));
     }
 

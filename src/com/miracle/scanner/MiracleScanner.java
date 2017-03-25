@@ -1,8 +1,8 @@
 package com.miracle.scanner;
 
-import com.miracle.exceptions.MException;
-import com.miracle.scanner.listener.MSyntaxErrorListener;
-import com.miracle.scanner.scope.MScope;
+import com.miracle.exceptions.MiracleException;
+import com.miracle.scanner.listener.MiracleSyntaxErrorListener;
+import com.miracle.scanner.scope.MiracleScope;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -10,19 +10,19 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class MScanner {
+public class MiracleScanner {
     public static void scan(InputStream stream) throws IOException {
         MLexer lexer = new MLexer(new ANTLRInputStream(stream));
         MParser parser = new MParser(new CommonTokenStream(lexer));
         parser.removeErrorListeners();
-        parser.addErrorListener(new MSyntaxErrorListener());
+        parser.addErrorListener(new MiracleSyntaxErrorListener());
         ParseTreeWalker walker = new ParseTreeWalker();
 
         try {
-            MScope.initScope();
+            MiracleScope.initScope();
             walker.walk(new MBaseListener(), parser.miracle());
-            MScope.exitScope();
-        } catch (MException e) {
+            MiracleScope.exitScope();
+        } catch (MiracleException e) {
             System.out.print(e.getMessage());
         }
     }

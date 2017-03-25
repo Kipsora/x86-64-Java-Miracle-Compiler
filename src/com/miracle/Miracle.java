@@ -1,9 +1,9 @@
-import com.miracle.scanner.MScanner;
+import com.miracle.scanner.MiracleScanner;
 
 import java.io.IOException;
 
 public class Miracle {
     public static void main(String args[]) throws IOException {
-        MScanner.scan(System.in);
+        MiracleScanner.scan(System.in);
     }
 }
