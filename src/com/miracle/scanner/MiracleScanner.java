@@ -3,8 +3,7 @@ package com.miracle.scanner;
 import com.miracle.cstree.MiracleLexer;
 import com.miracle.cstree.MiracleParser;
 import com.miracle.exceptions.MiracleException;
-import com.miracle.scanner.environment.MiracleImmutableEnvironmentManager;
-import com.miracle.scanner.listener.MiracleScopeChecker;
+import com.miracle.scanner.listener.MiracleDeclarationChecker;
 import com.miracle.scanner.listener.MiracleSyntaxErrorListener;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -22,7 +21,7 @@ public class MiracleScanner {
         ParseTreeWalker walker = new ParseTreeWalker();
 
         try {
-            walker.walk(new MiracleScopeChecker(new MiracleImmutableEnvironmentManager()), parser.miracle());
+            walker.walk(new MiracleDeclarationChecker(), parser.miracle());
         } catch (MiracleException e) {
             System.out.print(e.getMessage());
         }

@@ -1,17 +1,9 @@
 package com.miracle.exceptions;
 
-import org.antlr.v4.runtime.Token;
-
 public class MiracleExceptionStatement extends MiracleException {
     private String type;
 
-    public MiracleExceptionStatement(int line, int column, String type) {
-        super(line, column);
-        this.type = type;
-    }
-
-    public MiracleExceptionStatement(Token token, String type) {
-        super(token);
+    public MiracleExceptionStatement(String type) {
         this.type = type;
     }
 

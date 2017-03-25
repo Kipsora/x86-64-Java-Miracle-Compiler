@@ -1,18 +1,9 @@
 package com.miracle.exceptions;
 
-import org.antlr.v4.runtime.Token;
-
 public class MiracleExceptionTypeError extends MiracleException {
     private String typeLeft, typeRight;
 
-    public MiracleExceptionTypeError(int line, int column, String typeLeft, String typeRight) {
-        super(line, column);
-        this.typeLeft = typeLeft;
-        this.typeRight = typeRight;
-    }
-
-    public MiracleExceptionTypeError(Token token, String typeLeft, String typeRight) {
-        super(token);
+    public MiracleExceptionTypeError(String typeLeft, String typeRight) {
         this.typeLeft = typeLeft;
         this.typeRight = typeRight;
     }

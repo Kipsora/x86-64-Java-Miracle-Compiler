@@ -3,12 +3,37 @@ package com.miracle.scanner.listener;
 import com.miracle.cstree.MiracleBaseListener;
 import com.miracle.cstree.MiracleParser;
 import com.miracle.scanner.environment.MiracleEnvironmentManager;
+import org.antlr.v4.runtime.ParserRuleContext;
 
-public class MiracleScopeMaintainer extends MiracleBaseListener{
-    private final MiracleEnvironmentManager environment;
+public class MiracleRuntimeMaintainer extends MiracleBaseListener {
+    protected final MiracleEnvironmentManager environment;
+    private static int row;
+    private static int column;
 
-    MiracleScopeMaintainer(MiracleEnvironmentManager environment) {
+    public static int getRow() {
+        return row + 1;
+    }
+
+    public static int getColumn() {
+        return column + 1;
+    }
+
+    static void setColumn(int column) {
+        MiracleRuntimeMaintainer.column = column;
+    }
+
+    static void setRow(int row) {
+        MiracleRuntimeMaintainer.row = row;
+    }
+
+    MiracleRuntimeMaintainer(MiracleEnvironmentManager environment) {
         this.environment = environment;
+    }
+
+    @Override
+    public void enterEveryRule(ParserRuleContext ctx) {
+        row = ctx.getStart().getLine();
+        column = ctx.getStart().getCharPositionInLine();
     }
 
     @Override
