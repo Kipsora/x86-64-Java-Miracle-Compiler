@@ -47,8 +47,6 @@ public class MiracleDeclarationChecker extends MiracleScopeChecker {
         MiracleEnvironmentLoader.declare(ctx.IDENTIFIER(0).getText(),
                 new MiracleIdentifierFunction(ctx.typename(0).getText(), arguments));
         super.enterFunctionDeclarationStatement(ctx);
-        MiracleEnvironmentLoader.declare(ctx.IDENTIFIER(0).getText(),
-                new MiracleIdentifierFunction(false, ctx.typename(0).getText(), arguments));
         for (int i = 1; i < tmp.size(); i++) {
             MiracleEnvironmentLoader.declare(tmp.get(i).getText(),
                     new MiracleIdentifierVariable(false, ctx.typename(i).getText()));

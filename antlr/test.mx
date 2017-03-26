@@ -1,11 +1,3 @@
-class B{
-}
-
 int main() {
-B A;
+int b = a();
 }
-
-int main() {
-}
-
-int a;

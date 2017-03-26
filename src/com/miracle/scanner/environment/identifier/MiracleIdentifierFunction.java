@@ -6,12 +6,6 @@ public class MiracleIdentifierFunction extends MiracleIdentifier {
     private final String type;
     private final LinkedList<MiracleIdentifierVariable> arguments;
 
-    public MiracleIdentifierFunction(boolean coverable, String type, LinkedList<MiracleIdentifierVariable> arguments) {
-        super(coverable);
-        this.type = type;
-        this.arguments = arguments;
-    }
-
     public MiracleIdentifierFunction(String type, LinkedList<MiracleIdentifierVariable> arguments) {
         this.type = type;
         this.arguments = arguments;

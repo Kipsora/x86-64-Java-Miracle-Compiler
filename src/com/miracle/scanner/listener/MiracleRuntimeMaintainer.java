@@ -77,16 +77,6 @@ public abstract class MiracleRuntimeMaintainer extends MiracleBaseListener {
     }
 
     @Override
-    public void enterVariableDeclarationStatement(MiracleParser.VariableDeclarationStatementContext ctx) {
-        environment.enterScope(MiracleEnvironmentManager.ScopeType.SCOPE_VAR);
-    }
-
-    @Override
-    public void exitVariableDeclarationStatement(MiracleParser.VariableDeclarationStatementContext ctx) {
-        environment.exitScope();
-    }
-
-    @Override
     public void enterBlockStatement(MiracleParser.BlockStatementContext ctx) {
         environment.enterScope(MiracleEnvironmentManager.ScopeType.SCOPE_BLOCK);
     }

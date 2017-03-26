@@ -1,5 +1,6 @@
-package com.miracle.astree.node.expression;
+package com.miracle.astree.node.expression.unary;
 
+import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 
 public class MiracleASTreeUnaryExpression extends MiracleASTreeExpression {

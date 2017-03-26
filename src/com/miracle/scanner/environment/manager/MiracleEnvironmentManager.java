@@ -2,7 +2,6 @@ package com.miracle.scanner.environment.manager;
 
 import com.miracle.scanner.environment.identifier.MiracleIdentifierClass;
 import com.miracle.scanner.environment.identifier.MiracleIdentifierFunction;
-import com.miracle.scanner.environment.identifier.MiracleIdentifierVariable;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
@@ -24,7 +23,6 @@ public class MiracleEnvironmentManager {
     static Stack<ImmutableTriple<ScopeType, Short, Integer>> scopes = new Stack<>();
     static HashMap<Integer, HashMap<String, ImmutablePair<Integer, MiracleIdentifierClass>>> classMap = new HashMap<>();
     static HashMap<Integer, HashMap<String, ImmutablePair<Integer, MiracleIdentifierFunction>>> funcMap = new HashMap<>();
-    static HashMap<Integer, HashMap<String, ImmutablePair<Integer, MiracleIdentifierVariable>>> varMap = new HashMap<>();
 
     public static ScopeType getCurrentScopeType() {
         return scopes.peek().getLeft();
@@ -49,6 +47,6 @@ public class MiracleEnvironmentManager {
     }
 
     public enum ScopeType {
-        SCOPE_VAR, SCOPE_GLOBAL, SCOPE_FUNC, SCOPE_CLASS, SCOPE_ITER, SCOPE_BLOCK
+        SCOPE_GLOBAL, SCOPE_FUNC, SCOPE_CLASS, SCOPE_ITER, SCOPE_BLOCK
     }
 }

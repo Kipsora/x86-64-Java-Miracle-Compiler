@@ -1,10 +1,10 @@
 package com.miracle.exceptions;
 
-public class MiracleExceptionTypeError extends MiracleException {
+public class MiracleExceptionType extends MiracleException {
     private final String typeLeft;
     private final String typeRight;
 
-    public MiracleExceptionTypeError(String typeLeft, String typeRight) {
+    public MiracleExceptionType(String typeLeft, String typeRight) {
         this.typeLeft = typeLeft;
         this.typeRight = typeRight;
     }

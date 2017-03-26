@@ -1,6 +1,5 @@
 package com.miracle.scanner.environment.manager;
 
-import com.miracle.exceptions.MiracleExceptionIdentifierShadowError;
 import com.miracle.scanner.environment.identifier.MiracleIdentifier;
 import com.miracle.scanner.environment.identifier.MiracleIdentifierClass;
 import com.miracle.scanner.environment.identifier.MiracleIdentifierFunction;
@@ -12,6 +11,7 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public final class MiracleEnvironmentReader extends MiracleEnvironmentManager {
+    private static int varNumber;
     private static HashMap<String, ImmutablePair<Integer, MiracleIdentifierFunction>> curFuncMap = new HashMap<>();
     private static HashMap<String, ImmutablePair<Integer, MiracleIdentifierVariable>> curVarMap = new HashMap<>();
     private static HashMap<String, ImmutablePair<Integer, MiracleIdentifierClass>> curClassMap = new HashMap<>();
@@ -20,56 +20,14 @@ public final class MiracleEnvironmentReader extends MiracleEnvironmentManager {
     private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Integer, MiracleIdentifierClass>>> classStack = new Stack<>();
 
     private static void mergeMap(int scope) {
-        if (varMap.containsKey(scope)) {
-            varMap.get(scope).forEach((key, value) -> {
-                if (curVarMap.containsKey(key) && !curVarMap.get(key).getRight().getCoverable()) {
-                    throw new MiracleExceptionIdentifierShadowError(key, "variable",
-                            curVarMap.get(key).getRight().getIdentifierType());
-                }
-                if (curClassMap.containsKey(key) && !curClassMap.get(key).getRight().getCoverable()) {
-                    throw new MiracleExceptionIdentifierShadowError(key, "variable",
-                            curClassMap.get(key).getRight().getIdentifierType());
-                }
-                if (curFuncMap.containsKey(key) && !curFuncMap.get(key).getRight().getCoverable()) {
-                    throw new MiracleExceptionIdentifierShadowError(key, "variable",
-                            curFuncMap.get(key).getRight().getIdentifierType());
-                }
-                varStack.push(ImmutableTriple.of(key, scope, curVarMap.getOrDefault(key, null)));
-                curVarMap.put(key, value);
-            });
-        }
         if (classMap.containsKey(scope)) {
             classMap.get(scope).forEach((key, value) -> {
-                if (curVarMap.containsKey(key) && !curVarMap.get(key).getRight().getCoverable()) {
-                    throw new MiracleExceptionIdentifierShadowError(key, "class",
-                            curVarMap.get(key).getRight().getIdentifierType());
-                }
-                if (curClassMap.containsKey(key) && !curClassMap.get(key).getRight().getCoverable()) {
-                    throw new MiracleExceptionIdentifierShadowError(key, "class",
-                            curClassMap.get(key).getRight().getIdentifierType());
-                }
-                if (curFuncMap.containsKey(key) && !curFuncMap.get(key).getRight().getCoverable()) {
-                    throw new MiracleExceptionIdentifierShadowError(key, "class",
-                            curFuncMap.get(key).getRight().getIdentifierType());
-                }
                 classStack.push(ImmutableTriple.of(key, scope, curClassMap.getOrDefault(key, null)));
                 curClassMap.put(key, value);
             });
         }
         if (funcMap.containsKey(scope)) {
             funcMap.get(scope).forEach((key, value) -> {
-                if (curVarMap.containsKey(key) && !curVarMap.get(key).getRight().getCoverable()) {
-                    throw new MiracleExceptionIdentifierShadowError(key, "function",
-                            curVarMap.get(key).getRight().getIdentifierType());
-                }
-                if (curClassMap.containsKey(key) && !curClassMap.get(key).getRight().getCoverable()) {
-                    throw new MiracleExceptionIdentifierShadowError(key, "function",
-                            curClassMap.get(key).getRight().getIdentifierType());
-                }
-                if (curFuncMap.containsKey(key) && !curFuncMap.get(key).getRight().getCoverable()) {
-                    throw new MiracleExceptionIdentifierShadowError(key, "function",
-                            curFuncMap.get(key).getRight().getIdentifierType());
-                }
                 funcStack.push(ImmutableTriple.of(key, scope, curFuncMap.getOrDefault(key, null)));
                 curFuncMap.put(key, value);
             });
@@ -88,8 +46,15 @@ public final class MiracleEnvironmentReader extends MiracleEnvironmentManager {
         return null;
     }
 
+    public static void declare(String identifier, MiracleIdentifierVariable value) {
+        varStack.push(ImmutableTriple.of(identifier, scopes.peek().getRight(),
+                curVarMap.getOrDefault(identifier, null)));
+        curVarMap.put(identifier, ImmutablePair.of(++varNumber, value));
+    }
+
     @Override
     public void initScope() {
+        varNumber = 0;
         super.initScope();
         mergeMap(scopeNumber);
     }

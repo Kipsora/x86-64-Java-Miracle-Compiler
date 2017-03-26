@@ -1,9 +1,9 @@
 package com.miracle.exceptions;
 
-public class MiracleExceptionSyntaxError extends MiracleException {
+public class MiracleExceptionSyntax extends MiracleException {
     private final String message;
 
-    public MiracleExceptionSyntaxError(String message) {
+    public MiracleExceptionSyntax(String message) {
         this.message = message;
     }
 

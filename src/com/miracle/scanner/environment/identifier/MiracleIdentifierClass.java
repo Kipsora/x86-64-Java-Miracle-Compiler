@@ -4,7 +4,6 @@ public class MiracleIdentifierClass extends MiracleIdentifier {
     private final String extendClass;
 
     public MiracleIdentifierClass(String extendClass) {
-        super(false);
         this.extendClass = extendClass;
     }
 
