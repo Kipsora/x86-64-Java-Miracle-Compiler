@@ -2,16 +2,24 @@ package com.miracle.scanner.listener;
 
 import com.miracle.cstree.MiracleBaseListener;
 import com.miracle.cstree.MiracleParser;
-import com.miracle.scanner.environment.MiracleEnvironmentManager;
+import com.miracle.scanner.environment.manager.MiracleEnvironmentManager;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class MiracleRuntimeMaintainer extends MiracleBaseListener {
-    protected final MiracleEnvironmentManager environment;
     private static int row;
     private static int column;
+    protected final MiracleEnvironmentManager environment;
+
+    MiracleRuntimeMaintainer(MiracleEnvironmentManager environment) {
+        this.environment = environment;
+    }
 
     public static int getRow() {
-        return row + 1;
+        return row;
+    }
+
+    static void setRow(int row) {
+        MiracleRuntimeMaintainer.row = row;
     }
 
     public static int getColumn() {
@@ -20,14 +28,6 @@ public abstract class MiracleRuntimeMaintainer extends MiracleBaseListener {
 
     static void setColumn(int column) {
         MiracleRuntimeMaintainer.column = column;
-    }
-
-    static void setRow(int row) {
-        MiracleRuntimeMaintainer.row = row;
-    }
-
-    MiracleRuntimeMaintainer(MiracleEnvironmentManager environment) {
-        this.environment = environment;
     }
 
     @Override

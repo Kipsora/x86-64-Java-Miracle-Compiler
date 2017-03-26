@@ -1,4 +1,4 @@
-package com.miracle.scanner.environment;
+package com.miracle.scanner.environment.identifier;
 
 public abstract class MiracleIdentifier {
     private final boolean coverable;
@@ -6,6 +6,7 @@ public abstract class MiracleIdentifier {
     protected MiracleIdentifier() {
         this.coverable = true;
     }
+
     protected MiracleIdentifier(boolean coverable) {
         this.coverable = coverable;
     }

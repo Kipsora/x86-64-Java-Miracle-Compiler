@@ -1,4 +1,4 @@
-package com.miracle.scanner.environment;
+package com.miracle.scanner.environment.identifier;
 
 import java.util.LinkedList;
 
@@ -11,6 +11,7 @@ public class MiracleIdentifierFunction extends MiracleIdentifier {
         this.type = type;
         this.arguments = arguments;
     }
+
     public MiracleIdentifierFunction(String type, LinkedList<MiracleIdentifierVariable> arguments) {
         this.type = type;
         this.arguments = arguments;

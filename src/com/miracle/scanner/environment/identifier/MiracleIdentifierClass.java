@@ -1,14 +1,10 @@
-package com.miracle.scanner.environment;
+package com.miracle.scanner.environment.identifier;
 
 public class MiracleIdentifierClass extends MiracleIdentifier {
     private final String extendClass;
 
     public MiracleIdentifierClass(String extendClass) {
-        this.extendClass = extendClass;
-    }
-
-    public MiracleIdentifierClass(boolean coverable, String extendClass) {
-        super(coverable);
+        super(false);
         this.extendClass = extendClass;
     }
 

@@ -9,7 +9,7 @@ public class MiracleExceptionUndefinedIdentifier extends MiracleException {
 
     @Override
     public String toString() {
-        return "identifier \"" + identifier + "\" was not in environment.";
+        return "identifier \"" + identifier + "\" was not in the environment.";
     }
 
 }

@@ -13,13 +13,11 @@ public class MiracleExceptionDuplicateDeclaration extends MiracleException {
     @Override
     public String toString() {
         if (typeA.equals(typeB)) {
-            if (typeA.equals("class")) {
-                return "duplicated declarations of " + typeA + "es \"" + identifier + "\" were found.";
-            } else {
-                return "duplicated declarations of " + typeA + "s \"" + identifier + "\" were found.";
-            }
+            return "duplicated declarations of identifier \"" + identifier
+                    + "\" as \"" + typeA + "\" were found.";
         } else {
-            return "duplicated declarations of " + typeA + " \"" + identifier + "\" and " + typeB + " \"" + identifier + "\" were found.";
+            return "duplicated declarations of identifier \"" + identifier
+                    + "\" as \"" + typeA + "\" and \"" + typeB + "\" were found.";
         }
     }
 }

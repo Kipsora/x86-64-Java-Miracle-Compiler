@@ -1,3 +1,5 @@
+package com.miracle;
+
 import com.miracle.scanner.MiracleScanner;
 
 import java.io.IOException;
