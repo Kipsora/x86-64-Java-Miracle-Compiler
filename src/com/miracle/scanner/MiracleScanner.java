@@ -5,7 +5,6 @@ import com.miracle.cstree.MiracleParser;
 import com.miracle.exceptions.MiracleException;
 import com.miracle.scanner.listener.MiracleASTreeBuilder;
 import com.miracle.scanner.listener.MiracleDeclarationChecker;
-import com.miracle.scanner.listener.MiracleIdentifierChecker;
 import com.miracle.scanner.listener.MiracleSyntaxErrorListener;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -24,8 +23,6 @@ public class MiracleScanner {
         try {
             parser.reset();
             walker.walk(new MiracleDeclarationChecker(), parser.miracle());
-            parser.reset();
-            walker.walk(new MiracleIdentifierChecker(), parser.miracle());
             parser.reset();
             walker.walk(new MiracleASTreeBuilder(), parser.miracle());
         } catch (MiracleException e) {
