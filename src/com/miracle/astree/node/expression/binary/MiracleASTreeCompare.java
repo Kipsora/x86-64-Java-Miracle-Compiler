@@ -3,11 +3,8 @@ package com.miracle.astree.node.expression.binary;
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 
-/**
- * Created by kipsora on 17-3-26.
- */
 public class MiracleASTreeCompare extends MiracleASTreeBinaryExpression {
-    MiracleASTreeCompare(MiracleASTreeExpression left, OPERATOR operator, MiracleASTreeExpression right) {
+    public MiracleASTreeCompare(MiracleASTreeExpression left, OPERATOR operator, MiracleASTreeExpression right) {
         super("boolean", left, operator.toString(), right);
     }
 

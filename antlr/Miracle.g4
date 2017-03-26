@@ -53,7 +53,7 @@ expression: constant                                                            
     | expression '[' expression ']'                                                         #subscriptExpression
     | expression '.' IDENTIFIER                                                             #memberExpression
     | <assoc=right> expression operator=('++' | '--')                                       #suffixExpression
-    | <assoc=right> operator=('!' | '+' | '-' | '~' | '++' | '--') expression               #unaryExpression
+    | <assoc=right> operator=('!' | '+' | '-' | '~' | '++' | '--' | '~') expression         #prefixExpression
     | 'new' typename ('[' expression ']')*('[]')*                                           #newExpression
     | expression operator=('*' | '/' | '%') expression                                      #multDivExpression         \\ Completed
     | expression operator=('+' | '-') expression                                            #addSubExpression          \\ Completed

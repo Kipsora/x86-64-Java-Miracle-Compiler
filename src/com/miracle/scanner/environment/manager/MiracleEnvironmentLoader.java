@@ -13,10 +13,10 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import java.util.HashMap;
 
 public final class MiracleEnvironmentLoader extends MiracleEnvironmentManager {
+    static HashMap<Integer, HashMap<String, ImmutablePair<Integer, MiracleIdentifierVariable>>> varMap = new HashMap<>();
     private static int classNumber;
     private static int varNumber;
     private static int funcNumber;
-    static HashMap<Integer, HashMap<String, ImmutablePair<Integer, MiracleIdentifierVariable>>> varMap = new HashMap<>();
 
     private static void checkDeclaration(int scope, String identifier, MiracleIdentifier value) {
         if (BUILTIN.contains(identifier)) {

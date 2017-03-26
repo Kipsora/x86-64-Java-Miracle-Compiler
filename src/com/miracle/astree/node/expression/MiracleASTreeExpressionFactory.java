@@ -1,11 +1,20 @@
-package com.miracle.astree.node.expression.binary;
+package com.miracle.astree.node.expression;
 
-import com.miracle.astree.node.expression.MiracleASTreeExpression;
+import com.miracle.astree.node.expression.binary.*;
 
-public class MiracleASTreeBinaryExpressionFactory {
-    private MiracleASTreeBinaryExpressionFactory() {}
+public class MiracleASTreeExpressionFactory {
+    private MiracleASTreeExpressionFactory() {
+    }
 
-    public static MiracleASTreeBinaryExpression getInstance(MiracleASTreeExpression left, String operator, MiracleASTreeExpression right) {
+    public static MiracleASTreeExpression getInstance(String operator, MiracleASTreeExpression left) {
+
+    }
+
+    public static MiracleASTreeExpression getInstance(MiracleASTreeExpression left, String operator) {
+
+    }
+
+    public static MiracleASTreeExpression getInstance(MiracleASTreeExpression left, String operator, MiracleASTreeExpression right) {
         switch (operator) {
             case "+":
                 if (left.getType().equals("string")) {

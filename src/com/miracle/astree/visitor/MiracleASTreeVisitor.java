@@ -4,7 +4,7 @@ import com.miracle.astree.node.MiracleASTreeRoot;
 import com.miracle.astree.node.declaration.MiracleASTreeClass;
 import com.miracle.astree.node.declaration.MiracleASTreeVariable;
 import com.miracle.astree.node.expression.binary.*;
-import com.miracle.astree.node.expression.unary.MiracleASTreeUnaryIntegral;
+import com.miracle.astree.node.expression.unary.prefix.MiracleASTreePrefixIntegral;
 
 public interface MiracleASTreeVisitor {
     void visit(MiracleASTreeClass node);
@@ -23,5 +23,5 @@ public interface MiracleASTreeVisitor {
 
     void visit(MiracleASTreeLogic miracleASTreeLogic);
 
-    void visit(MiracleASTreeUnaryIntegral miracleASTreeUnaryIntegral);
+    void visit(MiracleASTreePrefixIntegral miracleASTreePrefixIntegral);
 }

@@ -6,14 +6,16 @@ import com.miracle.exceptions.MiracleExceptionBinaryExpression;
 public abstract class MiracleASTreeBinaryExpression extends MiracleASTreeExpression {
     final MiracleASTreeExpression left;
     final MiracleASTreeExpression right;
+    final String operator;
 
     MiracleASTreeBinaryExpression(String type, MiracleASTreeExpression left, String operator, MiracleASTreeExpression right) {
-        super(type, left.getText() + right.getText(), left.getMutable() && right.getMutable());
+        super(operator, type, left.getMutable() && right.getMutable());
         if (!left.getType().equals(right.getType())) {
             throw new MiracleExceptionBinaryExpression();
         }
         this.left = left;
         this.right = right;
+        this.operator = operator;
     }
 
     public MiracleASTreeExpression getLeft() {
@@ -22,5 +24,9 @@ public abstract class MiracleASTreeBinaryExpression extends MiracleASTreeExpress
 
     public MiracleASTreeExpression getRight() {
         return right;
+    }
+
+    public String getOperator() {
+        return operator;
     }
 }

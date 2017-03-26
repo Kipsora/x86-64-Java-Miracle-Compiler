@@ -11,6 +11,7 @@ public class MiracleASTreeAssign extends MiracleASTreeBinaryExpression {
             throw new MiracleExceptionLeftValue();
         }
     }
+
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
         visitor.visit(this);
