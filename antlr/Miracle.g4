@@ -53,20 +53,19 @@ expression: constant                                                            
     | expression '[' expression ']'                                                         #subscriptExpression
     | expression '.' IDENTIFIER                                                             #memberExpression
     | <assoc=right> expression operator=('++' | '--')                                       #suffixExpression
-    | operator=('++' | '--') expression                                                     #prefixExpression
-    | <assoc=right> operator=('!' | '+' | '-' | '~' | '++' | '--')                          #unaryExpression
+    | <assoc=right> operator=('!' | '+' | '-' | '~' | '++' | '--') expression               #unaryExpression
     | 'new' typename ('[' expression ']')*('[]')*                                           #newExpression
-    | expression operator=('*' | '/' | '%') expression                                      #multDivExpression
-    | expression operator=('+' | '-') expression                                            #addSubExpression
-    | expression operator=('<<' | '>>') expression                                          #shlShrExpression
-    | expression operator=('<' | '<=' | '>' | '>=') expression                              #compareExpression
-    | expression operator=('==' | '!=') expression                                          #equalityExpression
-    | expression '&' expression                                                             #andExpression
-    | expression '^' expression                                                             #xorExpression
-    | expression '|' expression                                                             #orExpression
-    | expression '&&' expression                                                            #logicAndExpression
-    | expression '||' expression                                                            #logicOrExpression
-    | <assoc=right> expression '=' expression                                               #assignExpression
+    | expression operator=('*' | '/' | '%') expression                                      #multDivExpression         \\ Completed
+    | expression operator=('+' | '-') expression                                            #addSubExpression          \\ Completed
+    | expression operator=('<<' | '>>') expression                                          #shlShrExpression          \\ Completed
+    | expression operator=('<' | '<=' | '>' | '>=') expression                              #compareExpression         \\ Completed
+    | expression operator=('==' | '!=') expression                                          #equalityExpression        \\ Completed
+    | expression '&' expression                                                             #andExpression             \\ Completed
+    | expression '^' expression                                                             #xorExpression             \\ Completed
+    | expression '|' expression                                                             #orExpression              \\ Completed
+    | expression '&&' expression                                                            #logicAndExpression        \\ Completed
+    | expression '||' expression                                                            #logicOrExpression         \\ Completed
+    | <assoc=right> expression '=' expression                                               #assignExpression          \\ Completed
     ;
 
 constant: INTEGER
