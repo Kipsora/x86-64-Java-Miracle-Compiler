@@ -8,6 +8,6 @@ public abstract class MiracleException extends Error {
     @Override
     public String getMessage() {
         return "Syntax error:" + String.valueOf(MiracleRuntimeMaintainer.getRow()) + ":"
-                + String.valueOf(MiracleRuntimeMaintainer.getColumn()) + ": " + toString();
+                + String.valueOf(MiracleRuntimeMaintainer.getColumn()) + ": " + toString() + "\n";
     }
 }

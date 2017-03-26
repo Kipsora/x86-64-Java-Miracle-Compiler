@@ -3,6 +3,7 @@ package com.miracle.scanner;
 import com.miracle.cstree.MiracleLexer;
 import com.miracle.cstree.MiracleParser;
 import com.miracle.exceptions.MiracleException;
+import com.miracle.scanner.listener.MiracleASTreeBuilder;
 import com.miracle.scanner.listener.MiracleDeclarationChecker;
 import com.miracle.scanner.listener.MiracleIdentifierChecker;
 import com.miracle.scanner.listener.MiracleSyntaxErrorListener;
@@ -21,9 +22,9 @@ public class MiracleScanner {
         parser.addErrorListener(new MiracleSyntaxErrorListener());
         ParseTreeWalker walker = new ParseTreeWalker();
         try {
-            walker.walk(new MiracleDeclarationChecker(), parser.miracle());
-            parser.reset();
-            walker.walk(new MiracleIdentifierChecker(), parser.miracle());
+            parser.reset(); walker.walk(new MiracleDeclarationChecker(), parser.miracle());
+            parser.reset(); walker.walk(new MiracleIdentifierChecker(), parser.miracle());
+            parser.reset(); walker.walk(new MiracleASTreeBuilder(), parser.miracle());
         } catch (MiracleException e) {
             System.out.print(e.getMessage());
         }
