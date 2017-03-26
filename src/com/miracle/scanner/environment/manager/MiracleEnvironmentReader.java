@@ -1,7 +1,10 @@
 package com.miracle.scanner.environment.manager;
 
 import com.miracle.exceptions.MiracleExceptionIdentifierShadowError;
-import com.miracle.scanner.environment.identifier.*;
+import com.miracle.scanner.environment.identifier.MiracleIdentifier;
+import com.miracle.scanner.environment.identifier.MiracleIdentifierClass;
+import com.miracle.scanner.environment.identifier.MiracleIdentifierFunction;
+import com.miracle.scanner.environment.identifier.MiracleIdentifierVariable;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 

@@ -2,10 +2,10 @@ package com.miracle.astree.node.declaration;
 
 import com.miracle.astree.node.MiracleASTreeNode;
 
-public abstract class MiracleASTNodeDeclaration extends MiracleASTreeNode {
-    private final String identifier;
+public abstract class MiracleASTreeDeclaration extends MiracleASTreeNode {
+    protected final String identifier;
 
-    protected MiracleASTNodeDeclaration(String identifier) {
+    MiracleASTreeDeclaration(String identifier) {
         this.identifier = identifier;
     }
 

@@ -3,7 +3,10 @@ package com.miracle.scanner.environment.manager;
 import com.miracle.exceptions.MiracleExceptionConflictWithBuiltin;
 import com.miracle.exceptions.MiracleExceptionConflictWithKeyword;
 import com.miracle.exceptions.MiracleExceptionDuplicateDeclaration;
-import com.miracle.scanner.environment.identifier.*;
+import com.miracle.scanner.environment.identifier.MiracleIdentifier;
+import com.miracle.scanner.environment.identifier.MiracleIdentifierClass;
+import com.miracle.scanner.environment.identifier.MiracleIdentifierFunction;
+import com.miracle.scanner.environment.identifier.MiracleIdentifierVariable;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.HashMap;
