@@ -17,8 +17,15 @@ public class MiracleDeclarationChecker extends MiracleScopeChecker {
 
     @Override
     public void enterVariableDeclarationStatement(MiracleParser.VariableDeclarationStatementContext ctx) {
-        MiracleEnvironmentLoader.declare(ctx.IDENTIFIER().getText(),
-                new MiracleIdentifierVariable(ctx.DECORATOR().getText(), true, ctx.typename().getText()));
+        if (ctx.DECORATOR() == null) {
+            MiracleEnvironmentLoader.declare(ctx.IDENTIFIER().getText(),
+                    new MiracleIdentifierVariable(null, true,
+                            ctx.typename().getText()));
+        } else {
+            MiracleEnvironmentLoader.declare(ctx.IDENTIFIER().getText(),
+                    new MiracleIdentifierVariable(ctx.DECORATOR().getText(), true,
+                            ctx.typename().getText()));
+        }
         super.enterVariableDeclarationStatement(ctx);
     }
 

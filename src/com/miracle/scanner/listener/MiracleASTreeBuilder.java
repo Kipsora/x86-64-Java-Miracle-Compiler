@@ -48,8 +48,13 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
         for (MiracleASTreeNode entry : path.pop()) {
             tmp.add((MiracleASTreeMemberDeclaration) entry);
         }
-        path.peek().add(new MiracleASTreeClass(ctx.IDENTIFIER(0).getText(),
-                ctx.IDENTIFIER(1).getText(), tmp));
+        if (ctx.IDENTIFIER().size() > 1) {
+            path.peek().add(new MiracleASTreeClass(ctx.IDENTIFIER(0).getText(),
+                    ctx.IDENTIFIER(1).getText(), tmp));
+        } else {
+            path.peek().add(new MiracleASTreeClass(ctx.IDENTIFIER(0).getText(),
+                    null, tmp));
+        }
         super.exitClassDeclarationStatement(ctx);
     }
 
@@ -95,7 +100,10 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             decorator = ctx.DECORATOR().getText();
         }
         MiracleASTreeTypename type = (MiracleASTreeTypename) path.peek().get(0);
-        MiracleASTreeExpression value = (MiracleASTreeExpression) path.peek().get(1);
+        MiracleASTreeExpression value = null;
+        if (path.peek().size() > 1) {
+            value = (MiracleASTreeExpression) path.peek().get(1);
+        }
         path.pop();
         path.peek().add(new MiracleASTreeVariable(decorator, ctx.IDENTIFIER().getText(), type, value));
         super.exitVariableDeclarationStatement(ctx);
