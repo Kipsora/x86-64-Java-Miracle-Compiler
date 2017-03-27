@@ -1,10 +1,11 @@
 package com.miracle.astree.node.expression.unary.prefix;
 
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
+import com.miracle.astree.node.expression.unary.MiracleASTreeUnaryExpression;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionSpecialExpression;
 
-public class MiracleASTreePrefixIntegral extends MiracleASTreePrefixExpression {
+public class MiracleASTreePrefixIntegral extends MiracleASTreeUnaryExpression {
     public MiracleASTreePrefixIntegral(OPERATOR op, MiracleASTreeExpression node) {
         super(op.toString(), node);
         if (!node.getType().equals("int")) {

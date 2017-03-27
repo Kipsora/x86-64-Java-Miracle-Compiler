@@ -9,7 +9,7 @@ public abstract class MiracleASTreeBinaryExpression extends MiracleASTreeExpress
     final String operator;
 
     MiracleASTreeBinaryExpression(String type, MiracleASTreeExpression left, String operator, MiracleASTreeExpression right) {
-        super(operator, type, left.getMutable() && right.getMutable());
+        super(operator, type, false);
         if (!left.getType().equals(right.getType())) {
             throw new MiracleExceptionBinaryExpression();
         }

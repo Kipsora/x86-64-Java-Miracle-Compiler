@@ -52,9 +52,9 @@ expression: constant                                                            
     | expression '(' expression? (',' expression)* ')'                                      #functionCallExpression
     | expression '[' expression ']'                                                         #subscriptExpression
     | expression '.' IDENTIFIER                                                             #memberExpression
-    | <assoc=right> expression operator=('++' | '--')                                       #suffixExpression
-    | <assoc=right> operator=('!' | '+' | '-' | '~' | '++' | '--' | '~') expression         #prefixExpression
-    | 'new' typename ('[' expression ']')*('[]')*                                           #newExpression
+    | <assoc=right> expression operator=('++' | '--')                                       #suffixExpression          \\ Completed
+    | <assoc=right> operator=('!' | '+' | '-' | '~' | '++' | '--') expression               #prefixExpression          \\ Completed
+    | 'new' typename ('[' expression ']')*('[]')*                                           #newExpression             
     | expression operator=('*' | '/' | '%') expression                                      #multDivExpression         \\ Completed
     | expression operator=('+' | '-') expression                                            #addSubExpression          \\ Completed
     | expression operator=('<<' | '>>') expression                                          #shlShrExpression          \\ Completed

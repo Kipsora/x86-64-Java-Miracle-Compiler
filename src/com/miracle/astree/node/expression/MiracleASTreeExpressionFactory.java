@@ -1,28 +1,42 @@
 package com.miracle.astree.node.expression;
 
 import com.miracle.astree.node.expression.binary.*;
+import com.miracle.astree.node.expression.unary.prefix.MiracleASTreeNegate;
 import com.miracle.astree.node.expression.unary.prefix.MiracleASTreePrefixIntegral;
+import com.miracle.astree.node.expression.unary.suffix.MiracleASTreeSuffixIntegral;
 
 public class MiracleASTreeExpressionFactory {
     private MiracleASTreeExpressionFactory() {
     }
 
     public static MiracleASTreeExpression getInstance(String operator, MiracleASTreeExpression left) {
-        if (operator.equals("+")) {
-            return new MiracleASTreePrefixIntegral(MiracleASTreePrefixIntegral.OPERATOR.POS, left);
-        } else if (operator.equals("++")) {
-            return new MiracleASTreePrefixIntegral(MiracleASTreePrefixIntegral.OPERATOR.ADD, left);
-        } else if (operator.equals("-")) {
-            return new MiracleASTreePrefixIntegral(MiracleASTreePrefixIntegral.OPERATOR.NEG, left);
-        } else if (operator.equals("--")) {
-            return new MiracleASTreePrefixIntegral(MiracleASTreePrefixIntegral.OPERATOR.SUB, left);
-        } else {
-            return null;
+        switch (operator) {
+            case "+":
+                return new MiracleASTreePrefixIntegral(MiracleASTreePrefixIntegral.OPERATOR.POS, left);
+            case "++":
+                return new MiracleASTreePrefixIntegral(MiracleASTreePrefixIntegral.OPERATOR.ADD, left);
+            case "-":
+                return new MiracleASTreePrefixIntegral(MiracleASTreePrefixIntegral.OPERATOR.NEG, left);
+            case "--":
+                return new MiracleASTreePrefixIntegral(MiracleASTreePrefixIntegral.OPERATOR.SUB, left);
+            case "~":
+                return new MiracleASTreePrefixIntegral(MiracleASTreePrefixIntegral.OPERATOR.REV, left);
+            case "!":
+                return new MiracleASTreeNegate(left);
+            default:
+                return null;
         }
     }
 
     public static MiracleASTreeExpression getInstance(MiracleASTreeExpression left, String operator) {
-
+        switch (operator) {
+            case "++":
+                return new MiracleASTreeSuffixIntegral(MiracleASTreeSuffixIntegral.OPERATOR.ADD, left);
+            case "--":
+                return new MiracleASTreeSuffixIntegral(MiracleASTreeSuffixIntegral.OPERATOR.SUB, left);
+            default:
+                return null;
+        }
     }
 
     public static MiracleASTreeExpression getInstance(MiracleASTreeExpression left, String operator, MiracleASTreeExpression right) {
