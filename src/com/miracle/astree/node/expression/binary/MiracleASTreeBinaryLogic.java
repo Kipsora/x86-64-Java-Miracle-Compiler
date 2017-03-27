@@ -4,8 +4,8 @@ import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionSpecialExpression;
 
-public class MiracleASTreeLogic extends MiracleASTreeBinaryExpression {
-    public MiracleASTreeLogic(MiracleASTreeExpression left, OPERATOR op, MiracleASTreeExpression right) {
+public class MiracleASTreeBinaryLogic extends MiracleASTreeBinaryExpression {
+    public MiracleASTreeBinaryLogic(MiracleASTreeExpression left, OPERATOR op, MiracleASTreeExpression right) {
         super("boolean", left, op.toString(), right);
         if (!left.getType().equals("boolean")) {
             throw new MiracleExceptionSpecialExpression("logical", "boolean", left.getType());

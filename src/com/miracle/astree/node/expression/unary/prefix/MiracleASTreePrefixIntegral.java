@@ -5,7 +5,7 @@ import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionSpecialExpression;
 
 public class MiracleASTreePrefixIntegral extends MiracleASTreePrefixExpression {
-    protected MiracleASTreePrefixIntegral(OPERATOR op, MiracleASTreeExpression node) {
+    public MiracleASTreePrefixIntegral(OPERATOR op, MiracleASTreeExpression node) {
         super(op.toString(), node);
         if (!node.getType().equals("int")) {
             throw new MiracleExceptionSpecialExpression("prefix " + op.toString(),
@@ -19,7 +19,7 @@ public class MiracleASTreePrefixIntegral extends MiracleASTreePrefixExpression {
     }
 
     public enum OPERATOR{
-        ADD, SUB, REV;
+        ADD, SUB, REV, NEG, POS;
 
         @Override
         public String toString() {
@@ -27,8 +27,12 @@ public class MiracleASTreePrefixIntegral extends MiracleASTreePrefixExpression {
                 return "++";
             } else if (this.equals(SUB)) {
                 return "--";
-            } else {
+            } else if (this.equals(REV)) {
                 return "~";
+            } else if (this.equals(NEG)) {
+                return "-";
+            } else {
+                return "+";
             }
         }
     }
