@@ -12,6 +12,7 @@ public abstract class MiracleASTreeExpression extends MiracleASTreeNode {
         this.mutable = mutable;
         this.operator = operator;
         this.type = type;
+        assert type != null;
     }
 
     public MiracleASTreeTypename getType() {

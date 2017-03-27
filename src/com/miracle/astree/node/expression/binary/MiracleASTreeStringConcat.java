@@ -1,17 +1,20 @@
 package com.miracle.astree.node.expression.binary;
 
+import com.miracle.astree.node.MiracleASTreeTypename;
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionSpecialExpression;
 
 public class MiracleASTreeStringConcat extends MiracleASTreeBinaryExpression {
     public MiracleASTreeStringConcat(MiracleASTreeExpression left, MiracleASTreeExpression right) {
-        super("string", left, "+", right);
+        super(new MiracleASTreeTypename("string"), left, "+", right);
         if (!left.getType().equals("string")) {
-            throw new MiracleExceptionSpecialExpression("string concat", "string", left.getType());
+            throw new MiracleExceptionSpecialExpression("string concat", "string",
+                    left.getType().toString());
         }
         if (!right.getType().equals("string")) {
-            throw new MiracleExceptionSpecialExpression("string concat", "string", right.getType());
+            throw new MiracleExceptionSpecialExpression("string concat", "string",
+                    right.getType().toString());
         }
     }
 

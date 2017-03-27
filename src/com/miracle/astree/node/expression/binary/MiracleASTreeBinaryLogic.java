@@ -9,10 +9,12 @@ public class MiracleASTreeBinaryLogic extends MiracleASTreeBinaryExpression {
     public MiracleASTreeBinaryLogic(MiracleASTreeExpression left, OPERATOR op, MiracleASTreeExpression right) {
         super(new MiracleASTreeTypename("boolean"), left, op.toString(), right);
         if (!"boolean".equals(left.getType())) {
-            throw new MiracleExceptionSpecialExpression("logical", "boolean", left.getType().toString());
+            throw new MiracleExceptionSpecialExpression("logical", "boolean",
+                    left.getType().toString());
         }
         if (!"boolean".equals(right.getType())) {
-            throw new MiracleExceptionSpecialExpression("logical", "boolean", right.getType().toString());
+            throw new MiracleExceptionSpecialExpression("logical", "boolean",
+                    right.getType().toString());
         }
     }
 

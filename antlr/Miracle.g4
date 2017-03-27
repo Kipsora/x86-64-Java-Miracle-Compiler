@@ -21,7 +21,7 @@ statement: blockStatement
 
 selectionStatement: 'if' '(' expression ')' statement ('else' statement)?;
 
-iterationStatement: 'for' '(' expression ';' expression ';' expression ')' statement        #forStatement
+iterationStatement: 'for' '(' expression? ';' expression? ';' expression? ')' statement     #forStatement
     | 'while' '(' expression ')' statement                                                  #whileStatement
     ;
 

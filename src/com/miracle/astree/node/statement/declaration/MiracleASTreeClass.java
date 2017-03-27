@@ -1,4 +1,4 @@
-package com.miracle.astree.node.declaration;
+package com.miracle.astree.node.statement.declaration;
 
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 
@@ -6,15 +6,10 @@ import java.util.List;
 
 public class MiracleASTreeClass extends MiracleASTreeDeclaration {
     private final String extend;
-    private final List<MiracleASTreeDeclaration> children;
+    private final List<MiracleASTreeMemberDeclaration> children;
 
-    public MiracleASTreeClass(String identifier, List<MiracleASTreeDeclaration> children) {
-        super(identifier);
-        this.extend = null;
-        this.children = children;
-    }
-
-    public MiracleASTreeClass(String identifier, String extend, List<MiracleASTreeDeclaration> children) {
+    public MiracleASTreeClass(String identifier, String extend,
+                              List<MiracleASTreeMemberDeclaration> children) {
         super(identifier);
         this.extend = extend;
         this.children = children;
@@ -29,7 +24,7 @@ public class MiracleASTreeClass extends MiracleASTreeDeclaration {
         visitor.visit(this);
     }
 
-    public List<MiracleASTreeDeclaration> getChildren() {
+    public List<MiracleASTreeMemberDeclaration> getChildren() {
         return children;
     }
 }

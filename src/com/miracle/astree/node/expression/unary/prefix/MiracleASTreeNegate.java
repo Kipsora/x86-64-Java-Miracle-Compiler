@@ -9,8 +9,8 @@ public class MiracleASTreeNegate extends MiracleASTreeUnaryExpression {
     public MiracleASTreeNegate(MiracleASTreeExpression node) {
         super("!", node);
         if (!node.getType().equals("boolean")) {
-            throw new MiracleExceptionSpecialExpression("prefix !",
-                    "boolean", node.getType());
+            throw new MiracleExceptionSpecialExpression("prefix !", "boolean",
+                    node.getType().toString());
         }
     }
 

@@ -48,7 +48,7 @@ public class MiracleLexer extends Lexer {
             "'%'", "'<<'", "'>>'", "'<'", "'<='", "'>'", "'>='", "'=='", "'!='", "'&'",
             "'^'", "'|'", "'&&'", "'||'", "'true'", "'false'", "'null'"
     };
-	private static final String[] _SYMBOLIC_NAMES = {
+    private static final String[] _SYMBOLIC_NAMES = {
             null, null, null, null, null, null, null, null, null, null, null, null,
             null, null, null, null, null, null, null, null, null, null, null, null,
             null, null, null, null, null, null, null, null, null, null, null, null,
@@ -56,7 +56,7 @@ public class MiracleLexer extends Lexer {
             null, null, null, "DECORATOR", "IDENTIFIER", "INTEGER", "STRING", "NEXTLINE",
             "LINECOMMENT", "BLOCKCOMMENT", "WHITECHAR"
     };
-	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
+    public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
 	/**
 	 * @deprecated Use {@link #VOCABULARY} instead.
@@ -245,7 +245,7 @@ public class MiracleLexer extends Lexer {
             new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 
     static {
-		_decisionToDFA = new DFA[_ATN.getNumberOfDecisions()];
+        _decisionToDFA = new DFA[_ATN.getNumberOfDecisions()];
 		for (int i = 0; i < _ATN.getNumberOfDecisions(); i++) {
 			_decisionToDFA[i] = new DFA(_ATN.getDecisionState(i), i);
 		}
