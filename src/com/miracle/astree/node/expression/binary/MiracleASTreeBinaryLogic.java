@@ -1,17 +1,18 @@
 package com.miracle.astree.node.expression.binary;
 
+import com.miracle.astree.node.MiracleASTreeTypename;
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionSpecialExpression;
 
 public class MiracleASTreeBinaryLogic extends MiracleASTreeBinaryExpression {
     public MiracleASTreeBinaryLogic(MiracleASTreeExpression left, OPERATOR op, MiracleASTreeExpression right) {
-        super("boolean", left, op.toString(), right);
-        if (!left.getType().equals("boolean")) {
-            throw new MiracleExceptionSpecialExpression("logical", "boolean", left.getType());
+        super(new MiracleASTreeTypename("boolean"), left, op.toString(), right);
+        if (!"boolean".equals(left.getType())) {
+            throw new MiracleExceptionSpecialExpression("logical", "boolean", left.getType().toString());
         }
-        if (!right.getType().equals("boolean")) {
-            throw new MiracleExceptionSpecialExpression("logical", "boolean", right.getType());
+        if (!"boolean".equals(right.getType())) {
+            throw new MiracleExceptionSpecialExpression("logical", "boolean", right.getType().toString());
         }
     }
 

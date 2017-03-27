@@ -8,18 +8,6 @@ public class MiracleASTreeClass extends MiracleASTreeDeclaration {
     private final String extend;
     private final List<MiracleASTreeDeclaration> children;
 
-    public MiracleASTreeClass(String identifier) {
-        super(identifier);
-        this.extend = null;
-        this.children = null;
-    }
-
-    public MiracleASTreeClass(String identifier, String extend) {
-        super(identifier);
-        this.extend = extend;
-        this.children = null;
-    }
-
     public MiracleASTreeClass(String identifier, List<MiracleASTreeDeclaration> children) {
         super(identifier);
         this.extend = null;
@@ -39,5 +27,9 @@ public class MiracleASTreeClass extends MiracleASTreeDeclaration {
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public List<MiracleASTreeDeclaration> getChildren() {
+        return children;
     }
 }

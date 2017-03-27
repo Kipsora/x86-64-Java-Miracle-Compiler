@@ -1,7 +1,9 @@
 package com.miracle.astree.visitor;
 
 import com.miracle.astree.node.MiracleASTreeRoot;
+import com.miracle.astree.node.MiracleASTreeTypename;
 import com.miracle.astree.node.declaration.MiracleASTreeClass;
+import com.miracle.astree.node.declaration.MiracleASTreeFunction;
 import com.miracle.astree.node.declaration.MiracleASTreeVariable;
 import com.miracle.astree.node.expression.binary.*;
 import com.miracle.astree.node.expression.multiary.MiracleASTreeNewExpression;
@@ -33,4 +35,10 @@ public interface MiracleASTreeVisitor {
     void visit(MiracleASTreeSuffixIntegral miracleASTreeSuffixIntegral);
 
     void visit(MiracleASTreeNewExpression miracleASTreeNewExpression);
+
+    void visit(MiracleASTreeFunction miracleASTreeFunction);
+
+    void visit(MiracleASTreeTypename miracleASTreeTypename);
+
+    void visit(MiracleASTreeMember miracleASTreeMember);
 }

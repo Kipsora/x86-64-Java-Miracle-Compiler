@@ -76,7 +76,7 @@ constant: INTEGER
 
 DECORATOR: 'public' | 'private' | 'protected';
 
-IDENTIFIER: [a-zA-Z][a-zA-Z0-9]*;
+IDENTIFIER: [_a-zA-Z][_a-zA-Z0-9]*;
 
 INTEGER: [0-9]+;
 

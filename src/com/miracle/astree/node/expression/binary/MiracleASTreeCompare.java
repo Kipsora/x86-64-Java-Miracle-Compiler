@@ -1,11 +1,12 @@
 package com.miracle.astree.node.expression.binary;
 
+import com.miracle.astree.node.MiracleASTreeTypename;
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 
 public class MiracleASTreeCompare extends MiracleASTreeBinaryExpression {
     public MiracleASTreeCompare(MiracleASTreeExpression left, OPERATOR operator, MiracleASTreeExpression right) {
-        super("boolean", left, operator.toString(), right);
+        super(new MiracleASTreeTypename("boolean"), left, operator.toString(), right);
     }
 
     @Override
