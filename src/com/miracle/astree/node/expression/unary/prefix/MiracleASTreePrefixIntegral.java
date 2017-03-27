@@ -10,13 +10,15 @@ public class MiracleASTreePrefixIntegral extends MiracleASTreeUnaryExpression {
         super(op.toString(), node);
         if (!node.getType().equals("int")) {
             throw new MiracleExceptionSpecialExpression("prefix " + op.toString(),
-                    "int", node.getType());
+                    "int", node.getType().toString());
         }
     }
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
+        visitor.enter();
         visitor.visit(this);
+        visitor.exit();
     }
 
     public enum OPERATOR{

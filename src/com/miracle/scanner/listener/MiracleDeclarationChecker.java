@@ -18,7 +18,7 @@ public class MiracleDeclarationChecker extends MiracleScopeChecker {
     @Override
     public void enterVariableDeclarationStatement(MiracleParser.VariableDeclarationStatementContext ctx) {
         MiracleEnvironmentLoader.declare(ctx.IDENTIFIER().getText(),
-                new MiracleIdentifierVariable(ctx.typename().getText()));
+                new MiracleIdentifierVariable(ctx.DECORATOR().getText(), true, ctx.typename().getText()));
         super.enterVariableDeclarationStatement(ctx);
     }
 
@@ -42,14 +42,14 @@ public class MiracleDeclarationChecker extends MiracleScopeChecker {
         List<TerminalNode> tmp = ctx.IDENTIFIER();
         LinkedList<MiracleIdentifierVariable> arguments = new LinkedList<>();
         for (int i = 1; i < tmp.size(); i++) {
-            arguments.add(new MiracleIdentifierVariable(tmp.get(i).getText()));
+            arguments.add(new MiracleIdentifierVariable(null, true, tmp.get(i).getText()));
         }
         MiracleEnvironmentLoader.declare(ctx.IDENTIFIER(0).getText(),
                 new MiracleIdentifierFunction(ctx.typename(0).getText(), arguments));
         super.enterFunctionDeclarationStatement(ctx);
         for (int i = 1; i < tmp.size(); i++) {
             MiracleEnvironmentLoader.declare(tmp.get(i).getText(),
-                    new MiracleIdentifierVariable(false, ctx.typename(i).getText()));
+                    new MiracleIdentifierVariable(null, false, ctx.typename(i).getText()));
         }
     }
 }

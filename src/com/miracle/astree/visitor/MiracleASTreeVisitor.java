@@ -19,9 +19,13 @@ import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
 
 public interface MiracleASTreeVisitor {
-    void visit(MiracleASTreeClass node);
+    void enter();
 
-    void visit(MiracleASTreeVariable node);
+    void exit();
+
+    void visit(MiracleASTreeClass miracleASTreeClass);
+
+    void visit(MiracleASTreeVariable miracleASTreeVariable);
 
     void visit(MiracleASTreeRoot miracleASTreeRoot);
 

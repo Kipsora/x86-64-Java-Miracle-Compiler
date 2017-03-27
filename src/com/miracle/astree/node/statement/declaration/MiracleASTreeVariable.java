@@ -38,7 +38,9 @@ public class MiracleASTreeVariable extends MiracleASTreeMemberDeclaration {
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
+        visitor.enter();
         visitor.visit(this);
+        visitor.exit();
     }
 
     public MiracleASTreeExpression getValue() {

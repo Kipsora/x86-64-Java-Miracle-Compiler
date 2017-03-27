@@ -1,6 +1,8 @@
 package com.miracle.scanner.listener;
 
+import com.miracle.astree.MiracleASTree;
 import com.miracle.astree.node.MiracleASTreeNode;
+import com.miracle.astree.node.MiracleASTreeRoot;
 import com.miracle.astree.node.MiracleASTreeTypename;
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.node.statement.MiracleASTreeBlock;
@@ -29,6 +31,10 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     }
 
     private Stack<List<MiracleASTreeNode>> path = new Stack<>();
+
+    public MiracleASTree getTree() {
+        return new MiracleASTree(new MiracleASTreeRoot(path.peek()));
+    }
 
     @Override
     public void enterClassDeclarationStatement(MiracleParser.ClassDeclarationStatementContext ctx) {
@@ -211,5 +217,23 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
         List<MiracleASTreeNode> children = path.pop();
         path.peek().add(new MiracleASTreeReturn((MiracleASTreeExpression) children.get(0)));
         super.exitReturnStatement(ctx);
+    }
+
+    @Override
+    public void enterTypename(MiracleParser.TypenameContext ctx) {
+        super.enterTypename(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitTypename(MiracleParser.TypenameContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        if (ctx.getChildCount() == 1) {
+            path.peek().add(new MiracleASTreeTypename(ctx.getChild(0).getText()));
+        }
+        if (ctx.IDENTIFIER() != null) {
+
+        }
+        super.exitTypename(ctx);
     }
 }

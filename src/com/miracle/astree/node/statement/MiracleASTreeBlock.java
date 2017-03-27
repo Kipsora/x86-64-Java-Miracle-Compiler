@@ -13,7 +13,9 @@ public class MiracleASTreeBlock extends MiracleASTreeStatement {
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
+        visitor.enter();
         visitor.visit(this);
+        visitor.exit();
     }
 
     public List<MiracleASTreeStatement> getStatement() {

@@ -25,7 +25,9 @@ public class MiracleASTreeTypename extends MiracleASTreeNode {
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
+        visitor.enter();
         visitor.visit(this);
+        visitor.exit();
     }
 
     public String getBasetype() {
