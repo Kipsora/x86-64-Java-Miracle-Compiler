@@ -1,22 +1,28 @@
 package com.miracle.astree.node.expression.value;
 
-import com.miracle.astree.node.MiracleASTreeTypename;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 
 public class MiracleASTreeVariable extends MiracleASTreeValue {
-    private final String identifier;
+    private final MiracleASTreeVariableDeclaration declaration;
 
-    public MiracleASTreeVariable(MiracleASTreeTypename type, String identifier, boolean mutable) {
-        super(type, true);
-        this.identifier = identifier;
+    public MiracleASTreeVariable(MiracleASTreeVariableDeclaration declaration) {
+        super(declaration.getType(), true);
+        this.declaration = declaration;
     }
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
+        visitor.enter();
         visitor.visit(this);
+        visitor.exit();
     }
 
     public String getIdentifier() {
-        return identifier;
+        return declaration.getIdentifier();
+    }
+
+    public MiracleASTreeVariableDeclaration getDeclaration() {
+        return declaration;
     }
 }

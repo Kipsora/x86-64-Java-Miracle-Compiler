@@ -2,6 +2,8 @@ package com.miracle.astree.visitor;
 
 import com.miracle.astree.node.MiracleASTreeNode;
 import com.miracle.astree.node.MiracleASTreeRoot;
+import com.miracle.astree.node.expression.value.MiracleASTreeConstant;
+import com.miracle.astree.node.expression.value.MiracleASTreeVariable;
 import com.miracle.astree.node.statement.MiracleASTreeStatement;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeClassDeclaration;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclaration;
@@ -15,6 +17,7 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
         for (int i = 1; i <= level; i++) System.out.print("  ");
         System.out.println(s);
     }
+
     @Override
     public void enter() {
         smartPrint("(");
@@ -41,9 +44,23 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
         smartPrint("function " + miracleASTreeFunctionDeclaration.getIdentifier());
         smartPrint("decorator: " + miracleASTreeFunctionDeclaration.getDecorator());
         smartPrint("return type: " + miracleASTreeFunctionDeclaration.getType().toString());
+        smartPrint("arguments: ");
+        for (MiracleASTreeVariableDeclaration entry : miracleASTreeFunctionDeclaration.getArguments()) {
+            entry.accept(this);
+        }
         for (MiracleASTreeStatement entry : miracleASTreeFunctionDeclaration.getBody()) {
             entry.accept(this);
         }
+    }
+
+    @Override
+    public void visit(MiracleASTreeConstant miracleASTreeConstant) {
+        smartPrint("constant: " + miracleASTreeConstant.getValue());
+    }
+
+    @Override
+    public void visit(MiracleASTreeVariable miracleASTreeVariable) {
+        smartPrint("variable: " + miracleASTreeVariable.getIdentifier());
     }
 
     @Override

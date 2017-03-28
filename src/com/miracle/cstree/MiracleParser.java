@@ -13,13 +13,6 @@ import java.util.List;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class MiracleParser extends Parser {
-    static {
-        RuntimeMetaData.checkVersion("4.6", RuntimeMetaData.VERSION);
-    }
-
-	protected static final DFA[] _decisionToDFA;
-	protected static final PredictionContextCache _sharedContextCache =
-            new PredictionContextCache();
     public static final int
             T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, T__7 = 8, T__8 = 9,
             T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, T__14 = 15, T__15 = 16, T__16 = 17,
@@ -41,8 +34,117 @@ public class MiracleParser extends Parser {
             "iterationStatement", "controlStatement", "expressionStatement", "emptyStatement",
             "typename", "expression", "constant"
     };
-
-	private static final String[] _LITERAL_NAMES = {
+    /**
+     * @deprecated Use {@link #VOCABULARY} instead.
+     */
+    @Deprecated
+    public static final String[] tokenNames;
+    public static final String _serializedATN =
+            "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3<\u0114\4\2\t\2\4" +
+                    "\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t" +
+                    "\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\3\2\3\2\3\2\7\2\"\n\2\f\2\16\2" +
+                    "%\13\2\3\3\3\3\3\3\3\3\5\3+\n\3\3\3\3\3\3\3\7\3\60\n\3\f\3\16\3\63\13" +
+                    "\3\3\3\3\3\3\4\5\48\n\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4@\n\4\3\4\3\4\3\4\3" +
+                    "\4\7\4F\n\4\f\4\16\4I\13\4\3\4\3\4\3\4\7\4N\n\4\f\4\16\4Q\13\4\3\4\3\4" +
+                    "\3\5\5\5V\n\5\3\5\3\5\3\5\3\5\5\5\\\n\5\3\5\3\5\3\6\3\6\7\6b\n\6\f\6\16" +
+                    "\6e\13\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7p\n\7\3\b\3\b\3\b\3\b" +
+                    "\3\b\3\b\3\b\5\by\n\b\3\t\3\t\3\t\5\t~\n\t\3\t\3\t\5\t\u0082\n\t\3\t\3" +
+                    "\t\5\t\u0086\n\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\t\u0090\n\t\3\n\3\n" +
+                    "\3\n\3\n\3\n\3\n\5\n\u0098\n\n\3\n\5\n\u009b\n\n\3\13\3\13\3\13\3\f\3" +
+                    "\f\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u00a8\n\r\3\r\3\r\6\r\u00ac\n\r\r\r\16" +
+                    "\r\u00ad\7\r\u00b0\n\r\f\r\16\r\u00b3\13\r\3\16\3\16\3\16\3\16\3\16\3" +
+                    "\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\7\16\u00c4\n\16\f\16" +
+                    "\16\16\u00c7\13\16\3\16\7\16\u00ca\n\16\f\16\16\16\u00cd\13\16\5\16\u00cf" +
+                    "\n\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16" +
+                    "\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16" +
+                    "\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u00f5\n\16\3\16\3\16" +
+                    "\7\16\u00f9\n\16\f\16\16\16\u00fc\13\16\3\16\3\16\3\16\3\16\3\16\3\16" +
+                    "\3\16\3\16\3\16\3\16\3\16\7\16\u0109\n\16\f\16\16\16\u010c\13\16\3\17" +
+                    "\3\17\3\17\3\17\5\17\u0112\n\17\3\17\2\4\30\32\20\2\4\6\b\n\f\16\20\22" +
+                    "\24\26\30\32\34\2\n\3\2\33 \3\2\"$\3\2\36\37\3\2%&\3\2\'*\3\2+,\3\2\33" +
+                    "\34\3\2\62\63\u0140\2#\3\2\2\2\4&\3\2\2\2\6\67\3\2\2\2\bU\3\2\2\2\n_\3" +
+                    "\2\2\2\fo\3\2\2\2\16q\3\2\2\2\20\u008f\3\2\2\2\22\u009a\3\2\2\2\24\u009c" +
+                    "\3\2\2\2\26\u009f\3\2\2\2\30\u00a7\3\2\2\2\32\u00ce\3\2\2\2\34\u0111\3" +
+                    "\2\2\2\36\"\5\4\3\2\37\"\5\6\4\2 \"\5\b\5\2!\36\3\2\2\2!\37\3\2\2\2! " +
+                    "\3\2\2\2\"%\3\2\2\2#!\3\2\2\2#$\3\2\2\2$\3\3\2\2\2%#\3\2\2\2&\'\7\3\2" +
+                    "\2\'*\7\66\2\2()\7\4\2\2)+\7\66\2\2*(\3\2\2\2*+\3\2\2\2+,\3\2\2\2,\61" +
+                    "\7\5\2\2-\60\5\6\4\2.\60\5\b\5\2/-\3\2\2\2/.\3\2\2\2\60\63\3\2\2\2\61" +
+                    "/\3\2\2\2\61\62\3\2\2\2\62\64\3\2\2\2\63\61\3\2\2\2\64\65\7\6\2\2\65\5" +
+                    "\3\2\2\2\668\7\65\2\2\67\66\3\2\2\2\678\3\2\2\289\3\2\2\29:\5\30\r\2:" +
+                    ";\7\66\2\2;?\7\7\2\2<=\5\30\r\2=>\7\66\2\2>@\3\2\2\2?<\3\2\2\2?@\3\2\2" +
+                    "\2@G\3\2\2\2AB\7\b\2\2BC\5\30\r\2CD\7\66\2\2DF\3\2\2\2EA\3\2\2\2FI\3\2" +
+                    "\2\2GE\3\2\2\2GH\3\2\2\2HJ\3\2\2\2IG\3\2\2\2JK\7\t\2\2KO\7\5\2\2LN\5\f" +
+                    "\7\2ML\3\2\2\2NQ\3\2\2\2OM\3\2\2\2OP\3\2\2\2PR\3\2\2\2QO\3\2\2\2RS\7\6" +
+                    "\2\2S\7\3\2\2\2TV\7\65\2\2UT\3\2\2\2UV\3\2\2\2VW\3\2\2\2WX\5\30\r\2X[" +
+                    "\7\66\2\2YZ\7\n\2\2Z\\\5\32\16\2[Y\3\2\2\2[\\\3\2\2\2\\]\3\2\2\2]^\7\13" +
+                    "\2\2^\t\3\2\2\2_c\7\5\2\2`b\5\f\7\2a`\3\2\2\2be\3\2\2\2ca\3\2\2\2cd\3" +
+                    "\2\2\2df\3\2\2\2ec\3\2\2\2fg\7\6\2\2g\13\3\2\2\2hp\5\n\6\2ip\5\b\5\2j" +
+                    "p\5\16\b\2kp\5\20\t\2lp\5\22\n\2mp\5\24\13\2np\5\26\f\2oh\3\2\2\2oi\3" +
+                    "\2\2\2oj\3\2\2\2ok\3\2\2\2ol\3\2\2\2om\3\2\2\2on\3\2\2\2p\r\3\2\2\2qr" +
+                    "\7\f\2\2rs\7\7\2\2st\5\32\16\2tu\7\t\2\2ux\5\f\7\2vw\7\r\2\2wy\5\f\7\2" +
+                    "xv\3\2\2\2xy\3\2\2\2y\17\3\2\2\2z{\7\16\2\2{}\7\7\2\2|~\5\32\16\2}|\3" +
+                    "\2\2\2}~\3\2\2\2~\177\3\2\2\2\177\u0081\7\13\2\2\u0080\u0082\5\32\16\2" +
+                    "\u0081\u0080\3\2\2\2\u0081\u0082\3\2\2\2\u0082\u0083\3\2\2\2\u0083\u0085" +
+                    "\7\13\2\2\u0084\u0086\5\32\16\2\u0085\u0084\3\2\2\2\u0085\u0086\3\2\2" +
+                    "\2\u0086\u0087\3\2\2\2\u0087\u0088\7\t\2\2\u0088\u0090\5\f\7\2\u0089\u008a" +
+                    "\7\17\2\2\u008a\u008b\7\7\2\2\u008b\u008c\5\32\16\2\u008c\u008d\7\t\2" +
+                    "\2\u008d\u008e\5\f\7\2\u008e\u0090\3\2\2\2\u008fz\3\2\2\2\u008f\u0089" +
+                    "\3\2\2\2\u0090\21\3\2\2\2\u0091\u0092\7\20\2\2\u0092\u009b\7\13\2\2\u0093" +
+                    "\u0094\7\21\2\2\u0094\u009b\7\13\2\2\u0095\u0097\7\22\2\2\u0096\u0098" +
+                    "\5\32\16\2\u0097\u0096\3\2\2\2\u0097\u0098\3\2\2\2\u0098\u0099\3\2\2\2" +
+                    "\u0099\u009b\7\13\2\2\u009a\u0091\3\2\2\2\u009a\u0093\3\2\2\2\u009a\u0095" +
+                    "\3\2\2\2\u009b\23\3\2\2\2\u009c\u009d\5\32\16\2\u009d\u009e\7\13\2\2\u009e" +
+                    "\25\3\2\2\2\u009f\u00a0\7\13\2\2\u00a0\27\3\2\2\2\u00a1\u00a2\b\r\1\2" +
+                    "\u00a2\u00a8\7\23\2\2\u00a3\u00a8\7\24\2\2\u00a4\u00a8\7\25\2\2\u00a5" +
+                    "\u00a8\7\26\2\2\u00a6\u00a8\7\66\2\2\u00a7\u00a1\3\2\2\2\u00a7\u00a3\3" +
+                    "\2\2\2\u00a7\u00a4\3\2\2\2\u00a7\u00a5\3\2\2\2\u00a7\u00a6\3\2\2\2\u00a8" +
+                    "\u00b1\3\2\2\2\u00a9\u00ab\f\3\2\2\u00aa\u00ac\7\27\2\2\u00ab\u00aa\3" +
+                    "\2\2\2\u00ac\u00ad\3\2\2\2\u00ad\u00ab\3\2\2\2\u00ad\u00ae\3\2\2\2\u00ae" +
+                    "\u00b0\3\2\2\2\u00af\u00a9\3\2\2\2\u00b0\u00b3\3\2\2\2\u00b1\u00af\3\2" +
+                    "\2\2\u00b1\u00b2\3\2\2\2\u00b2\31\3\2\2\2\u00b3\u00b1\3\2\2\2\u00b4\u00b5" +
+                    "\b\16\1\2\u00b5\u00cf\5\34\17\2\u00b6\u00cf\7\66\2\2\u00b7\u00b8\7\7\2" +
+                    "\2\u00b8\u00b9\5\32\16\2\u00b9\u00ba\7\t\2\2\u00ba\u00cf\3\2\2\2\u00bb" +
+                    "\u00bc\t\2\2\2\u00bc\u00cf\5\32\16\17\u00bd\u00be\7!\2\2\u00be\u00c5\5" +
+                    "\30\r\2\u00bf\u00c0\7\30\2\2\u00c0\u00c1\5\32\16\2\u00c1\u00c2\7\31\2" +
+                    "\2\u00c2\u00c4\3\2\2\2\u00c3\u00bf\3\2\2\2\u00c4\u00c7\3\2\2\2\u00c5\u00c3" +
+                    "\3\2\2\2\u00c5\u00c6\3\2\2\2\u00c6\u00cb\3\2\2\2\u00c7\u00c5\3\2\2\2\u00c8" +
+                    "\u00ca\7\27\2\2\u00c9\u00c8\3\2\2\2\u00ca\u00cd\3\2\2\2\u00cb\u00c9\3" +
+                    "\2\2\2\u00cb\u00cc\3\2\2\2\u00cc\u00cf\3\2\2\2\u00cd\u00cb\3\2\2\2\u00ce" +
+                    "\u00b4\3\2\2\2\u00ce\u00b6\3\2\2\2\u00ce\u00b7\3\2\2\2\u00ce\u00bb\3\2" +
+                    "\2\2\u00ce\u00bd\3\2\2\2\u00cf\u010a\3\2\2\2\u00d0\u00d1\f\r\2\2\u00d1" +
+                    "\u00d2\t\3\2\2\u00d2\u0109\5\32\16\16\u00d3\u00d4\f\f\2\2\u00d4\u00d5" +
+                    "\t\4\2\2\u00d5\u0109\5\32\16\r\u00d6\u00d7\f\13\2\2\u00d7\u00d8\t\5\2" +
+                    "\2\u00d8\u0109\5\32\16\f\u00d9\u00da\f\n\2\2\u00da\u00db\t\6\2\2\u00db" +
+                    "\u0109\5\32\16\13\u00dc\u00dd\f\t\2\2\u00dd\u00de\t\7\2\2\u00de\u0109" +
+                    "\5\32\16\n\u00df\u00e0\f\b\2\2\u00e0\u00e1\7-\2\2\u00e1\u0109\5\32\16" +
+                    "\t\u00e2\u00e3\f\7\2\2\u00e3\u00e4\7.\2\2\u00e4\u0109\5\32\16\b\u00e5" +
+                    "\u00e6\f\6\2\2\u00e6\u00e7\7/\2\2\u00e7\u0109\5\32\16\7\u00e8\u00e9\f" +
+                    "\5\2\2\u00e9\u00ea\7\60\2\2\u00ea\u0109\5\32\16\6\u00eb\u00ec\f\4\2\2" +
+                    "\u00ec\u00ed\7\61\2\2\u00ed\u0109\5\32\16\5\u00ee\u00ef\f\3\2\2\u00ef" +
+                    "\u00f0\7\n\2\2\u00f0\u0109\5\32\16\3\u00f1\u00f2\f\23\2\2\u00f2\u00f4" +
+                    "\7\7\2\2\u00f3\u00f5\5\32\16\2\u00f4\u00f3\3\2\2\2\u00f4\u00f5\3\2\2\2" +
+                    "\u00f5\u00fa\3\2\2\2\u00f6\u00f7\7\b\2\2\u00f7\u00f9\5\32\16\2\u00f8\u00f6" +
+                    "\3\2\2\2\u00f9\u00fc\3\2\2\2\u00fa\u00f8\3\2\2\2\u00fa\u00fb\3\2\2\2\u00fb" +
+                    "\u00fd\3\2\2\2\u00fc\u00fa\3\2\2\2\u00fd\u0109\7\t\2\2\u00fe\u00ff\f\22" +
+                    "\2\2\u00ff\u0100\7\30\2\2\u0100\u0101\5\32\16\2\u0101\u0102\7\31\2\2\u0102" +
+                    "\u0109\3\2\2\2\u0103\u0104\f\21\2\2\u0104\u0105\7\32\2\2\u0105\u0109\7" +
+                    "\66\2\2\u0106\u0107\f\20\2\2\u0107\u0109\t\b\2\2\u0108\u00d0\3\2\2\2\u0108" +
+                    "\u00d3\3\2\2\2\u0108\u00d6\3\2\2\2\u0108\u00d9\3\2\2\2\u0108\u00dc\3\2" +
+                    "\2\2\u0108\u00df\3\2\2\2\u0108\u00e2\3\2\2\2\u0108\u00e5\3\2\2\2\u0108" +
+                    "\u00e8\3\2\2\2\u0108\u00eb\3\2\2\2\u0108\u00ee\3\2\2\2\u0108\u00f1\3\2" +
+                    "\2\2\u0108\u00fe\3\2\2\2\u0108\u0103\3\2\2\2\u0108\u0106\3\2\2\2\u0109" +
+                    "\u010c\3\2\2\2\u010a\u0108\3\2\2\2\u010a\u010b\3\2\2\2\u010b\33\3\2\2" +
+                    "\2\u010c\u010a\3\2\2\2\u010d\u0112\7\67\2\2\u010e\u0112\78\2\2\u010f\u0112" +
+                    "\t\t\2\2\u0110\u0112\7\64\2\2\u0111\u010d\3\2\2\2\u0111\u010e\3\2\2\2" +
+                    "\u0111\u010f\3\2\2\2\u0111\u0110\3\2\2\2\u0112\35\3\2\2\2!!#*/\61\67?" +
+                    "GOU[cox}\u0081\u0085\u008f\u0097\u009a\u00a7\u00ad\u00b1\u00c5\u00cb\u00ce" +
+                    "\u00f4\u00fa\u0108\u010a\u0111";
+    public static final ATN _ATN =
+            new ATNDeserializer().deserialize(_serializedATN.toCharArray());
+    protected static final DFA[] _decisionToDFA;
+    protected static final PredictionContextCache _sharedContextCache =
+            new PredictionContextCache();
+    private static final String[] _LITERAL_NAMES = {
             null, "'class'", "'extends'", "'{'", "'}'", "'('", "','", "')'", "'='",
             "';'", "'if'", "'else'", "'for'", "'while'", "'continue'", "'break'",
             "'return'", "'void'", "'int'", "'bool'", "'string'", "'[]'", "'['", "']'",
@@ -60,111 +162,75 @@ public class MiracleParser extends Parser {
     };
     public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
-	/**
-	 * @deprecated Use {@link #VOCABULARY} instead.
-	 */
-	@Deprecated
-	public static final String[] tokenNames;
-	static {
-		tokenNames = new String[_SYMBOLIC_NAMES.length];
-		for (int i = 0; i < tokenNames.length; i++) {
-			tokenNames[i] = VOCABULARY.getLiteralName(i);
-			if (tokenNames[i] == null) {
-				tokenNames[i] = VOCABULARY.getSymbolicName(i);
-			}
+    static {
+        RuntimeMetaData.checkVersion("4.6", RuntimeMetaData.VERSION);
+    }
 
-			if (tokenNames[i] == null) {
-				tokenNames[i] = "<INVALID>";
-			}
-		}
-	}
+    static {
+        tokenNames = new String[_SYMBOLIC_NAMES.length];
+        for (int i = 0; i < tokenNames.length; i++) {
+            tokenNames[i] = VOCABULARY.getLiteralName(i);
+            if (tokenNames[i] == null) {
+                tokenNames[i] = VOCABULARY.getSymbolicName(i);
+            }
 
-	@Override
-	@Deprecated
-	public String[] getTokenNames() {
-		return tokenNames;
-	}
+            if (tokenNames[i] == null) {
+                tokenNames[i] = "<INVALID>";
+            }
+        }
+    }
 
-	@Override
+    static {
+        _decisionToDFA = new DFA[_ATN.getNumberOfDecisions()];
+        for (int i = 0; i < _ATN.getNumberOfDecisions(); i++) {
+            _decisionToDFA[i] = new DFA(_ATN.getDecisionState(i), i);
+        }
+    }
 
-	public Vocabulary getVocabulary() {
-		return VOCABULARY;
-	}
+    public MiracleParser(TokenStream input) {
+        super(input);
+        _interp = new ParserATNSimulator(this, _ATN, _decisionToDFA, _sharedContextCache);
+    }
 
-	@Override
+    @Override
+    @Deprecated
+    public String[] getTokenNames() {
+        return tokenNames;
+    }
+
+    @Override
+
+    public Vocabulary getVocabulary() {
+        return VOCABULARY;
+    }
+
+    @Override
     public String getGrammarFileName() {
         return "Miracle.g4";
     }
 
-	@Override
+    @Override
     public String[] getRuleNames() {
         return ruleNames;
     }
 
-	@Override
+    @Override
     public String getSerializedATN() {
         return _serializedATN;
     }
 
-	@Override
+    @Override
     public ATN getATN() {
         return _ATN;
     }
 
-	public MiracleParser(TokenStream input) {
-		super(input);
-        _interp = new ParserATNSimulator(this, _ATN, _decisionToDFA, _sharedContextCache);
-    }
-
-    public static class MiracleContext extends ParserRuleContext {
-		public List<ClassDeclarationStatementContext> classDeclarationStatement() {
-			return getRuleContexts(ClassDeclarationStatementContext.class);
-		}
-		public ClassDeclarationStatementContext classDeclarationStatement(int i) {
-            return getRuleContext(ClassDeclarationStatementContext.class, i);
-        }
-
-        public List<FunctionDeclarationStatementContext> functionDeclarationStatement() {
-			return getRuleContexts(FunctionDeclarationStatementContext.class);
-		}
-		public FunctionDeclarationStatementContext functionDeclarationStatement(int i) {
-            return getRuleContext(FunctionDeclarationStatementContext.class, i);
-        }
-
-        public List<VariableDeclarationStatementContext> variableDeclarationStatement() {
-			return getRuleContexts(VariableDeclarationStatementContext.class);
-		}
-		public VariableDeclarationStatementContext variableDeclarationStatement(int i) {
-            return getRuleContext(VariableDeclarationStatementContext.class, i);
-        }
-
-        public MiracleContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_miracle;
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterMiracle(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitMiracle(this);
-        }
-    }
-
-	public final MiracleContext miracle() throws RecognitionException {
-		MiracleContext _localctx = new MiracleContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_miracle);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
+    public final MiracleContext miracle() throws RecognitionException {
+        MiracleContext _localctx = new MiracleContext(_ctx, getState());
+        enterRule(_localctx, 0, RULE_miracle);
+        int _la;
+        try {
+            enterOuterAlt(_localctx, 1);
+            {
                 setState(33);
                 _errHandler.sync(this);
                 _la = _input.LA(1);
@@ -198,62 +264,20 @@ public class MiracleParser extends Parser {
         } catch (RecognitionException re) {
             _localctx.exception = re;
             _errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+            _errHandler.recover(this, re);
         } finally {
             exitRule();
         }
-		return _localctx;
-	}
-
-	public static class ClassDeclarationStatementContext extends ParserRuleContext {
-        public List<TerminalNode> IDENTIFIER() {
-            return getTokens(MiracleParser.IDENTIFIER);
-        }
-
-        public TerminalNode IDENTIFIER(int i) {
-            return getToken(MiracleParser.IDENTIFIER, i);
-		}
-		public List<FunctionDeclarationStatementContext> functionDeclarationStatement() {
-			return getRuleContexts(FunctionDeclarationStatementContext.class);
-		}
-		public FunctionDeclarationStatementContext functionDeclarationStatement(int i) {
-            return getRuleContext(FunctionDeclarationStatementContext.class, i);
-        }
-
-        public List<VariableDeclarationStatementContext> variableDeclarationStatement() {
-			return getRuleContexts(VariableDeclarationStatementContext.class);
-		}
-		public VariableDeclarationStatementContext variableDeclarationStatement(int i) {
-            return getRuleContext(VariableDeclarationStatementContext.class, i);
-        }
-
-        public ClassDeclarationStatementContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_classDeclarationStatement;
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterClassDeclarationStatement(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitClassDeclarationStatement(this);
-        }
+        return _localctx;
     }
 
-	public final ClassDeclarationStatementContext classDeclarationStatement() throws RecognitionException {
-		ClassDeclarationStatementContext _localctx = new ClassDeclarationStatementContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_classDeclarationStatement);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
+    public final ClassDeclarationStatementContext classDeclarationStatement() throws RecognitionException {
+        ClassDeclarationStatementContext _localctx = new ClassDeclarationStatementContext(_ctx, getState());
+        enterRule(_localctx, 2, RULE_classDeclarationStatement);
+        int _la;
+        try {
+            enterOuterAlt(_localctx, 1);
+            {
                 setState(36);
                 match(T__0);
                 setState(37);
@@ -302,69 +326,20 @@ public class MiracleParser extends Parser {
         } catch (RecognitionException re) {
             _localctx.exception = re;
             _errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+            _errHandler.recover(this, re);
         } finally {
             exitRule();
         }
-		return _localctx;
-	}
-
-	public static class FunctionDeclarationStatementContext extends ParserRuleContext {
-		public List<TypenameContext> typename() {
-			return getRuleContexts(TypenameContext.class);
-		}
-		public TypenameContext typename(int i) {
-            return getRuleContext(TypenameContext.class, i);
-        }
-
-        public List<TerminalNode> IDENTIFIER() {
-            return getTokens(MiracleParser.IDENTIFIER);
-        }
-
-        public TerminalNode IDENTIFIER(int i) {
-            return getToken(MiracleParser.IDENTIFIER, i);
-		}
-
-        public TerminalNode DECORATOR() {
-            return getToken(MiracleParser.DECORATOR, 0);
-        }
-
-        public List<StatementContext> statement() {
-            return getRuleContexts(StatementContext.class);
-		}
-		public StatementContext statement(int i) {
-            return getRuleContext(StatementContext.class, i);
-        }
-
-        public FunctionDeclarationStatementContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_functionDeclarationStatement;
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener)
-                ((MiracleListener) listener).enterFunctionDeclarationStatement(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener)
-                ((MiracleListener) listener).exitFunctionDeclarationStatement(this);
-        }
+        return _localctx;
     }
 
-	public final FunctionDeclarationStatementContext functionDeclarationStatement() throws RecognitionException {
-		FunctionDeclarationStatementContext _localctx = new FunctionDeclarationStatementContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_functionDeclarationStatement);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
+    public final FunctionDeclarationStatementContext functionDeclarationStatement() throws RecognitionException {
+        FunctionDeclarationStatementContext _localctx = new FunctionDeclarationStatementContext(_ctx, getState());
+        enterRule(_localctx, 4, RULE_functionDeclarationStatement);
+        int _la;
+        try {
+            enterOuterAlt(_localctx, 1);
+            {
                 setState(53);
                 _errHandler.sync(this);
                 _la = _input.LA(1);
@@ -435,59 +410,20 @@ public class MiracleParser extends Parser {
         } catch (RecognitionException re) {
             _localctx.exception = re;
             _errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+            _errHandler.recover(this, re);
         } finally {
             exitRule();
         }
-		return _localctx;
-	}
-
-	public static class VariableDeclarationStatementContext extends ParserRuleContext {
-		public TypenameContext typename() {
-            return getRuleContext(TypenameContext.class, 0);
-        }
-
-        public TerminalNode IDENTIFIER() {
-            return getToken(MiracleParser.IDENTIFIER, 0);
-        }
-
-        public TerminalNode DECORATOR() {
-            return getToken(MiracleParser.DECORATOR, 0);
-        }
-
-        public ExpressionContext expression() {
-            return getRuleContext(ExpressionContext.class, 0);
-        }
-
-        public VariableDeclarationStatementContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_variableDeclarationStatement;
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener)
-                ((MiracleListener) listener).enterVariableDeclarationStatement(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener)
-                ((MiracleListener) listener).exitVariableDeclarationStatement(this);
-        }
+        return _localctx;
     }
 
-	public final VariableDeclarationStatementContext variableDeclarationStatement() throws RecognitionException {
-		VariableDeclarationStatementContext _localctx = new VariableDeclarationStatementContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_variableDeclarationStatement);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
+    public final VariableDeclarationStatementContext variableDeclarationStatement() throws RecognitionException {
+        VariableDeclarationStatementContext _localctx = new VariableDeclarationStatementContext(_ctx, getState());
+        enterRule(_localctx, 6, RULE_variableDeclarationStatement);
+        int _la;
+        try {
+            enterOuterAlt(_localctx, 1);
+            {
                 setState(83);
                 _errHandler.sync(this);
                 _la = _input.LA(1);
@@ -520,48 +456,20 @@ public class MiracleParser extends Parser {
         } catch (RecognitionException re) {
             _localctx.exception = re;
             _errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+            _errHandler.recover(this, re);
         } finally {
             exitRule();
         }
-		return _localctx;
-	}
-
-	public static class BlockStatementContext extends ParserRuleContext {
-		public List<StatementContext> statement() {
-			return getRuleContexts(StatementContext.class);
-		}
-		public StatementContext statement(int i) {
-            return getRuleContext(StatementContext.class, i);
-        }
-
-        public BlockStatementContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_blockStatement;
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterBlockStatement(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitBlockStatement(this);
-        }
+        return _localctx;
     }
 
-	public final BlockStatementContext blockStatement() throws RecognitionException {
-		BlockStatementContext _localctx = new BlockStatementContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_blockStatement);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
+    public final BlockStatementContext blockStatement() throws RecognitionException {
+        BlockStatementContext _localctx = new BlockStatementContext(_ctx, getState());
+        enterRule(_localctx, 8, RULE_blockStatement);
+        int _la;
+        try {
+            enterOuterAlt(_localctx, 1);
+            {
                 setState(93);
                 match(T__2);
                 setState(97);
@@ -584,68 +492,19 @@ public class MiracleParser extends Parser {
         } catch (RecognitionException re) {
             _localctx.exception = re;
             _errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+            _errHandler.recover(this, re);
         } finally {
             exitRule();
         }
-		return _localctx;
-	}
-
-	public static class StatementContext extends ParserRuleContext {
-		public BlockStatementContext blockStatement() {
-            return getRuleContext(BlockStatementContext.class, 0);
-        }
-
-        public VariableDeclarationStatementContext variableDeclarationStatement() {
-            return getRuleContext(VariableDeclarationStatementContext.class, 0);
-        }
-
-        public SelectionStatementContext selectionStatement() {
-            return getRuleContext(SelectionStatementContext.class, 0);
-        }
-
-        public IterationStatementContext iterationStatement() {
-            return getRuleContext(IterationStatementContext.class, 0);
-        }
-
-        public ControlStatementContext controlStatement() {
-            return getRuleContext(ControlStatementContext.class, 0);
-        }
-
-        public ExpressionStatementContext expressionStatement() {
-            return getRuleContext(ExpressionStatementContext.class, 0);
-        }
-
-        public EmptyStatementContext emptyStatement() {
-            return getRuleContext(EmptyStatementContext.class, 0);
-        }
-
-        public StatementContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_statement;
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterStatement(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitStatement(this);
-        }
+        return _localctx;
     }
 
-	public final StatementContext statement() throws RecognitionException {
-		StatementContext _localctx = new StatementContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_statement);
-		try {
-			setState(109);
-			_errHandler.sync(this);
+    public final StatementContext statement() throws RecognitionException {
+        StatementContext _localctx = new StatementContext(_ctx, getState());
+        enterRule(_localctx, 10, RULE_statement);
+        try {
+            setState(109);
+            _errHandler.sync(this);
             switch (getInterpreter().adaptivePredict(_input, 12, _ctx)) {
                 case 1:
                     enterOuterAlt(_localctx, 1);
@@ -696,55 +555,23 @@ public class MiracleParser extends Parser {
                     emptyStatement();
                 }
                 break;
-			}
+            }
         } catch (RecognitionException re) {
             _localctx.exception = re;
             _errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+            _errHandler.recover(this, re);
         } finally {
             exitRule();
         }
-		return _localctx;
-	}
-
-	public static class SelectionStatementContext extends ParserRuleContext {
-		public ExpressionContext expression() {
-            return getRuleContext(ExpressionContext.class, 0);
-        }
-
-        public List<StatementContext> statement() {
-			return getRuleContexts(StatementContext.class);
-		}
-		public StatementContext statement(int i) {
-            return getRuleContext(StatementContext.class, i);
-        }
-
-        public SelectionStatementContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_selectionStatement;
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterSelectionStatement(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitSelectionStatement(this);
-        }
+        return _localctx;
     }
 
-	public final SelectionStatementContext selectionStatement() throws RecognitionException {
-		SelectionStatementContext _localctx = new SelectionStatementContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_selectionStatement);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
+    public final SelectionStatementContext selectionStatement() throws RecognitionException {
+        SelectionStatementContext _localctx = new SelectionStatementContext(_ctx, getState());
+        enterRule(_localctx, 12, RULE_selectionStatement);
+        try {
+            enterOuterAlt(_localctx, 1);
+            {
                 setState(111);
                 match(T__9);
                 setState(112);
@@ -770,88 +597,21 @@ public class MiracleParser extends Parser {
         } catch (RecognitionException re) {
             _localctx.exception = re;
             _errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+            _errHandler.recover(this, re);
         } finally {
             exitRule();
         }
-		return _localctx;
-	}
-
-	public static class IterationStatementContext extends ParserRuleContext {
-		public IterationStatementContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_iterationStatement;
-        }
-
-        public IterationStatementContext() {
-        }
-
-        public void copyFrom(IterationStatementContext ctx) {
-            super.copyFrom(ctx);
-		}
-	}
-	public static class WhileStatementContext extends IterationStatementContext {
-		public ExpressionContext expression() {
-            return getRuleContext(ExpressionContext.class, 0);
-        }
-
-        public StatementContext statement() {
-            return getRuleContext(StatementContext.class, 0);
-        }
-
-        public WhileStatementContext(IterationStatementContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterWhileStatement(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitWhileStatement(this);
-        }
-    }
-	public static class ForStatementContext extends IterationStatementContext {
-        public StatementContext statement() {
-            return getRuleContext(StatementContext.class, 0);
-        }
-
-        public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public ForStatementContext(IterationStatementContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterForStatement(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitForStatement(this);
-        }
+        return _localctx;
     }
 
-	public final IterationStatementContext iterationStatement() throws RecognitionException {
-		IterationStatementContext _localctx = new IterationStatementContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_iterationStatement);
+    public final IterationStatementContext iterationStatement() throws RecognitionException {
+        IterationStatementContext _localctx = new IterationStatementContext(_ctx, getState());
+        enterRule(_localctx, 14, RULE_iterationStatement);
         int _la;
         try {
             setState(141);
             _errHandler.sync(this);
-			switch (_input.LA(1)) {
+            switch (_input.LA(1)) {
                 case T__11:
                     _localctx = new ForStatementContext(_localctx);
                     enterOuterAlt(_localctx, 1);
@@ -922,88 +682,21 @@ public class MiracleParser extends Parser {
         } catch (RecognitionException re) {
             _localctx.exception = re;
             _errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+            _errHandler.recover(this, re);
         } finally {
             exitRule();
         }
-		return _localctx;
-	}
-
-	public static class ControlStatementContext extends ParserRuleContext {
-		public ControlStatementContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_controlStatement;
-        }
-
-        public ControlStatementContext() {
-        }
-
-        public void copyFrom(ControlStatementContext ctx) {
-            super.copyFrom(ctx);
-		}
-	}
-	public static class BreakStatementContext extends ControlStatementContext {
-        public BreakStatementContext(ControlStatementContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterBreakStatement(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitBreakStatement(this);
-        }
-    }
-	public static class ContinueStatementContext extends ControlStatementContext {
-        public ContinueStatementContext(ControlStatementContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterContinueStatement(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitContinueStatement(this);
-        }
-    }
-	public static class ReturnStatementContext extends ControlStatementContext {
-		public ExpressionContext expression() {
-            return getRuleContext(ExpressionContext.class, 0);
-        }
-
-        public ReturnStatementContext(ControlStatementContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterReturnStatement(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitReturnStatement(this);
-        }
+        return _localctx;
     }
 
-	public final ControlStatementContext controlStatement() throws RecognitionException {
-		ControlStatementContext _localctx = new ControlStatementContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_controlStatement);
-		int _la;
-		try {
+    public final ControlStatementContext controlStatement() throws RecognitionException {
+        ControlStatementContext _localctx = new ControlStatementContext(_ctx, getState());
+        enterRule(_localctx, 16, RULE_controlStatement);
+        int _la;
+        try {
             setState(152);
             _errHandler.sync(this);
-			switch (_input.LA(1)) {
+            switch (_input.LA(1)) {
                 case T__13:
                     _localctx = new ContinueStatementContext(_localctx);
                     enterOuterAlt(_localctx, 1);
@@ -1050,44 +743,19 @@ public class MiracleParser extends Parser {
         } catch (RecognitionException re) {
             _localctx.exception = re;
             _errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+            _errHandler.recover(this, re);
         } finally {
             exitRule();
         }
-		return _localctx;
-	}
-
-	public static class ExpressionStatementContext extends ParserRuleContext {
-		public ExpressionContext expression() {
-            return getRuleContext(ExpressionContext.class, 0);
-        }
-
-        public ExpressionStatementContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_expressionStatement;
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterExpressionStatement(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitExpressionStatement(this);
-        }
+        return _localctx;
     }
 
-	public final ExpressionStatementContext expressionStatement() throws RecognitionException {
-		ExpressionStatementContext _localctx = new ExpressionStatementContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_expressionStatement);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
+    public final ExpressionStatementContext expressionStatement() throws RecognitionException {
+        ExpressionStatementContext _localctx = new ExpressionStatementContext(_ctx, getState());
+        enterRule(_localctx, 18, RULE_expressionStatement);
+        try {
+            enterOuterAlt(_localctx, 1);
+            {
                 setState(154);
                 expression(0);
                 setState(155);
@@ -1096,97 +764,47 @@ public class MiracleParser extends Parser {
         } catch (RecognitionException re) {
             _localctx.exception = re;
             _errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+            _errHandler.recover(this, re);
         } finally {
             exitRule();
         }
-		return _localctx;
-	}
-
-	public static class EmptyStatementContext extends ParserRuleContext {
-		public EmptyStatementContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_emptyStatement;
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterEmptyStatement(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitEmptyStatement(this);
-        }
+        return _localctx;
     }
 
-	public final EmptyStatementContext emptyStatement() throws RecognitionException {
-		EmptyStatementContext _localctx = new EmptyStatementContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_emptyStatement);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
+    public final EmptyStatementContext emptyStatement() throws RecognitionException {
+        EmptyStatementContext _localctx = new EmptyStatementContext(_ctx, getState());
+        enterRule(_localctx, 20, RULE_emptyStatement);
+        try {
+            enterOuterAlt(_localctx, 1);
+            {
                 setState(157);
                 match(T__8);
             }
         } catch (RecognitionException re) {
             _localctx.exception = re;
             _errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+            _errHandler.recover(this, re);
         } finally {
             exitRule();
         }
-		return _localctx;
-	}
-
-	public static class TypenameContext extends ParserRuleContext {
-        public TerminalNode IDENTIFIER() {
-            return getToken(MiracleParser.IDENTIFIER, 0);
-        }
-
-        public TypenameContext typename() {
-            return getRuleContext(TypenameContext.class, 0);
-        }
-
-        public TypenameContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_typename;
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterTypename(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitTypename(this);
-        }
+        return _localctx;
     }
 
-	public final TypenameContext typename() throws RecognitionException {
-		return typename(0);
-	}
+    public final TypenameContext typename() throws RecognitionException {
+        return typename(0);
+    }
 
-	private TypenameContext typename(int _p) throws RecognitionException {
-		ParserRuleContext _parentctx = _ctx;
-		int _parentState = getState();
-		TypenameContext _localctx = new TypenameContext(_ctx, _parentState);
-		TypenameContext _prevctx = _localctx;
-		int _startState = 22;
-		enterRecursionRule(_localctx, 22, RULE_typename, _p);
-		try {
-			int _alt;
-			enterOuterAlt(_localctx, 1);
-			{
+    private TypenameContext typename(int _p) throws RecognitionException {
+        ParserRuleContext _parentctx = _ctx;
+        int _parentState = getState();
+        TypenameContext _localctx = new TypenameContext(_ctx, _parentState);
+        TypenameContext _prevctx = _localctx;
+        int _startState = 22;
+        enterRecursionRule(_localctx, 22, RULE_typename, _p);
+        try {
+            int _alt;
+            enterOuterAlt(_localctx, 1);
+            {
                 setState(165);
                 _errHandler.sync(this);
                 switch (_input.LA(1)) {
@@ -1262,484 +880,29 @@ public class MiracleParser extends Parser {
         } catch (RecognitionException re) {
             _localctx.exception = re;
             _errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+            _errHandler.recover(this, re);
         } finally {
             unrollRecursionContexts(_parentctx);
         }
-		return _localctx;
-	}
-
-	public static class ExpressionContext extends ParserRuleContext {
-		public ExpressionContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_expression;
-        }
-
-        public ExpressionContext() {
-        }
-
-        public void copyFrom(ExpressionContext ctx) {
-            super.copyFrom(ctx);
-		}
-	}
-	public static class ConstantExpressionContext extends ExpressionContext {
-		public ConstantContext constant() {
-            return getRuleContext(ConstantContext.class, 0);
-        }
-
-        public ConstantExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterConstantExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitConstantExpression(this);
-        }
-    }
-	public static class XorExpressionContext extends ExpressionContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public XorExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterXorExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitXorExpression(this);
-        }
-    }
-	public static class SubscriptExpressionContext extends ExpressionContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public SubscriptExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterSubscriptExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitSubscriptExpression(this);
-        }
-    }
-	public static class NewExpressionContext extends ExpressionContext {
-		public TypenameContext typename() {
-            return getRuleContext(TypenameContext.class, 0);
-        }
-
-        public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public NewExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterNewExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitNewExpression(this);
-        }
-    }
-	public static class AssignExpressionContext extends ExpressionContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public AssignExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterAssignExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitAssignExpression(this);
-        }
-    }
-	public static class BraceExpressionContext extends ExpressionContext {
-		public ExpressionContext expression() {
-            return getRuleContext(ExpressionContext.class, 0);
-        }
-
-        public BraceExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterBraceExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitBraceExpression(this);
-        }
-    }
-	public static class MultDivExpressionContext extends ExpressionContext {
-		public Token operator;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public MultDivExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterMultDivExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitMultDivExpression(this);
-        }
-    }
-	public static class MemberExpressionContext extends ExpressionContext {
-		public ExpressionContext expression() {
-            return getRuleContext(ExpressionContext.class, 0);
-        }
-
-        public TerminalNode IDENTIFIER() {
-            return getToken(MiracleParser.IDENTIFIER, 0);
-        }
-
-        public MemberExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterMemberExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitMemberExpression(this);
-        }
-    }
-	public static class VariableExpressionContext extends ExpressionContext {
-        public TerminalNode IDENTIFIER() {
-            return getToken(MiracleParser.IDENTIFIER, 0);
-        }
-
-        public VariableExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterVariableExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitVariableExpression(this);
-        }
-    }
-	public static class CompareExpressionContext extends ExpressionContext {
-		public Token operator;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public CompareExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterCompareExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitCompareExpression(this);
-        }
-    }
-	public static class OrExpressionContext extends ExpressionContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public OrExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterOrExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitOrExpression(this);
-        }
-    }
-	public static class AndExpressionContext extends ExpressionContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public AndExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterAndExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitAndExpression(this);
-        }
-    }
-	public static class LogicAndExpressionContext extends ExpressionContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public LogicAndExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterLogicAndExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitLogicAndExpression(this);
-        }
-    }
-	public static class PrefixExpressionContext extends ExpressionContext {
-		public Token operator;
-		public ExpressionContext expression() {
-            return getRuleContext(ExpressionContext.class, 0);
-        }
-
-        public PrefixExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterPrefixExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitPrefixExpression(this);
-        }
-    }
-	public static class LogicOrExpressionContext extends ExpressionContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public LogicOrExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterLogicOrExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitLogicOrExpression(this);
-        }
-    }
-	public static class AddSubExpressionContext extends ExpressionContext {
-		public Token operator;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public AddSubExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterAddSubExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitAddSubExpression(this);
-        }
-    }
-	public static class SuffixExpressionContext extends ExpressionContext {
-		public Token operator;
-		public ExpressionContext expression() {
-            return getRuleContext(ExpressionContext.class, 0);
-        }
-
-        public SuffixExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterSuffixExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitSuffixExpression(this);
-        }
-    }
-	public static class ShlShrExpressionContext extends ExpressionContext {
-		public Token operator;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public ShlShrExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterShlShrExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitShlShrExpression(this);
-        }
-    }
-	public static class EqualityExpressionContext extends ExpressionContext {
-		public Token operator;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public EqualityExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterEqualityExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitEqualityExpression(this);
-        }
-    }
-	public static class FunctionCallExpressionContext extends ExpressionContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-            return getRuleContext(ExpressionContext.class, i);
-        }
-
-        public FunctionCallExpressionContext(ExpressionContext ctx) {
-            copyFrom(ctx);
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterFunctionCallExpression(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitFunctionCallExpression(this);
-        }
+        return _localctx;
     }
 
-	public final ExpressionContext expression() throws RecognitionException {
-		return expression(0);
-	}
+    public final ExpressionContext expression() throws RecognitionException {
+        return expression(0);
+    }
 
-	private ExpressionContext expression(int _p) throws RecognitionException {
-		ParserRuleContext _parentctx = _ctx;
-		int _parentState = getState();
-		ExpressionContext _localctx = new ExpressionContext(_ctx, _parentState);
-		ExpressionContext _prevctx = _localctx;
-		int _startState = 24;
-		enterRecursionRule(_localctx, 24, RULE_expression, _p);
-		int _la;
-		try {
-			int _alt;
-			enterOuterAlt(_localctx, 1);
-			{
+    private ExpressionContext expression(int _p) throws RecognitionException {
+        ParserRuleContext _parentctx = _ctx;
+        int _parentState = getState();
+        ExpressionContext _localctx = new ExpressionContext(_ctx, _parentState);
+        ExpressionContext _prevctx = _localctx;
+        int _startState = 24;
+        enterRecursionRule(_localctx, 24, RULE_expression, _p);
+        int _la;
+        try {
+            int _alt;
+            enterOuterAlt(_localctx, 1);
+            {
                 setState(204);
                 _errHandler.sync(this);
                 switch (_input.LA(1)) {
@@ -2125,50 +1288,21 @@ public class MiracleParser extends Parser {
         } catch (RecognitionException re) {
             _localctx.exception = re;
             _errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+            _errHandler.recover(this, re);
         } finally {
             unrollRecursionContexts(_parentctx);
         }
-		return _localctx;
-	}
-
-	public static class ConstantContext extends ParserRuleContext {
-        public TerminalNode INTEGER() {
-            return getToken(MiracleParser.INTEGER, 0);
-        }
-
-        public TerminalNode STRING() {
-            return getToken(MiracleParser.STRING, 0);
-        }
-
-        public ConstantContext(ParserRuleContext parent, int invokingState) {
-            super(parent, invokingState);
-		}
-
-        @Override
-        public int getRuleIndex() {
-            return RULE_constant;
-        }
-
-        @Override
-        public void enterRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterConstant(this);
-        }
-
-        @Override
-		public void exitRule(ParseTreeListener listener) {
-            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitConstant(this);
-        }
+        return _localctx;
     }
 
-	public final ConstantContext constant() throws RecognitionException {
-		ConstantContext _localctx = new ConstantContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_constant);
-		int _la;
-		try {
+    public final ConstantContext constant() throws RecognitionException {
+        ConstantContext _localctx = new ConstantContext(_ctx, getState());
+        enterRule(_localctx, 26, RULE_constant);
+        int _la;
+        try {
             setState(271);
             _errHandler.sync(this);
-			switch (_input.LA(1)) {
+            switch (_input.LA(1)) {
                 case INTEGER:
                     enterOuterAlt(_localctx, 1);
                 {
@@ -2211,31 +1345,33 @@ public class MiracleParser extends Parser {
         } catch (RecognitionException re) {
             _localctx.exception = re;
             _errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
+            _errHandler.recover(this, re);
         } finally {
             exitRule();
         }
-		return _localctx;
-	}
+        return _localctx;
+    }
 
-	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
-		switch (ruleIndex) {
+    public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
+        switch (ruleIndex) {
             case 11:
                 return typename_sempred((TypenameContext) _localctx, predIndex);
             case 12:
                 return expression_sempred((ExpressionContext) _localctx, predIndex);
         }
         return true;
-	}
-	private boolean typename_sempred(TypenameContext _localctx, int predIndex) {
-		switch (predIndex) {
+    }
+
+    private boolean typename_sempred(TypenameContext _localctx, int predIndex) {
+        switch (predIndex) {
             case 0:
                 return precpred(_ctx, 1);
         }
         return true;
-	}
-	private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
-		switch (predIndex) {
+    }
+
+    private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
+        switch (predIndex) {
             case 1:
                 return precpred(_ctx, 11);
             case 2:
@@ -2268,115 +1404,1036 @@ public class MiracleParser extends Parser {
                 return precpred(_ctx, 14);
         }
         return true;
-	}
+    }
 
-	public static final String _serializedATN =
-            "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3<\u0114\4\2\t\2\4" +
-                    "\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t" +
-                    "\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\3\2\3\2\3\2\7\2\"\n\2\f\2\16\2" +
-                    "%\13\2\3\3\3\3\3\3\3\3\5\3+\n\3\3\3\3\3\3\3\7\3\60\n\3\f\3\16\3\63\13" +
-                    "\3\3\3\3\3\3\4\5\48\n\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4@\n\4\3\4\3\4\3\4\3" +
-                    "\4\7\4F\n\4\f\4\16\4I\13\4\3\4\3\4\3\4\7\4N\n\4\f\4\16\4Q\13\4\3\4\3\4" +
-                    "\3\5\5\5V\n\5\3\5\3\5\3\5\3\5\5\5\\\n\5\3\5\3\5\3\6\3\6\7\6b\n\6\f\6\16" +
-                    "\6e\13\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7p\n\7\3\b\3\b\3\b\3\b" +
-                    "\3\b\3\b\3\b\5\by\n\b\3\t\3\t\3\t\5\t~\n\t\3\t\3\t\5\t\u0082\n\t\3\t\3" +
-                    "\t\5\t\u0086\n\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\t\u0090\n\t\3\n\3\n" +
-                    "\3\n\3\n\3\n\3\n\5\n\u0098\n\n\3\n\5\n\u009b\n\n\3\13\3\13\3\13\3\f\3" +
-                    "\f\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u00a8\n\r\3\r\3\r\6\r\u00ac\n\r\r\r\16" +
-                    "\r\u00ad\7\r\u00b0\n\r\f\r\16\r\u00b3\13\r\3\16\3\16\3\16\3\16\3\16\3" +
-                    "\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\7\16\u00c4\n\16\f\16" +
-                    "\16\16\u00c7\13\16\3\16\7\16\u00ca\n\16\f\16\16\16\u00cd\13\16\5\16\u00cf" +
-                    "\n\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16" +
-                    "\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16" +
-                    "\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u00f5\n\16\3\16\3\16" +
-                    "\7\16\u00f9\n\16\f\16\16\16\u00fc\13\16\3\16\3\16\3\16\3\16\3\16\3\16" +
-                    "\3\16\3\16\3\16\3\16\3\16\7\16\u0109\n\16\f\16\16\16\u010c\13\16\3\17" +
-                    "\3\17\3\17\3\17\5\17\u0112\n\17\3\17\2\4\30\32\20\2\4\6\b\n\f\16\20\22" +
-                    "\24\26\30\32\34\2\n\3\2\33 \3\2\"$\3\2\36\37\3\2%&\3\2\'*\3\2+,\3\2\33" +
-                    "\34\3\2\62\63\u0140\2#\3\2\2\2\4&\3\2\2\2\6\67\3\2\2\2\bU\3\2\2\2\n_\3" +
-                    "\2\2\2\fo\3\2\2\2\16q\3\2\2\2\20\u008f\3\2\2\2\22\u009a\3\2\2\2\24\u009c" +
-                    "\3\2\2\2\26\u009f\3\2\2\2\30\u00a7\3\2\2\2\32\u00ce\3\2\2\2\34\u0111\3" +
-                    "\2\2\2\36\"\5\4\3\2\37\"\5\6\4\2 \"\5\b\5\2!\36\3\2\2\2!\37\3\2\2\2! " +
-                    "\3\2\2\2\"%\3\2\2\2#!\3\2\2\2#$\3\2\2\2$\3\3\2\2\2%#\3\2\2\2&\'\7\3\2" +
-                    "\2\'*\7\66\2\2()\7\4\2\2)+\7\66\2\2*(\3\2\2\2*+\3\2\2\2+,\3\2\2\2,\61" +
-                    "\7\5\2\2-\60\5\6\4\2.\60\5\b\5\2/-\3\2\2\2/.\3\2\2\2\60\63\3\2\2\2\61" +
-                    "/\3\2\2\2\61\62\3\2\2\2\62\64\3\2\2\2\63\61\3\2\2\2\64\65\7\6\2\2\65\5" +
-                    "\3\2\2\2\668\7\65\2\2\67\66\3\2\2\2\678\3\2\2\289\3\2\2\29:\5\30\r\2:" +
-                    ";\7\66\2\2;?\7\7\2\2<=\5\30\r\2=>\7\66\2\2>@\3\2\2\2?<\3\2\2\2?@\3\2\2" +
-                    "\2@G\3\2\2\2AB\7\b\2\2BC\5\30\r\2CD\7\66\2\2DF\3\2\2\2EA\3\2\2\2FI\3\2" +
-                    "\2\2GE\3\2\2\2GH\3\2\2\2HJ\3\2\2\2IG\3\2\2\2JK\7\t\2\2KO\7\5\2\2LN\5\f" +
-                    "\7\2ML\3\2\2\2NQ\3\2\2\2OM\3\2\2\2OP\3\2\2\2PR\3\2\2\2QO\3\2\2\2RS\7\6" +
-                    "\2\2S\7\3\2\2\2TV\7\65\2\2UT\3\2\2\2UV\3\2\2\2VW\3\2\2\2WX\5\30\r\2X[" +
-                    "\7\66\2\2YZ\7\n\2\2Z\\\5\32\16\2[Y\3\2\2\2[\\\3\2\2\2\\]\3\2\2\2]^\7\13" +
-                    "\2\2^\t\3\2\2\2_c\7\5\2\2`b\5\f\7\2a`\3\2\2\2be\3\2\2\2ca\3\2\2\2cd\3" +
-                    "\2\2\2df\3\2\2\2ec\3\2\2\2fg\7\6\2\2g\13\3\2\2\2hp\5\n\6\2ip\5\b\5\2j" +
-                    "p\5\16\b\2kp\5\20\t\2lp\5\22\n\2mp\5\24\13\2np\5\26\f\2oh\3\2\2\2oi\3" +
-                    "\2\2\2oj\3\2\2\2ok\3\2\2\2ol\3\2\2\2om\3\2\2\2on\3\2\2\2p\r\3\2\2\2qr" +
-                    "\7\f\2\2rs\7\7\2\2st\5\32\16\2tu\7\t\2\2ux\5\f\7\2vw\7\r\2\2wy\5\f\7\2" +
-                    "xv\3\2\2\2xy\3\2\2\2y\17\3\2\2\2z{\7\16\2\2{}\7\7\2\2|~\5\32\16\2}|\3" +
-                    "\2\2\2}~\3\2\2\2~\177\3\2\2\2\177\u0081\7\13\2\2\u0080\u0082\5\32\16\2" +
-                    "\u0081\u0080\3\2\2\2\u0081\u0082\3\2\2\2\u0082\u0083\3\2\2\2\u0083\u0085" +
-                    "\7\13\2\2\u0084\u0086\5\32\16\2\u0085\u0084\3\2\2\2\u0085\u0086\3\2\2" +
-                    "\2\u0086\u0087\3\2\2\2\u0087\u0088\7\t\2\2\u0088\u0090\5\f\7\2\u0089\u008a" +
-                    "\7\17\2\2\u008a\u008b\7\7\2\2\u008b\u008c\5\32\16\2\u008c\u008d\7\t\2" +
-                    "\2\u008d\u008e\5\f\7\2\u008e\u0090\3\2\2\2\u008fz\3\2\2\2\u008f\u0089" +
-                    "\3\2\2\2\u0090\21\3\2\2\2\u0091\u0092\7\20\2\2\u0092\u009b\7\13\2\2\u0093" +
-                    "\u0094\7\21\2\2\u0094\u009b\7\13\2\2\u0095\u0097\7\22\2\2\u0096\u0098" +
-                    "\5\32\16\2\u0097\u0096\3\2\2\2\u0097\u0098\3\2\2\2\u0098\u0099\3\2\2\2" +
-                    "\u0099\u009b\7\13\2\2\u009a\u0091\3\2\2\2\u009a\u0093\3\2\2\2\u009a\u0095" +
-                    "\3\2\2\2\u009b\23\3\2\2\2\u009c\u009d\5\32\16\2\u009d\u009e\7\13\2\2\u009e" +
-                    "\25\3\2\2\2\u009f\u00a0\7\13\2\2\u00a0\27\3\2\2\2\u00a1\u00a2\b\r\1\2" +
-                    "\u00a2\u00a8\7\23\2\2\u00a3\u00a8\7\24\2\2\u00a4\u00a8\7\25\2\2\u00a5" +
-                    "\u00a8\7\26\2\2\u00a6\u00a8\7\66\2\2\u00a7\u00a1\3\2\2\2\u00a7\u00a3\3" +
-                    "\2\2\2\u00a7\u00a4\3\2\2\2\u00a7\u00a5\3\2\2\2\u00a7\u00a6\3\2\2\2\u00a8" +
-                    "\u00b1\3\2\2\2\u00a9\u00ab\f\3\2\2\u00aa\u00ac\7\27\2\2\u00ab\u00aa\3" +
-                    "\2\2\2\u00ac\u00ad\3\2\2\2\u00ad\u00ab\3\2\2\2\u00ad\u00ae\3\2\2\2\u00ae" +
-                    "\u00b0\3\2\2\2\u00af\u00a9\3\2\2\2\u00b0\u00b3\3\2\2\2\u00b1\u00af\3\2" +
-                    "\2\2\u00b1\u00b2\3\2\2\2\u00b2\31\3\2\2\2\u00b3\u00b1\3\2\2\2\u00b4\u00b5" +
-                    "\b\16\1\2\u00b5\u00cf\5\34\17\2\u00b6\u00cf\7\66\2\2\u00b7\u00b8\7\7\2" +
-                    "\2\u00b8\u00b9\5\32\16\2\u00b9\u00ba\7\t\2\2\u00ba\u00cf\3\2\2\2\u00bb" +
-                    "\u00bc\t\2\2\2\u00bc\u00cf\5\32\16\17\u00bd\u00be\7!\2\2\u00be\u00c5\5" +
-                    "\30\r\2\u00bf\u00c0\7\30\2\2\u00c0\u00c1\5\32\16\2\u00c1\u00c2\7\31\2" +
-                    "\2\u00c2\u00c4\3\2\2\2\u00c3\u00bf\3\2\2\2\u00c4\u00c7\3\2\2\2\u00c5\u00c3" +
-                    "\3\2\2\2\u00c5\u00c6\3\2\2\2\u00c6\u00cb\3\2\2\2\u00c7\u00c5\3\2\2\2\u00c8" +
-                    "\u00ca\7\27\2\2\u00c9\u00c8\3\2\2\2\u00ca\u00cd\3\2\2\2\u00cb\u00c9\3" +
-                    "\2\2\2\u00cb\u00cc\3\2\2\2\u00cc\u00cf\3\2\2\2\u00cd\u00cb\3\2\2\2\u00ce" +
-                    "\u00b4\3\2\2\2\u00ce\u00b6\3\2\2\2\u00ce\u00b7\3\2\2\2\u00ce\u00bb\3\2" +
-                    "\2\2\u00ce\u00bd\3\2\2\2\u00cf\u010a\3\2\2\2\u00d0\u00d1\f\r\2\2\u00d1" +
-                    "\u00d2\t\3\2\2\u00d2\u0109\5\32\16\16\u00d3\u00d4\f\f\2\2\u00d4\u00d5" +
-                    "\t\4\2\2\u00d5\u0109\5\32\16\r\u00d6\u00d7\f\13\2\2\u00d7\u00d8\t\5\2" +
-                    "\2\u00d8\u0109\5\32\16\f\u00d9\u00da\f\n\2\2\u00da\u00db\t\6\2\2\u00db" +
-                    "\u0109\5\32\16\13\u00dc\u00dd\f\t\2\2\u00dd\u00de\t\7\2\2\u00de\u0109" +
-                    "\5\32\16\n\u00df\u00e0\f\b\2\2\u00e0\u00e1\7-\2\2\u00e1\u0109\5\32\16" +
-                    "\t\u00e2\u00e3\f\7\2\2\u00e3\u00e4\7.\2\2\u00e4\u0109\5\32\16\b\u00e5" +
-                    "\u00e6\f\6\2\2\u00e6\u00e7\7/\2\2\u00e7\u0109\5\32\16\7\u00e8\u00e9\f" +
-                    "\5\2\2\u00e9\u00ea\7\60\2\2\u00ea\u0109\5\32\16\6\u00eb\u00ec\f\4\2\2" +
-                    "\u00ec\u00ed\7\61\2\2\u00ed\u0109\5\32\16\5\u00ee\u00ef\f\3\2\2\u00ef" +
-                    "\u00f0\7\n\2\2\u00f0\u0109\5\32\16\3\u00f1\u00f2\f\23\2\2\u00f2\u00f4" +
-                    "\7\7\2\2\u00f3\u00f5\5\32\16\2\u00f4\u00f3\3\2\2\2\u00f4\u00f5\3\2\2\2" +
-                    "\u00f5\u00fa\3\2\2\2\u00f6\u00f7\7\b\2\2\u00f7\u00f9\5\32\16\2\u00f8\u00f6" +
-                    "\3\2\2\2\u00f9\u00fc\3\2\2\2\u00fa\u00f8\3\2\2\2\u00fa\u00fb\3\2\2\2\u00fb" +
-                    "\u00fd\3\2\2\2\u00fc\u00fa\3\2\2\2\u00fd\u0109\7\t\2\2\u00fe\u00ff\f\22" +
-                    "\2\2\u00ff\u0100\7\30\2\2\u0100\u0101\5\32\16\2\u0101\u0102\7\31\2\2\u0102" +
-                    "\u0109\3\2\2\2\u0103\u0104\f\21\2\2\u0104\u0105\7\32\2\2\u0105\u0109\7" +
-                    "\66\2\2\u0106\u0107\f\20\2\2\u0107\u0109\t\b\2\2\u0108\u00d0\3\2\2\2\u0108" +
-                    "\u00d3\3\2\2\2\u0108\u00d6\3\2\2\2\u0108\u00d9\3\2\2\2\u0108\u00dc\3\2" +
-                    "\2\2\u0108\u00df\3\2\2\2\u0108\u00e2\3\2\2\2\u0108\u00e5\3\2\2\2\u0108" +
-                    "\u00e8\3\2\2\2\u0108\u00eb\3\2\2\2\u0108\u00ee\3\2\2\2\u0108\u00f1\3\2" +
-                    "\2\2\u0108\u00fe\3\2\2\2\u0108\u0103\3\2\2\2\u0108\u0106\3\2\2\2\u0109" +
-                    "\u010c\3\2\2\2\u010a\u0108\3\2\2\2\u010a\u010b\3\2\2\2\u010b\33\3\2\2" +
-                    "\2\u010c\u010a\3\2\2\2\u010d\u0112\7\67\2\2\u010e\u0112\78\2\2\u010f\u0112" +
-                    "\t\t\2\2\u0110\u0112\7\64\2\2\u0111\u010d\3\2\2\2\u0111\u010e\3\2\2\2" +
-                    "\u0111\u010f\3\2\2\2\u0111\u0110\3\2\2\2\u0112\35\3\2\2\2!!#*/\61\67?" +
-                    "GOU[cox}\u0081\u0085\u008f\u0097\u009a\u00a7\u00ad\u00b1\u00c5\u00cb\u00ce" +
-                    "\u00f4\u00fa\u0108\u010a\u0111";
-    public static final ATN _ATN =
-            new ATNDeserializer().deserialize(_serializedATN.toCharArray());
+    public static class MiracleContext extends ParserRuleContext {
+        public MiracleContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
 
-    static {
-        _decisionToDFA = new DFA[_ATN.getNumberOfDecisions()];
-		for (int i = 0; i < _ATN.getNumberOfDecisions(); i++) {
-			_decisionToDFA[i] = new DFA(_ATN.getDecisionState(i), i);
-		}
-	}
+        public List<ClassDeclarationStatementContext> classDeclarationStatement() {
+            return getRuleContexts(ClassDeclarationStatementContext.class);
+        }
+
+        public ClassDeclarationStatementContext classDeclarationStatement(int i) {
+            return getRuleContext(ClassDeclarationStatementContext.class, i);
+        }
+
+        public List<FunctionDeclarationStatementContext> functionDeclarationStatement() {
+            return getRuleContexts(FunctionDeclarationStatementContext.class);
+        }
+
+        public FunctionDeclarationStatementContext functionDeclarationStatement(int i) {
+            return getRuleContext(FunctionDeclarationStatementContext.class, i);
+        }
+
+        public List<VariableDeclarationStatementContext> variableDeclarationStatement() {
+            return getRuleContexts(VariableDeclarationStatementContext.class);
+        }
+
+        public VariableDeclarationStatementContext variableDeclarationStatement(int i) {
+            return getRuleContext(VariableDeclarationStatementContext.class, i);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_miracle;
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterMiracle(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitMiracle(this);
+        }
+    }
+
+    public static class ClassDeclarationStatementContext extends ParserRuleContext {
+        public ClassDeclarationStatementContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public List<TerminalNode> IDENTIFIER() {
+            return getTokens(MiracleParser.IDENTIFIER);
+        }
+
+        public TerminalNode IDENTIFIER(int i) {
+            return getToken(MiracleParser.IDENTIFIER, i);
+        }
+
+        public List<FunctionDeclarationStatementContext> functionDeclarationStatement() {
+            return getRuleContexts(FunctionDeclarationStatementContext.class);
+        }
+
+        public FunctionDeclarationStatementContext functionDeclarationStatement(int i) {
+            return getRuleContext(FunctionDeclarationStatementContext.class, i);
+        }
+
+        public List<VariableDeclarationStatementContext> variableDeclarationStatement() {
+            return getRuleContexts(VariableDeclarationStatementContext.class);
+        }
+
+        public VariableDeclarationStatementContext variableDeclarationStatement(int i) {
+            return getRuleContext(VariableDeclarationStatementContext.class, i);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_classDeclarationStatement;
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterClassDeclarationStatement(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitClassDeclarationStatement(this);
+        }
+    }
+
+    public static class FunctionDeclarationStatementContext extends ParserRuleContext {
+        public FunctionDeclarationStatementContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public List<TypenameContext> typename() {
+            return getRuleContexts(TypenameContext.class);
+        }
+
+        public TypenameContext typename(int i) {
+            return getRuleContext(TypenameContext.class, i);
+        }
+
+        public List<TerminalNode> IDENTIFIER() {
+            return getTokens(MiracleParser.IDENTIFIER);
+        }
+
+        public TerminalNode IDENTIFIER(int i) {
+            return getToken(MiracleParser.IDENTIFIER, i);
+        }
+
+        public TerminalNode DECORATOR() {
+            return getToken(MiracleParser.DECORATOR, 0);
+        }
+
+        public List<StatementContext> statement() {
+            return getRuleContexts(StatementContext.class);
+        }
+
+        public StatementContext statement(int i) {
+            return getRuleContext(StatementContext.class, i);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_functionDeclarationStatement;
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener)
+                ((MiracleListener) listener).enterFunctionDeclarationStatement(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener)
+                ((MiracleListener) listener).exitFunctionDeclarationStatement(this);
+        }
+    }
+
+    public static class VariableDeclarationStatementContext extends ParserRuleContext {
+        public VariableDeclarationStatementContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public TypenameContext typename() {
+            return getRuleContext(TypenameContext.class, 0);
+        }
+
+        public TerminalNode IDENTIFIER() {
+            return getToken(MiracleParser.IDENTIFIER, 0);
+        }
+
+        public TerminalNode DECORATOR() {
+            return getToken(MiracleParser.DECORATOR, 0);
+        }
+
+        public ExpressionContext expression() {
+            return getRuleContext(ExpressionContext.class, 0);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_variableDeclarationStatement;
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener)
+                ((MiracleListener) listener).enterVariableDeclarationStatement(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener)
+                ((MiracleListener) listener).exitVariableDeclarationStatement(this);
+        }
+    }
+
+    public static class BlockStatementContext extends ParserRuleContext {
+        public BlockStatementContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public List<StatementContext> statement() {
+            return getRuleContexts(StatementContext.class);
+        }
+
+        public StatementContext statement(int i) {
+            return getRuleContext(StatementContext.class, i);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_blockStatement;
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterBlockStatement(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitBlockStatement(this);
+        }
+    }
+
+    public static class StatementContext extends ParserRuleContext {
+        public StatementContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public BlockStatementContext blockStatement() {
+            return getRuleContext(BlockStatementContext.class, 0);
+        }
+
+        public VariableDeclarationStatementContext variableDeclarationStatement() {
+            return getRuleContext(VariableDeclarationStatementContext.class, 0);
+        }
+
+        public SelectionStatementContext selectionStatement() {
+            return getRuleContext(SelectionStatementContext.class, 0);
+        }
+
+        public IterationStatementContext iterationStatement() {
+            return getRuleContext(IterationStatementContext.class, 0);
+        }
+
+        public ControlStatementContext controlStatement() {
+            return getRuleContext(ControlStatementContext.class, 0);
+        }
+
+        public ExpressionStatementContext expressionStatement() {
+            return getRuleContext(ExpressionStatementContext.class, 0);
+        }
+
+        public EmptyStatementContext emptyStatement() {
+            return getRuleContext(EmptyStatementContext.class, 0);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_statement;
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterStatement(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitStatement(this);
+        }
+    }
+
+    public static class SelectionStatementContext extends ParserRuleContext {
+        public SelectionStatementContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public ExpressionContext expression() {
+            return getRuleContext(ExpressionContext.class, 0);
+        }
+
+        public List<StatementContext> statement() {
+            return getRuleContexts(StatementContext.class);
+        }
+
+        public StatementContext statement(int i) {
+            return getRuleContext(StatementContext.class, i);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_selectionStatement;
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterSelectionStatement(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitSelectionStatement(this);
+        }
+    }
+
+    public static class IterationStatementContext extends ParserRuleContext {
+        public IterationStatementContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public IterationStatementContext() {
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_iterationStatement;
+        }
+
+        public void copyFrom(IterationStatementContext ctx) {
+            super.copyFrom(ctx);
+        }
+    }
+
+    public static class WhileStatementContext extends IterationStatementContext {
+        public WhileStatementContext(IterationStatementContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public ExpressionContext expression() {
+            return getRuleContext(ExpressionContext.class, 0);
+        }
+
+        public StatementContext statement() {
+            return getRuleContext(StatementContext.class, 0);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterWhileStatement(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitWhileStatement(this);
+        }
+    }
+
+    public static class ForStatementContext extends IterationStatementContext {
+        public ForStatementContext(IterationStatementContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public StatementContext statement() {
+            return getRuleContext(StatementContext.class, 0);
+        }
+
+        public List<ExpressionContext> expression() {
+            return getRuleContexts(ExpressionContext.class);
+        }
+
+        public ExpressionContext expression(int i) {
+            return getRuleContext(ExpressionContext.class, i);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterForStatement(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitForStatement(this);
+        }
+    }
+
+    public static class ControlStatementContext extends ParserRuleContext {
+        public ControlStatementContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public ControlStatementContext() {
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_controlStatement;
+        }
+
+        public void copyFrom(ControlStatementContext ctx) {
+            super.copyFrom(ctx);
+        }
+    }
+
+    public static class BreakStatementContext extends ControlStatementContext {
+        public BreakStatementContext(ControlStatementContext ctx) {
+            copyFrom(ctx);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterBreakStatement(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitBreakStatement(this);
+        }
+    }
+
+    public static class ContinueStatementContext extends ControlStatementContext {
+        public ContinueStatementContext(ControlStatementContext ctx) {
+            copyFrom(ctx);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterContinueStatement(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitContinueStatement(this);
+        }
+    }
+
+    public static class ReturnStatementContext extends ControlStatementContext {
+        public ReturnStatementContext(ControlStatementContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public ExpressionContext expression() {
+            return getRuleContext(ExpressionContext.class, 0);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterReturnStatement(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitReturnStatement(this);
+        }
+    }
+
+    public static class ExpressionStatementContext extends ParserRuleContext {
+        public ExpressionStatementContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public ExpressionContext expression() {
+            return getRuleContext(ExpressionContext.class, 0);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_expressionStatement;
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterExpressionStatement(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitExpressionStatement(this);
+        }
+    }
+
+    public static class EmptyStatementContext extends ParserRuleContext {
+        public EmptyStatementContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_emptyStatement;
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterEmptyStatement(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitEmptyStatement(this);
+        }
+    }
+
+    public static class TypenameContext extends ParserRuleContext {
+        public TypenameContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public TerminalNode IDENTIFIER() {
+            return getToken(MiracleParser.IDENTIFIER, 0);
+        }
+
+        public TypenameContext typename() {
+            return getRuleContext(TypenameContext.class, 0);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_typename;
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterTypename(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitTypename(this);
+        }
+    }
+
+    public static class ExpressionContext extends ParserRuleContext {
+        public ExpressionContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public ExpressionContext() {
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_expression;
+        }
+
+        public void copyFrom(ExpressionContext ctx) {
+            super.copyFrom(ctx);
+        }
+    }
+
+    public static class ConstantExpressionContext extends ExpressionContext {
+        public ConstantExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public ConstantContext constant() {
+            return getRuleContext(ConstantContext.class, 0);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterConstantExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitConstantExpression(this);
+        }
+    }
+
+    public static class XorExpressionContext extends ExpressionContext {
+        public XorExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public List<ExpressionContext> expression() {
+            return getRuleContexts(ExpressionContext.class);
+        }
+
+        public ExpressionContext expression(int i) {
+            return getRuleContext(ExpressionContext.class, i);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterXorExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitXorExpression(this);
+        }
+    }
+
+    public static class SubscriptExpressionContext extends ExpressionContext {
+        public SubscriptExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public List<ExpressionContext> expression() {
+            return getRuleContexts(ExpressionContext.class);
+        }
+
+        public ExpressionContext expression(int i) {
+            return getRuleContext(ExpressionContext.class, i);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterSubscriptExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitSubscriptExpression(this);
+        }
+    }
+
+    public static class NewExpressionContext extends ExpressionContext {
+        public NewExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public TypenameContext typename() {
+            return getRuleContext(TypenameContext.class, 0);
+        }
+
+        public List<ExpressionContext> expression() {
+            return getRuleContexts(ExpressionContext.class);
+        }
+
+        public ExpressionContext expression(int i) {
+            return getRuleContext(ExpressionContext.class, i);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterNewExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitNewExpression(this);
+        }
+    }
+
+    public static class AssignExpressionContext extends ExpressionContext {
+        public AssignExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public List<ExpressionContext> expression() {
+            return getRuleContexts(ExpressionContext.class);
+        }
+
+        public ExpressionContext expression(int i) {
+            return getRuleContext(ExpressionContext.class, i);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterAssignExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitAssignExpression(this);
+        }
+    }
+
+    public static class BraceExpressionContext extends ExpressionContext {
+        public BraceExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public ExpressionContext expression() {
+            return getRuleContext(ExpressionContext.class, 0);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterBraceExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitBraceExpression(this);
+        }
+    }
+
+    public static class MultDivExpressionContext extends ExpressionContext {
+        public Token operator;
+
+        public MultDivExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public List<ExpressionContext> expression() {
+            return getRuleContexts(ExpressionContext.class);
+        }
+
+        public ExpressionContext expression(int i) {
+            return getRuleContext(ExpressionContext.class, i);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterMultDivExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitMultDivExpression(this);
+        }
+    }
+
+    public static class MemberExpressionContext extends ExpressionContext {
+        public MemberExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public ExpressionContext expression() {
+            return getRuleContext(ExpressionContext.class, 0);
+        }
+
+        public TerminalNode IDENTIFIER() {
+            return getToken(MiracleParser.IDENTIFIER, 0);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterMemberExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitMemberExpression(this);
+        }
+    }
+
+    public static class VariableExpressionContext extends ExpressionContext {
+        public VariableExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public TerminalNode IDENTIFIER() {
+            return getToken(MiracleParser.IDENTIFIER, 0);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterVariableExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitVariableExpression(this);
+        }
+    }
+
+    public static class CompareExpressionContext extends ExpressionContext {
+        public Token operator;
+
+        public CompareExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public List<ExpressionContext> expression() {
+            return getRuleContexts(ExpressionContext.class);
+        }
+
+        public ExpressionContext expression(int i) {
+            return getRuleContext(ExpressionContext.class, i);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterCompareExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitCompareExpression(this);
+        }
+    }
+
+    public static class OrExpressionContext extends ExpressionContext {
+        public OrExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public List<ExpressionContext> expression() {
+            return getRuleContexts(ExpressionContext.class);
+        }
+
+        public ExpressionContext expression(int i) {
+            return getRuleContext(ExpressionContext.class, i);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterOrExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitOrExpression(this);
+        }
+    }
+
+    public static class AndExpressionContext extends ExpressionContext {
+        public AndExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public List<ExpressionContext> expression() {
+            return getRuleContexts(ExpressionContext.class);
+        }
+
+        public ExpressionContext expression(int i) {
+            return getRuleContext(ExpressionContext.class, i);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterAndExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitAndExpression(this);
+        }
+    }
+
+    public static class LogicAndExpressionContext extends ExpressionContext {
+        public LogicAndExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public List<ExpressionContext> expression() {
+            return getRuleContexts(ExpressionContext.class);
+        }
+
+        public ExpressionContext expression(int i) {
+            return getRuleContext(ExpressionContext.class, i);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterLogicAndExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitLogicAndExpression(this);
+        }
+    }
+
+    public static class PrefixExpressionContext extends ExpressionContext {
+        public Token operator;
+
+        public PrefixExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public ExpressionContext expression() {
+            return getRuleContext(ExpressionContext.class, 0);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterPrefixExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitPrefixExpression(this);
+        }
+    }
+
+    public static class LogicOrExpressionContext extends ExpressionContext {
+        public LogicOrExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public List<ExpressionContext> expression() {
+            return getRuleContexts(ExpressionContext.class);
+        }
+
+        public ExpressionContext expression(int i) {
+            return getRuleContext(ExpressionContext.class, i);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterLogicOrExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitLogicOrExpression(this);
+        }
+    }
+
+    public static class AddSubExpressionContext extends ExpressionContext {
+        public Token operator;
+
+        public AddSubExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public List<ExpressionContext> expression() {
+            return getRuleContexts(ExpressionContext.class);
+        }
+
+        public ExpressionContext expression(int i) {
+            return getRuleContext(ExpressionContext.class, i);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterAddSubExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitAddSubExpression(this);
+        }
+    }
+
+    public static class SuffixExpressionContext extends ExpressionContext {
+        public Token operator;
+
+        public SuffixExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public ExpressionContext expression() {
+            return getRuleContext(ExpressionContext.class, 0);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterSuffixExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitSuffixExpression(this);
+        }
+    }
+
+    public static class ShlShrExpressionContext extends ExpressionContext {
+        public Token operator;
+
+        public ShlShrExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public List<ExpressionContext> expression() {
+            return getRuleContexts(ExpressionContext.class);
+        }
+
+        public ExpressionContext expression(int i) {
+            return getRuleContext(ExpressionContext.class, i);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterShlShrExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitShlShrExpression(this);
+        }
+    }
+
+    public static class EqualityExpressionContext extends ExpressionContext {
+        public Token operator;
+
+        public EqualityExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public List<ExpressionContext> expression() {
+            return getRuleContexts(ExpressionContext.class);
+        }
+
+        public ExpressionContext expression(int i) {
+            return getRuleContext(ExpressionContext.class, i);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterEqualityExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitEqualityExpression(this);
+        }
+    }
+
+    public static class FunctionCallExpressionContext extends ExpressionContext {
+        public FunctionCallExpressionContext(ExpressionContext ctx) {
+            copyFrom(ctx);
+        }
+
+        public List<ExpressionContext> expression() {
+            return getRuleContexts(ExpressionContext.class);
+        }
+
+        public ExpressionContext expression(int i) {
+            return getRuleContext(ExpressionContext.class, i);
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterFunctionCallExpression(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitFunctionCallExpression(this);
+        }
+    }
+
+    public static class ConstantContext extends ParserRuleContext {
+        public ConstantContext(ParserRuleContext parent, int invokingState) {
+            super(parent, invokingState);
+        }
+
+        public TerminalNode INTEGER() {
+            return getToken(MiracleParser.INTEGER, 0);
+        }
+
+        public TerminalNode STRING() {
+            return getToken(MiracleParser.STRING, 0);
+        }
+
+        @Override
+        public int getRuleIndex() {
+            return RULE_constant;
+        }
+
+        @Override
+        public void enterRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).enterConstant(this);
+        }
+
+        @Override
+        public void exitRule(ParseTreeListener listener) {
+            if (listener instanceof MiracleListener) ((MiracleListener) listener).exitConstant(this);
+        }
+    }
 }

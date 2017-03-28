@@ -20,7 +20,7 @@ import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclar
 import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
 import com.miracle.cstree.MiracleParser;
-import com.miracle.scanner.environment.identifier.MiracleIdentifierVariable;
+import com.miracle.exceptions.MiracleExceptionUndefinedIdentifier;
 import com.miracle.scanner.environment.manager.MiracleEnvironmentReader;
 
 import java.util.LinkedList;
@@ -28,12 +28,12 @@ import java.util.List;
 import java.util.Stack;
 
 public class MiracleASTreeBuilder extends MiracleScopeChecker {
+    private Stack<List<MiracleASTreeNode>> path = new Stack<>();
+
     public MiracleASTreeBuilder() {
         super(new MiracleEnvironmentReader());
         path.push(new LinkedList<>());
     }
-
-    private Stack<List<MiracleASTreeNode>> path = new Stack<>();
 
     public MiracleASTree getTree() {
         return new MiracleASTree(new MiracleASTreeRoot(path.peek()));
@@ -108,15 +108,11 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
             value = (MiracleASTreeExpression) path.peek().get(1);
         }
         path.pop();
-        path.peek().add(new MiracleASTreeVariableDeclaration(decorator, ctx.IDENTIFIER().getText(), type, value));
+        MiracleASTreeVariableDeclaration node = new MiracleASTreeVariableDeclaration(decorator,
+                ctx.IDENTIFIER().getText(), type, value);
+        path.peek().add(node);
         super.exitVariableDeclarationStatement(ctx);
-        if (ctx.DECORATOR() != null) {
-            MiracleEnvironmentReader.declare(ctx.IDENTIFIER().getText(),
-                    new MiracleIdentifierVariable(ctx.DECORATOR().getText(), true, type));
-        } else {
-            MiracleEnvironmentReader.declare(ctx.IDENTIFIER().getText(),
-                    new MiracleIdentifierVariable(null, true, type));
-        }
+        MiracleEnvironmentReader.declare(ctx.IDENTIFIER().getText(), true, node);
     }
 
     @Override
@@ -246,11 +242,17 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
     @Override
     public void exitTypename(MiracleParser.TypenameContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        if (ctx.getChildCount() == 1) {
-            path.peek().add(new MiracleASTreeTypename(ctx.getChild(0).getText()));
-        }
-        if (ctx.IDENTIFIER() != null) {
-
+        if (ctx.IDENTIFIER() != null) {                                              // custom types
+            String identifier = ctx.IDENTIFIER().getText();
+            if (!MiracleEnvironmentReader.contain(identifier)) {
+                throw new MiracleExceptionUndefinedIdentifier(identifier);
+            }
+            path.peek().add(new MiracleASTreeTypename(identifier));
+        } else if (ctx.getChildCount() == 1) {
+            path.peek().add(new MiracleASTreeTypename(ctx.getChild(0).getText())); // built-in types
+        } else {
+            path.peek().add(new MiracleASTreeTypename(ctx.typename().getText(),      // array type
+                    ctx.getChildCount() - 1));
         }
         super.exitTypename(ctx);
     }
@@ -289,7 +291,12 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
     @Override
     public void exitVariableExpression(MiracleParser.VariableExpressionContext ctx) {
         path.pop();
-        path.peek().add(new MiracleASTreeVariable());
+        String id = ctx.IDENTIFIER().getText();
+        if (!MiracleEnvironmentReader.contain(id)) {
+            throw new MiracleExceptionUndefinedIdentifier(id);
+        }
+        MiracleASTreeVariableDeclaration tmp = (MiracleASTreeVariableDeclaration) MiracleEnvironmentReader.get(id);
+        path.peek().add(new MiracleASTreeVariable(tmp));
         super.exitVariableExpression(ctx);
     }
 }

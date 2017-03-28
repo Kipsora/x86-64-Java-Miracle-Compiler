@@ -2,6 +2,7 @@ package com.miracle.scanner.environment.manager;
 
 import com.miracle.astree.node.statement.declaration.MiracleASTreeClassDeclaration;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclaration;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
 import java.util.Arrays;
@@ -20,10 +21,9 @@ public class MiracleEnvironmentManager {
     }));
     static int scopeNumber;
     static Stack<ImmutableTriple<ScopeType, Short, Integer>> scopes = new Stack<>();
-    static HashMap<Integer, HashMap<String, ImmutableTriple<Integer, Boolean,
-            MiracleASTreeClassDeclaration>>> classMap = new HashMap<>();
-    static HashMap<Integer, HashMap<String, ImmutableTriple<Integer, Boolean,
-            MiracleASTreeFunctionDeclaration>>> funcMap = new HashMap<>();
+
+    static HashMap<Integer, HashMap<String, ImmutablePair<Boolean, MiracleASTreeClassDeclaration>>> classMap = new HashMap<>();
+    static HashMap<Integer, HashMap<String, ImmutablePair<Boolean, MiracleASTreeFunctionDeclaration>>> funcMap = new HashMap<>();
 
     public static ScopeType getCurrentScopeType() {
         return scopes.peek().getLeft();

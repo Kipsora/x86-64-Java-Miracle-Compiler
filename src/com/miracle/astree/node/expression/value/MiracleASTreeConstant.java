@@ -13,7 +13,9 @@ public class MiracleASTreeConstant extends MiracleASTreeValue {
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
+        visitor.enter();
         visitor.visit(this);
+        visitor.exit();
     }
 
     public String getValue() {

@@ -1,22 +1,19 @@
 package com.miracle.scanner.environment.manager;
 
-import com.miracle.astree.node.statement.declaration.*;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
 import com.miracle.exceptions.MiracleExceptionConflictWithBuiltin;
 import com.miracle.exceptions.MiracleExceptionConflictWithKeyword;
 import com.miracle.exceptions.MiracleExceptionDuplicateDeclaration;
 import com.miracle.exceptions.MiracleExceptionIdentifierShadow;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.HashMap;
 
 public final class MiracleEnvironmentLoader extends MiracleEnvironmentManager {
-    private static HashMap<Integer, HashMap<String, ImmutableTriple<Integer, Boolean,
+    private static HashMap<Integer, HashMap<String, ImmutablePair<Boolean,
             MiracleASTreeVariableDeclaration>>> varMap = new HashMap<>();
-    private static int classNumber;
-    private static int varNumber;
-    private static int funcNumber;
 
-    private static void checkDeclaration(int scope, String identifier, MiracleASTreeDeclaration value) {
+    private static void checkDeclaration(int scope, String identifier, String value) {
         if (BUILTIN.contains(identifier)) {
             throw new MiracleExceptionConflictWithBuiltin(identifier);
         }
@@ -24,90 +21,49 @@ public final class MiracleEnvironmentLoader extends MiracleEnvironmentManager {
             throw new MiracleExceptionConflictWithKeyword(identifier);
         }
         if (varMap.containsKey(scope) && varMap.get(scope).containsKey(identifier)) {
-            if (varMap.get(scope).get(identifier).getMiddle()) {
-                if (value instanceof MiracleASTreeClassDeclaration) {
-                    throw new MiracleExceptionDuplicateDeclaration(
-                            "variable",
-                            "class",
-                            identifier
-                    );
-                } else {
-                    throw new MiracleExceptionDuplicateDeclaration(
-                            "variable",
-                            ((MiracleASTreeMemberDeclaration) value).getType().toString(),
-                            identifier
-                    );
-                }
+            if (varMap.get(scope).get(identifier).getLeft()) {
+                throw new MiracleExceptionDuplicateDeclaration("variable", value, identifier);
             } else {
-                throw new MiracleExceptionIdentifierShadow(
-                        identifier,
-                        value.getIdentifier(),
-                        "function paramter"
-                );
+                throw new MiracleExceptionIdentifierShadow(identifier, value, "function paramter");
             }
         }
         if (funcMap.containsKey(scope) && funcMap.get(scope).containsKey(identifier)) {
-            if (value instanceof MiracleASTreeClassDeclaration) {
-                throw new MiracleExceptionDuplicateDeclaration(
-                        "function",
-                        "class",
-                        identifier
-                );
-            } else {
-                throw new MiracleExceptionDuplicateDeclaration(
-                        "function",
-                        ((MiracleASTreeMemberDeclaration) value).getType().toString(),
-                        identifier
-                );
-            }
+            throw new MiracleExceptionDuplicateDeclaration("function", value, identifier);
         }
         if (classMap.containsKey(scope) && classMap.get(scope).containsKey(identifier)) {
-            if (value instanceof MiracleASTreeClassDeclaration) {
-                throw new MiracleExceptionDuplicateDeclaration(
-                        "class",
-                        "class",
-                        identifier
-                );
-            } else {
-                throw new MiracleExceptionDuplicateDeclaration(
-                        "class",
-                        ((MiracleASTreeMemberDeclaration) value).getType().toString(),
-                        identifier
-                );
-            }
+            throw new MiracleExceptionDuplicateDeclaration("class", value, identifier);
         }
     }
 
-    public static void declare(String identifier, boolean coverable, MiracleASTreeVariableDeclaration value) {
+    public static void declareVariable(String identifier) {
         int scope = scopes.peek().getRight();
-        checkDeclaration(scope, identifier, value);
+        checkDeclaration(scope, identifier, "variable");
         if (!varMap.containsKey(scope)) {
             varMap.put(scope, new HashMap<>());
         }
-        varMap.get(scope).put(identifier, ImmutableTriple.of(++varNumber, coverable, value));
+        varMap.get(scope).put(identifier, ImmutablePair.of(false, null));
     }
 
-    public static void declare(String identifier, MiracleASTreeClassDeclaration value) {
+    public static void declareClass(String identifier) {
         int scope = scopes.peek().getRight();
-        checkDeclaration(scope, identifier, value);
+        checkDeclaration(scope, identifier, "class");
         if (!classMap.containsKey(scope)) {
             classMap.put(scope, new HashMap<>());
         }
-        classMap.get(scope).put(identifier, ImmutableTriple.of(++classNumber, false, value));
+        classMap.get(scope).put(identifier, ImmutablePair.of(false, null));
     }
 
-    public static void declare(String identifier, MiracleASTreeFunctionDeclaration value) {
+    public static void declareFunction(String identifier) {
         int scope = scopes.peek().getRight();
-        checkDeclaration(scope, identifier, value);
+        checkDeclaration(scope, identifier, "function");
         if (!funcMap.containsKey(scope)) {
             funcMap.put(scope, new HashMap<>());
         }
-        funcMap.get(scope).put(identifier, ImmutableTriple.of(++funcNumber, false, value));
+        funcMap.get(scope).put(identifier, ImmutablePair.of(false, null));
     }
 
     @Override
     public void initScope() {
         super.initScope();
-        varNumber = funcNumber = classNumber = 0;
     }
 }

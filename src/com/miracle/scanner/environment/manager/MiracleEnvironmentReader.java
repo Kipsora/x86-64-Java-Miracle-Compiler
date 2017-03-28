@@ -1,10 +1,9 @@
 package com.miracle.scanner.environment.manager;
 
 import com.miracle.astree.node.statement.declaration.MiracleASTreeClassDeclaration;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeDeclaration;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclaration;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
-import com.miracle.scanner.environment.identifier.MiracleIdentifier;
-import com.miracle.scanner.environment.identifier.MiracleIdentifierVariable;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
@@ -12,13 +11,12 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public final class MiracleEnvironmentReader extends MiracleEnvironmentManager {
-    private static int varNumber;
-    private static HashMap<String, ImmutablePair<Integer, MiracleASTreeFunctionDeclaration>> curFuncMap = new HashMap<>();
-    private static HashMap<String, ImmutablePair<Integer, MiracleASTreeVariableDeclaration>> curVarMap = new HashMap<>();
-    private static HashMap<String, ImmutablePair<Integer, MiracleASTreeClassDeclaration>> curClassMap = new HashMap<>();
-    private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Integer, MiracleASTreeVariableDeclaration>>> varStack = new Stack<>();
-    private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Integer, MiracleASTreeFunctionDeclaration>>> funcStack = new Stack<>();
-    private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Integer, MiracleASTreeClassDeclaration>>> classStack = new Stack<>();
+    private static HashMap<String, ImmutablePair<Boolean, MiracleASTreeFunctionDeclaration>> curFuncMap = new HashMap<>();
+    private static HashMap<String, ImmutablePair<Boolean, MiracleASTreeVariableDeclaration>> curVarMap = new HashMap<>();
+    private static HashMap<String, ImmutablePair<Boolean, MiracleASTreeClassDeclaration>> curClassMap = new HashMap<>();
+    private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Boolean, MiracleASTreeVariableDeclaration>>> varStack = new Stack<>();
+    private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Boolean, MiracleASTreeFunctionDeclaration>>> funcStack = new Stack<>();
+    private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Boolean, MiracleASTreeClassDeclaration>>> classStack = new Stack<>();
 
     private static void mergeMap(int scope) {
         if (classMap.containsKey(scope)) {
@@ -40,22 +38,21 @@ public final class MiracleEnvironmentReader extends MiracleEnvironmentManager {
                 || curVarMap.containsKey(id) || curFuncMap.containsKey(id);
     }
 
-    public static MiracleIdentifier get(String id) {
+    public static MiracleASTreeDeclaration get(String id) {
         if (curClassMap.containsKey(id)) return curClassMap.get(id).getRight();
         if (curVarMap.containsKey(id)) return curVarMap.get(id).getRight();
         if (curFuncMap.containsKey(id)) return curFuncMap.get(id).getRight();
         return null;
     }
 
-    public static void declare(String identifier, MiracleIdentifierVariable value) {
+    public static void declare(String identifier, boolean coverable, MiracleASTreeVariableDeclaration value) {
         varStack.push(ImmutableTriple.of(identifier, scopes.peek().getRight(),
                 curVarMap.getOrDefault(identifier, null)));
-        curVarMap.put(identifier, ImmutablePair.of(++varNumber, value));
+        curVarMap.put(identifier, ImmutablePair.of(coverable, value));
     }
 
     @Override
     public void initScope() {
-        varNumber = 0;
         super.initScope();
         mergeMap(scopeNumber);
     }

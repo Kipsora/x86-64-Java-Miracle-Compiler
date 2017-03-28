@@ -21,7 +21,7 @@ public class MiracleASTreePrefixIntegral extends MiracleASTreeUnaryExpression {
         visitor.exit();
     }
 
-    public enum OPERATOR{
+    public enum OPERATOR {
         ADD, SUB, REV, NEG, POS;
 
         @Override
