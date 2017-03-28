@@ -1,8 +1,9 @@
 package com.miracle.scanner.environment.manager;
 
+import com.miracle.astree.node.statement.declaration.MiracleASTreeClassDeclaration;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclaration;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
 import com.miracle.scanner.environment.identifier.MiracleIdentifier;
-import com.miracle.scanner.environment.identifier.MiracleIdentifierClass;
-import com.miracle.scanner.environment.identifier.MiracleIdentifierFunction;
 import com.miracle.scanner.environment.identifier.MiracleIdentifierVariable;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
@@ -12,12 +13,12 @@ import java.util.Stack;
 
 public final class MiracleEnvironmentReader extends MiracleEnvironmentManager {
     private static int varNumber;
-    private static HashMap<String, ImmutablePair<Integer, MiracleIdentifierFunction>> curFuncMap = new HashMap<>();
-    private static HashMap<String, ImmutablePair<Integer, MiracleIdentifierVariable>> curVarMap = new HashMap<>();
-    private static HashMap<String, ImmutablePair<Integer, MiracleIdentifierClass>> curClassMap = new HashMap<>();
-    private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Integer, MiracleIdentifierVariable>>> varStack = new Stack<>();
-    private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Integer, MiracleIdentifierFunction>>> funcStack = new Stack<>();
-    private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Integer, MiracleIdentifierClass>>> classStack = new Stack<>();
+    private static HashMap<String, ImmutablePair<Integer, MiracleASTreeFunctionDeclaration>> curFuncMap = new HashMap<>();
+    private static HashMap<String, ImmutablePair<Integer, MiracleASTreeVariableDeclaration>> curVarMap = new HashMap<>();
+    private static HashMap<String, ImmutablePair<Integer, MiracleASTreeClassDeclaration>> curClassMap = new HashMap<>();
+    private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Integer, MiracleASTreeVariableDeclaration>>> varStack = new Stack<>();
+    private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Integer, MiracleASTreeFunctionDeclaration>>> funcStack = new Stack<>();
+    private static Stack<ImmutableTriple<String, Integer, ImmutablePair<Integer, MiracleASTreeClassDeclaration>>> classStack = new Stack<>();
 
     private static void mergeMap(int scope) {
         if (classMap.containsKey(scope)) {

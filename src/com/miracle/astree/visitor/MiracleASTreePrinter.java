@@ -3,10 +3,10 @@ package com.miracle.astree.visitor;
 import com.miracle.astree.node.MiracleASTreeNode;
 import com.miracle.astree.node.MiracleASTreeRoot;
 import com.miracle.astree.node.statement.MiracleASTreeStatement;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeClass;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeFunction;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeClassDeclaration;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclaration;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeMemberDeclaration;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeVariable;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
 
 public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
     private int level = 0;
@@ -37,35 +37,35 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
     }
 
     @Override
-    public void visit(MiracleASTreeFunction miracleASTreeFunction) {
-        smartPrint("function " + miracleASTreeFunction.getIdentifier());
-        smartPrint("decorator: " + miracleASTreeFunction.getDecorator());
-        smartPrint("return type: " + miracleASTreeFunction.getType().toString());
-        for (MiracleASTreeStatement entry : miracleASTreeFunction.getBody()) {
+    public void visit(MiracleASTreeFunctionDeclaration miracleASTreeFunctionDeclaration) {
+        smartPrint("function " + miracleASTreeFunctionDeclaration.getIdentifier());
+        smartPrint("decorator: " + miracleASTreeFunctionDeclaration.getDecorator());
+        smartPrint("return type: " + miracleASTreeFunctionDeclaration.getType().toString());
+        for (MiracleASTreeStatement entry : miracleASTreeFunctionDeclaration.getBody()) {
             entry.accept(this);
         }
     }
 
     @Override
-    public void visit(MiracleASTreeVariable miracleASTreeVariable) {
+    public void visit(MiracleASTreeVariableDeclaration miracleASTreeVariableDeclaration) {
         smartPrint("var declaration");
-        smartPrint("var id: " + miracleASTreeVariable.getIdentifier());
-        smartPrint("var deco: " + miracleASTreeVariable.getDecorator());
-        smartPrint("var type: " + miracleASTreeVariable.getType().toString());
-        if (miracleASTreeVariable.getValue() == null) {
+        smartPrint("var id: " + miracleASTreeVariableDeclaration.getIdentifier());
+        smartPrint("var deco: " + miracleASTreeVariableDeclaration.getDecorator());
+        smartPrint("var type: " + miracleASTreeVariableDeclaration.getType().toString());
+        if (miracleASTreeVariableDeclaration.getValue() == null) {
             smartPrint("var exp: null");
         } else {
             smartPrint("var exp: ");
-            miracleASTreeVariable.getValue().accept(this);
+            miracleASTreeVariableDeclaration.getValue().accept(this);
         }
     }
 
     @Override
-    public void visit(MiracleASTreeClass miracleASTreeClass) {
+    public void visit(MiracleASTreeClassDeclaration miracleASTreeClassDeclaration) {
         smartPrint("class delcaration");
-        smartPrint("class id: " + miracleASTreeClass.getIdentifier());
+        smartPrint("class id: " + miracleASTreeClassDeclaration.getIdentifier());
         smartPrint("class content: ");
-        for (MiracleASTreeMemberDeclaration entry : miracleASTreeClass.getChildren()) {
+        for (MiracleASTreeMemberDeclaration entry : miracleASTreeClassDeclaration.getChildren()) {
             entry.accept(this);
         }
     }

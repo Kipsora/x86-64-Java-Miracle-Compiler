@@ -7,14 +7,16 @@ import com.miracle.astree.node.expression.multiary.MiracleASTreeNewExpression;
 import com.miracle.astree.node.expression.unary.prefix.MiracleASTreeNegate;
 import com.miracle.astree.node.expression.unary.prefix.MiracleASTreePrefixIntegral;
 import com.miracle.astree.node.expression.unary.suffix.MiracleASTreeSuffixIntegral;
+import com.miracle.astree.node.expression.value.MiracleASTreeConstant;
+import com.miracle.astree.node.expression.value.MiracleASTreeVariable;
 import com.miracle.astree.node.statement.MiracleASTreeBlock;
 import com.miracle.astree.node.statement.MiracleASTreeSelection;
 import com.miracle.astree.node.statement.control.MiracleASTreeBreak;
 import com.miracle.astree.node.statement.control.MiracleASTreeContinue;
 import com.miracle.astree.node.statement.control.MiracleASTreeReturn;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeClass;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeFunction;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeVariable;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeClassDeclaration;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclaration;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
 
@@ -30,12 +32,12 @@ public class MiracleASTreeBaseVisitor implements MiracleASTreeVisitor {
     }
 
     @Override
-    public void visit(MiracleASTreeClass miracleASTreeClass) {
+    public void visit(MiracleASTreeClassDeclaration miracleASTreeClassDeclaration) {
 
     }
 
     @Override
-    public void visit(MiracleASTreeVariable miracleASTreeVariable) {
+    public void visit(MiracleASTreeVariableDeclaration miracleASTreeVariableDeclaration) {
 
     }
 
@@ -90,7 +92,7 @@ public class MiracleASTreeBaseVisitor implements MiracleASTreeVisitor {
     }
 
     @Override
-    public void visit(MiracleASTreeFunction miracleASTreeFunction) {
+    public void visit(MiracleASTreeFunctionDeclaration miracleASTreeFunctionDeclaration) {
 
     }
 
@@ -136,6 +138,16 @@ public class MiracleASTreeBaseVisitor implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeReturn miracleASTreeReturn) {
+
+    }
+
+    @Override
+    public void visit(MiracleASTreeConstant miracleASTreeConstant) {
+
+    }
+
+    @Override
+    public void visit(MiracleASTreeVariable miracleASTreeVariable) {
 
     }
 }

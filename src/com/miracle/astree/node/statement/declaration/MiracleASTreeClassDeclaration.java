@@ -4,12 +4,12 @@ import com.miracle.astree.visitor.MiracleASTreeVisitor;
 
 import java.util.List;
 
-public class MiracleASTreeClass extends MiracleASTreeDeclaration {
+public class MiracleASTreeClassDeclaration extends MiracleASTreeDeclaration {
     private final String extend;
     private final List<MiracleASTreeMemberDeclaration> children;
 
-    public MiracleASTreeClass(String identifier, String extend,
-                              List<MiracleASTreeMemberDeclaration> children) {
+    public MiracleASTreeClassDeclaration(String identifier, String extend,
+                                         List<MiracleASTreeMemberDeclaration> children) {
         super(identifier);
         this.extend = extend;
         this.children = children;

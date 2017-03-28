@@ -6,21 +6,21 @@ import com.miracle.astree.visitor.MiracleASTreeVisitor;
 
 import java.util.List;
 
-public class MiracleASTreeFunction extends MiracleASTreeMemberDeclaration {
-    private final List<MiracleASTreeVariable> arguments;
+public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclaration {
+    private final List<MiracleASTreeVariableDeclaration> arguments;
     private final List<MiracleASTreeStatement> body;
     private final MiracleASTreeTypename type;
 
-    public MiracleASTreeFunction(MiracleASTreeTypename type, String identifier,
-                                 List<MiracleASTreeVariable> arguments, List<MiracleASTreeStatement> body) {
+    public MiracleASTreeFunctionDeclaration(MiracleASTreeTypename type, String identifier,
+                                            List<MiracleASTreeVariableDeclaration> arguments, List<MiracleASTreeStatement> body) {
         super(identifier);
         this.arguments = arguments;
         this.body = body;
         this.type = type;
     }
 
-    public MiracleASTreeFunction(String decorator, MiracleASTreeTypename type, String identifier,
-                                 List<MiracleASTreeVariable> arguments, List<MiracleASTreeStatement> body) {
+    public MiracleASTreeFunctionDeclaration(String decorator, MiracleASTreeTypename type, String identifier,
+                                            List<MiracleASTreeVariableDeclaration> arguments, List<MiracleASTreeStatement> body) {
         super(decorator, identifier);
         this.arguments = arguments;
         this.body = body;
@@ -34,7 +34,7 @@ public class MiracleASTreeFunction extends MiracleASTreeMemberDeclaration {
         visitor.exit();
     }
 
-    public List<MiracleASTreeVariable> getArguments() {
+    public List<MiracleASTreeVariableDeclaration> getArguments() {
         return arguments;
     }
 

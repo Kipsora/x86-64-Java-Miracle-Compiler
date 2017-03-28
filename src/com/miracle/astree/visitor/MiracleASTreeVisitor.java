@@ -7,14 +7,16 @@ import com.miracle.astree.node.expression.multiary.MiracleASTreeNewExpression;
 import com.miracle.astree.node.expression.unary.prefix.MiracleASTreeNegate;
 import com.miracle.astree.node.expression.unary.prefix.MiracleASTreePrefixIntegral;
 import com.miracle.astree.node.expression.unary.suffix.MiracleASTreeSuffixIntegral;
+import com.miracle.astree.node.expression.value.MiracleASTreeConstant;
+import com.miracle.astree.node.expression.value.MiracleASTreeVariable;
 import com.miracle.astree.node.statement.MiracleASTreeBlock;
 import com.miracle.astree.node.statement.MiracleASTreeSelection;
 import com.miracle.astree.node.statement.control.MiracleASTreeBreak;
 import com.miracle.astree.node.statement.control.MiracleASTreeContinue;
 import com.miracle.astree.node.statement.control.MiracleASTreeReturn;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeClass;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeFunction;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeVariable;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeClassDeclaration;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclaration;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
 
@@ -23,9 +25,9 @@ public interface MiracleASTreeVisitor {
 
     void exit();
 
-    void visit(MiracleASTreeClass miracleASTreeClass);
+    void visit(MiracleASTreeClassDeclaration miracleASTreeClassDeclaration);
 
-    void visit(MiracleASTreeVariable miracleASTreeVariable);
+    void visit(MiracleASTreeVariableDeclaration miracleASTreeVariableDeclaration);
 
     void visit(MiracleASTreeRoot miracleASTreeRoot);
 
@@ -47,7 +49,7 @@ public interface MiracleASTreeVisitor {
 
     void visit(MiracleASTreeNewExpression miracleASTreeNewExpression);
 
-    void visit(MiracleASTreeFunction miracleASTreeFunction);
+    void visit(MiracleASTreeFunctionDeclaration miracleASTreeFunctionDeclaration);
 
     void visit(MiracleASTreeTypename miracleASTreeTypename);
 
@@ -66,4 +68,8 @@ public interface MiracleASTreeVisitor {
     void visit(MiracleASTreeBreak miracleASTreeBreak);
 
     void visit(MiracleASTreeReturn miracleASTreeReturn);
+
+    void visit(MiracleASTreeConstant miracleASTreeConstant);
+
+    void visit(MiracleASTreeVariable miracleASTreeVariable);
 }

@@ -5,12 +5,12 @@ import com.miracle.astree.node.MiracleASTreeTypename;
 
 public abstract class MiracleASTreeExpression extends MiracleASTreeNode {
     private final boolean mutable;
-    private final String operator;
+    private final String symbol;
     private final MiracleASTreeTypename type;
 
-    protected MiracleASTreeExpression(MiracleASTreeTypename type, String operator, boolean mutable) {
+    protected MiracleASTreeExpression(MiracleASTreeTypename type, String symbol, boolean mutable) {
         this.mutable = mutable;
-        this.operator = operator;
+        this.symbol = symbol;
         this.type = type;
         assert type != null;
     }
@@ -23,7 +23,7 @@ public abstract class MiracleASTreeExpression extends MiracleASTreeNode {
         return mutable;
     }
 
-    public String getOperator() {
-        return operator;
+    public String getSymbol() {
+        return symbol;
     }
 }

@@ -19,12 +19,10 @@ public class MiracleDeclarationChecker extends MiracleScopeChecker {
     public void enterVariableDeclarationStatement(MiracleParser.VariableDeclarationStatementContext ctx) {
         if (ctx.DECORATOR() == null) {
             MiracleEnvironmentLoader.declare(ctx.IDENTIFIER().getText(),
-                    new MiracleIdentifierVariable(null, true,
-                            ctx.typename().getText()));
+                    new MiracleIdentifierVariable(null, true));
         } else {
             MiracleEnvironmentLoader.declare(ctx.IDENTIFIER().getText(),
-                    new MiracleIdentifierVariable(ctx.DECORATOR().getText(), true,
-                            ctx.typename().getText()));
+                    new MiracleIdentifierVariable(ctx.DECORATOR().getText(), true));
         }
         super.enterVariableDeclarationStatement(ctx);
     }
@@ -49,14 +47,14 @@ public class MiracleDeclarationChecker extends MiracleScopeChecker {
         List<TerminalNode> tmp = ctx.IDENTIFIER();
         LinkedList<MiracleIdentifierVariable> arguments = new LinkedList<>();
         for (int i = 1; i < tmp.size(); i++) {
-            arguments.add(new MiracleIdentifierVariable(null, true, tmp.get(i).getText()));
+            arguments.add(new MiracleIdentifierVariable(null, true));
         }
         MiracleEnvironmentLoader.declare(ctx.IDENTIFIER(0).getText(),
-                new MiracleIdentifierFunction(ctx.typename(0).getText(), arguments));
+                new MiracleIdentifierFunction(ctx.typename(0), arguments));
         super.enterFunctionDeclarationStatement(ctx);
         for (int i = 1; i < tmp.size(); i++) {
             MiracleEnvironmentLoader.declare(tmp.get(i).getText(),
-                    new MiracleIdentifierVariable(null, false, ctx.typename(i).getText()));
+                    new MiracleIdentifierVariable(null, false));
         }
     }
 }

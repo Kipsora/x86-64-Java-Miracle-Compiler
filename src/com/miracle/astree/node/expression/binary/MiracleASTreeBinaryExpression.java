@@ -37,7 +37,7 @@ public abstract class MiracleASTreeBinaryExpression extends MiracleASTreeExpress
         return right;
     }
 
-    public String getOperator() {
+    public String getSymbol() {
         return operator;
     }
 }

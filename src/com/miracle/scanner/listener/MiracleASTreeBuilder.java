@@ -5,26 +5,29 @@ import com.miracle.astree.node.MiracleASTreeNode;
 import com.miracle.astree.node.MiracleASTreeRoot;
 import com.miracle.astree.node.MiracleASTreeTypename;
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
+import com.miracle.astree.node.expression.value.MiracleASTreeConstant;
+import com.miracle.astree.node.expression.value.MiracleASTreeVariable;
 import com.miracle.astree.node.statement.MiracleASTreeBlock;
 import com.miracle.astree.node.statement.MiracleASTreeSelection;
 import com.miracle.astree.node.statement.MiracleASTreeStatement;
 import com.miracle.astree.node.statement.control.MiracleASTreeBreak;
 import com.miracle.astree.node.statement.control.MiracleASTreeContinue;
 import com.miracle.astree.node.statement.control.MiracleASTreeReturn;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeClass;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeFunction;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeClassDeclaration;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclaration;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeMemberDeclaration;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeVariable;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
 import com.miracle.cstree.MiracleParser;
+import com.miracle.scanner.environment.identifier.MiracleIdentifierVariable;
 import com.miracle.scanner.environment.manager.MiracleEnvironmentReader;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
+public class MiracleASTreeBuilder extends MiracleScopeChecker {
     public MiracleASTreeBuilder() {
         super(new MiracleEnvironmentReader());
         path.push(new LinkedList<>());
@@ -49,10 +52,10 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             tmp.add((MiracleASTreeMemberDeclaration) entry);
         }
         if (ctx.IDENTIFIER().size() > 1) {
-            path.peek().add(new MiracleASTreeClass(ctx.IDENTIFIER(0).getText(),
+            path.peek().add(new MiracleASTreeClassDeclaration(ctx.IDENTIFIER(0).getText(),
                     ctx.IDENTIFIER(1).getText(), tmp));
         } else {
-            path.peek().add(new MiracleASTreeClass(ctx.IDENTIFIER(0).getText(),
+            path.peek().add(new MiracleASTreeClassDeclaration(ctx.IDENTIFIER(0).getText(),
                     null, tmp));
         }
         super.exitClassDeclarationStatement(ctx);
@@ -71,18 +74,18 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             decorator = ctx.DECORATOR().getText();
         }
         List<MiracleASTreeNode> children = path.pop();
-        List<MiracleASTreeVariable> arguments = new LinkedList<>();
+        List<MiracleASTreeVariableDeclaration> arguments = new LinkedList<>();
         List<MiracleASTreeStatement> body = new LinkedList<>();
         MiracleASTreeTypename type = (MiracleASTreeTypename) children.get(0);
         for (int i = 1; i < children.size(); i++) {
             if (i < ctx.IDENTIFIER().size()) {
-                arguments.add(new MiracleASTreeVariable(ctx.IDENTIFIER(i).getText(),
+                arguments.add(new MiracleASTreeVariableDeclaration(ctx.IDENTIFIER(i).getText(),
                         (MiracleASTreeTypename) children.get(i)));
             } else {
                 body.add((MiracleASTreeStatement) children.get(i));
             }
         }
-        path.peek().add(new MiracleASTreeFunction(decorator, type,
+        path.peek().add(new MiracleASTreeFunctionDeclaration(decorator, type,
                 ctx.IDENTIFIER(0).getText(), arguments, body));
         super.exitFunctionDeclarationStatement(ctx);
     }
@@ -105,8 +108,15 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             value = (MiracleASTreeExpression) path.peek().get(1);
         }
         path.pop();
-        path.peek().add(new MiracleASTreeVariable(decorator, ctx.IDENTIFIER().getText(), type, value));
+        path.peek().add(new MiracleASTreeVariableDeclaration(decorator, ctx.IDENTIFIER().getText(), type, value));
         super.exitVariableDeclarationStatement(ctx);
+        if (ctx.DECORATOR() != null) {
+            MiracleEnvironmentReader.declare(ctx.IDENTIFIER().getText(),
+                    new MiracleIdentifierVariable(ctx.DECORATOR().getText(), true, type));
+        } else {
+            MiracleEnvironmentReader.declare(ctx.IDENTIFIER().getText(),
+                    new MiracleIdentifierVariable(null, true, type));
+        }
     }
 
     @Override
@@ -243,5 +253,43 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
 
         }
         super.exitTypename(ctx);
+    }
+
+    @Override
+    public void enterConstant(MiracleParser.ConstantContext ctx) {
+        super.enterConstant(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitConstant(MiracleParser.ConstantContext ctx) {
+        path.pop();
+        if (ctx.INTEGER() != null) {
+            path.peek().add(new MiracleASTreeConstant(new MiracleASTreeTypename("int"),
+                    ctx.INTEGER().getText()));
+        } else if (ctx.STRING() != null) {
+            path.peek().add(new MiracleASTreeConstant(new MiracleASTreeTypename("string"),
+                    ctx.STRING().getText()));
+        } else if (ctx.getText().equals("null")) {
+            path.peek().add(new MiracleASTreeConstant(new MiracleASTreeTypename("emptyobj"),
+                    ctx.STRING().getText()));
+        } else {
+            path.peek().add(new MiracleASTreeConstant(new MiracleASTreeTypename("boolean"),
+                    ctx.STRING().getText()));
+        }
+        super.exitConstant(ctx);
+    }
+
+    @Override
+    public void enterVariableExpression(MiracleParser.VariableExpressionContext ctx) {
+        super.enterVariableExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitVariableExpression(MiracleParser.VariableExpressionContext ctx) {
+        path.pop();
+        path.peek().add(new MiracleASTreeVariable());
+        super.exitVariableExpression(ctx);
     }
 }
