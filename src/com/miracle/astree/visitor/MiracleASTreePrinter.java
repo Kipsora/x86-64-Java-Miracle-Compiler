@@ -81,6 +81,7 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
     public void visit(MiracleASTreeClassDeclaration miracleASTreeClassDeclaration) {
         smartPrint("class delcaration");
         smartPrint("class id: " + miracleASTreeClassDeclaration.getIdentifier());
+        smartPrint("class extend from: " + miracleASTreeClassDeclaration.getExtend());
         smartPrint("class content: ");
         for (MiracleASTreeMemberDeclaration entry : miracleASTreeClassDeclaration.getChildren()) {
             entry.accept(this);

@@ -251,6 +251,7 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
             }
             path.peek().add(new MiracleASTreeTypename(identifier));
         } else if (ctx.getChildCount() == 1) {
+            System.out.println("fuck!");
             path.peek().add(new MiracleASTreeTypename(ctx.getChild(0).getText())); // built-in types
         } else {
             path.peek().add(new MiracleASTreeTypename(ctx.typename().getText(),      // array type
@@ -367,7 +368,7 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
         List<MiracleASTreeNode> children = path.pop();
         path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
                 ctx.operator.getText(), (MiracleASTreeExpression) children.get(1)));
-        path.push(new LinkedList<>());
+        super.exitAddSubExpression(ctx);
     }
 
     @Override

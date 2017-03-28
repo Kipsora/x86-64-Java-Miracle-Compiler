@@ -8,11 +8,11 @@ import com.miracle.exceptions.MiracleExceptionSpecialExpression;
 public class MiracleASTreeStringConcat extends MiracleASTreeBinaryExpression {
     public MiracleASTreeStringConcat(MiracleASTreeExpression left, MiracleASTreeExpression right) {
         super(new MiracleASTreeTypename("string"), left, "+", right);
-        if (!left.getType().equals("string")) {
+        if (!left.getType().equals(new MiracleASTreeTypename("string"))) {
             throw new MiracleExceptionSpecialExpression("string concat", "string",
                     left.getType().toString());
         }
-        if (!right.getType().equals("string")) {
+        if (!right.getType().equals(new MiracleASTreeTypename("string"))) {
             throw new MiracleExceptionSpecialExpression("string concat", "string",
                     right.getType().toString());
         }

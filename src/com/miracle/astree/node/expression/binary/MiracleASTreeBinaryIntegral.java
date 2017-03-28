@@ -8,10 +8,10 @@ import com.miracle.exceptions.MiracleExceptionSpecialExpression;
 public class MiracleASTreeBinaryIntegral extends MiracleASTreeBinaryExpression {
     public MiracleASTreeBinaryIntegral(MiracleASTreeExpression left, OPERATOR op, MiracleASTreeExpression right) {
         super(new MiracleASTreeTypename("int"), left, op.toString(), right);
-        if (!left.getType().equals("int")) {
+        if (!left.getType().equals(new MiracleASTreeTypename("int"))) {
             throw new MiracleExceptionSpecialExpression("arithmetic", "int", left.getType().toString());
         }
-        if (!right.getType().equals("int")) {
+        if (!right.getType().equals(new MiracleASTreeTypename("int"))) {
             throw new MiracleExceptionSpecialExpression("arithmetic", "int", right.getType().toString());
         }
     }

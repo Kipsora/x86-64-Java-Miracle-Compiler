@@ -3,10 +3,14 @@ package com.miracle.astree.node.expression.binary;
 import com.miracle.astree.node.MiracleASTreeTypename;
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
+import com.miracle.exceptions.MiracleExceptionCompareExpression;
 
 public class MiracleASTreeCompare extends MiracleASTreeBinaryExpression {
     public MiracleASTreeCompare(MiracleASTreeExpression left, OPERATOR operator, MiracleASTreeExpression right) {
         super(new MiracleASTreeTypename("boolean"), left, operator.toString(), right);
+        if (!left.getType().equals(right.getType())) {
+            throw new MiracleExceptionCompareExpression(left.getType().toString(), right.getType().toString());
+        }
     }
 
     @Override

@@ -13,7 +13,7 @@ public class MiracleExceptionSpecialExpression extends MiracleException {
 
     @Override
     public String toString() {
-        return "only \"" + need + "\" can be used in " + name + " expressions, but \" type \""
+        return "only \"" + need + "\" can be used in " + name + " expressions, but type \""
                 + type + "\"  was found.";
     }
 }
