@@ -5,6 +5,8 @@ import com.miracle.astree.node.MiracleASTreeNode;
 import com.miracle.astree.node.MiracleASTreeRoot;
 import com.miracle.astree.node.MiracleASTreeTypename;
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
+import com.miracle.astree.node.expression.MiracleASTreeExpressionFactory;
+import com.miracle.astree.node.expression.multiary.MiracleASTreeNewExpression;
 import com.miracle.astree.node.expression.value.MiracleASTreeConstant;
 import com.miracle.astree.node.expression.value.MiracleASTreeVariable;
 import com.miracle.astree.node.statement.MiracleASTreeBlock;
@@ -273,11 +275,10 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
             path.peek().add(new MiracleASTreeConstant(new MiracleASTreeTypename("string"),
                     ctx.STRING().getText()));
         } else if (ctx.getText().equals("null")) {
-            path.peek().add(new MiracleASTreeConstant(new MiracleASTreeTypename("emptyobj"),
-                    ctx.STRING().getText()));
+            path.peek().add(new MiracleASTreeConstant(new MiracleASTreeTypename("emptyobj"), "null"));
         } else {
             path.peek().add(new MiracleASTreeConstant(new MiracleASTreeTypename("boolean"),
-                    ctx.STRING().getText()));
+                    ctx.getText()));
         }
         super.exitConstant(ctx);
     }
@@ -298,5 +299,200 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
         MiracleASTreeVariableDeclaration tmp = (MiracleASTreeVariableDeclaration) MiracleEnvironmentReader.get(id);
         path.peek().add(new MiracleASTreeVariable(tmp));
         super.exitVariableExpression(ctx);
+    }
+
+    @Override
+    public void enterSuffixExpression(MiracleParser.SuffixExpressionContext ctx) {
+        super.enterSuffixExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitSuffixExpression(MiracleParser.SuffixExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(MiracleASTreeExpressionFactory.getInstance(ctx.operator.getText(),
+                (MiracleASTreeExpression) children.get(0)));
+        super.exitSuffixExpression(ctx);
+    }
+
+    @Override
+    public void enterPrefixExpression(MiracleParser.PrefixExpressionContext ctx) {
+        super.enterPrefixExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitPrefixExpression(MiracleParser.PrefixExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
+                ctx.operator.getText()));
+        super.exitPrefixExpression(ctx);
+    }
+
+    @Override
+    public void enterNewExpression(MiracleParser.NewExpressionContext ctx) {
+        super.enterNewExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitNewExpression(MiracleParser.NewExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(new MiracleASTreeNewExpression((MiracleASTreeTypename) children.get(0)));
+        super.exitNewExpression(ctx);
+    }
+
+    @Override
+    public void enterMultDivExpression(MiracleParser.MultDivExpressionContext ctx) {
+        super.enterMultDivExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitMultDivExpression(MiracleParser.MultDivExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
+                ctx.operator.getText(), (MiracleASTreeExpression) children.get(1)));
+        super.exitMultDivExpression(ctx);
+    }
+
+    @Override
+    public void enterAddSubExpression(MiracleParser.AddSubExpressionContext ctx) {
+        super.enterAddSubExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitAddSubExpression(MiracleParser.AddSubExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
+                ctx.operator.getText(), (MiracleASTreeExpression) children.get(1)));
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void enterShlShrExpression(MiracleParser.ShlShrExpressionContext ctx) {
+        super.enterShlShrExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitShlShrExpression(MiracleParser.ShlShrExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
+                ctx.operator.getText(), (MiracleASTreeExpression) children.get(1)));
+        super.exitShlShrExpression(ctx);
+    }
+
+    @Override
+    public void enterCompareExpression(MiracleParser.CompareExpressionContext ctx) {
+        super.enterCompareExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitCompareExpression(MiracleParser.CompareExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
+                ctx.operator.getText(), (MiracleASTreeExpression) children.get(1)));
+        super.exitCompareExpression(ctx);
+    }
+
+    @Override
+    public void enterEqualityExpression(MiracleParser.EqualityExpressionContext ctx) {
+        super.enterEqualityExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitEqualityExpression(MiracleParser.EqualityExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
+                ctx.operator.getText(), (MiracleASTreeExpression) children.get(1)));
+        super.exitEqualityExpression(ctx);
+    }
+
+    @Override
+    public void enterAndExpression(MiracleParser.AndExpressionContext ctx) {
+        super.enterAndExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitAndExpression(MiracleParser.AndExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
+                "&", (MiracleASTreeExpression) children.get(1)));
+        super.exitAndExpression(ctx);
+    }
+
+    @Override
+    public void enterXorExpression(MiracleParser.XorExpressionContext ctx) {
+        super.enterXorExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitXorExpression(MiracleParser.XorExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
+                "^", (MiracleASTreeExpression) children.get(1)));
+        super.exitXorExpression(ctx);
+    }
+
+    @Override
+    public void enterOrExpression(MiracleParser.OrExpressionContext ctx) {
+        super.enterOrExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitOrExpression(MiracleParser.OrExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
+                "|", (MiracleASTreeExpression) children.get(1)));
+        super.exitOrExpression(ctx);
+    }
+
+    @Override
+    public void enterLogicAndExpression(MiracleParser.LogicAndExpressionContext ctx) {
+        super.enterLogicAndExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitLogicAndExpression(MiracleParser.LogicAndExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
+                "&&", (MiracleASTreeExpression) children.get(1)));
+        super.exitLogicAndExpression(ctx);
+    }
+
+    @Override
+    public void enterLogicOrExpression(MiracleParser.LogicOrExpressionContext ctx) {
+        super.enterLogicOrExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitLogicOrExpression(MiracleParser.LogicOrExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
+                "||", (MiracleASTreeExpression) children.get(1)));
+        super.exitLogicOrExpression(ctx);
+    }
+
+    @Override
+    public void enterAssignExpression(MiracleParser.AssignExpressionContext ctx) {
+        super.enterAssignExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitAssignExpression(MiracleParser.AssignExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
+                "=", (MiracleASTreeExpression) children.get(1)));
+        super.exitAssignExpression(ctx);
     }
 }

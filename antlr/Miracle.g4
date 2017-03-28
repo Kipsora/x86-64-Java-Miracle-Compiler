@@ -46,26 +46,26 @@ typename: 'void'
  * Here expression means every expression has a value after processed,
  * particularly, the void value.
  */
-expression: constant                                                                        #constantExpression
-    | IDENTIFIER                                                                            #variableExpression
+expression: constant                                                                        #constantExpression        /* Completed x 2 */
+    | IDENTIFIER                                                                            #variableExpression        /* Completed x 2 */
     | '(' expression ')'                                                                    #braceExpression
     | expression '(' expression? (',' expression)* ')'                                      #functionCallExpression
     | expression '[' expression ']'                                                         #subscriptExpression
     | expression '.' IDENTIFIER                                                             #memberExpression
-    | <assoc=right> expression operator=('++' | '--')                                       #suffixExpression          /* Completed */
-    | <assoc=right> operator=('!' | '+' | '-' | '~' | '++' | '--') expression               #prefixExpression          /* Completed */
-    | 'new' typename ('[' expression ']')*('[]')*                                           #newExpression             /* Completed */
-    | expression operator=('*' | '/' | '%') expression                                      #multDivExpression         /* Completed */
-    | expression operator=('+' | '-') expression                                            #addSubExpression          /* Completed */
-    | expression operator=('<<' | '>>') expression                                          #shlShrExpression          /* Completed */
-    | expression operator=('<' | '<=' | '>' | '>=') expression                              #compareExpression         /* Completed */
-    | expression operator=('==' | '!=') expression                                          #equalityExpression        /* Completed */
-    | expression '&' expression                                                             #andExpression             /* Completed */
-    | expression '^' expression                                                             #xorExpression             /* Completed */
-    | expression '|' expression                                                             #orExpression              /* Completed */
-    | expression '&&' expression                                                            #logicAndExpression        /* Completed */
-    | expression '||' expression                                                            #logicOrExpression         /* Completed */
-    | <assoc=right> expression '=' expression                                               #assignExpression          /* Completed */
+    | <assoc=right> expression operator=('++' | '--')                                       #suffixExpression          /* Completed x 2*/
+    | <assoc=right> operator=('!' | '+' | '-' | '~' | '++' | '--') expression               #prefixExpression          /* Completed x 2*/
+    | 'new' typename ('[' expression ']')*('[]')*                                           #newExpression             /* Completed x 2*/
+    | expression operator=('*' | '/' | '%') expression                                      #multDivExpression         /* Completed x 2*/
+    | expression operator=('+' | '-') expression                                            #addSubExpression          /* Completed x 2*/
+    | expression operator=('<<' | '>>') expression                                          #shlShrExpression          /* Completed x 2*/
+    | expression operator=('<' | '<=' | '>' | '>=') expression                              #compareExpression         /* Completed x 2*/
+    | expression operator=('==' | '!=') expression                                          #equalityExpression        /* Completed x 2*/
+    | expression '&' expression                                                             #andExpression             /* Completed x 2*/
+    | expression '^' expression                                                             #xorExpression             /* Completed x 2*/
+    | expression '|' expression                                                             #orExpression              /* Completed x 2*/
+    | expression '&&' expression                                                            #logicAndExpression        /* Completed x 2*/
+    | expression '||' expression                                                            #logicOrExpression         /* Completed x 2*/
+    | <assoc=right> expression '=' expression                                               #assignExpression          /* Completed x 2*/
     ;
 
 constant: INTEGER

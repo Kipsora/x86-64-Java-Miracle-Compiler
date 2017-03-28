@@ -7,7 +7,7 @@ import com.miracle.astree.visitor.MiracleASTreeVisitor;
 public class MiracleASTreeNewExpression extends MiracleASTreeExpression {
     private final MiracleASTreeTypename type;
 
-    protected MiracleASTreeNewExpression(MiracleASTreeTypename type) {
+    public MiracleASTreeNewExpression(MiracleASTreeTypename type) {
         super(type, "new", true);
         this.type = type;
     }
