@@ -2,7 +2,7 @@ package com.miracle.scanner.listener;
 
 import com.miracle.cstree.MiracleParser;
 import com.miracle.exceptions.MiracleExceptionStatementScope;
-import com.miracle.scanner.environment.manager.MiracleEnvironmentManager;
+import com.miracle.scanner.environment.MiracleEnvironmentManager;
 
 public abstract class MiracleScopeChecker extends MiracleRuntimeMaintainer {
     MiracleScopeChecker(MiracleEnvironmentManager environment) {

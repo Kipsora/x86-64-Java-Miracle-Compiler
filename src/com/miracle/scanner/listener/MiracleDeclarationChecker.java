@@ -1,7 +1,7 @@
 package com.miracle.scanner.listener;
 
 import com.miracle.cstree.MiracleParser;
-import com.miracle.scanner.environment.manager.MiracleEnvironmentLoader;
+import com.miracle.scanner.environment.MiracleEnvironmentLoader;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.List;

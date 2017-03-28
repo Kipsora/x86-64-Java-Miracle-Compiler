@@ -2,7 +2,7 @@ package com.miracle.scanner.listener;
 
 import com.miracle.cstree.MiracleBaseListener;
 import com.miracle.cstree.MiracleParser;
-import com.miracle.scanner.environment.manager.MiracleEnvironmentManager;
+import com.miracle.scanner.environment.MiracleEnvironmentManager;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class MiracleRuntimeMaintainer extends MiracleBaseListener {

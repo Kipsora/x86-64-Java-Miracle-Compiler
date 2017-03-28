@@ -20,8 +20,10 @@ public class MiracleASTreeFor extends MiracleASTreeStatement {
         this.middleExpression = middleExpression;
         this.rightExpression = rightExpression;
         this.statement = statement;
-        if (!middleExpression.getType().equals(new MiracleASTreeTypename("boolean"))) {
-            throw new MiracleExceptionJudgeExpression(middleExpression.getType().toString());
+        if (middleExpression != null) {
+            if (!middleExpression.getType().equals(new MiracleASTreeTypename("boolean"))) {
+                throw new MiracleExceptionJudgeExpression(middleExpression.getType().toString());
+            }
         }
     }
 

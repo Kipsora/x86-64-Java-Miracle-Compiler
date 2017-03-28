@@ -23,7 +23,7 @@ import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
 import com.miracle.cstree.MiracleParser;
 import com.miracle.exceptions.MiracleExceptionUndefinedIdentifier;
-import com.miracle.scanner.environment.manager.MiracleEnvironmentReader;
+import com.miracle.scanner.environment.MiracleEnvironmentReader;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -165,14 +165,16 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
         MiracleASTreeExpression[] node = new MiracleASTreeExpression[3];
         MiracleASTreeStatement statement = null;
         int consumed = 0;
-        for (int i = 0, j = 0; i < ctx.getChildCount(); i++) {
+        for (int i = 0, j = 0; i < ctx.getChildCount() && j < 3; i++) {
             if (ctx.getChild(i).getText().equals(";") || ctx.getChild(i).getText().equals(")")) {
-                if (!ctx.getChild(i - 1).getText().equals("(") && !ctx.getChild(i).getText().equals(";")) {
+                if (!ctx.getChild(i - 1).getText().equals("(") && !ctx.getChild(i - 1).getText().equals(";")
+                        && ctx.getChild(i).getText().equals(";")) {
+                    System.out.println(ctx.getChild(i - 1).getText() + " " + ctx.getChild(i).getText());
                     node[j] = (MiracleASTreeExpression) children.get(consumed++);
                 }
                 j++;
             }
-            if (ctx.getChild(i).getText().equals(")")) {
+            if (ctx.getChild(i).getText().equals(")") && !ctx.getChild(i - 1).getText().equals(";")) {
                 statement = (MiracleASTreeStatement) children.get(consumed++);
             }
         }
@@ -251,7 +253,6 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
             }
             path.peek().add(new MiracleASTreeTypename(identifier));
         } else if (ctx.getChildCount() == 1) {
-            System.out.println("fuck!");
             path.peek().add(new MiracleASTreeTypename(ctx.getChild(0).getText())); // built-in types
         } else {
             path.peek().add(new MiracleASTreeTypename(ctx.typename().getText(),      // array type
