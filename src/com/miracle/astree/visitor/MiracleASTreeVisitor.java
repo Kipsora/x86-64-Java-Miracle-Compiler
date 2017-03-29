@@ -78,4 +78,6 @@ public interface MiracleASTreeVisitor {
     void visit(MiracleASTreeFunction miracleASTreeFunction);
 
     void visit(MiracleASTreeTypename miracleASTreeTypename);
+
+    void visit(MiracleASTreeSubscript miracleASTreeSubscript);
 }

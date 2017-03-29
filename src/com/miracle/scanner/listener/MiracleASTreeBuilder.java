@@ -233,7 +233,12 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
     @Override
     public void exitReturnStatement(MiracleParser.ReturnStatementContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(new MiracleASTreeReturn((MiracleASTreeExpression) children.get(0)));
+
+        if (ctx.expression() == null) {
+            path.peek().add(new MiracleASTreeReturn());
+        } else {
+            path.peek().add(new MiracleASTreeReturn((MiracleASTreeExpression) children.get(0)));
+        }
         super.exitReturnStatement(ctx);
     }
 
@@ -561,7 +566,9 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
 
     @Override
     public void exitSubscriptExpression(MiracleParser.SubscriptExpressionContext ctx) {
-
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
+                "[]", (MiracleASTreeExpression) children.get(1)));
         super.exitSubscriptExpression(ctx);
     }
 }

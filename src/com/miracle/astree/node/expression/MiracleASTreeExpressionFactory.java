@@ -87,6 +87,8 @@ public class MiracleASTreeExpressionFactory {
                 return new MiracleASTreeBinaryIntegral(left, MiracleASTreeBinaryIntegral.OPERATOR.SHL, right);
             case ">>":
                 return new MiracleASTreeBinaryIntegral(left, MiracleASTreeBinaryIntegral.OPERATOR.SHR, right);
+            case "[]":
+                return new MiracleASTreeSubscript(left, right);
             default:
                 return null;
         }
