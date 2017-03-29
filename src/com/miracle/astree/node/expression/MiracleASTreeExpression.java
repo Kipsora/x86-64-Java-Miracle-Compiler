@@ -1,7 +1,7 @@
 package com.miracle.astree.node.expression;
 
 import com.miracle.astree.node.MiracleASTreeNode;
-import com.miracle.astree.node.MiracleASTreeTypename;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 
 public abstract class MiracleASTreeExpression extends MiracleASTreeNode {
     private final boolean mutable;

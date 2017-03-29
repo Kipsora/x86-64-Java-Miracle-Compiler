@@ -12,4 +12,10 @@ public abstract class MiracleASTreeDeclaration extends MiracleASTreeStatement {
     public String getIdentifier() {
         return identifier;
     }
+
+    public abstract DECTYPE getDeclarationType();
+
+    public enum DECTYPE {
+        DEC_FUNC, DEC_VAR, DEC_CLASS
+    }
 }

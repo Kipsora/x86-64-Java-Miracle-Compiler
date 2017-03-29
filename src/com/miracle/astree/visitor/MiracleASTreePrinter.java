@@ -69,11 +69,11 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
         smartPrint("var id: " + miracleASTreeVariableDeclaration.getIdentifier());
         smartPrint("var deco: " + miracleASTreeVariableDeclaration.getDecorator());
         smartPrint("var type: " + miracleASTreeVariableDeclaration.getType().toString());
-        if (miracleASTreeVariableDeclaration.getValue() == null) {
+        if (miracleASTreeVariableDeclaration.getInitExpression() == null) {
             smartPrint("var exp: null");
         } else {
             smartPrint("var exp: ");
-            miracleASTreeVariableDeclaration.getValue().accept(this);
+            miracleASTreeVariableDeclaration.getInitExpression().accept(this);
         }
     }
 

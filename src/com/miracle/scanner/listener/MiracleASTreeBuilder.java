@@ -3,25 +3,25 @@ package com.miracle.scanner.listener;
 import com.miracle.astree.MiracleASTree;
 import com.miracle.astree.node.MiracleASTreeNode;
 import com.miracle.astree.node.MiracleASTreeRoot;
-import com.miracle.astree.node.MiracleASTreeTypename;
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.node.expression.MiracleASTreeExpressionFactory;
+import com.miracle.astree.node.expression.multiary.MiracleASTreeCallExpression;
 import com.miracle.astree.node.expression.multiary.MiracleASTreeNewExpression;
 import com.miracle.astree.node.expression.value.MiracleASTreeConstant;
-import com.miracle.astree.node.expression.value.MiracleASTreeVariable;
+import com.miracle.astree.node.expression.value.MiracleASTreeFunction;
 import com.miracle.astree.node.statement.MiracleASTreeBlock;
 import com.miracle.astree.node.statement.MiracleASTreeSelection;
 import com.miracle.astree.node.statement.MiracleASTreeStatement;
 import com.miracle.astree.node.statement.control.MiracleASTreeBreak;
 import com.miracle.astree.node.statement.control.MiracleASTreeContinue;
 import com.miracle.astree.node.statement.control.MiracleASTreeReturn;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeClassDeclaration;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclaration;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeMemberDeclaration;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
+import com.miracle.astree.node.statement.declaration.*;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
 import com.miracle.cstree.MiracleParser;
+import com.miracle.exceptions.MiracleExceptionArguments;
+import com.miracle.exceptions.MiracleExceptionCallVariable;
+import com.miracle.exceptions.MiracleExceptionMember;
 import com.miracle.exceptions.MiracleExceptionUndefinedIdentifier;
 import com.miracle.scanner.environment.MiracleEnvironmentReader;
 
@@ -299,7 +299,7 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
             throw new MiracleExceptionUndefinedIdentifier(id);
         }
         MiracleASTreeVariableDeclaration tmp = (MiracleASTreeVariableDeclaration) MiracleEnvironmentReader.get(id);
-        path.peek().add(new MiracleASTreeVariable(tmp));
+        path.peek().add(tmp.toValue());
         super.exitVariableExpression(ctx);
     }
 
@@ -496,5 +496,72 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
         path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
                 "=", (MiracleASTreeExpression) children.get(1)));
         super.exitAssignExpression(ctx);
+    }
+
+    @Override
+    public void enterMemberExpression(MiracleParser.MemberExpressionContext ctx) {
+        super.enterMemberExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitMemberExpression(MiracleParser.MemberExpressionContext ctx) {
+        MiracleASTreeExpression left = (MiracleASTreeExpression) path.pop().get(0);
+        MiracleASTreeTypename type = left.getType();
+        String identifier = ctx.IDENTIFIER().getText();
+        if (type.getTypenameType().equals(MiracleASTreeTypename.TYPE.TN_FUNC)
+                || type.getDimension() != 0) {
+            throw new MiracleExceptionMember(type.toString(), identifier);
+        }
+        if (!MiracleEnvironmentReader.get(type.toString()).getDeclarationType()
+                .equals(MiracleASTreeDeclaration.DECTYPE.DEC_CLASS)) {
+            throw new MiracleExceptionMember(type.toString(), identifier);
+        }
+        MiracleASTreeClassDeclaration declaration = (MiracleASTreeClassDeclaration) MiracleEnvironmentReader.get(type.toString());
+        if (!declaration.contain(identifier)) {
+            throw new MiracleExceptionMember(type.toString(), identifier);
+        }
+        path.peek().add(declaration.getMember(identifier).toValue());
+        super.exitMemberExpression(ctx);
+    }
+
+    @Override
+    public void enterFunctionCallExpression(MiracleParser.FunctionCallExpressionContext ctx) {
+        super.enterFunctionCallExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitFunctionCallExpression(MiracleParser.FunctionCallExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        MiracleASTreeExpression head = (MiracleASTreeExpression) children.get(0);
+        MiracleASTreeTypename orgtype = head.getType();
+        if (orgtype.getTypenameType().equals(MiracleASTreeTypename.TYPE.TN_VAR)) {
+            throw new MiracleExceptionCallVariable();
+        }
+        List<MiracleASTreeTypename> argtype = new LinkedList<>();
+        List<MiracleASTreeExpression> args = new LinkedList<>();
+        for (int i = 1; i < children.size(); i++) {
+            argtype.add(((MiracleASTreeExpression) children.get(i)).getType());
+            args.add(((MiracleASTreeExpression) children.get(i)));
+        }
+        if (!orgtype.match(argtype)) {
+            throw new MiracleExceptionArguments(MiracleASTreeTypename.getArgStyle(orgtype.getArguments()),
+                    MiracleASTreeTypename.getArgStyle(argtype));
+        }
+        path.peek().add(new MiracleASTreeCallExpression((MiracleASTreeFunction) head, args));
+        super.exitFunctionCallExpression(ctx);
+    }
+
+    @Override
+    public void enterSubscriptExpression(MiracleParser.SubscriptExpressionContext ctx) {
+        super.enterSubscriptExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitSubscriptExpression(MiracleParser.SubscriptExpressionContext ctx) {
+
+        super.exitSubscriptExpression(ctx);
     }
 }

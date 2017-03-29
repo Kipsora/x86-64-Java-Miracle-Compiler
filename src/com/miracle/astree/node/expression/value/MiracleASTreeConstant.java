@@ -1,6 +1,6 @@
 package com.miracle.astree.node.expression.value;
 
-import com.miracle.astree.node.MiracleASTreeTypename;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 
 public class MiracleASTreeConstant extends MiracleASTreeValue {

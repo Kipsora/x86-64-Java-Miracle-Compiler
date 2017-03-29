@@ -1,10 +1,10 @@
 package com.miracle.astree.node.expression.value;
 
-import com.miracle.astree.node.MiracleASTreeTypename;
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 
 public abstract class MiracleASTreeValue extends MiracleASTreeExpression {
-    protected MiracleASTreeValue(MiracleASTreeTypename type, boolean mutable) {
+    MiracleASTreeValue(MiracleASTreeTypename type, boolean mutable) {
         super(type, "value", mutable);
     }
 }

@@ -43,15 +43,15 @@ typename: 'void'
     ;
 
 /**
- * Here expression means every expression has a value after processed,
- * particularly, the void value.
+ * Here expression means every expression has a expression after processed,
+ * particularly, the void expression.
  */
 expression: constant                                                                        #constantExpression        /* Completed x 2 */
     | IDENTIFIER                                                                            #variableExpression        /* Completed x 2 */
     | '(' expression ')'                                                                    #braceExpression
-    | expression '(' expression? (',' expression)* ')'                                      #functionCallExpression
+    | expression '(' expression? (',' expression)* ')'                                      #functionCallExpression    /* Completed x 2*/
     | expression '[' expression ']'                                                         #subscriptExpression
-    | expression '.' IDENTIFIER                                                             #memberExpression
+    | expression '.' IDENTIFIER                                                             #memberExpression          /* Completed x 2*/
     | <assoc=right> expression operator=('++' | '--')                                       #suffixExpression          /* Completed x 2*/
     | <assoc=right> operator=('!' | '+' | '-' | '~' | '++' | '--') expression               #prefixExpression          /* Completed x 2*/
     | 'new' typename ('[' expression ']')*('[]')*                                           #newExpression             /* Completed x 2*/

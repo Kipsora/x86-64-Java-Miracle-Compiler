@@ -1,13 +1,14 @@
 package com.miracle.astree.visitor;
 
 import com.miracle.astree.node.MiracleASTreeRoot;
-import com.miracle.astree.node.MiracleASTreeTypename;
 import com.miracle.astree.node.expression.binary.*;
+import com.miracle.astree.node.expression.multiary.MiracleASTreeCallExpression;
 import com.miracle.astree.node.expression.multiary.MiracleASTreeNewExpression;
 import com.miracle.astree.node.expression.unary.prefix.MiracleASTreeNegate;
 import com.miracle.astree.node.expression.unary.prefix.MiracleASTreePrefixIntegral;
 import com.miracle.astree.node.expression.unary.suffix.MiracleASTreeSuffixIntegral;
 import com.miracle.astree.node.expression.value.MiracleASTreeConstant;
+import com.miracle.astree.node.expression.value.MiracleASTreeFunction;
 import com.miracle.astree.node.expression.value.MiracleASTreeVariable;
 import com.miracle.astree.node.statement.MiracleASTreeBlock;
 import com.miracle.astree.node.statement.MiracleASTreeSelection;
@@ -16,6 +17,7 @@ import com.miracle.astree.node.statement.control.MiracleASTreeContinue;
 import com.miracle.astree.node.statement.control.MiracleASTreeReturn;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeClassDeclaration;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclaration;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
@@ -51,8 +53,6 @@ public interface MiracleASTreeVisitor {
 
     void visit(MiracleASTreeFunctionDeclaration miracleASTreeFunctionDeclaration);
 
-    void visit(MiracleASTreeTypename miracleASTreeTypename);
-
     void visit(MiracleASTreeMember miracleASTreeMember);
 
     void visit(MiracleASTreeBlock miracleASTreeBlock);
@@ -72,4 +72,10 @@ public interface MiracleASTreeVisitor {
     void visit(MiracleASTreeConstant miracleASTreeConstant);
 
     void visit(MiracleASTreeVariable miracleASTreeVariable);
+
+    void visit(MiracleASTreeCallExpression miracleASTreeCallExpression);
+
+    void visit(MiracleASTreeFunction miracleASTreeFunction);
+
+    void visit(MiracleASTreeTypename miracleASTreeTypename);
 }

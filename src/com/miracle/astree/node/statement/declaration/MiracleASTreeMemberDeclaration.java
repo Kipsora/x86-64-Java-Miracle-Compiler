@@ -1,6 +1,6 @@
 package com.miracle.astree.node.statement.declaration;
 
-import com.miracle.astree.node.MiracleASTreeTypename;
+import com.miracle.astree.node.expression.value.MiracleASTreeValue;
 
 public abstract class MiracleASTreeMemberDeclaration extends MiracleASTreeDeclaration {
     private final String decorator;
@@ -20,4 +20,6 @@ public abstract class MiracleASTreeMemberDeclaration extends MiracleASTreeDeclar
     }
 
     public abstract MiracleASTreeTypename getType();
+
+    public abstract MiracleASTreeValue toValue();
 }
