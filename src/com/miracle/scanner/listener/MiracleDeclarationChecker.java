@@ -6,7 +6,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.List;
 
-public class MiracleDeclarationChecker extends MiracleScopeChecker {
+public class MiracleDeclarationChecker extends MiracleRuntimeMaintainer {
     public MiracleDeclarationChecker() {
         super(new MiracleEnvironmentLoader());
     }

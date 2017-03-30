@@ -2,29 +2,18 @@ package com.miracle.astree.node.statement.control;
 
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclaration;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
-import com.miracle.exceptions.MiracleExceptionReturn;
 
 public class MiracleASTreeReturn extends MiracleASTreeControl {
     private final MiracleASTreeExpression expression;
-    private final MiracleASTreeFunctionDeclaration function;
+    private MiracleASTreeFunctionDeclaration function;
 
-    public MiracleASTreeReturn(MiracleASTreeExpression expression, MiracleASTreeFunctionDeclaration function) {
+    public MiracleASTreeReturn(MiracleASTreeExpression expression) {
         this.expression = expression;
-        this.function = function;
-        if (!function.getRetType().equals(expression.getType())) {
-            throw new MiracleExceptionReturn(function.getRetType().toString(),
-                    expression.getType().toString());
-        }
     }
 
-    public MiracleASTreeReturn(MiracleASTreeFunctionDeclaration function) {
+    public MiracleASTreeReturn() {
         this.expression = null;
-        this.function = function;
-        if (!function.getRetType().equals(new MiracleASTreeTypename("void"))) {
-            throw new MiracleExceptionReturn(function.getRetType().toString(), "void");
-        }
     }
 
     @Override
@@ -34,7 +23,15 @@ public class MiracleASTreeReturn extends MiracleASTreeControl {
         visitor.exit();
     }
 
+    public void link(MiracleASTreeFunctionDeclaration declaration) {
+        this.function = declaration;
+    }
+
     public MiracleASTreeFunctionDeclaration getFunction() {
         return function;
+    }
+
+    public MiracleASTreeExpression getExpression() {
+        return expression;
     }
 }

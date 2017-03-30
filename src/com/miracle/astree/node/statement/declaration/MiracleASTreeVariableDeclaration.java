@@ -16,43 +16,31 @@ public class MiracleASTreeVariableDeclaration extends MiracleASTreeMemberDeclara
         this.expression = null;
     }
 
-    public MiracleASTreeVariableDeclaration(String identifier, MiracleASTreeTypename type, MiracleASTreeExpression expression) {
-        super(identifier);
-        this.type = type;
-        this.expression = expression;
-        if (expression.getType().equals("emptyobj")) {
-            if (type.getDimension() == 1 && (type.getBasetype().equals("int")
-                    || type.getBasetype().equals("string"))
-                    || type.getBasetype().equals("boolean")) {
-                throw new MiracleExceptionType("assignment", type.toString(),
-                        expression.getType().toString());
-            }
-        } else if (!expression.getType().equals(type)) {
-            throw new MiracleExceptionType("assignment", type.toString(),
-                    expression.getType().toString());
-        }
-    }
-
-    public MiracleASTreeVariableDeclaration(String decorator, String identifier, MiracleASTreeTypename type) {
-        super(decorator, identifier);
-        this.type = type;
-        this.expression = null;
-    }
-
-    public MiracleASTreeVariableDeclaration(String decorator, String identifier, MiracleASTreeTypename type, MiracleASTreeExpression expression) {
+    public MiracleASTreeVariableDeclaration(String decorator, String identifier, MiracleASTreeTypename type,
+                                            MiracleASTreeExpression expression) {
         super(decorator, identifier);
         this.type = type;
         this.expression = expression;
-        if (expression.getType().equals(new MiracleASTreeTypename("emptyobj"))) {
-            if (type.getDimension() == 1 && (type.getBasetype().equals("int")
-                    || type.getBasetype().equals("string"))
-                    || type.getBasetype().equals("boolean")) {
-                throw new MiracleExceptionType("assignment", type.toString(),
-                        expression.getType().toString());
+        if (expression != null) {
+            if (expression.getType().equals(new MiracleASTreeTypename("emptyobj"))) {
+                if (type.getDimension() == 1 && (type.getBasetype().equals("int")
+                        || type.getBasetype().equals("string"))
+                        || type.getBasetype().equals("boolean")) {
+                    throw new MiracleExceptionType("assignment", type.toString(),
+                            expression.getType().toString());
+                }
+            } else {
+                System.out.println(expression.getType().toString());
+                System.out.println(type.toString());
+                System.out.println(expression.getType().getArguments());
+                System.out.println(type.getArguments());
+                System.out.println(expression.getType().getBasetype());
+                System.out.println(type.getBasetype());
+                if (!expression.getType().equals(type)) {
+                    throw new MiracleExceptionType("assignment", type.toString(),
+                            expression.getType().toString());
+                }
             }
-        } else if (!expression.getType().equals(type)) {
-            throw new MiracleExceptionType("assignment", type.toString(),
-                    expression.getType().toString());
         }
     }
 

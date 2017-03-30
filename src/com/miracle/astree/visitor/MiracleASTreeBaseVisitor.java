@@ -7,6 +7,7 @@ import com.miracle.astree.node.expression.multiary.MiracleASTreeNewExpression;
 import com.miracle.astree.node.expression.unary.prefix.MiracleASTreeNegate;
 import com.miracle.astree.node.expression.unary.prefix.MiracleASTreePrefixIntegral;
 import com.miracle.astree.node.expression.unary.suffix.MiracleASTreeSuffixIntegral;
+import com.miracle.astree.node.expression.value.MiracleASTreeArray;
 import com.miracle.astree.node.expression.value.MiracleASTreeConstant;
 import com.miracle.astree.node.expression.value.MiracleASTreeFunction;
 import com.miracle.astree.node.expression.value.MiracleASTreeVariable;
@@ -100,6 +101,16 @@ public class MiracleASTreeBaseVisitor implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeTypename miracleASTreeTypename) {
+
+    }
+
+    @Override
+    public void visit(MiracleASTreeSubscript miracleASTreeSubscript) {
+
+    }
+
+    @Override
+    public void visit(MiracleASTreeArray miracleASTreeArray) {
 
     }
 

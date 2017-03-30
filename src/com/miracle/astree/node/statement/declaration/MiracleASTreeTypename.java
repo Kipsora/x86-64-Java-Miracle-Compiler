@@ -11,22 +11,6 @@ public class MiracleASTreeTypename extends MiracleASTreeNode {
     private final int dimension;
     private final List<MiracleASTreeTypename> arguments;
 
-    public static String getArgStyle(List<MiracleASTreeTypename> arguments) {
-        if (arguments == null) {
-            return null;
-        }
-        StringBuilder tmp = new StringBuilder();
-        tmp.append('(');
-        boolean first = true;
-        for (MiracleASTreeTypename entry : arguments) {
-            if (!first) tmp.append(',');
-            tmp.append(entry.toString());
-            first = false;
-        }
-        tmp.append(')');
-        return tmp.toString();
-    }
-
     public MiracleASTreeTypename(String basetype, int dimension,
                                  List<MiracleASTreeTypename> arguments) {
         this.basetype = basetype;
@@ -50,6 +34,22 @@ public class MiracleASTreeTypename extends MiracleASTreeNode {
         this.basetype = basetype;
         this.dimension = 0;
         this.arguments = null;
+    }
+
+    public static String getArgStyle(List<MiracleASTreeTypename> arguments) {
+        if (arguments == null) {
+            return null;
+        }
+        StringBuilder tmp = new StringBuilder();
+        tmp.append('(');
+        boolean first = true;
+        for (MiracleASTreeTypename entry : arguments) {
+            if (!first) tmp.append(',');
+            tmp.append(entry.toString());
+            first = false;
+        }
+        tmp.append(')');
+        return tmp.toString();
     }
 
     public List<MiracleASTreeTypename> getArguments() {

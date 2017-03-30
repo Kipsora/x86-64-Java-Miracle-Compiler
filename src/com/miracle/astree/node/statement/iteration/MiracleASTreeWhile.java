@@ -6,7 +6,7 @@ import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionJudgeExpression;
 
-public class MiracleASTreeWhile extends MiracleASTreeStatement {
+public class MiracleASTreeWhile extends MiracleASTreeIteration {
     private final MiracleASTreeExpression expression;
     private final MiracleASTreeStatement statement;
 
@@ -23,5 +23,13 @@ public class MiracleASTreeWhile extends MiracleASTreeStatement {
         visitor.enter();
         visitor.visit(this);
         visitor.exit();
+    }
+
+    public MiracleASTreeExpression getExpression() {
+        return expression;
+    }
+
+    public MiracleASTreeStatement getStatement() {
+        return statement;
     }
 }

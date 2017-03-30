@@ -19,17 +19,14 @@ import com.miracle.astree.node.statement.declaration.*;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
 import com.miracle.cstree.MiracleParser;
-import com.miracle.exceptions.MiracleExceptionArguments;
-import com.miracle.exceptions.MiracleExceptionCallVariable;
-import com.miracle.exceptions.MiracleExceptionMember;
-import com.miracle.exceptions.MiracleExceptionUndefinedIdentifier;
+import com.miracle.exceptions.*;
 import com.miracle.scanner.environment.MiracleEnvironmentReader;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-public class MiracleASTreeBuilder extends MiracleScopeChecker {
+public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     private Stack<List<MiracleASTreeNode>> path = new Stack<>();
 
     public MiracleASTreeBuilder() {
@@ -169,7 +166,6 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
             if (ctx.getChild(i).getText().equals(";") || ctx.getChild(i).getText().equals(")")) {
                 if (!ctx.getChild(i - 1).getText().equals("(") && !ctx.getChild(i - 1).getText().equals(";")
                         && ctx.getChild(i).getText().equals(";")) {
-                    System.out.println(ctx.getChild(i - 1).getText() + " " + ctx.getChild(i).getText());
                     node[j] = (MiracleASTreeExpression) children.get(consumed++);
                 }
                 j++;
@@ -239,6 +235,7 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
         } else {
             path.peek().add(new MiracleASTreeReturn((MiracleASTreeExpression) children.get(0)));
         }
+
         super.exitReturnStatement(ctx);
     }
 
@@ -251,17 +248,25 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
     @Override
     public void exitTypename(MiracleParser.TypenameContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        if (ctx.IDENTIFIER() != null) {                                              // custom types
+        int dimension = 0;
+        if (ctx.IDENTIFIER() != null) {
             String identifier = ctx.IDENTIFIER().getText();
             if (!MiracleEnvironmentReader.contain(identifier)) {
                 throw new MiracleExceptionUndefinedIdentifier(identifier);
             }
-            path.peek().add(new MiracleASTreeTypename(identifier));
-        } else if (ctx.getChildCount() == 1) {
-            path.peek().add(new MiracleASTreeTypename(ctx.getChild(0).getText())); // built-in types
+            for (int i = 1; i < ctx.getChildCount(); i++) {
+                if (ctx.getChild(i).getText().equals("[")) {
+                    dimension++;
+                }
+            }
+            path.peek().add(new MiracleASTreeTypename(ctx.IDENTIFIER().getText(), dimension));
         } else {
-            path.peek().add(new MiracleASTreeTypename(ctx.typename().getText(),      // array type
-                    ctx.getChildCount() - 1));
+            for (int i = 1; i < ctx.getChildCount(); i++) {                          // custom types
+                if (ctx.getChild(i).getText().equals("[")) {
+                    dimension++;
+                }
+            }
+            path.peek().add(new MiracleASTreeTypename(ctx.BASETYPE().getText(), dimension));
         }
         super.exitTypename(ctx);
     }
@@ -345,7 +350,39 @@ public class MiracleASTreeBuilder extends MiracleScopeChecker {
     @Override
     public void exitNewExpression(MiracleParser.NewExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(new MiracleASTreeNewExpression((MiracleASTreeTypename) children.get(0)));
+        List<MiracleASTreeExpression> size = new LinkedList<>();
+        MiracleASTreeTypename type = (MiracleASTreeTypename) children.get(0);
+        if (type.getDimension() != 0) {
+            throw new MiracleExceptionNewType(type.toString());
+        }
+        int dimension = 0;
+        for (int i = 0, j = 1; i < ctx.getChildCount(); i++) {
+            if (ctx.getChild(i).getText().equals("[") && j < children.size()) {
+                MiracleASTreeExpression expression = (MiracleASTreeExpression) children.get(j++);
+                if (!expression.getType().equals(new MiracleASTreeTypename("int"))) {
+                    throw new MiracleExceptionNewSubscript(expression.getType().toString());
+                }
+                size.add(expression);
+            }
+            System.out.println("token :" + ctx.getChild(i).getText());
+            if (ctx.getChild(i).getText().equals("[")) {
+                dimension++;
+            }
+        }
+        if (dimension == 0) {
+            if (type.getBasetype().equals("int") || type.getBasetype().equals("boolean")
+                    || type.getBasetype().equals("void") || type.getBasetype().equals("string")) {
+                throw new MiracleExceptionNewBaseType();
+            }
+        }
+        System.out.println("dimension analysis: " + dimension);
+        path.peek().add(new MiracleASTreeNewExpression(
+                new MiracleASTreeTypename(
+                        type.toString(),
+                        dimension
+                ),
+                size
+        ));
         super.exitNewExpression(ctx);
     }
 

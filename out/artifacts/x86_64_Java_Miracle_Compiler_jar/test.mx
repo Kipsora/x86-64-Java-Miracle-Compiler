@@ -1,0 +1,5 @@
+// input: 1 2 3 4
+
+int main(string [] args)  {
+	print(args[1]);
+}
