@@ -114,10 +114,6 @@ public class MiracleASTreeBaseVisitor implements MiracleASTreeVisitor {
 
     }
 
-    @Override
-    public void visit(MiracleASTreeMember miracleASTreeMember) {
-
-    }
 
     @Override
     public void visit(MiracleASTreeBlock miracleASTreeBlock) {

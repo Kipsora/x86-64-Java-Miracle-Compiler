@@ -7,19 +7,24 @@ import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionJudgeExpression;
 
 public class MiracleASTreeFor extends MiracleASTreeIteration {
-    private final MiracleASTreeExpression leftExpression;
-    private final MiracleASTreeExpression middleExpression;
-    private final MiracleASTreeExpression rightExpression;
-    private final MiracleASTreeStatement statement;
+    private MiracleASTreeExpression leftExpression;
+    private MiracleASTreeExpression middleExpression;
+    private MiracleASTreeExpression rightExpression;
+    private MiracleASTreeStatement statement;
 
-    public MiracleASTreeFor(MiracleASTreeExpression leftExpression,
-                            MiracleASTreeExpression middleExpression,
-                            MiracleASTreeExpression rightExpression,
-                            MiracleASTreeStatement statement) {
+    @Override
+    public void accept(MiracleASTreeVisitor visitor) {
+        visitor.enter();
+        visitor.visit(this);
+        visitor.exit();
+    }
+
+    public void setLeftExpression(MiracleASTreeExpression leftExpression) {
         this.leftExpression = leftExpression;
+    }
+
+    public void setMiddleExpression(MiracleASTreeExpression middleExpression) {
         this.middleExpression = middleExpression;
-        this.rightExpression = rightExpression;
-        this.statement = statement;
         if (middleExpression != null) {
             if (!middleExpression.getType().equals(new MiracleASTreeTypename("boolean"))) {
                 throw new MiracleExceptionJudgeExpression(middleExpression.getType().toString());
@@ -27,11 +32,12 @@ public class MiracleASTreeFor extends MiracleASTreeIteration {
         }
     }
 
-    @Override
-    public void accept(MiracleASTreeVisitor visitor) {
-        visitor.enter();
-        visitor.visit(this);
-        visitor.exit();
+    public void setRightExpression(MiracleASTreeExpression rightExpression) {
+        this.rightExpression = rightExpression;
+    }
+
+    public void setStatement(MiracleASTreeStatement statement) {
+        this.statement = statement;
     }
 
     public MiracleASTreeExpression getLeftExpression() {

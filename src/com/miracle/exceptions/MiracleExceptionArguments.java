@@ -12,6 +12,6 @@ public class MiracleExceptionArguments extends MiracleException {
     @Override
     public String toString() {
         return "the function is declared to receive type of \"" + typeOrigin + "\", but given \""
-                + typeActual + ".";
+                + typeActual + "\".";
     }
 }

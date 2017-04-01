@@ -7,10 +7,7 @@ import com.miracle.astree.node.expression.multiary.MiracleASTreeNewExpression;
 import com.miracle.astree.node.expression.unary.prefix.MiracleASTreeNegate;
 import com.miracle.astree.node.expression.unary.prefix.MiracleASTreePrefixIntegral;
 import com.miracle.astree.node.expression.unary.suffix.MiracleASTreeSuffixIntegral;
-import com.miracle.astree.node.expression.value.MiracleASTreeArray;
-import com.miracle.astree.node.expression.value.MiracleASTreeConstant;
-import com.miracle.astree.node.expression.value.MiracleASTreeFunction;
-import com.miracle.astree.node.expression.value.MiracleASTreeVariable;
+import com.miracle.astree.node.expression.value.*;
 import com.miracle.astree.node.statement.MiracleASTreeBlock;
 import com.miracle.astree.node.statement.MiracleASTreeSelection;
 import com.miracle.astree.node.statement.control.MiracleASTreeBreak;
@@ -54,8 +51,6 @@ public interface MiracleASTreeVisitor {
 
     void visit(MiracleASTreeFunctionDeclaration miracleASTreeFunctionDeclaration);
 
-    void visit(MiracleASTreeMember miracleASTreeMember);
-
     void visit(MiracleASTreeBlock miracleASTreeBlock);
 
     void visit(MiracleASTreeSelection miracleASTreeSelection);
@@ -83,4 +78,8 @@ public interface MiracleASTreeVisitor {
     void visit(MiracleASTreeSubscript miracleASTreeSubscript);
 
     void visit(MiracleASTreeArray miracleASTreeArray);
+
+    void visit(MiracleASTreeThis miracleASTreeThis);
+
+    void visit(MiracleASTreeMember miracleASTreeMember);
 }

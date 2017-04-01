@@ -23,19 +23,13 @@ public class MiracleASTreeVariableDeclaration extends MiracleASTreeMemberDeclara
         this.expression = expression;
         if (expression != null) {
             if (expression.getType().equals(new MiracleASTreeTypename("emptyobj"))) {
-                if (type.getDimension() == 1 && (type.getBasetype().equals("int")
+                if (type.getDimension() == 0 && (type.getBasetype().equals("int")
                         || type.getBasetype().equals("string"))
                         || type.getBasetype().equals("boolean")) {
                     throw new MiracleExceptionType("assignment", type.toString(),
                             expression.getType().toString());
                 }
             } else {
-                System.out.println(expression.getType().toString());
-                System.out.println(type.toString());
-                System.out.println(expression.getType().getArguments());
-                System.out.println(type.getArguments());
-                System.out.println(expression.getType().getBasetype());
-                System.out.println(type.getBasetype());
                 if (!expression.getType().equals(type)) {
                     throw new MiracleExceptionType("assignment", type.toString(),
                             expression.getType().toString());

@@ -12,16 +12,14 @@ public class MiracleASTreeCallExpression extends MiracleASTreeExpression {
 
     public MiracleASTreeCallExpression(MiracleASTreeFunction function,
                                        List<MiracleASTreeExpression> arguments) {
-        super(function.getDeclaration().getType(), "function call", false);
+        super(function.getDeclaration().getReturnType(), "function call", false);
         this.function = function;
         this.arguments = arguments;
     }
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
-        visitor.enter();
         visitor.visit(this);
-        visitor.exit();
     }
 
     public MiracleASTreeFunction getFunction() {

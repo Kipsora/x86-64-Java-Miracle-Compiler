@@ -1,4 +1,4 @@
-package com.miracle.cstree;// Generated from Miracle.g4 by ANTLR 4.6
+package com.miracle.cstree;// Generated from Miracle.g4 by ANTLR 4.7
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;

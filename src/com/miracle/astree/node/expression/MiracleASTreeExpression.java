@@ -1,9 +1,10 @@
 package com.miracle.astree.node.expression;
 
 import com.miracle.astree.node.MiracleASTreeNode;
+import com.miracle.astree.node.statement.MiracleASTreeStatement;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 
-public abstract class MiracleASTreeExpression extends MiracleASTreeNode {
+public abstract class MiracleASTreeExpression extends MiracleASTreeStatement {
     private final boolean mutable;
     private final String symbol;
     private final MiracleASTreeTypename type;

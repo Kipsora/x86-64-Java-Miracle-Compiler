@@ -57,7 +57,13 @@ public class MiracleASTreeTypename extends MiracleASTreeNode {
     }
 
     public boolean match(List<MiracleASTreeTypename> arguments) {
-        return Objects.equals(this.arguments, arguments);
+        if (this.arguments.size() != arguments.size()) return false;
+        for (int i = 0; i < this.arguments.size(); i++) {
+            if (!this.arguments.get(i).equals(arguments.get(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public String getBasetype() {

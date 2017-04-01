@@ -15,9 +15,7 @@ public class MiracleASTreeNewExpression extends MiracleASTreeExpression {
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
-        visitor.enter();
-        visitor.visit(this);
-        visitor.exit();
+        visitor.visit(this);;
     }
 
     public List<MiracleASTreeExpression> getSize() {

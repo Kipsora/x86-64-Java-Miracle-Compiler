@@ -11,9 +11,6 @@ public abstract class MiracleASTreeBinaryExpression extends MiracleASTreeExpress
 
     protected MiracleASTreeBinaryExpression(MiracleASTreeTypename type, MiracleASTreeExpression left, String operator, MiracleASTreeExpression right, boolean mutable) {
         super(type, operator, mutable);
-        if (!left.getType().equals(right.getType())) {
-            throw new MiracleExceptionBinaryExpression();
-        }
         this.left = left;
         this.right = right;
         this.operator = operator;
@@ -21,9 +18,6 @@ public abstract class MiracleASTreeBinaryExpression extends MiracleASTreeExpress
 
     MiracleASTreeBinaryExpression(MiracleASTreeTypename type, MiracleASTreeExpression left, String operator, MiracleASTreeExpression right) {
         super(type, operator, false);
-        if (!left.getType().equals(right.getType())) {
-            throw new MiracleExceptionBinaryExpression();
-        }
         this.left = left;
         this.right = right;
         this.operator = operator;

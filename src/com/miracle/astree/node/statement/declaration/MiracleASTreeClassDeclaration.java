@@ -8,10 +8,9 @@ import java.util.List;
 public class MiracleASTreeClassDeclaration extends MiracleASTreeDeclaration {
     private final String extend;
     private final HashMap<String, MiracleASTreeMemberDeclaration> mapping;
-    private final List<MiracleASTreeMemberDeclaration> children;
+    private List<MiracleASTreeMemberDeclaration> children;
 
-    public MiracleASTreeClassDeclaration(String identifier, String extend,
-                                         List<MiracleASTreeMemberDeclaration> children) {
+    public MiracleASTreeClassDeclaration(String identifier, String extend) {
         super(identifier);
         this.extend = extend;
         this.mapping = new HashMap<>();
@@ -19,6 +18,10 @@ public class MiracleASTreeClassDeclaration extends MiracleASTreeDeclaration {
         for (MiracleASTreeMemberDeclaration entry : children) {
             this.mapping.put(entry.getIdentifier(), entry);
         }
+    }
+
+    public void setChildren(List<MiracleASTreeMemberDeclaration> children) {
+        this.children = children;
     }
 
     public String getExtend() {

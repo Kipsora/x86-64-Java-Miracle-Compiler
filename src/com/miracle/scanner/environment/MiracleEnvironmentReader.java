@@ -34,8 +34,7 @@ public class MiracleEnvironmentReader extends MiracleEnvironmentManager {
     }
 
     public static boolean contain(String id) {
-        return KEYWORD.contains(id) || BUILTIN.contains(id) || curClassMap.containsKey(id)
-                || curVarMap.containsKey(id) || curFuncMap.containsKey(id);
+        return curClassMap.containsKey(id) || curVarMap.containsKey(id) || curFuncMap.containsKey(id);
     }
 
     public static MiracleASTreeDeclaration get(String id) {

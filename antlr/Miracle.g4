@@ -48,7 +48,7 @@ expression: constant                                                            
     | expression '.' IDENTIFIER                                                             #memberExpression          /* Completed x 2*/
     | <assoc=right> expression operator=('++' | '--')                                       #suffixExpression          /* Completed x 2*/
     | <assoc=right> operator=('!' | '+' | '-' | '~' | '++' | '--') expression               #prefixExpression          /* Completed x 2*/
-    | 'new' typename (('[' expression ']')+('[' ']')*)?                                     #newExpression             /* Completed x 2*/
+    | 'new' typename (('[' expression? ']')+ | '(' ')')?                                    #newExpression             /* Completed x 2*/
     | expression operator=('*' | '/' | '%') expression                                      #multDivExpression         /* Completed x 2*/
     | expression operator=('+' | '-') expression                                            #addSubExpression          /* Completed x 2*/
     | expression operator=('<<' | '>>') expression                                          #shlShrExpression          /* Completed x 2*/

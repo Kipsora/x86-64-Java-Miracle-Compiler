@@ -7,15 +7,18 @@ import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionJudgeExpression;
 
 public class MiracleASTreeWhile extends MiracleASTreeIteration {
-    private final MiracleASTreeExpression expression;
-    private final MiracleASTreeStatement statement;
+    private MiracleASTreeExpression expression;
+    private MiracleASTreeStatement statement;
 
-    public MiracleASTreeWhile(MiracleASTreeExpression expression, MiracleASTreeStatement statement) {
+    public void setExpression(MiracleASTreeExpression expression) {
         this.expression = expression;
-        this.statement = statement;
         if (expression.getType().equals(new MiracleASTreeTypename("boolean"))) {
             throw new MiracleExceptionJudgeExpression(expression.getType().toString());
         }
+    }
+
+    public void setStatement(MiracleASTreeStatement statement) {
+        this.statement = statement;
     }
 
     @Override

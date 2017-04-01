@@ -16,9 +16,7 @@ public class MiracleASTreeSuffixIntegral extends MiracleASTreeUnaryExpression {
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
-        visitor.enter();
         visitor.visit(this);
-        visitor.enter();
     }
 
     public enum OPERATOR {

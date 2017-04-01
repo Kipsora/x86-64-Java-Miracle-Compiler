@@ -4,7 +4,7 @@ import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionLeftValue;
 
-public class MiracleASTreeAssign extends MiracleASTreeBinaryExpression {
+public class MiracleASTreeAssign extends MiracleASTreeArithmetic {
     public MiracleASTreeAssign(MiracleASTreeExpression left, MiracleASTreeExpression right) {
         super(left.getType(), left, "=", right);
         if (!left.getMutable()) {
@@ -14,8 +14,6 @@ public class MiracleASTreeAssign extends MiracleASTreeBinaryExpression {
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
-        visitor.enter();
         visitor.visit(this);
-        visitor.exit();
     }
 }

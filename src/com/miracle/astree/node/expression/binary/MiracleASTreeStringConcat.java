@@ -5,7 +5,7 @@ import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionSpecialExpression;
 
-public class MiracleASTreeStringConcat extends MiracleASTreeBinaryExpression {
+public class MiracleASTreeStringConcat extends MiracleASTreeArithmetic {
     public MiracleASTreeStringConcat(MiracleASTreeExpression left, MiracleASTreeExpression right) {
         super(new MiracleASTreeTypename("string"), left, "+", right);
         if (!left.getType().equals(new MiracleASTreeTypename("string"))) {
@@ -20,8 +20,6 @@ public class MiracleASTreeStringConcat extends MiracleASTreeBinaryExpression {
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
-        visitor.enter();
         visitor.visit(this);
-        visitor.exit();
     }
 }

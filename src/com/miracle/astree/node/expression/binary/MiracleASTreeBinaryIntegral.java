@@ -5,7 +5,7 @@ import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionSpecialExpression;
 
-public class MiracleASTreeBinaryIntegral extends MiracleASTreeBinaryExpression {
+public class MiracleASTreeBinaryIntegral extends MiracleASTreeArithmetic {
     public MiracleASTreeBinaryIntegral(MiracleASTreeExpression left, OPERATOR op, MiracleASTreeExpression right) {
         super(new MiracleASTreeTypename("int"), left, op.toString(), right);
         if (!left.getType().equals(new MiracleASTreeTypename("int"))) {
@@ -18,9 +18,7 @@ public class MiracleASTreeBinaryIntegral extends MiracleASTreeBinaryExpression {
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
-        visitor.enter();
         visitor.visit(this);
-        visitor.exit();
     }
 
     public enum OPERATOR {

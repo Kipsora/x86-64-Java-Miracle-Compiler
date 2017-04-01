@@ -1,5 +1,6 @@
 package com.miracle.astree.node.statement.declaration;
 
+import com.miracle.astree.node.expression.value.MiracleASTreeFunction;
 import com.miracle.astree.node.expression.value.MiracleASTreeValue;
 import com.miracle.astree.node.statement.MiracleASTreeStatement;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
@@ -8,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclaration {
-    private final List<MiracleASTreeStatement> body;
+    private final List<MiracleASTreeStatement> body; // null represents built-in functions
     private final MiracleASTreeTypename type;
     private final MiracleASTreeTypename rettype;
     private final List<MiracleASTreeVariableDeclaration> arguments;
@@ -44,14 +45,14 @@ public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclara
 
     @Override
     public MiracleASTreeValue toValue() {
-        return null;
+        return new MiracleASTreeFunction(this);
     }
 
     public List<MiracleASTreeVariableDeclaration> getArguments() {
         return arguments;
     }
 
-    public MiracleASTreeTypename getRetType() {
+    public MiracleASTreeTypename getReturnType() {
         return rettype;
     }
 

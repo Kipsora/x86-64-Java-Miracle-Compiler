@@ -33,6 +33,11 @@ public class MiracleEnvironmentManager {
         return ((scopes.peek().getMiddle() >> type.ordinal()) & 1) == 1;
     }
 
+    public static boolean isBuiltinType(String identifier) {
+        return identifier.equals("int") || identifier.equals("void")
+                || identifier.equals("string") || identifier.equals("boolean");
+    }
+
     public void initScope() {
         scopeNumber = 0;
         scopes.push(ImmutableTriple.of(ScopeType.SCOPE_GLOBAL, (short) (1 << ScopeType.SCOPE_GLOBAL.ordinal()), scopeNumber));
@@ -45,6 +50,10 @@ public class MiracleEnvironmentManager {
 
     public void exitScope() {
         scopes.pop();
+    }
+
+    public static boolean isBuiltinMethod(String id) {
+        return BUILTIN.contains(id);
     }
 
     public enum ScopeType {

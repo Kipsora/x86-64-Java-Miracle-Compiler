@@ -14,7 +14,7 @@ public final class MiracleEnvironmentLoader extends MiracleEnvironmentManager {
             MiracleASTreeVariableDeclaration>>> varMap = new HashMap<>();
 
     private static void checkDeclaration(int scope, String identifier, String value) {
-        if (BUILTIN.contains(identifier)) {
+        if (scopes.peek().getLeft().equals(ScopeType.SCOPE_GLOBAL) && BUILTIN.contains(identifier)) {
             throw new MiracleExceptionConflictWithBuiltin(identifier);
         }
         if (KEYWORD.contains(identifier)) {
