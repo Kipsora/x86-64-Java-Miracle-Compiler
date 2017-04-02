@@ -19,12 +19,6 @@ public class MiracleDetailedDeclarationFetcher extends MiracleRuntimeMaintainer 
     }
 
     @Override
-    public void enterTypename(MiracleParser.TypenameContext ctx) {
-        super.enterTypename(ctx);
-        path.push(new LinkedList<>());
-    }
-
-    @Override
     public void enterClassDeclarationStatement(MiracleParser.ClassDeclarationStatementContext ctx) {
         super.enterClassDeclarationStatement(ctx);
         path.push(new LinkedList<>());
@@ -38,6 +32,12 @@ public class MiracleDetailedDeclarationFetcher extends MiracleRuntimeMaintainer 
         }
         MiracleEnvironmentManager.getClass(ctx.IDENTIFIER().getText()).setChildren(tmp);
         super.exitClassDeclarationStatement(ctx);
+    }
+
+    @Override
+    public void enterTypename(MiracleParser.TypenameContext ctx) {
+        super.enterTypename(ctx);
+        path.push(new LinkedList<>());
     }
 
     @Override

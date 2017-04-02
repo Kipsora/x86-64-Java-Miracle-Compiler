@@ -75,6 +75,7 @@ public class MiracleASTreeTypename extends MiracleASTreeNode {
     }
 
     public boolean equals(MiracleASTreeTypename e) {
+        
         return e.basetype.equals(basetype) && dimension == e.dimension
                 && Objects.equals(arguments, e.arguments);
     }

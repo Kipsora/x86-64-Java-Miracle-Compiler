@@ -5,6 +5,9 @@ import com.miracle.astree.node.expression.unary.prefix.MiracleASTreeNegate;
 import com.miracle.astree.node.expression.unary.prefix.MiracleASTreePrefixIntegral;
 import com.miracle.astree.node.expression.unary.suffix.MiracleASTreeSuffixIntegral;
 
+import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeINT;
+import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeSTRING;
+
 public class MiracleASTreeExpressionFactory {
     private MiracleASTreeExpressionFactory() {
     }
@@ -42,7 +45,7 @@ public class MiracleASTreeExpressionFactory {
     public static MiracleASTreeExpression getInstance(MiracleASTreeExpression left, String operator, MiracleASTreeExpression right) {
         switch (operator) {
             case "+":
-                if (left.getType().equals("string")) {
+                if (left.getType().equals(MiracleASTreeSTRING)) {
                     return new MiracleASTreeStringConcat(left, right);
                 } else {
                     return new MiracleASTreeBinaryIntegral(left, MiracleASTreeBinaryIntegral.OPERATOR.ADD, right);
@@ -62,7 +65,7 @@ public class MiracleASTreeExpressionFactory {
             case "||":
                 return new MiracleASTreeBinaryLogic(left, MiracleASTreeBinaryLogic.OPERATOR.OR, right);
             case "^":
-                if (left.getType().equals("int")) {
+                if (left.getType().equals(MiracleASTreeINT)) {
                     return new MiracleASTreeBinaryIntegral(left, MiracleASTreeBinaryIntegral.OPERATOR.XOR, right);
                 } else {
                     return new MiracleASTreeBinaryLogic(left, MiracleASTreeBinaryLogic.OPERATOR.XOR, right);

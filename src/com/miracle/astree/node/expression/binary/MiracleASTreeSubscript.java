@@ -17,7 +17,7 @@ public class MiracleASTreeSubscript extends MiracleASTreeBinaryExpression {
         if (head.getType().getDimension() == 0) {
             throw new MiracleExceptionSubscript();
         }
-        if (content.getType().equals(MiracleASTreeINT)) {
+        if (!content.getType().equals(MiracleASTreeINT)) {
             throw new MiracleExpressionSubscriptContent(content.getType().toString());
         }
     }

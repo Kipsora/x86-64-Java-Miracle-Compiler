@@ -9,6 +9,6 @@ public class MiracleExpressionSubscriptContent extends MiracleException {
 
     @Override
     public String toString() {
-        return "subscription method requires integer, but type \"" + type + "\" was found.";
+        return "subscription method requires \"int\", but type \"" + type + "\" was found.";
     }
 }
