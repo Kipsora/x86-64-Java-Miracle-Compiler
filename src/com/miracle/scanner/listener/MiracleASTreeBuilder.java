@@ -8,7 +8,9 @@ import com.miracle.astree.node.expression.MiracleASTreeExpressionFactory;
 import com.miracle.astree.node.expression.binary.MiracleASTreeMember;
 import com.miracle.astree.node.expression.multiary.MiracleASTreeCallExpression;
 import com.miracle.astree.node.expression.multiary.MiracleASTreeNewExpression;
-import com.miracle.astree.node.expression.value.*;
+import com.miracle.astree.node.expression.value.MiracleASTreeConstant;
+import com.miracle.astree.node.expression.value.MiracleASTreeFunction;
+import com.miracle.astree.node.expression.value.MiracleASTreeThis;
 import com.miracle.astree.node.statement.MiracleASTreeBlock;
 import com.miracle.astree.node.statement.MiracleASTreeSelection;
 import com.miracle.astree.node.statement.MiracleASTreeStatement;
@@ -21,17 +23,18 @@ import com.miracle.astree.node.statement.iteration.MiracleASTreeIteration;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
 import com.miracle.cstree.MiracleParser;
 import com.miracle.exceptions.*;
-import com.miracle.exceptions.MiracleExceptionThis;
 import com.miracle.scanner.MiracleEnvironmentManager;
-import com.miracle.scanner.environment.MiracleEnvironmentReader;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
 
 public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     private Stack<List<MiracleASTreeNode>> path = new Stack<>();
     private Stack<MiracleASTreeIteration> iterationBuffer = new Stack<>();
+    private Stack<MiracleASTreeFunctionDeclaration> functionBuffer = new Stack<>();
     private Stack<MiracleASTreeClassDeclaration> classBuffer = new Stack<>();
-    private Stack<MiracleASTreeFunctionDeclaration> funcBuffer = new Stack<>();
 
     private static final MiracleASTreeTypename MiracleASTreeINT =
             new MiracleASTreeTypename("int");
@@ -119,7 +122,6 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             );
 
     public MiracleASTreeBuilder() {
-        super(new MiracleEnvironmentReader());
         path.push(new LinkedList<>());
     }
 
@@ -131,7 +133,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     public void enterClassDeclarationStatement(MiracleParser.ClassDeclarationStatementContext ctx) {
         super.enterClassDeclarationStatement(ctx);
         path.push(new LinkedList<>());
-        classBuffer.add(new MiracleASTreeClassDeclaration(ctx.IDENTIFIER().getText()));
+        classBuffer.push(MiracleEnvironmentManager.getClass(ctx.IDENTIFIER().getText()));
     }
 
     @Override
@@ -150,6 +152,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     public void enterFunctionDeclarationStatement(MiracleParser.FunctionDeclarationStatementContext ctx) {
         super.enterFunctionDeclarationStatement(ctx);
         path.push(new LinkedList<>());
+        functionBuffer.push(MiracleEnvironmentManager.getFunction(ctx.IDENTIFIER(0).getText()));
     }
 
     @Override
@@ -166,8 +169,12 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
                 body.add((MiracleASTreeStatement) children.get(i));
             }
         }
-        path.peek().add(new MiracleASTreeFunctionDeclaration(type,
-                ctx.IDENTIFIER(0).getText(), arguments, body));
+        MiracleASTreeFunctionDeclaration node = functionBuffer.pop();
+        node.setRettype(type);
+        node.setArguments(arguments);
+        node.setBody(body);
+        node.construct();
+        path.peek().add(node);
         super.exitFunctionDeclarationStatement(ctx);
     }
 
@@ -185,12 +192,12 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             value = (MiracleASTreeExpression) path.peek().get(1);
         }
         path.pop();
-        MiracleASTreeVariableDeclaration node = new MiracleASTreeVariableDeclaration(
-                ctx.IDENTIFIER().getText(), type, value
-        );
+        MiracleASTreeVariableDeclaration node = MiracleEnvironmentManager.getVariable(ctx.IDENTIFIER().getText());
+        node.setType(type);
+        node.setExpression(value);
+        node.construct();
         path.peek().add(node);
         super.exitVariableDeclarationStatement(ctx);
-        MiracleEnvironmentReader.declare(ctx.IDENTIFIER().getText(), true, node);
     }
 
     @Override
@@ -341,9 +348,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
         if (ctx.IDENTIFIER() != null) {
             String identifier = ctx.IDENTIFIER().getText();
             if (!MiracleASTreeBuiltinTYPE.contains(new MiracleASTreeTypename(identifier))) {
-                if (!MiracleEnvironmentReader.contain(identifier)) {
-                    throw new MiracleExceptionUndefinedIdentifier(identifier);
-                }
+                MiracleEnvironmentManager.getClass(identifier);
             }
             for (int i = 1; i < ctx.getChildCount(); i++) {
                 if (ctx.getChild(i).getText().equals("[")) {
@@ -397,16 +402,15 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
         path.pop();
         String id = ctx.IDENTIFIER().getText();
         if (id.equals("this")) {
-            if (MiracleEnvironmentManager.inScope(MiracleEnvironmentManager.ScopeType.SCOPE_CLASS)) {
+            if (MiracleEnvironmentManager.inMemberScope()) {
                 path.peek().add(new MiracleASTreeThis(
                         new MiracleASTreeTypename(classBuffer.peek().getIdentifier()), true)
                 );
             } else {
                 throw new MiracleExceptionThis();
             }
-        } else if (MiracleEnvironmentReader.contain(id)) {
-            MiracleASTreeVariableDeclaration tmp = (MiracleASTreeVariableDeclaration) MiracleEnvironmentReader.get(id);
-            path.peek().add(tmp.toValue());
+        } else if (MiracleEnvironmentManager.containVariable(id)) {
+            path.peek().add(MiracleEnvironmentManager.getVariable(id).toValue());
         } else if (id.equals("print")) {
             path.peek().add(MiracleASTreePRINT.toValue());
         } else if (id.equals("println")) {
@@ -670,28 +674,32 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
                 || type.getDimension() != 0) {
             throw new MiracleExceptionMember(type.toString(), identifier);
         }
-        if (MiracleEnvironmentReader.contain(type.toString())) {
-            if (!MiracleEnvironmentReader.get(type.toString()).getDeclarationType()
-                    .equals(MiracleASTreeDeclaration.DECTYPE.DEC_CLASS)) {
+        if (MiracleEnvironmentManager.contain(type.toString())) {
+            if (!MiracleEnvironmentManager.containClass(type.toString())) {
                 throw new MiracleExceptionMember(type.toString(), identifier);
             }
-            MiracleASTreeClassDeclaration declaration = (MiracleASTreeClassDeclaration) MiracleEnvironmentReader.get(type.toString());
+            MiracleASTreeClassDeclaration declaration = MiracleEnvironmentManager.getClass(type.toString());
             if (!declaration.contain(identifier)) {
                 throw new MiracleExceptionMember(type.toString(), identifier);
             }
             path.peek().add(new MiracleASTreeMember(left, declaration.getMember(identifier).toValue()));
         } else {
             if (type.equals(MiracleASTreeSTRING)) {
-                if (identifier.equals("substring")) {
-                    path.peek().add(new MiracleASTreeMember(left, MiracleASTreeSUBSTRING.toValue()));
-                } else if (identifier.equals("length")) {
-                    path.peek().add(new MiracleASTreeMember(left, MiracleASTreeLENGTH.toValue()));
-                } else if (identifier.equals("parseInt")) {
-                    path.peek().add(new MiracleASTreeMember(left, MiracleASTreePARSEINT.toValue()));
-                } else if (identifier.equals("ord")) {
-                    path.peek().add(new MiracleASTreeMember(left, MiracleASTreeORD.toValue()));
-                } else {
-                    throw new MiracleExceptionMember(type.toString(), identifier);
+                switch (identifier) {
+                    case "substring":
+                        path.peek().add(new MiracleASTreeMember(left, MiracleASTreeSUBSTRING.toValue()));
+                        break;
+                    case "length":
+                        path.peek().add(new MiracleASTreeMember(left, MiracleASTreeLENGTH.toValue()));
+                        break;
+                    case "parseInt":
+                        path.peek().add(new MiracleASTreeMember(left, MiracleASTreePARSEINT.toValue()));
+                        break;
+                    case "ord":
+                        path.peek().add(new MiracleASTreeMember(left, MiracleASTreeORD.toValue()));
+                        break;
+                    default:
+                        throw new MiracleExceptionMember(type.toString(), identifier);
                 }
             } else if (type.getDimension() > 0) {
                 if (identifier.equals("size")) {

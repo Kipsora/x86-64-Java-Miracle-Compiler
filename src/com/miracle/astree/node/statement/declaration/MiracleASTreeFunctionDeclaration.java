@@ -18,6 +18,16 @@ public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclara
         super(identifier);
     }
 
+    public MiracleASTreeFunctionDeclaration(MiracleASTreeTypename rettype, String identifier,
+                                            List<MiracleASTreeVariableDeclaration> arguments,
+                                            List<MiracleASTreeStatement> body) {
+        super(identifier);
+        setRettype(rettype);
+        setArguments(arguments);
+        setBody(body);
+        construct();
+    }
+
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
         visitor.enter();

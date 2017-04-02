@@ -8,11 +8,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 public abstract class MiracleRuntimeMaintainer extends MiracleBaseListener {
     private static int row;
     private static int column;
-    private final MiracleEnvironmentManager environment;
-
-    MiracleRuntimeMaintainer(MiracleEnvironmentManager environment) {
-        this.environment = environment;
-    }
 
     public static int getRow() {
         return row;
@@ -38,61 +33,72 @@ public abstract class MiracleRuntimeMaintainer extends MiracleBaseListener {
 
     @Override
     public void enterMiracle(MiracleParser.MiracleContext ctx) {
-        this.environment.initScope();
+        MiracleEnvironmentManager.init();
+        MiracleEnvironmentManager.newscope(false);
     }
 
     @Override
     public void exitMiracle(MiracleParser.MiracleContext ctx) {
-        this.environment.exitScope();
+        MiracleEnvironmentManager.exitscope();
     }
 
     @Override
     public void enterClassDeclarationStatement(MiracleParser.ClassDeclarationStatementContext ctx) {
-        environment.enterScope(MiracleEnvironmentManager.ScopeType.SCOPE_CLASS);
+        MiracleEnvironmentManager.newscope(true);
     }
 
     @Override
     public void exitClassDeclarationStatement(MiracleParser.ClassDeclarationStatementContext ctx) {
-        environment.exitScope();
-    }
-
-    @Override
-    public void enterForStatement(MiracleParser.ForStatementContext ctx) {
-        environment.enterScope(MiracleEnvironmentManager.ScopeType.SCOPE_ITER);
-    }
-
-    @Override
-    public void exitForStatement(MiracleParser.ForStatementContext ctx) {
-        environment.exitScope();
-    }
-
-    @Override
-    public void enterWhileStatement(MiracleParser.WhileStatementContext ctx) {
-        environment.enterScope(MiracleEnvironmentManager.ScopeType.SCOPE_ITER);
-    }
-
-    @Override
-    public void exitWhileStatement(MiracleParser.WhileStatementContext ctx) {
-        environment.exitScope();
+        MiracleEnvironmentManager.exitscope();
     }
 
     @Override
     public void enterBlockStatement(MiracleParser.BlockStatementContext ctx) {
-        environment.enterScope(MiracleEnvironmentManager.ScopeType.SCOPE_BLOCK);
+        MiracleEnvironmentManager.newscope(false);
     }
 
     @Override
     public void exitBlockStatement(MiracleParser.BlockStatementContext ctx) {
-        environment.exitScope();
+        MiracleEnvironmentManager.exitscope();
     }
 
     @Override
     public void enterFunctionDeclarationStatement(MiracleParser.FunctionDeclarationStatementContext ctx) {
-        environment.enterScope(MiracleEnvironmentManager.ScopeType.SCOPE_FUNC);
+        MiracleEnvironmentManager.newscope(false);
     }
 
     @Override
     public void exitFunctionDeclarationStatement(MiracleParser.FunctionDeclarationStatementContext ctx) {
-        environment.exitScope();
+        MiracleEnvironmentManager.exitscope();
+    }
+
+    @Override
+    public void enterForStatement(MiracleParser.ForStatementContext ctx) {
+        MiracleEnvironmentManager.newscope(false);
+    }
+
+    @Override
+    public void exitForStatement(MiracleParser.ForStatementContext ctx) {
+        MiracleEnvironmentManager.exitscope();
+    }
+
+    @Override
+    public void enterWhileStatement(MiracleParser.WhileStatementContext ctx) {
+        MiracleEnvironmentManager.newscope(false);
+    }
+
+    @Override
+    public void exitWhileStatement(MiracleParser.WhileStatementContext ctx) {
+        MiracleEnvironmentManager.exitscope();
+    }
+
+    @Override
+    public void enterSelectionStatement(MiracleParser.SelectionStatementContext ctx) {
+        MiracleEnvironmentManager.newscope(false);
+    }
+
+    @Override
+    public void exitSelectionStatement(MiracleParser.SelectionStatementContext ctx) {
+        MiracleEnvironmentManager.exitscope();
     }
 }

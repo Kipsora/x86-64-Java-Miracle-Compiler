@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public class MiracleEnvironmentManager {
-    private int scopeNumber = 0;
+    private static int scopeNumber = 0;
 
     private static HashMap<Integer, HashMap<String, MiracleASTreeClassDeclaration>> mapclass = new HashMap<>();
     private static HashMap<Integer, HashMap<String, MiracleASTreeFunctionDeclaration>> mapfunc = new HashMap<>();
@@ -26,7 +26,7 @@ public class MiracleEnvironmentManager {
     private static Stack<ImmutableTriple<Integer, String, MiracleASTreeFunctionDeclaration>> recfunc = new Stack<>();
     private static Stack<ImmutableTriple<Integer, String, MiracleASTreeVariableDeclaration>> recvari = new Stack<>();
 
-    private static Stack<ImmutablePair<Integer, Boolean>> scope = new Stack<>();
+    private static Stack<ImmutableTriple<Integer, Boolean, Boolean>> scope = new Stack<>();
 
     private static MiracleEnvironmentManager instance = new MiracleEnvironmentManager();
 
@@ -37,12 +37,38 @@ public class MiracleEnvironmentManager {
         return instance;
     }
 
-    public void init() {
+    private static void checkDeclaration(String identifier, String type) {
+        if (mapclass.get(scope.peek().getLeft()).containsKey(identifier)) {
+            throw new MiracleExceptionDuplicateDeclaration("class", type, identifier);
+        }
+        if (mapfunc.get(scope.peek().getLeft()).containsKey(identifier)) {
+            throw new MiracleExceptionDuplicateDeclaration("function", type, identifier);
+        }
+        if (scope.peek().getRight()) {
+            if (mapvari.get(scope.peek().getLeft()).containsKey(identifier)) {
+                throw new MiracleExceptionDuplicateDeclaration("variable", type, identifier);
+            }
+        } else {
+            if (declaredVariable.get(identifier).getRight().equals(scope.peek().getLeft())) {
+                throw new MiracleExceptionDuplicateDeclaration("function", type, identifier);
+            }
+        }
+    }
+
+    public static void init() {
         scopeNumber = 0;
     }
 
-    public void newscope(boolean member) {
-        scope.push(ImmutablePair.of(++scopeNumber, member));
+    public static boolean inMemberScope() {
+        return scope.peek().getMiddle();
+    }
+
+    public static void newscope(boolean member) {
+        if (!scope.empty()) {
+            scope.push(ImmutableTriple.of(++scopeNumber, scope.peek().getMiddle() | member, member));
+        } else {
+            scope.push(ImmutableTriple.of(++scopeNumber, member, member));
+        }
         if (!mapclass.containsKey(scope.peek().getLeft())) {
             mapclass.put(scope.peek().getLeft(), new HashMap<>());
         }
@@ -80,7 +106,7 @@ public class MiracleEnvironmentManager {
         }
     }
 
-    public void exitscope() {
+    public static void exitscope() {
         while (!recclass.empty() && recclass.peek().getLeft().equals(scope.peek().getLeft())) {
             if (recclass.peek().getRight() == null) {
                 declaredClass.remove(recclass.peek().getMiddle());
@@ -105,25 +131,7 @@ public class MiracleEnvironmentManager {
         scope.pop();
     }
 
-    private void checkDeclaration(String identifier, String type) {
-        if (mapclass.get(scope.peek().getLeft()).containsKey(identifier)) {
-            throw new MiracleExceptionDuplicateDeclaration("class", type, identifier);
-        }
-        if (mapfunc.get(scope.peek().getLeft()).containsKey(identifier)) {
-            throw new MiracleExceptionDuplicateDeclaration("function", type, identifier);
-        }
-        if (scope.peek().getRight()) {
-            if (mapvari.get(scope.peek().getLeft()).containsKey(identifier)) {
-                throw new MiracleExceptionDuplicateDeclaration("variable", type, identifier);
-            }
-        } else {
-            if (declaredVariable.get(identifier).getRight().equals(scope.peek().getLeft())) {
-                throw new MiracleExceptionDuplicateDeclaration("function", type, identifier);
-            }
-        }
-    }
-
-    void declareClass(String identifier) {
+    public static void declareClass(String identifier) {
         checkDeclaration(identifier, "class");
         MiracleASTreeClassDeclaration node = new MiracleASTreeClassDeclaration(identifier);
         mapclass.get(scope.peek().getLeft()).put(identifier, node);
@@ -135,7 +143,7 @@ public class MiracleEnvironmentManager {
         declaredClass.put(identifier, ImmutablePair.of(scope.peek().getLeft(), node));
     }
 
-    void declareFunction(String identifier) {
+    public static void declareFunction(String identifier) {
         checkDeclaration(identifier, "function");
         MiracleASTreeFunctionDeclaration node = new MiracleASTreeFunctionDeclaration(identifier);
         mapfunc.get(scope.peek().getLeft()).put(identifier, node);
@@ -147,7 +155,7 @@ public class MiracleEnvironmentManager {
         declaredFunction.put(identifier, ImmutablePair.of(scope.peek().getLeft(), node));
     }
 
-    void declareVariable(String identifier) {
+    public static void declareVariable(String identifier) {
         checkDeclaration(identifier, "variable");
         MiracleASTreeVariableDeclaration node = new MiracleASTreeVariableDeclaration(identifier);
         mapvari.get(scope.peek().getLeft()).put(identifier, node);
@@ -159,24 +167,49 @@ public class MiracleEnvironmentManager {
         declaredVariable.put(identifier, ImmutablePair.of(scope.peek().getLeft(), node));
     }
 
-    MiracleASTreeClassDeclaration getClass(String identifier) {
+    public static MiracleASTreeClassDeclaration getClass(String identifier) {
         if (!declaredClass.containsKey(identifier)) {
             throw new MiracleExceptionUndefinedIdentifier(identifier);
         }
         return declaredClass.get(identifier).getRight();
     }
 
-    MiracleASTreeFunctionDeclaration getFunction(String identifier) {
+    public static MiracleASTreeFunctionDeclaration getFunction(String identifier) {
         if (!declaredFunction.containsKey(identifier)) {
             throw new MiracleExceptionUndefinedIdentifier(identifier);
         }
         return declaredFunction.get(identifier).getRight();
     }
 
-    MiracleASTreeVariableDeclaration getVariable(String identifier) {
+    public static MiracleASTreeVariableDeclaration getVariable(String identifier) {
         if (!declaredVariable.containsKey(identifier)) {
             throw new MiracleExceptionUndefinedIdentifier(identifier);
         }
+        if (!scope.peek().getRight()) {
+            if (declaredVariable.containsKey(identifier)) {
+                recvari.push(ImmutableTriple.of(scope.peek().getLeft(), identifier, declaredVariable.get(identifier).getRight()));
+            } else {
+                recvari.push(ImmutableTriple.of(scope.peek().getLeft(), identifier, null));
+            }
+            declaredVariable.put(identifier, ImmutablePair.of(scope.peek().getLeft(),
+                    mapvari.get(scope.peek().getLeft()).get(identifier)));
+        }
         return declaredVariable.get(identifier).getRight();
+    }
+
+    public static boolean containVariable(String identifier) {
+        return declaredVariable.containsKey(identifier);
+    }
+
+    public static boolean containClass(String identifier) {
+        return declaredClass.containsKey(identifier);
+    }
+
+    public static boolean containFunction(String identifier) {
+        return declaredFunction.containsKey(identifier);
+    }
+
+    public static boolean contain(String identifier) {
+        return containClass(identifier) || containFunction(identifier) || containVariable(identifier);
     }
 }

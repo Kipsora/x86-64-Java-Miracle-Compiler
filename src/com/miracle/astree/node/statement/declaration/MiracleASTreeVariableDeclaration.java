@@ -14,6 +14,19 @@ public class MiracleASTreeVariableDeclaration extends MiracleASTreeMemberDeclara
         super(identifier);
     }
 
+    public MiracleASTreeVariableDeclaration(String identifier, MiracleASTreeTypename type) {
+        super(identifier);
+        setType(type);
+        construct();
+    }
+
+    public MiracleASTreeVariableDeclaration(String identifier, MiracleASTreeTypename type, MiracleASTreeExpression expression) {
+        super(identifier);
+        setType(type);
+        setExpression(expression);
+        construct();
+    }
+
     public MiracleASTreeTypename getType() {
         return type;
     }
