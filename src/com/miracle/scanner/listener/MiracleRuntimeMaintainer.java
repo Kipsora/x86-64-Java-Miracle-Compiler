@@ -2,13 +2,13 @@ package com.miracle.scanner.listener;
 
 import com.miracle.cstree.MiracleBaseListener;
 import com.miracle.cstree.MiracleParser;
-import com.miracle.scanner.environment.MiracleEnvironmentManager;
+import com.miracle.scanner.MiracleEnvironmentManager;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class MiracleRuntimeMaintainer extends MiracleBaseListener {
     private static int row;
     private static int column;
-    protected final MiracleEnvironmentManager environment;
+    private final MiracleEnvironmentManager environment;
 
     MiracleRuntimeMaintainer(MiracleEnvironmentManager environment) {
         this.environment = environment;

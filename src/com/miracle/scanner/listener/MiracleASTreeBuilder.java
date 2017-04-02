@@ -22,12 +22,10 @@ import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
 import com.miracle.cstree.MiracleParser;
 import com.miracle.exceptions.*;
 import com.miracle.exceptions.MiracleExceptionThis;
-import com.miracle.scanner.environment.MiracleEnvironmentManager;
+import com.miracle.scanner.MiracleEnvironmentManager;
 import com.miracle.scanner.environment.MiracleEnvironmentReader;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     private Stack<List<MiracleASTreeNode>> path = new Stack<>();
@@ -43,10 +41,16 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             new MiracleASTreeTypename("string");
     private static final MiracleASTreeTypename MiracleASTreeVOID =
             new MiracleASTreeTypename("void");
+    private static final HashSet MiracleASTreeBuiltinTYPE =
+            new HashSet<MiracleASTreeTypename>() {{
+                add(MiracleASTreeINT);
+                add(MiracleASTreeBOOLEAN);
+                add(MiracleASTreeSTRING);
+                add(MiracleASTreeVOID);
+            }};
 
     private static final MiracleASTreeFunctionDeclaration MiracleASTreeTOSTRING =
             new MiracleASTreeFunctionDeclaration(
-                    null,
                     MiracleASTreeSTRING, "toString",
                     new LinkedList<MiracleASTreeVariableDeclaration>() {{
                         add(new MiracleASTreeVariableDeclaration("x", MiracleASTreeINT));
@@ -54,7 +58,6 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             );
     private static final MiracleASTreeFunctionDeclaration MiracleASTreePRINT =
             new MiracleASTreeFunctionDeclaration(
-                    null,
                     MiracleASTreeVOID, "print",
                     new LinkedList<MiracleASTreeVariableDeclaration>() {{
                         add(new MiracleASTreeVariableDeclaration("x", MiracleASTreeSTRING));
@@ -62,7 +65,6 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             );
     private static final MiracleASTreeFunctionDeclaration MiracleASTreePRINTLN =
             new MiracleASTreeFunctionDeclaration(
-                    null,
                     MiracleASTreeVOID, "println",
                     new LinkedList<MiracleASTreeVariableDeclaration>() {{
                         add(new MiracleASTreeVariableDeclaration("x", MiracleASTreeSTRING));
@@ -70,35 +72,30 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             );
     private static final MiracleASTreeFunctionDeclaration MiracleASTreeGETSTRING =
             new MiracleASTreeFunctionDeclaration(
-                    null,
                     MiracleASTreeSTRING, "getString",
                     new LinkedList<>(),
                     null
             );
     private static final MiracleASTreeFunctionDeclaration MiracleASTreeGETINT =
             new MiracleASTreeFunctionDeclaration(
-                    null,
                     MiracleASTreeINT, "getInt",
                     new LinkedList<>(),
                     null
             );
     private static final MiracleASTreeFunctionDeclaration MiracleASTreeSIZE =
             new MiracleASTreeFunctionDeclaration(
-                    null,
                     MiracleASTreeINT, "size",
                     new LinkedList<>(),
                     null
             );
     private static final MiracleASTreeFunctionDeclaration MiracleASTreeLENGTH =
             new MiracleASTreeFunctionDeclaration(
-                    null,
                     MiracleASTreeINT, "length",
                     new LinkedList<>(),
                     null
             );
     private static final MiracleASTreeFunctionDeclaration MiracleASTreeSUBSTRING =
             new MiracleASTreeFunctionDeclaration(
-                    null,
                     MiracleASTreeSTRING, "substring",
                     new LinkedList<MiracleASTreeVariableDeclaration>() {{
                         add(new MiracleASTreeVariableDeclaration("l", MiracleASTreeINT));
@@ -108,14 +105,12 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             );
     private static final MiracleASTreeFunctionDeclaration MiracleASTreePARSEINT =
             new MiracleASTreeFunctionDeclaration(
-                    null,
                     MiracleASTreeINT, "parseInt",
                     new LinkedList<>(),
                     null
             );
     private static final MiracleASTreeFunctionDeclaration MiracleASTreeORD =
             new MiracleASTreeFunctionDeclaration(
-                    null,
                     MiracleASTreeINT, "ord",
                     new LinkedList<MiracleASTreeVariableDeclaration>() {{
                         add(new MiracleASTreeVariableDeclaration("l", MiracleASTreeINT));
@@ -136,13 +131,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     public void enterClassDeclarationStatement(MiracleParser.ClassDeclarationStatementContext ctx) {
         super.enterClassDeclarationStatement(ctx);
         path.push(new LinkedList<>());
-        if (ctx.IDENTIFIER().size() > 1) {
-            classBuffer.add(new MiracleASTreeClassDeclaration(ctx.IDENTIFIER(0).getText(),
-                    ctx.IDENTIFIER(1).getText()));
-        } else {
-            classBuffer.add(new MiracleASTreeClassDeclaration(ctx.IDENTIFIER(0).getText(),
-                    null));
-        }
+        classBuffer.add(new MiracleASTreeClassDeclaration(ctx.IDENTIFIER().getText()));
     }
 
     @Override
@@ -165,10 +154,6 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
 
     @Override
     public void exitFunctionDeclarationStatement(MiracleParser.FunctionDeclarationStatementContext ctx) {
-        String decorator = null;
-        if (ctx.DECORATOR() != null) {
-            decorator = ctx.DECORATOR().getText();
-        }
         List<MiracleASTreeNode> children = path.pop();
         List<MiracleASTreeVariableDeclaration> arguments = new LinkedList<>();
         List<MiracleASTreeStatement> body = new LinkedList<>();
@@ -181,7 +166,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
                 body.add((MiracleASTreeStatement) children.get(i));
             }
         }
-        path.peek().add(new MiracleASTreeFunctionDeclaration(decorator, type,
+        path.peek().add(new MiracleASTreeFunctionDeclaration(type,
                 ctx.IDENTIFIER(0).getText(), arguments, body));
         super.exitFunctionDeclarationStatement(ctx);
     }
@@ -194,18 +179,15 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
 
     @Override
     public void exitVariableDeclarationStatement(MiracleParser.VariableDeclarationStatementContext ctx) {
-        String decorator = null;
-        if (ctx.DECORATOR() != null) {
-            decorator = ctx.DECORATOR().getText();
-        }
         MiracleASTreeTypename type = (MiracleASTreeTypename) path.peek().get(0);
         MiracleASTreeExpression value = null;
         if (path.peek().size() > 1) {
             value = (MiracleASTreeExpression) path.peek().get(1);
         }
         path.pop();
-        MiracleASTreeVariableDeclaration node = new MiracleASTreeVariableDeclaration(decorator,
-                ctx.IDENTIFIER().getText(), type, value);
+        MiracleASTreeVariableDeclaration node = new MiracleASTreeVariableDeclaration(
+                ctx.IDENTIFIER().getText(), type, value
+        );
         path.peek().add(node);
         super.exitVariableDeclarationStatement(ctx);
         MiracleEnvironmentReader.declare(ctx.IDENTIFIER().getText(), true, node);
@@ -358,7 +340,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
         int dimension = 0;
         if (ctx.IDENTIFIER() != null) {
             String identifier = ctx.IDENTIFIER().getText();
-            if (!MiracleEnvironmentManager.isBuiltinType(identifier)) {
+            if (!MiracleASTreeBuiltinTYPE.contains(new MiracleASTreeTypename(identifier))) {
                 if (!MiracleEnvironmentReader.contain(identifier)) {
                     throw new MiracleExceptionUndefinedIdentifier(identifier);
                 }

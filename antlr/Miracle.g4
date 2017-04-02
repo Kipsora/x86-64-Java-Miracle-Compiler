@@ -2,11 +2,13 @@ grammar Miracle;
 
 miracle: (classDeclarationStatement | functionDeclarationStatement | variableDeclarationStatement)*;
 
-classDeclarationStatement: 'class' IDENTIFIER ('extends' IDENTIFIER)? '{' (functionDeclarationStatement | variableDeclarationStatement)* '}';
+classDeclarationStatement: 'class' IDENTIFIER '{' (functionDeclarationStatement | variableDeclarationStatement | constructorDeclarationStatement)* '}';
 
-functionDeclarationStatement: DECORATOR? typename IDENTIFIER '(' (typename IDENTIFIER)?(',' typename IDENTIFIER)* ')' '{' statement* '}';
+functionDeclarationStatement: typename IDENTIFIER '(' (typename IDENTIFIER)?(',' typename IDENTIFIER)* ')' '{' statement* '}';
 
-variableDeclarationStatement: DECORATOR? typename IDENTIFIER ('=' expression)? ';';
+variableDeclarationStatement: typename IDENTIFIER ('=' expression)? ';';
+
+constructorDeclarationStatement: IDENTIFIER '(' ')' '{' statement* '}';
 
 blockStatement: '{' statement* '}';
 

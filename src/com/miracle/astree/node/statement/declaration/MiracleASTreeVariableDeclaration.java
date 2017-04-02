@@ -7,20 +7,26 @@ import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionType;
 
 public class MiracleASTreeVariableDeclaration extends MiracleASTreeMemberDeclaration {
-    private final MiracleASTreeTypename type;
-    private final MiracleASTreeExpression expression;
+    private MiracleASTreeTypename type;
+    private MiracleASTreeExpression expression;
 
-    public MiracleASTreeVariableDeclaration(String identifier, MiracleASTreeTypename type) {
+    public MiracleASTreeVariableDeclaration(String identifier) {
         super(identifier);
-        this.type = type;
-        this.expression = null;
     }
 
-    public MiracleASTreeVariableDeclaration(String decorator, String identifier, MiracleASTreeTypename type,
-                                            MiracleASTreeExpression expression) {
-        super(decorator, identifier);
+    public MiracleASTreeTypename getType() {
+        return type;
+    }
+
+    public void setType(MiracleASTreeTypename type) {
         this.type = type;
+    }
+
+    public void setExpression(MiracleASTreeExpression expression) {
         this.expression = expression;
+    }
+
+    public void construct() {
         if (expression != null) {
             if (expression.getType().equals(new MiracleASTreeTypename("emptyobj"))) {
                 if (type.getDimension() == 0 && (type.getBasetype().equals("int")
@@ -36,10 +42,6 @@ public class MiracleASTreeVariableDeclaration extends MiracleASTreeMemberDeclara
                 }
             }
         }
-    }
-
-    public MiracleASTreeTypename getType() {
-        return type;
     }
 
     @Override

@@ -6,26 +6,19 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MiracleASTreeClassDeclaration extends MiracleASTreeDeclaration {
-    private final String extend;
-    private final HashMap<String, MiracleASTreeMemberDeclaration> mapping;
+    private HashMap<String, MiracleASTreeMemberDeclaration> mapping;
     private List<MiracleASTreeMemberDeclaration> children;
 
-    public MiracleASTreeClassDeclaration(String identifier, String extend) {
+    public MiracleASTreeClassDeclaration(String identifier) {
         super(identifier);
-        this.extend = extend;
-        this.mapping = new HashMap<>();
-        this.children = children;
-        for (MiracleASTreeMemberDeclaration entry : children) {
-            this.mapping.put(entry.getIdentifier(), entry);
-        }
     }
 
     public void setChildren(List<MiracleASTreeMemberDeclaration> children) {
         this.children = children;
-    }
-
-    public String getExtend() {
-        return extend;
+        this.mapping = new HashMap<>();
+        for (MiracleASTreeMemberDeclaration entry : children) {
+            this.mapping.put(entry.getIdentifier(), entry);
+        }
     }
 
     public boolean contain(String identifier) {

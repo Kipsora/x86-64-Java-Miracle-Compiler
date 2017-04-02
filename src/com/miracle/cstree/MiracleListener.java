@@ -47,6 +47,16 @@ public interface MiracleListener extends ParseTreeListener {
 	 */
 	void exitVariableDeclarationStatement(MiracleParser.VariableDeclarationStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MiracleParser#constructorDeclarationStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstructorDeclarationStatement(MiracleParser.ConstructorDeclarationStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiracleParser#constructorDeclarationStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstructorDeclarationStatement(MiracleParser.ConstructorDeclarationStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MiracleParser#blockStatement}.
 	 * @param ctx the parse tree
 	 */

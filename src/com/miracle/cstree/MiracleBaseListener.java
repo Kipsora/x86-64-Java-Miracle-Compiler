@@ -63,6 +63,18 @@ public class MiracleBaseListener implements MiracleListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterConstructorDeclarationStatement(MiracleParser.ConstructorDeclarationStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConstructorDeclarationStatement(MiracleParser.ConstructorDeclarationStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBlockStatement(MiracleParser.BlockStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
