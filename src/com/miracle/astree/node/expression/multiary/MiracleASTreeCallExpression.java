@@ -2,17 +2,19 @@ package com.miracle.astree.node.expression.multiary;
 
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.node.expression.value.MiracleASTreeFunction;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 
 import java.util.List;
 
 public class MiracleASTreeCallExpression extends MiracleASTreeExpression {
-    private final MiracleASTreeFunction function;
+    private final MiracleASTreeExpression function;
     private final List<MiracleASTreeExpression> arguments;
 
-    public MiracleASTreeCallExpression(MiracleASTreeFunction function,
+    public MiracleASTreeCallExpression(MiracleASTreeExpression function,
                                        List<MiracleASTreeExpression> arguments) {
-        super(function.getDeclaration().getReturnType(), "function call", false);
+        super(new MiracleASTreeTypename(function.getType().getBasetype(), function.getType().getDimension()),
+                "function call", false);
         this.function = function;
         this.arguments = arguments;
     }
@@ -22,7 +24,7 @@ public class MiracleASTreeCallExpression extends MiracleASTreeExpression {
         visitor.visit(this);
     }
 
-    public MiracleASTreeFunction getFunction() {
+    public MiracleASTreeExpression getFunction() {
         return function;
     }
 

@@ -7,39 +7,26 @@ import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionType;
 
 public class MiracleASTreeVariableDeclaration extends MiracleASTreeMemberDeclaration {
-    private MiracleASTreeTypename type;
+    private final MiracleASTreeTypename type;
     private MiracleASTreeExpression expression;
-
-    public MiracleASTreeVariableDeclaration(String identifier) {
-        super(identifier);
-    }
 
     public MiracleASTreeVariableDeclaration(String identifier, MiracleASTreeTypename type) {
         super(identifier);
-        setType(type);
-        construct();
+        this.type = type;
     }
 
     public MiracleASTreeVariableDeclaration(String identifier, MiracleASTreeTypename type, MiracleASTreeExpression expression) {
         super(identifier);
-        setType(type);
+        this.type = type;
         setExpression(expression);
-        construct();
     }
 
     public MiracleASTreeTypename getType() {
         return type;
     }
 
-    public void setType(MiracleASTreeTypename type) {
-        this.type = type;
-    }
-
     public void setExpression(MiracleASTreeExpression expression) {
         this.expression = expression;
-    }
-
-    public void construct() {
         if (expression != null) {
             if (expression.getType().equals(new MiracleASTreeTypename("emptyobj"))) {
                 if (type.getDimension() == 0 && (type.getBasetype().equals("int")

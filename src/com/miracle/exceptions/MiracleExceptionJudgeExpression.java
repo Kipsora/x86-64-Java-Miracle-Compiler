@@ -9,7 +9,7 @@ public class MiracleExceptionJudgeExpression extends MiracleException {
 
     @Override
     public String toString() {
-        return "the return type of the expression here must be boolean, but type \""
+        return "the return type of the expression here must be bool, but type \""
                 + type + "\" was found.";
     }
 }

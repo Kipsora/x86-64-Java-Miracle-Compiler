@@ -5,10 +5,12 @@ import com.miracle.astree.node.expression.unary.MiracleASTreeUnaryExpression;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionSpecialExpression;
 
+import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeINT;
+
 public class MiracleASTreeSuffixIntegral extends MiracleASTreeUnaryExpression {
     public MiracleASTreeSuffixIntegral(OPERATOR operator, MiracleASTreeExpression node) {
         super(operator.toString(), node);
-        if (!node.getType().equals("int")) {
+        if (!node.getType().equals(MiracleASTreeINT)) {
             throw new MiracleExceptionSpecialExpression("suffix " + operator.toString(),
                     "int", node.getType().toString());
         }

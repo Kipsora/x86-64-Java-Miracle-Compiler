@@ -9,7 +9,7 @@ public abstract class MiracleASTreeBinaryExpression extends MiracleASTreeExpress
     private final MiracleASTreeExpression right;
     private final String operator;
 
-    protected MiracleASTreeBinaryExpression(MiracleASTreeTypename type, MiracleASTreeExpression left, String operator, MiracleASTreeExpression right, boolean mutable) {
+    MiracleASTreeBinaryExpression(MiracleASTreeTypename type, MiracleASTreeExpression left, String operator, MiracleASTreeExpression right, boolean mutable) {
         super(type, operator, mutable);
         this.left = left;
         this.right = right;

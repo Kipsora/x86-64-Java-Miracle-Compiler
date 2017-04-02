@@ -5,11 +5,13 @@ import com.miracle.astree.node.expression.unary.MiracleASTreeUnaryExpression;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionSpecialExpression;
 
+import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeINT;
+
 public class MiracleASTreePrefixIntegral extends MiracleASTreeUnaryExpression {
-    public MiracleASTreePrefixIntegral(OPERATOR op, MiracleASTreeExpression node) {
-        super(op.toString(), node);
-        if (!node.getType().equals("int")) {
-            throw new MiracleExceptionSpecialExpression("prefix " + op.toString(),
+    public MiracleASTreePrefixIntegral(OPERATOR operator, MiracleASTreeExpression node) {
+        super(operator.toString(), node);
+        if (!node.getType().equals(MiracleASTreeINT)) {
+            throw new MiracleExceptionSpecialExpression("prefix " + operator.toString(),
                     "int", node.getType().toString());
         }
     }

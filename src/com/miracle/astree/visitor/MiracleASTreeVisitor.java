@@ -81,5 +81,5 @@ public interface MiracleASTreeVisitor {
 
     void visit(MiracleASTreeThis miracleASTreeThis);
 
-    void visit(MiracleASTreeMember miracleASTreeMember);
+    void visit(MiracleASTreeField miracleASTreeField);
 }

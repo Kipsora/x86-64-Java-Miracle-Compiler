@@ -5,13 +5,15 @@ import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionSpecialExpression;
 
+import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeINT;
+
 public class MiracleASTreeBinaryIntegral extends MiracleASTreeArithmetic {
     public MiracleASTreeBinaryIntegral(MiracleASTreeExpression left, OPERATOR op, MiracleASTreeExpression right) {
         super(new MiracleASTreeTypename("int"), left, op.toString(), right);
-        if (!left.getType().equals(new MiracleASTreeTypename("int"))) {
+        if (!left.getType().equals(MiracleASTreeINT)) {
             throw new MiracleExceptionSpecialExpression("arithmetic", "int", left.getType().toString());
         }
-        if (!right.getType().equals(new MiracleASTreeTypename("int"))) {
+        if (!right.getType().equals(MiracleASTreeINT)) {
             throw new MiracleExceptionSpecialExpression("arithmetic", "int", right.getType().toString());
         }
     }

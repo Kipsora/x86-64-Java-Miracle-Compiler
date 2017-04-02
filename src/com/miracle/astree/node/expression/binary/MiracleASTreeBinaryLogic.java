@@ -5,15 +5,19 @@ import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionSpecialExpression;
 
+import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeBOOLEAN;
+import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeINT;
+import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeSTRING;
+
 public class MiracleASTreeBinaryLogic extends MiracleASTreeArithmetic {
     public MiracleASTreeBinaryLogic(MiracleASTreeExpression left, OPERATOR op, MiracleASTreeExpression right) {
-        super(new MiracleASTreeTypename("boolean"), left, op.toString(), right);
-        if (!"boolean".equals(left.getType())) {
-            throw new MiracleExceptionSpecialExpression("logical", "boolean",
+        super(MiracleASTreeBOOLEAN, left, op.toString(), right);
+        if (!left.getType().equals(MiracleASTreeBOOLEAN)) {
+            throw new MiracleExceptionSpecialExpression("logical", "bool",
                     left.getType().toString());
         }
-        if (!"boolean".equals(right.getType())) {
-            throw new MiracleExceptionSpecialExpression("logical", "boolean",
+        if (!right.getType().equals(MiracleASTreeBOOLEAN)) {
+            throw new MiracleExceptionSpecialExpression("logical", "bool",
                     right.getType().toString());
         }
     }

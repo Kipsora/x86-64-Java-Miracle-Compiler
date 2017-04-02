@@ -10,22 +10,20 @@ import java.util.List;
 
 public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclaration {
     private MiracleASTreeTypename type;
-    private MiracleASTreeTypename rettype;
-    private List<MiracleASTreeVariableDeclaration> arguments;
+    private final MiracleASTreeTypename rettype;
+    private final List<MiracleASTreeVariableDeclaration> arguments;
     private List<MiracleASTreeStatement> body; // null represents built-in functions
 
-    public MiracleASTreeFunctionDeclaration(String identifier) {
-        super(identifier);
-    }
-
     public MiracleASTreeFunctionDeclaration(MiracleASTreeTypename rettype, String identifier,
-                                            List<MiracleASTreeVariableDeclaration> arguments,
-                                            List<MiracleASTreeStatement> body) {
+                                            List<MiracleASTreeVariableDeclaration> arguments) {
         super(identifier);
-        setRettype(rettype);
-        setArguments(arguments);
-        setBody(body);
-        construct();
+        this.rettype = rettype;
+        this.arguments = arguments;
+        List<MiracleASTreeTypename> tmp = new LinkedList<>();
+        for (MiracleASTreeVariableDeclaration entry : arguments) {
+            tmp.add(entry.getType());
+        }
+        this.type = new MiracleASTreeTypename(rettype.getBasetype(), rettype.getDimension(), tmp);
     }
 
     @Override
@@ -35,24 +33,8 @@ public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclara
         visitor.exit();
     }
 
-    public void setArguments(List<MiracleASTreeVariableDeclaration> arguments) {
-        this.arguments = arguments;
-    }
-
     public void setBody(List<MiracleASTreeStatement> body) {
         this.body = body;
-    }
-
-    public void setRettype(MiracleASTreeTypename rettype) {
-        this.rettype = rettype;
-    }
-
-    public void construct() {
-        List<MiracleASTreeTypename> tmp = new LinkedList<>();
-        for (MiracleASTreeVariableDeclaration entry : arguments) {
-            tmp.add(entry.getType());
-        }
-        this.type = new MiracleASTreeTypename(rettype.getBasetype(), rettype.getDimension(), tmp);
     }
 
     public List<MiracleASTreeStatement> getBody() {

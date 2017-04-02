@@ -1,13 +1,97 @@
 package com.miracle.scanner.listener;
 
+import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclaration;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
 import com.miracle.cstree.MiracleBaseListener;
 import com.miracle.cstree.MiracleParser;
 import com.miracle.scanner.MiracleEnvironmentManager;
 import org.antlr.v4.runtime.ParserRuleContext;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+
 public abstract class MiracleRuntimeMaintainer extends MiracleBaseListener {
     private static int row;
     private static int column;
+
+    public static final MiracleASTreeTypename MiracleASTreeINT =
+            new MiracleASTreeTypename("int");
+    public static final MiracleASTreeTypename MiracleASTreeBOOLEAN =
+            new MiracleASTreeTypename("bool");
+    public static final MiracleASTreeTypename MiracleASTreeSTRING =
+            new MiracleASTreeTypename("string");
+    static final MiracleASTreeTypename MiracleASTreeVOID =
+            new MiracleASTreeTypename("void");
+    static final HashSet MiracleASTreeBuiltinTYPE =
+            new HashSet<MiracleASTreeTypename>() {{
+                add(MiracleASTreeINT);
+                add(MiracleASTreeBOOLEAN);
+                add(MiracleASTreeSTRING);
+                add(MiracleASTreeVOID);
+            }};
+
+    static final MiracleASTreeFunctionDeclaration MiracleASTreeTOSTRING =
+            new MiracleASTreeFunctionDeclaration(
+                    MiracleASTreeSTRING, "toString",
+                    new LinkedList<MiracleASTreeVariableDeclaration>() {{
+                        add(new MiracleASTreeVariableDeclaration("x", MiracleASTreeINT));
+                    }}
+            );
+    static final MiracleASTreeFunctionDeclaration MiracleASTreePRINT =
+            new MiracleASTreeFunctionDeclaration(
+                    MiracleASTreeVOID, "print",
+                    new LinkedList<MiracleASTreeVariableDeclaration>() {{
+                        add(new MiracleASTreeVariableDeclaration("x", MiracleASTreeSTRING));
+                    }}
+            );
+    static final MiracleASTreeFunctionDeclaration MiracleASTreePRINTLN =
+            new MiracleASTreeFunctionDeclaration(
+                    MiracleASTreeVOID, "println",
+                    new LinkedList<MiracleASTreeVariableDeclaration>() {{
+                        add(new MiracleASTreeVariableDeclaration("x", MiracleASTreeSTRING));
+                    }}
+            );
+    static final MiracleASTreeFunctionDeclaration MiracleASTreeGETSTRING =
+            new MiracleASTreeFunctionDeclaration(
+                    MiracleASTreeSTRING, "getString",
+                    new LinkedList<>()
+            );
+    static final MiracleASTreeFunctionDeclaration MiracleASTreeGETINT =
+            new MiracleASTreeFunctionDeclaration(
+                    MiracleASTreeINT, "getInt",
+                    new LinkedList<>()
+            );
+    static final MiracleASTreeFunctionDeclaration MiracleASTreeSIZE =
+            new MiracleASTreeFunctionDeclaration(
+                    MiracleASTreeINT, "size",
+                    new LinkedList<>()
+            );
+    static final MiracleASTreeFunctionDeclaration MiracleASTreeLENGTH =
+            new MiracleASTreeFunctionDeclaration(
+                    MiracleASTreeINT, "length",
+                    new LinkedList<>()
+            );
+    static final MiracleASTreeFunctionDeclaration MiracleASTreeSUBSTRING =
+            new MiracleASTreeFunctionDeclaration(
+                    MiracleASTreeSTRING, "substring",
+                    new LinkedList<MiracleASTreeVariableDeclaration>() {{
+                        add(new MiracleASTreeVariableDeclaration("l", MiracleASTreeINT));
+                        add(new MiracleASTreeVariableDeclaration("r", MiracleASTreeINT));
+                    }}
+            );
+    static final MiracleASTreeFunctionDeclaration MiracleASTreePARSEINT =
+            new MiracleASTreeFunctionDeclaration(
+                    MiracleASTreeINT, "parseInt",
+                    new LinkedList<>()
+            );
+    static final MiracleASTreeFunctionDeclaration MiracleASTreeORD =
+            new MiracleASTreeFunctionDeclaration(
+                    MiracleASTreeINT, "ord",
+                    new LinkedList<MiracleASTreeVariableDeclaration>() {{
+                        add(new MiracleASTreeVariableDeclaration("l", MiracleASTreeINT));
+                    }}
+            );
 
     public static int getRow() {
         return row;

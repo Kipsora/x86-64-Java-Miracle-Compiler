@@ -5,9 +5,12 @@ import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionCompareExpression;
 
+import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeBOOLEAN;
+import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeINT;
+
 public class MiracleASTreeCompare extends MiracleASTreeArithmetic {
     public MiracleASTreeCompare(MiracleASTreeExpression left, OPERATOR operator, MiracleASTreeExpression right) {
-        super(new MiracleASTreeTypename("boolean"), left, operator.toString(), right);
+        super(MiracleASTreeBOOLEAN, left, operator.toString(), right);
         if (!left.getType().equals(right.getType())) {
             throw new MiracleExceptionCompareExpression(left.getType().toString(), right.getType().toString());
         }

@@ -6,6 +6,8 @@ import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionJudgeExpression;
 
+import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeBOOLEAN;
+
 public class MiracleASTreeFor extends MiracleASTreeIteration {
     private MiracleASTreeExpression leftExpression;
     private MiracleASTreeExpression middleExpression;
@@ -26,7 +28,7 @@ public class MiracleASTreeFor extends MiracleASTreeIteration {
     public void setMiddleExpression(MiracleASTreeExpression middleExpression) {
         this.middleExpression = middleExpression;
         if (middleExpression != null) {
-            if (!middleExpression.getType().equals(new MiracleASTreeTypename("boolean"))) {
+            if (!middleExpression.getType().equals(MiracleASTreeBOOLEAN)) {
                 throw new MiracleExceptionJudgeExpression(middleExpression.getType().toString());
             }
         }

@@ -4,8 +4,8 @@ import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.node.expression.value.MiracleASTreeValue;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 
-public class MiracleASTreeMember extends MiracleASTreeBinaryExpression {
-    public MiracleASTreeMember(MiracleASTreeExpression left, MiracleASTreeValue right) {
+public class MiracleASTreeField extends MiracleASTreeBinaryExpression {
+    public MiracleASTreeField(MiracleASTreeExpression left, MiracleASTreeValue right) {
         super(right.getType(), left, ".", right, left.getMutable() && right.getMutable());
     }
 

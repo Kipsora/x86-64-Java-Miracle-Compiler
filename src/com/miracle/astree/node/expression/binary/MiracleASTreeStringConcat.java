@@ -5,14 +5,17 @@ import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionSpecialExpression;
 
+import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeINT;
+import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeSTRING;
+
 public class MiracleASTreeStringConcat extends MiracleASTreeArithmetic {
     public MiracleASTreeStringConcat(MiracleASTreeExpression left, MiracleASTreeExpression right) {
-        super(new MiracleASTreeTypename("string"), left, "+", right);
-        if (!left.getType().equals(new MiracleASTreeTypename("string"))) {
+        super(MiracleASTreeSTRING, left, "+", right);
+        if (!left.getType().equals(MiracleASTreeSTRING)) {
             throw new MiracleExceptionSpecialExpression("string concat", "string",
                     left.getType().toString());
         }
-        if (!right.getType().equals(new MiracleASTreeTypename("string"))) {
+        if (!right.getType().equals(MiracleASTreeSTRING)) {
             throw new MiracleExceptionSpecialExpression("string concat", "string",
                     right.getType().toString());
         }
