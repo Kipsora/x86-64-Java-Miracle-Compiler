@@ -188,7 +188,10 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     public void exitWhileStatement(MiracleParser.WhileStatementContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
         MiracleASTreeExpression expression = (MiracleASTreeExpression) children.get(0);
-        MiracleASTreeStatement statement = (MiracleASTreeStatement) children.get(1);
+        MiracleASTreeStatement statement = null;
+        if (children.size() > 1) {
+            statement = (MiracleASTreeStatement) children.get(1);
+        }
         MiracleASTreeWhile whilenode = (MiracleASTreeWhile) iterationBuffer.pop();
         whilenode.setExpression(expression);
         whilenode.setStatement(statement);
