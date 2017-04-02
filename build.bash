@@ -4,5 +4,5 @@
 set -e
 cd "$(dirname "$0")"
 mkdir -p bin
-find ./src -name *.java | javac -d bin -classpath "lib/*" @/dev/stdin
+find ./src -name *.java | javac -d bin -cp "./lib/*" @/dev/stdin
 
