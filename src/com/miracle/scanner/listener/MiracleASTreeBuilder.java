@@ -585,8 +585,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
         MiracleASTreeExpression left = (MiracleASTreeExpression) path.pop().get(0);
         MiracleASTreeTypename type = left.getType();
         String identifier = ctx.IDENTIFIER().getText();
-        if (type.getTypenameType().equals(MiracleASTreeTypename.TYPE.TN_FUNC)
-                || type.getDimension() != 0) {
+        if (type.getTypenameType().equals(MiracleASTreeTypename.TYPE.TN_FUNC)) {
             throw new MiracleExceptionMember(type.toString(), identifier);
         }
         if (MiracleEnvironmentManager.contain(type.toString())) {
