@@ -25,14 +25,7 @@ import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeIteration;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
 import com.miracle.cstree.MiracleParser;
-import com.miracle.exceptions.MiracleExceptionArguments;
-import com.miracle.exceptions.MiracleExceptionCallVariable;
-import com.miracle.exceptions.MiracleExceptionMember;
-import com.miracle.exceptions.MiracleExceptionNewBaseType;
-import com.miracle.exceptions.MiracleExceptionNewSubscript;
-import com.miracle.exceptions.MiracleExceptionNewType;
-import com.miracle.exceptions.MiracleExceptionThis;
-import com.miracle.exceptions.MiracleExceptionUndefinedIdentifier;
+import com.miracle.exceptions.*;
 import com.miracle.scanner.MiracleEnvironmentManager;
 
 import java.util.LinkedList;
@@ -212,6 +205,9 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     @Override
     public void exitContinueStatement(MiracleParser.ContinueStatementContext ctx) {
         path.pop();
+        if (iterationBuffer.empty()) {
+            throw new MiracleExceptionStatementScope("break", "iteration");
+        }
         path.peek().add(new MiracleASTreeContinue());
         super.exitContinueStatement(ctx);
     }
@@ -225,6 +221,9 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     @Override
     public void exitBreakStatement(MiracleParser.BreakStatementContext ctx) {
         path.pop();
+        if (iterationBuffer.empty()) {
+            throw new MiracleExceptionStatementScope("break", "iteration");
+        }
         path.peek().add(new MiracleASTreeBreak(iterationBuffer.peek()));
         super.exitBreakStatement(ctx);
     }
@@ -238,13 +237,23 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     @Override
     public void exitReturnStatement(MiracleParser.ReturnStatementContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
+        if (functionBuffer.empty()) {
+            throw new MiracleExceptionStatementScope("return", "function");
+        }
+        MiracleASTreeFunctionDeclaration function = functionBuffer.peek();
 
         if (ctx.expression() == null) {
+            if (!function.getReturnType().equals(MiracleASTreeVOID)) {
+                throw new MiracleExceptionReturn(function.getReturnType().toString(), MiracleASTreeVOID.toString());
+            }
             path.peek().add(new MiracleASTreeReturn());
         } else {
+            if (!function.getReturnType().equals(((MiracleASTreeExpression) children.get(0)).getType())) {
+                throw new MiracleExceptionReturn(function.getReturnType().toString(),
+                        ((MiracleASTreeExpression) children.get(0)).getType().toString());
+            }
             path.peek().add(new MiracleASTreeReturn((MiracleASTreeExpression) children.get(0)));
         }
-
         super.exitReturnStatement(ctx);
     }
 

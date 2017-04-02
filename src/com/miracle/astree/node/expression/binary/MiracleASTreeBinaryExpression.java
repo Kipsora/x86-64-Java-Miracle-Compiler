@@ -2,7 +2,6 @@ package com.miracle.astree.node.expression.binary;
 
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
-import com.miracle.exceptions.MiracleExceptionBinaryExpression;
 
 public abstract class MiracleASTreeBinaryExpression extends MiracleASTreeExpression {
     private final MiracleASTreeExpression left;

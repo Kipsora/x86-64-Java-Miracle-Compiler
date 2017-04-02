@@ -2,6 +2,7 @@ package com.miracle.astree.node.statement.declaration;
 
 import com.miracle.astree.node.MiracleASTreeNode;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
+import com.miracle.exceptions.MiracleException;
 
 import java.util.List;
 import java.util.Objects;
@@ -75,7 +76,12 @@ public class MiracleASTreeTypename extends MiracleASTreeNode {
     }
 
     public boolean equals(MiracleASTreeTypename e) {
-        
+        if (e.basetype.equals("emptyobj")) {
+            assert e.arguments == null;
+            assert e.dimension == 0;
+            return dimension > 0 || (!basetype.equals("int") && !basetype.equals("bool")
+                    && !basetype.equals("void") && !basetype.equals("string") && arguments == null);
+        }
         return e.basetype.equals(basetype) && dimension == e.dimension
                 && Objects.equals(arguments, e.arguments);
     }
