@@ -5,6 +5,9 @@ import com.miracle.astree.node.statement.declaration.MiracleASTreeMemberDeclarat
 import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
 import com.miracle.cstree.MiracleParser;
+import com.miracle.exceptions.MiracleException;
+import com.miracle.exceptions.MiracleExceptionMainType;
+import com.miracle.exceptions.MiracleExceptionVoid;
 import com.miracle.scanner.MiracleEnvironmentManager;
 
 import java.util.LinkedList;
@@ -16,6 +19,17 @@ public class MiracleDetailedDeclarationFetcher extends MiracleRuntimeMaintainer 
 
     public MiracleDetailedDeclarationFetcher() {
         path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitMiracle(MiracleParser.MiracleContext ctx) {
+        if (MiracleEnvironmentManager.containFunction("main")) {
+            MiracleASTreeTypename type = MiracleEnvironmentManager.getFunction("main").getReturnType();
+            if (!type.equals(MiracleASTreeINT)) {
+                throw new MiracleExceptionMainType(type.toString());
+            }
+        }
+        super.exitMiracle(ctx);
     }
 
     @Override
@@ -75,6 +89,9 @@ public class MiracleDetailedDeclarationFetcher extends MiracleRuntimeMaintainer 
     @Override
     public void exitVariableDeclarationStatement(MiracleParser.VariableDeclarationStatementContext ctx) {
         MiracleASTreeTypename type = (MiracleASTreeTypename) path.pop().get(0);
+        if (type.getBasetype().equals("void")) {
+            throw new MiracleExceptionVoid();
+        }
         super.exitVariableDeclarationStatement(ctx);
         MiracleEnvironmentManager.declareVariable(ctx.IDENTIFIER().getText(), type);
         path.peek().add(MiracleEnvironmentManager.getVariable(ctx.IDENTIFIER().getText()));
@@ -100,4 +117,6 @@ public class MiracleDetailedDeclarationFetcher extends MiracleRuntimeMaintainer 
         MiracleEnvironmentManager.declareFunction(ctx.IDENTIFIER(0).getText(), type, arguments);
         path.peek().add(MiracleEnvironmentManager.getFunction(ctx.IDENTIFIER(0).getText()));
     }
+
+
 }

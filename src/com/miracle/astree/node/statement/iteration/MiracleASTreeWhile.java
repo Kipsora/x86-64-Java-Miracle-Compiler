@@ -6,13 +6,15 @@ import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionJudgeExpression;
 
+import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeBOOLEAN;
+
 public class MiracleASTreeWhile extends MiracleASTreeIteration {
     private MiracleASTreeExpression expression;
     private MiracleASTreeStatement statement;
 
     public void setExpression(MiracleASTreeExpression expression) {
         this.expression = expression;
-        if (expression.getType().equals(new MiracleASTreeTypename("boolean"))) {
+        if (!expression.getType().equals(MiracleASTreeBOOLEAN)) {
             throw new MiracleExceptionJudgeExpression(expression.getType().toString());
         }
     }

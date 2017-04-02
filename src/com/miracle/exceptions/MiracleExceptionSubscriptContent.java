@@ -1,9 +1,9 @@
 package com.miracle.exceptions;
 
-public class MiracleExpressionSubscriptContent extends MiracleException {
+public class MiracleExceptionSubscriptContent extends MiracleException {
     private final String type;
 
-    public MiracleExpressionSubscriptContent(String type) {
+    public MiracleExceptionSubscriptContent(String type) {
         this.type = type;
     }
 
