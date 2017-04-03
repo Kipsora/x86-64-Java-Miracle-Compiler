@@ -329,38 +329,6 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     }
 
     @Override
-    public void enterTypename(MiracleParser.TypenameContext ctx) {
-        super.enterTypename(ctx);
-        path.push(new LinkedList<>());
-    }
-
-    @Override
-    public void exitTypename(MiracleParser.TypenameContext ctx) {
-        path.pop();
-        int dimension = 0;
-        if (ctx.IDENTIFIER() != null) {
-            String identifier = ctx.IDENTIFIER().getText();
-            if (!MiracleASTreeBuiltinTYPE.contains(new MiracleASTreeTypename(identifier))) {
-                MiracleEnvironmentManager.getClass(identifier);
-            }
-            for (int i = 1; i < ctx.getChildCount(); i++) {
-                if (ctx.getChild(i).getText().equals("[")) {
-                    dimension++;
-                }
-            }
-            path.peek().add(new MiracleASTreeTypename(ctx.IDENTIFIER().getText(), dimension));
-        } else {
-            for (int i = 1; i < ctx.getChildCount(); i++) {                          // custom types
-                if (ctx.getChild(i).getText().equals("[")) {
-                    dimension++;
-                }
-            }
-            path.peek().add(new MiracleASTreeTypename(ctx.BASETYPE().getText(), dimension));
-        }
-        super.exitTypename(ctx);
-    }
-
-    @Override
     public void exitNewExpression(MiracleParser.NewExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
         List<MiracleASTreeExpression> size = new LinkedList<>();
@@ -402,6 +370,31 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
                 size
         ));
         super.exitNewExpression(ctx);
+    }
+
+    @Override
+    public void exitTypename(MiracleParser.TypenameContext ctx) {
+        int dimension = 0;
+        if (ctx.IDENTIFIER() != null) {
+            String identifier = ctx.IDENTIFIER().getText();
+            if (!MiracleASTreeBuiltinTYPE.contains(new MiracleASTreeTypename(identifier))) {
+                MiracleEnvironmentManager.getClass(identifier);
+            }
+            for (int i = 1; i < ctx.getChildCount(); i++) {
+                if (ctx.getChild(i).getText().equals("[")) {
+                    dimension++;
+                }
+            }
+            path.peek().add(new MiracleASTreeTypename(ctx.IDENTIFIER().getText(), dimension));
+        } else {
+            for (int i = 1; i < ctx.getChildCount(); i++) {                          // custom types
+                if (ctx.getChild(i).getText().equals("[")) {
+                    dimension++;
+                }
+            }
+            path.peek().add(new MiracleASTreeTypename(ctx.BASETYPE().getText(), dimension));
+        }
+        super.exitTypename(ctx);
     }
 
     @Override

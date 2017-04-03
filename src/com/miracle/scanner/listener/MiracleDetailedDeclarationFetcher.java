@@ -49,14 +49,7 @@ public class MiracleDetailedDeclarationFetcher extends MiracleRuntimeMaintainer 
     }
 
     @Override
-    public void enterTypename(MiracleParser.TypenameContext ctx) {
-        super.enterTypename(ctx);
-        path.push(new LinkedList<>());
-    }
-
-    @Override
     public void exitTypename(MiracleParser.TypenameContext ctx) {
-        path.pop();
         int dimension = 0;
         if (ctx.IDENTIFIER() != null) {
             String identifier = ctx.IDENTIFIER().getText();
