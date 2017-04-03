@@ -29,6 +29,8 @@ public class MiracleDetailedDeclarationFetcher extends MiracleRuntimeMaintainer 
             if (!type.equals(MiracleASTreeINT)) {
                 throw new MiracleExceptionMainType(type.toString());
             }
+        } else {
+            throw new MiracleExceptionUndefinedMain();
         }
         super.exitMiracle(ctx);
     }
