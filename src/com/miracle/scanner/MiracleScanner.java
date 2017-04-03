@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class MiracleScanner {
-    public static void scan(InputStream stream) throws IOException {
+    public static void scan(InputStream stream) throws Exception {
         MiracleLexer lexer = new MiracleLexer(new ANTLRInputStream(stream));
         MiracleParser parser = new MiracleParser(new CommonTokenStream(lexer));
         parser.removeErrorListeners();
@@ -34,7 +34,7 @@ public class MiracleScanner {
             MiracleASTreePrinter printer = new MiracleASTreePrinter();
             builder.getTree().visit(printer);
         } catch(MiracleException e) {
-            System.out.println(e.getMessage());
+            throw new Exception(e.getMessage());
         }
     }
 }
