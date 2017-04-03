@@ -200,14 +200,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     }
 
     @Override
-    public void enterContinueStatement(MiracleParser.ContinueStatementContext ctx) {
-        super.enterContinueStatement(ctx);
-        path.push(new LinkedList<>());
-    }
-
-    @Override
     public void exitContinueStatement(MiracleParser.ContinueStatementContext ctx) {
-        path.pop();
         if (iterationBuffer.empty()) {
             throw new MiracleExceptionStatementScope("break", "iteration");
         }
@@ -216,14 +209,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     }
 
     @Override
-    public void enterBreakStatement(MiracleParser.BreakStatementContext ctx) {
-        super.enterBreakStatement(ctx);
-        path.push(new LinkedList<>());
-    }
-
-    @Override
     public void exitBreakStatement(MiracleParser.BreakStatementContext ctx) {
-        path.pop();
         if (iterationBuffer.empty()) {
             throw new MiracleExceptionStatementScope("break", "iteration");
         }
@@ -261,14 +247,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     }
 
     @Override
-    public void enterConstant(MiracleParser.ConstantContext ctx) {
-        super.enterConstant(ctx);
-        path.push(new LinkedList<>());
-    }
-
-    @Override
     public void exitConstant(MiracleParser.ConstantContext ctx) {
-        path.pop();
         if (ctx.INTEGER() != null) {
             path.peek().add(new MiracleASTreeConstant(MiracleASTreeINT,
                     ctx.INTEGER().getText()));
@@ -285,14 +264,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     }
 
     @Override
-    public void enterVariableExpression(MiracleParser.VariableExpressionContext ctx) {
-        super.enterVariableExpression(ctx);
-        path.push(new LinkedList<>());
-    }
-
-    @Override
     public void exitVariableExpression(MiracleParser.VariableExpressionContext ctx) {
-        path.pop();
         String id = ctx.IDENTIFIER().getText();
         if (id.equals("this")) {
             if (MiracleEnvironmentManager.inMemberScope()) {

@@ -240,6 +240,6 @@ public class MiracleEnvironmentManager {
     }
 
     public static boolean contain(String identifier) {
-        return containClass(identifier) || containFunction(identifier) || containVariable(identifier);
+        return containFunction(identifier) || containVariable(identifier) || containClass(identifier);
     }
 }
