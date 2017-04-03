@@ -1,5 +1,6 @@
 package com.miracle.scanner;
 
+import com.miracle.astree.visitor.MiracleASTreePrinter;
 import com.miracle.cstree.MiracleLexer;
 import com.miracle.cstree.MiracleParser;
 import com.miracle.exceptions.MiracleException;

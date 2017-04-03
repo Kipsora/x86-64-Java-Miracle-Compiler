@@ -13,10 +13,7 @@ import com.miracle.astree.node.statement.MiracleASTreeSelection;
 import com.miracle.astree.node.statement.control.MiracleASTreeBreak;
 import com.miracle.astree.node.statement.control.MiracleASTreeContinue;
 import com.miracle.astree.node.statement.control.MiracleASTreeReturn;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeClassDeclaration;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclaration;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
+import com.miracle.astree.node.statement.declaration.*;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
 

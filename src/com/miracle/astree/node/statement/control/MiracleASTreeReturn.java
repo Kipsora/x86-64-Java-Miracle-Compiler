@@ -6,14 +6,16 @@ import com.miracle.astree.visitor.MiracleASTreeVisitor;
 
 public class MiracleASTreeReturn extends MiracleASTreeControl {
     private final MiracleASTreeExpression expression;
-    private MiracleASTreeFunctionDeclaration function;
+    private final MiracleASTreeFunctionDeclaration function;
 
-    public MiracleASTreeReturn(MiracleASTreeExpression expression) {
+    public MiracleASTreeReturn(MiracleASTreeFunctionDeclaration function, MiracleASTreeExpression expression) {
         this.expression = expression;
+        this.function = function;
     }
 
-    public MiracleASTreeReturn() {
+    public MiracleASTreeReturn(MiracleASTreeFunctionDeclaration function) {
         this.expression = null;
+        this.function = function;
     }
 
     @Override
@@ -21,10 +23,6 @@ public class MiracleASTreeReturn extends MiracleASTreeControl {
         visitor.enter();
         visitor.visit(this);
         visitor.exit();
-    }
-
-    public void link(MiracleASTreeFunctionDeclaration declaration) {
-        this.function = declaration;
     }
 
     public MiracleASTreeFunctionDeclaration getFunction() {

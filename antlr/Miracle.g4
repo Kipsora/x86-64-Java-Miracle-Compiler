@@ -8,7 +8,7 @@ functionDeclarationStatement: typename IDENTIFIER '(' (typename IDENTIFIER)?(','
 
 variableDeclarationStatement: typename IDENTIFIER ('=' expression)? ';';
 
-constructorDeclarationStatement: IDENTIFIER '(' ')' '{' statement* '}';
+constructorDeclarationStatement: typename '(' ')' '{' statement* '}';
 
 blockStatement: '{' statement* '}';
 

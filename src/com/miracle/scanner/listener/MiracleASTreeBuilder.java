@@ -135,7 +135,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
         if (children.size() > 2) {
             path.peek().add(new MiracleASTreeSelection((MiracleASTreeExpression) children.get(0),
                     (MiracleASTreeStatement) children.get(1), (MiracleASTreeStatement) children.get(2)));
-        } else {
+        } else if (children.size() > 1) {
             path.peek().add(new MiracleASTreeSelection((MiracleASTreeExpression) children.get(0),
                     (MiracleASTreeStatement) children.get(1), null));
         }
@@ -232,16 +232,17 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
         MiracleASTreeFunctionDeclaration function = functionBuffer.peek();
 
         if (ctx.expression() == null) {
-            if (!function.getReturnType().equals(MiracleASTreeVOID)) {
+            if (!function.getIdentifier().equals("") &&
+                    !function.getReturnType().equals(MiracleASTreeVOID)) {
                 throw new MiracleExceptionReturn(function.getReturnType().toString(), MiracleASTreeVOID.toString());
             }
-            path.peek().add(new MiracleASTreeReturn());
+            path.peek().add(new MiracleASTreeReturn(function));
         } else {
             if (!function.getReturnType().equals(((MiracleASTreeExpression) children.get(0)).getType())) {
                 throw new MiracleExceptionReturn(function.getReturnType().toString(),
                         ((MiracleASTreeExpression) children.get(0)).getType().toString());
             }
-            path.peek().add(new MiracleASTreeReturn((MiracleASTreeExpression) children.get(0)));
+            path.peek().add(new MiracleASTreeReturn(function, (MiracleASTreeExpression) children.get(0)));
         }
         super.exitReturnStatement(ctx);
     }
@@ -282,12 +283,12 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             path.peek().add(MiracleASTreePRINT.toValue());
         } else if (id.equals("println")) {
             path.peek().add(MiracleASTreePRINTLN.toValue());
+        } else if (id.equals("toString")) {
+            path.peek().add(MiracleASTreeTOSTRING.toValue());
         } else if (id.equals("getString")) {
             path.peek().add(MiracleASTreeGETSTRING.toValue());
         } else if (id.equals("getInt")) {
             path.peek().add(MiracleASTreeGETINT.toValue());
-        } else if (id.equals("toString")) {
-            path.peek().add(MiracleASTreeTOSTRING.toValue());
         } else {
             throw new MiracleExceptionUndefinedIdentifier(id);
         }
@@ -651,5 +652,25 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
         path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
                 "[]", (MiracleASTreeExpression) children.get(1)));
         super.exitSubscriptExpression(ctx);
+    }
+
+    @Override
+    public void enterConstructorDeclarationStatement(MiracleParser.ConstructorDeclarationStatementContext ctx) {
+        super.enterConstructorDeclarationStatement(ctx);
+        functionBuffer.add(MiracleEnvironmentManager.getFunction(""));
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitConstructorDeclarationStatement(MiracleParser.ConstructorDeclarationStatementContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        List<MiracleASTreeStatement> body = new LinkedList<>();
+        for (int i = 1; i < children.size(); i++) {
+            body.add((MiracleASTreeStatement) children.get(i));
+        }
+        MiracleASTreeFunctionDeclaration node = functionBuffer.pop();
+        node.setBody(body);
+        path.peek().add(node);
+        super.exitConstructorDeclarationStatement(ctx);
     }
 }

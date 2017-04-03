@@ -1,13 +1,12 @@
 package com.miracle.scanner.listener;
 
 import com.miracle.astree.node.MiracleASTreeNode;
+import com.miracle.astree.node.statement.declaration.MiracleASTreeClassDeclaration;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeMemberDeclaration;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
 import com.miracle.cstree.MiracleParser;
-import com.miracle.exceptions.MiracleException;
-import com.miracle.exceptions.MiracleExceptionMainType;
-import com.miracle.exceptions.MiracleExceptionVoid;
+import com.miracle.exceptions.*;
 import com.miracle.scanner.MiracleEnvironmentManager;
 
 import java.util.LinkedList;
@@ -16,6 +15,8 @@ import java.util.Stack;
 
 public class MiracleDetailedDeclarationFetcher extends MiracleRuntimeMaintainer {
     private Stack<List<MiracleASTreeNode>> path = new Stack<>();
+    private MiracleASTreeClassDeclaration nowClass = null;
+    private int constructorCounter = 0;
 
     public MiracleDetailedDeclarationFetcher() {
         path.push(new LinkedList<>());
@@ -36,6 +37,8 @@ public class MiracleDetailedDeclarationFetcher extends MiracleRuntimeMaintainer 
     public void enterClassDeclarationStatement(MiracleParser.ClassDeclarationStatementContext ctx) {
         super.enterClassDeclarationStatement(ctx);
         path.push(new LinkedList<>());
+        nowClass = MiracleEnvironmentManager.getClass(ctx.IDENTIFIER().getText());
+        constructorCounter = 0;
     }
 
     @Override
@@ -44,6 +47,7 @@ public class MiracleDetailedDeclarationFetcher extends MiracleRuntimeMaintainer 
         for (MiracleASTreeNode entry : path.pop()) {
             tmp.add((MiracleASTreeMemberDeclaration) entry);
         }
+        nowClass = null;
         MiracleEnvironmentManager.getClass(ctx.IDENTIFIER().getText()).setChildren(tmp);
         super.exitClassDeclarationStatement(ctx);
     }
@@ -111,5 +115,24 @@ public class MiracleDetailedDeclarationFetcher extends MiracleRuntimeMaintainer 
         path.peek().add(MiracleEnvironmentManager.getFunction(ctx.IDENTIFIER(0).getText()));
     }
 
+    @Override
+    public void enterConstructorDeclarationStatement(MiracleParser.ConstructorDeclarationStatementContext ctx) {
+        super.enterConstructorDeclarationStatement(ctx);
+        path.add(new LinkedList<>());
+    }
+
+    @Override
+    public void exitConstructorDeclarationStatement(MiracleParser.ConstructorDeclarationStatementContext ctx) {
+        MiracleASTreeTypename type = (MiracleASTreeTypename) path.pop().get(0);
+        if (!type.equals(new MiracleASTreeTypename(nowClass.getIdentifier()))) {
+            throw new MiracleExceptionConstructor();
+        }
+        if (constructorCounter > 0) {
+            throw new MiracleExceptionMultipleConstructor();
+        }
+        MiracleEnvironmentManager.declareFunction("", type, new LinkedList<>());
+        path.peek().add(MiracleEnvironmentManager.getFunction(""));
+        super.exitConstructorDeclarationStatement(ctx);
+    }
 
 }

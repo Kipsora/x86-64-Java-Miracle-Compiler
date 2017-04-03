@@ -125,7 +125,7 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTreeNewExpression miracleASTreeNewExpression) {
-        System.out.print("new ");
+        System.out.print("new " + miracleASTreeNewExpression.getType().getBasetype().toString() + " ");
         for (MiracleASTreeExpression size : miracleASTreeNewExpression.getSize()) {
             System.out.print("[");
             size.accept(this);

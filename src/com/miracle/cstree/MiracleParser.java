@@ -445,7 +445,9 @@ public class MiracleParser extends Parser {
 	}
 
 	public static class ConstructorDeclarationStatementContext extends ParserRuleContext {
-		public TerminalNode IDENTIFIER() { return getToken(MiracleParser.IDENTIFIER, 0); }
+		public TypenameContext typename() {
+			return getRuleContext(TypenameContext.class,0);
+		}
 		public List<StatementContext> statement() {
 			return getRuleContexts(StatementContext.class);
 		}
@@ -474,7 +476,7 @@ public class MiracleParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(86);
-			match(IDENTIFIER);
+			typename();
 			setState(87);
 			match(T__3);
 			setState(88);
@@ -2062,7 +2064,7 @@ public class MiracleParser extends Parser {
 		"DF\3\2\2\2EC\3\2\2\2FG\7\b\2\2GK\7\4\2\2HJ\5\16\b\2IH\3\2\2\2JM\3\2\2"+
 		"\2KI\3\2\2\2KL\3\2\2\2LN\3\2\2\2MK\3\2\2\2NO\7\5\2\2O\7\3\2\2\2PQ\5\32"+
 		"\16\2QT\7\61\2\2RS\7\t\2\2SU\5\34\17\2TR\3\2\2\2TU\3\2\2\2UV\3\2\2\2V"+
-		"W\7\n\2\2W\t\3\2\2\2XY\7\61\2\2YZ\7\6\2\2Z[\7\b\2\2[_\7\4\2\2\\^\5\16"+
+		"W\7\n\2\2W\t\3\2\2\2XY\5\32\16\2YZ\7\6\2\2Z[\7\b\2\2[_\7\4\2\2\\^\5\16"+
 		"\b\2]\\\3\2\2\2^a\3\2\2\2_]\3\2\2\2_`\3\2\2\2`b\3\2\2\2a_\3\2\2\2bc\7"+
 		"\5\2\2c\13\3\2\2\2dh\7\4\2\2eg\5\16\b\2fe\3\2\2\2gj\3\2\2\2hf\3\2\2\2"+
 		"hi\3\2\2\2ik\3\2\2\2jh\3\2\2\2kl\7\5\2\2l\r\3\2\2\2mu\5\f\7\2nu\5\b\5"+
