@@ -89,7 +89,7 @@ public class MiracleEnvironmentManager {
         } else {
             scope.push(ImmutableTriple.of(scopeNumber++, member, member));
         }
-        if (mapclass.size() < scope.peek().getLeft()) {
+        if (mapclass.size() < scopeNumber) {
             mapclass.add(new HashMap<>());
         }
         mapclass.get(scope.peek().getLeft()).forEach((key, value) -> {
@@ -100,7 +100,7 @@ public class MiracleEnvironmentManager {
             }
             declaredClass.put(key, ImmutablePair.of(scope.peek().getLeft(), value));
         });
-        if (mapfunc.size() < scope.peek().getLeft()) {
+        if (mapfunc.size() < scopeNumber) {
             mapfunc.add(new HashMap<>());
         }
         mapfunc.get(scope.peek().getLeft()).forEach((key, value) -> {
@@ -111,7 +111,7 @@ public class MiracleEnvironmentManager {
             }
             declaredFunction.put(key, ImmutablePair.of(scope.peek().getLeft(), value));
         });
-        if (mapvari.size() < scope.peek().getLeft()) {
+        if (mapvari.size() < scopeNumber) {
             mapvari.add(new HashMap<>());
         }
         if (scope.peek().getRight()) {
