@@ -155,20 +155,19 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
         MiracleASTreeExpression[] node = new MiracleASTreeExpression[3];
         MiracleASTreeStatement statement = null;
         int consumed = 0;
-        for (int i = 0, j = 0; j < ctx.expression().size(); i++) {
+        for (int i = 0, j = 0; j < 3 && consumed < ctx.expression().size(); i++) {
             if (ctx.getChild(i).getText().equals(";") || ctx.getChild(i).getText().equals(")")) {
                 if (!ctx.getChild(i - 1).getText().equals("(") && !ctx.getChild(i - 1).getText().equals(";")) {
-                    node[j++] = (MiracleASTreeExpression) children.get(consumed++);
+                    node[j] = (MiracleASTreeExpression) children.get(consumed++);
                 }
+                j++;
             }
         }
         if (consumed < children.size()) {
             statement = (MiracleASTreeStatement) children.get(consumed);
         }
         MiracleASTreeFor fornode = (MiracleASTreeFor) iterationBuffer.pop();
-        fornode.setLeftExpression(node[0]);
-        fornode.setMiddleExpression(node[1]);
-        fornode.setRightExpression(node[2]);
+        fornode.setExpression(node[0], node[1], node[2]);
         fornode.setStatement(statement);
         path.peek().add(fornode);
         super.exitForStatement(ctx);

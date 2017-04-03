@@ -21,12 +21,12 @@ public class MiracleASTreeFor extends MiracleASTreeIteration {
         visitor.exit();
     }
 
-    public void setLeftExpression(MiracleASTreeExpression leftExpression) {
+    public void setExpression(MiracleASTreeExpression leftExpression,
+                              MiracleASTreeExpression middleExpression,
+                              MiracleASTreeExpression rightExpression) {
         this.leftExpression = leftExpression;
-    }
-
-    public void setMiddleExpression(MiracleASTreeExpression middleExpression) {
         this.middleExpression = middleExpression;
+        this.rightExpression = rightExpression;
         if (middleExpression != null) {
             if (!middleExpression.getType().equals(MiracleASTreeBOOLEAN)) {
                 throw new MiracleExceptionJudgeExpression(middleExpression.getType().toString());
