@@ -8,6 +8,7 @@ import java.util.List;
 
 public class MiracleASTreeNewExpression extends MiracleASTreeExpression {
     private final List<MiracleASTreeExpression> size;
+
     public MiracleASTreeNewExpression(MiracleASTreeTypename type, List<MiracleASTreeExpression> size) {
         super(type, "new", true);
         this.size = size;
@@ -15,7 +16,8 @@ public class MiracleASTreeNewExpression extends MiracleASTreeExpression {
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
-        visitor.visit(this);;
+        visitor.visit(this);
+        ;
     }
 
     public List<MiracleASTreeExpression> getSize() {

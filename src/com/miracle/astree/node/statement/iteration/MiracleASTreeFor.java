@@ -2,7 +2,6 @@ package com.miracle.astree.node.statement.iteration;
 
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.node.statement.MiracleASTreeStatement;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionJudgeExpression;
 
@@ -34,14 +33,6 @@ public class MiracleASTreeFor extends MiracleASTreeIteration {
         }
     }
 
-    public void setRightExpression(MiracleASTreeExpression rightExpression) {
-        this.rightExpression = rightExpression;
-    }
-
-    public void setStatement(MiracleASTreeStatement statement) {
-        this.statement = statement;
-    }
-
     public MiracleASTreeExpression getLeftExpression() {
         return leftExpression;
     }
@@ -54,7 +45,15 @@ public class MiracleASTreeFor extends MiracleASTreeIteration {
         return rightExpression;
     }
 
+    public void setRightExpression(MiracleASTreeExpression rightExpression) {
+        this.rightExpression = rightExpression;
+    }
+
     public MiracleASTreeStatement getStatement() {
         return statement;
+    }
+
+    public void setStatement(MiracleASTreeStatement statement) {
+        this.statement = statement;
     }
 }

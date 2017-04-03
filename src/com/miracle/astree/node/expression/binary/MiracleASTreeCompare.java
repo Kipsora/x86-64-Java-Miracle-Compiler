@@ -1,12 +1,10 @@
 package com.miracle.astree.node.expression.binary;
 
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionCompareExpression;
 
 import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeBOOLEAN;
-import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeINT;
 
 public class MiracleASTreeCompare extends MiracleASTreeArithmetic {
     public MiracleASTreeCompare(MiracleASTreeExpression left, OPERATOR operator, MiracleASTreeExpression right) {

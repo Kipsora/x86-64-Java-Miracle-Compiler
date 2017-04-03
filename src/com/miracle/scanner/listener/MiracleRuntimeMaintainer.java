@@ -12,9 +12,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 public abstract class MiracleRuntimeMaintainer extends MiracleBaseListener {
-    private static int row;
-    private static int column;
-
     public static final MiracleASTreeTypename MiracleASTreeINT =
             new MiracleASTreeTypename("int");
     public static final MiracleASTreeTypename MiracleASTreeBOOLEAN =
@@ -30,7 +27,6 @@ public abstract class MiracleRuntimeMaintainer extends MiracleBaseListener {
                 add(MiracleASTreeSTRING);
                 add(MiracleASTreeVOID);
             }};
-
     static final MiracleASTreeFunctionDeclaration MiracleASTreeTOSTRING =
             new MiracleASTreeFunctionDeclaration(
                     MiracleASTreeSTRING, "toString",
@@ -92,6 +88,8 @@ public abstract class MiracleRuntimeMaintainer extends MiracleBaseListener {
                         add(new MiracleASTreeVariableDeclaration("l", MiracleASTreeINT));
                     }}
             );
+    private static int row;
+    private static int column;
 
     public static int getRow() {
         return row;

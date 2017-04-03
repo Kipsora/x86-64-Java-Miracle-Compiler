@@ -1,17 +1,10 @@
 package com.miracle.scanner.listener;
 
-import com.miracle.Miracle;
 import com.miracle.astree.MiracleASTree;
 import com.miracle.astree.node.MiracleASTreeNode;
 import com.miracle.astree.node.MiracleASTreeRoot;
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
-import com.miracle.astree.node.expression.binary.MiracleASTreeAssign;
-import com.miracle.astree.node.expression.binary.MiracleASTreeBinaryIntegral;
-import com.miracle.astree.node.expression.binary.MiracleASTreeBinaryLogic;
-import com.miracle.astree.node.expression.binary.MiracleASTreeCompare;
-import com.miracle.astree.node.expression.binary.MiracleASTreeField;
-import com.miracle.astree.node.expression.binary.MiracleASTreeStringConcat;
-import com.miracle.astree.node.expression.binary.MiracleASTreeSubscript;
+import com.miracle.astree.node.expression.binary.*;
 import com.miracle.astree.node.expression.multiary.MiracleASTreeCallExpression;
 import com.miracle.astree.node.expression.multiary.MiracleASTreeNewExpression;
 import com.miracle.astree.node.expression.unary.prefix.MiracleASTreeNegate;
@@ -254,7 +247,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             }
             path.peek().add(new MiracleASTreeReturn(function));
         } else {
-            if (function.getIdentifier().equals("") ) {
+            if (function.getIdentifier().equals("")) {
                 if (!((MiracleASTreeExpression) children.get(0)).getType().equals(MiracleASTreeVOID)) {
                     throw new MiracleExceptionReturn(MiracleASTreeVOID.toString(),
                             ((MiracleASTreeExpression) children.get(0)).getType().toString());
@@ -462,7 +455,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     public void exitMultDivExpression(MiracleParser.MultDivExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
         switch (ctx.operator.getText()) {
-            case "*" :
+            case "*":
                 path.peek().add(new MiracleASTreeBinaryIntegral((MiracleASTreeExpression) children.get(0),
                         MiracleASTreeBinaryIntegral.OPERATOR.MUL, (MiracleASTreeExpression) children.get(1)));
                 break;
@@ -517,7 +510,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     public void exitShlShrExpression(MiracleParser.ShlShrExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
         switch (ctx.operator.getText()) {
-            case "<<" :
+            case "<<":
                 path.peek().add(new MiracleASTreeBinaryIntegral((MiracleASTreeExpression) children.get(0),
                         MiracleASTreeBinaryIntegral.OPERATOR.SHL, (MiracleASTreeExpression) children.get(1)));
                 break;
@@ -540,7 +533,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     public void exitCompareExpression(MiracleParser.CompareExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
         switch (ctx.operator.getText()) {
-            case "<" :
+            case "<":
                 path.peek().add(new MiracleASTreeCompare((MiracleASTreeExpression) children.get(0),
                         MiracleASTreeCompare.OPERATOR.L, (MiracleASTreeExpression) children.get(1)));
                 break;

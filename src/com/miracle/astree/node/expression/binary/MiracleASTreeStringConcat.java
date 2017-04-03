@@ -1,11 +1,9 @@
 package com.miracle.astree.node.expression.binary;
 
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.exceptions.MiracleExceptionSpecialExpression;
 
-import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeINT;
 import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTreeSTRING;
 
 public class MiracleASTreeStringConcat extends MiracleASTreeArithmetic {

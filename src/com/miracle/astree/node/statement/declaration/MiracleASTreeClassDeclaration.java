@@ -13,14 +13,6 @@ public class MiracleASTreeClassDeclaration extends MiracleASTreeDeclaration {
         super(identifier);
     }
 
-    public void setChildren(List<MiracleASTreeMemberDeclaration> children) {
-        this.children = children;
-        this.mapping = new HashMap<>();
-        for (MiracleASTreeMemberDeclaration entry : children) {
-            this.mapping.put(entry.getIdentifier(), entry);
-        }
-    }
-
     public boolean contain(String identifier) {
         return mapping.containsKey(identifier);
     }
@@ -38,6 +30,14 @@ public class MiracleASTreeClassDeclaration extends MiracleASTreeDeclaration {
 
     public List<MiracleASTreeMemberDeclaration> getChildren() {
         return children;
+    }
+
+    public void setChildren(List<MiracleASTreeMemberDeclaration> children) {
+        this.children = children;
+        this.mapping = new HashMap<>();
+        for (MiracleASTreeMemberDeclaration entry : children) {
+            this.mapping.put(entry.getIdentifier(), entry);
+        }
     }
 
     @Override

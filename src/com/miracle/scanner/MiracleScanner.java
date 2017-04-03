@@ -28,7 +28,7 @@ public class MiracleScanner {
             parser.reset();
             MiracleASTreeBuilder builder = new MiracleASTreeBuilder();
             walker.walk(builder, parser.miracle());
-        } catch(MiracleException e) {
+        } catch (MiracleException e) {
             throw new Exception(e.getMessage());
         }
     }

@@ -1,20 +1,15 @@
 package com.miracle.scanner;
 
-import com.miracle.astree.node.expression.value.MiracleASTreeFunction;
 import com.miracle.astree.node.statement.declaration.*;
 import com.miracle.exceptions.MiracleExceptionConflictWithKeyword;
 import com.miracle.exceptions.MiracleExceptionDuplicateDeclaration;
 import com.miracle.exceptions.MiracleExceptionUndefinedIdentifier;
-import com.miracle.scanner.listener.MiracleClassDeclarationFetcher;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
-import javax.print.DocFlavor;
 import java.util.*;
 
 public class MiracleEnvironmentManager {
-    private static int scopeNumber = 0;
-
     private static final HashSet<String> MiracleKEYWORD = new HashSet<String>() {{
         add("bool");
         add("int");
@@ -33,7 +28,7 @@ public class MiracleEnvironmentManager {
         add("class");
         add("this");
     }};
-
+    private static int scopeNumber = 0;
     private static List<HashMap<String, MiracleASTreeClassDeclaration>> mapclass = new ArrayList<>();
     private static List<HashMap<String, MiracleASTreeFunctionDeclaration>> mapfunc = new ArrayList<>();
     private static List<HashMap<String, MiracleASTreeVariableDeclaration>> mapvari = new ArrayList<>();

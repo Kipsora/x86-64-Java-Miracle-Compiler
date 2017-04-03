@@ -22,8 +22,6 @@ import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclar
 import com.miracle.astree.node.statement.declaration.MiracleASTreeMemberDeclaration;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
-import com.miracle.exceptions.MiracleExceptionMember;
-import com.miracle.exceptions.MiracleExceptionThis;
 
 public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
     private int level = 0;

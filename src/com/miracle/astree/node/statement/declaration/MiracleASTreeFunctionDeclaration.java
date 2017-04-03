@@ -9,9 +9,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclaration {
-    private MiracleASTreeTypename type;
     private final MiracleASTreeTypename rettype;
     private final List<MiracleASTreeVariableDeclaration> arguments;
+    private MiracleASTreeTypename type;
     private List<MiracleASTreeStatement> body; // null represents built-in functions
 
     public MiracleASTreeFunctionDeclaration(MiracleASTreeTypename rettype, String identifier,
@@ -33,12 +33,12 @@ public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclara
         visitor.exit();
     }
 
-    public void setBody(List<MiracleASTreeStatement> body) {
-        this.body = body;
-    }
-
     public List<MiracleASTreeStatement> getBody() {
         return body;
+    }
+
+    public void setBody(List<MiracleASTreeStatement> body) {
+        this.body = body;
     }
 
     public MiracleASTreeTypename getType() {

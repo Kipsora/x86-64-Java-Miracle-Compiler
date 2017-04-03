@@ -1,6 +1,5 @@
 package com.miracle.astree.node.expression;
 
-import com.miracle.astree.node.MiracleASTreeNode;
 import com.miracle.astree.node.statement.MiracleASTreeStatement;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 

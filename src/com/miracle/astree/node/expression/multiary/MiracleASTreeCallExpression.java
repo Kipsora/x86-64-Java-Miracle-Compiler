@@ -1,7 +1,6 @@
 package com.miracle.astree.node.expression.multiary;
 
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
-import com.miracle.astree.node.expression.value.MiracleASTreeFunction;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 
