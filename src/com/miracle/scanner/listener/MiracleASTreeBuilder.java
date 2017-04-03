@@ -266,9 +266,16 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             }
             path.peek().add(new MiracleASTreeReturn(function));
         } else {
-            if (!function.getReturnType().equals(((MiracleASTreeExpression) children.get(0)).getType())) {
-                throw new MiracleExceptionReturn(function.getReturnType().toString(),
-                        ((MiracleASTreeExpression) children.get(0)).getType().toString());
+            if (function.getIdentifier().equals("") ) {
+                if (!((MiracleASTreeExpression) children.get(0)).getType().equals(MiracleASTreeVOID)) {
+                    throw new MiracleExceptionReturn(MiracleASTreeVOID.toString(),
+                            ((MiracleASTreeExpression) children.get(0)).getType().toString());
+                }
+            } else {
+                if (!function.getReturnType().equals(((MiracleASTreeExpression) children.get(0)).getType())) {
+                    throw new MiracleExceptionReturn(function.getReturnType().toString(),
+                            ((MiracleASTreeExpression) children.get(0)).getType().toString());
+                }
             }
             path.peek().add(new MiracleASTreeReturn(function, (MiracleASTreeExpression) children.get(0)));
         }
