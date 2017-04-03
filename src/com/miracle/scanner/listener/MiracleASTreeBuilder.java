@@ -4,10 +4,12 @@ import com.miracle.astree.MiracleASTree;
 import com.miracle.astree.node.MiracleASTreeNode;
 import com.miracle.astree.node.MiracleASTreeRoot;
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
-import com.miracle.astree.node.expression.MiracleASTreeExpressionFactory;
-import com.miracle.astree.node.expression.binary.MiracleASTreeField;
+import com.miracle.astree.node.expression.binary.*;
 import com.miracle.astree.node.expression.multiary.MiracleASTreeCallExpression;
 import com.miracle.astree.node.expression.multiary.MiracleASTreeNewExpression;
+import com.miracle.astree.node.expression.unary.prefix.MiracleASTreeNegate;
+import com.miracle.astree.node.expression.unary.prefix.MiracleASTreePrefixIntegral;
+import com.miracle.astree.node.expression.unary.suffix.MiracleASTreeSuffixIntegral;
 import com.miracle.astree.node.expression.value.MiracleASTreeConstant;
 import com.miracle.astree.node.expression.value.MiracleASTreeThis;
 import com.miracle.astree.node.statement.MiracleASTreeBlock;
@@ -25,7 +27,16 @@ import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeIteration;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
 import com.miracle.cstree.MiracleParser;
-import com.miracle.exceptions.*;
+import com.miracle.exceptions.MiracleExceptionArguments;
+import com.miracle.exceptions.MiracleExceptionCallVariable;
+import com.miracle.exceptions.MiracleExceptionMember;
+import com.miracle.exceptions.MiracleExceptionNewBaseType;
+import com.miracle.exceptions.MiracleExceptionNewSubscript;
+import com.miracle.exceptions.MiracleExceptionNewType;
+import com.miracle.exceptions.MiracleExceptionReturn;
+import com.miracle.exceptions.MiracleExceptionStatementScope;
+import com.miracle.exceptions.MiracleExceptionThis;
+import com.miracle.exceptions.MiracleExceptionUndefinedIdentifier;
 import com.miracle.scanner.MiracleEnvironmentManager;
 
 import java.util.LinkedList;
@@ -300,8 +311,17 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     @Override
     public void exitSuffixExpression(MiracleParser.SuffixExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
-                ctx.operator.getText()));
+        switch (ctx.operator.getText()) {
+            case "++":
+                path.peek().add(new MiracleASTreeSuffixIntegral(MiracleASTreeSuffixIntegral.OPERATOR.ADD,
+                        (MiracleASTreeExpression) children.get(0)));
+                break;
+            case "--":
+                path.peek().add(new MiracleASTreeSuffixIntegral(MiracleASTreeSuffixIntegral.OPERATOR.SUB,
+                        (MiracleASTreeExpression) children.get(0)));
+                break;
+            default:
+        }
         super.exitSuffixExpression(ctx);
     }
 
@@ -313,9 +333,28 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
 
     @Override
     public void exitPrefixExpression(MiracleParser.PrefixExpressionContext ctx) {
-        List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(MiracleASTreeExpressionFactory.getInstance(ctx.operator.getText(),
-                (MiracleASTreeExpression) children.get(0)));
+        MiracleASTreeExpression left = (MiracleASTreeExpression) path.pop().get(0);
+        switch (ctx.operator.getText()) {
+            case "+":
+                path.peek().add(new MiracleASTreePrefixIntegral(MiracleASTreePrefixIntegral.OPERATOR.POS, left));
+                break;
+            case "++":
+                path.peek().add(new MiracleASTreePrefixIntegral(MiracleASTreePrefixIntegral.OPERATOR.ADD, left));
+                break;
+            case "-":
+                path.peek().add(new MiracleASTreePrefixIntegral(MiracleASTreePrefixIntegral.OPERATOR.NEG, left));
+                break;
+            case "--":
+                path.peek().add(new MiracleASTreePrefixIntegral(MiracleASTreePrefixIntegral.OPERATOR.SUB, left));
+                break;
+            case "~":
+                path.peek().add(new MiracleASTreePrefixIntegral(MiracleASTreePrefixIntegral.OPERATOR.REV, left));
+                break;
+            case "!":
+                path.peek().add(new MiracleASTreeNegate(left));
+                break;
+            default:
+        }
         super.exitPrefixExpression(ctx);
     }
 
@@ -403,8 +442,21 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     @Override
     public void exitMultDivExpression(MiracleParser.MultDivExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
-                ctx.operator.getText(), (MiracleASTreeExpression) children.get(1)));
+        switch (ctx.operator.getText()) {
+            case "*" :
+                path.peek().add(new MiracleASTreeBinaryIntegral((MiracleASTreeExpression) children.get(0),
+                        MiracleASTreeBinaryIntegral.OPERATOR.MUL, (MiracleASTreeExpression) children.get(1)));
+                break;
+            case "/":
+                path.peek().add(new MiracleASTreeBinaryIntegral((MiracleASTreeExpression) children.get(0),
+                        MiracleASTreeBinaryIntegral.OPERATOR.DIV, (MiracleASTreeExpression) children.get(1)));
+                break;
+            case "%":
+                path.peek().add(new MiracleASTreeBinaryIntegral((MiracleASTreeExpression) children.get(0),
+                        MiracleASTreeBinaryIntegral.OPERATOR.MOD, (MiracleASTreeExpression) children.get(1)));
+                break;
+            default:
+        }
         super.exitMultDivExpression(ctx);
     }
 
@@ -417,8 +469,22 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     @Override
     public void exitAddSubExpression(MiracleParser.AddSubExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
-                ctx.operator.getText(), (MiracleASTreeExpression) children.get(1)));
+        switch (ctx.operator.getText()) {
+            case "+":
+                if (((MiracleASTreeExpression) children.get(0)).getType().equals(MiracleASTreeSTRING)) {
+                    path.peek().add(new MiracleASTreeStringConcat((MiracleASTreeExpression) children.get(0),
+                            (MiracleASTreeExpression) children.get(1)));
+                } else {
+                    path.peek().add(new MiracleASTreeBinaryIntegral((MiracleASTreeExpression) children.get(0),
+                            MiracleASTreeBinaryIntegral.OPERATOR.ADD, (MiracleASTreeExpression) children.get(1)));
+                }
+                break;
+            case "-":
+                path.peek().add(new MiracleASTreeBinaryIntegral((MiracleASTreeExpression) children.get(0),
+                        MiracleASTreeBinaryIntegral.OPERATOR.SUB, (MiracleASTreeExpression) children.get(1)));
+                break;
+            default:
+        }
         super.exitAddSubExpression(ctx);
     }
 
@@ -431,8 +497,17 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     @Override
     public void exitShlShrExpression(MiracleParser.ShlShrExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
-                ctx.operator.getText(), (MiracleASTreeExpression) children.get(1)));
+        switch (ctx.operator.getText()) {
+            case "<<" :
+                path.peek().add(new MiracleASTreeBinaryIntegral((MiracleASTreeExpression) children.get(0),
+                        MiracleASTreeBinaryIntegral.OPERATOR.SHL, (MiracleASTreeExpression) children.get(1)));
+                break;
+            case ">>":
+                path.peek().add(new MiracleASTreeBinaryIntegral((MiracleASTreeExpression) children.get(0),
+                        MiracleASTreeBinaryIntegral.OPERATOR.SHR, (MiracleASTreeExpression) children.get(1)));
+                break;
+            default:
+        }
         super.exitShlShrExpression(ctx);
     }
 
@@ -445,8 +520,25 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     @Override
     public void exitCompareExpression(MiracleParser.CompareExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
-                ctx.operator.getText(), (MiracleASTreeExpression) children.get(1)));
+        switch (ctx.operator.getText()) {
+            case "<" :
+                path.peek().add(new MiracleASTreeCompare((MiracleASTreeExpression) children.get(0),
+                        MiracleASTreeCompare.OPERATOR.L, (MiracleASTreeExpression) children.get(1)));
+                break;
+            case ">":
+                path.peek().add(new MiracleASTreeCompare((MiracleASTreeExpression) children.get(0),
+                        MiracleASTreeCompare.OPERATOR.R, (MiracleASTreeExpression) children.get(1)));
+                break;
+            case "<=":
+                path.peek().add(new MiracleASTreeCompare((MiracleASTreeExpression) children.get(0),
+                        MiracleASTreeCompare.OPERATOR.LEQ, (MiracleASTreeExpression) children.get(1)));
+                break;
+            case ">=":
+                path.peek().add(new MiracleASTreeCompare((MiracleASTreeExpression) children.get(0),
+                        MiracleASTreeCompare.OPERATOR.REQ, (MiracleASTreeExpression) children.get(1)));
+                break;
+            default:
+        }
         super.exitCompareExpression(ctx);
     }
 
@@ -459,8 +551,17 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     @Override
     public void exitEqualityExpression(MiracleParser.EqualityExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
-                ctx.operator.getText(), (MiracleASTreeExpression) children.get(1)));
+        switch (ctx.operator.getText()) {
+            case "==":
+                path.peek().add(new MiracleASTreeCompare((MiracleASTreeExpression) children.get(0),
+                        MiracleASTreeCompare.OPERATOR.EQ, (MiracleASTreeExpression) children.get(1)));
+                break;
+            case "!=":
+                path.peek().add(new MiracleASTreeCompare((MiracleASTreeExpression) children.get(0),
+                        MiracleASTreeCompare.OPERATOR.NEQ, (MiracleASTreeExpression) children.get(1)));
+                break;
+            default:
+        }
         super.exitEqualityExpression(ctx);
     }
 
@@ -473,8 +574,8 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     @Override
     public void exitAndExpression(MiracleParser.AndExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
-                "&", (MiracleASTreeExpression) children.get(1)));
+        path.peek().add(new MiracleASTreeBinaryIntegral((MiracleASTreeExpression) children.get(0),
+                MiracleASTreeBinaryIntegral.OPERATOR.AND, (MiracleASTreeExpression) children.get(1)));
         super.exitAndExpression(ctx);
     }
 
@@ -487,8 +588,13 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     @Override
     public void exitXorExpression(MiracleParser.XorExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
-                "^", (MiracleASTreeExpression) children.get(1)));
+        MiracleASTreeExpression left = (MiracleASTreeExpression) children.get(0);
+        MiracleASTreeExpression right = (MiracleASTreeExpression) children.get(1);
+        if (left.getType().equals(MiracleASTreeINT)) {
+            path.peek().add(new MiracleASTreeBinaryIntegral(left, MiracleASTreeBinaryIntegral.OPERATOR.XOR, right));
+        } else {
+            path.peek().add(new MiracleASTreeBinaryLogic(left, MiracleASTreeBinaryLogic.OPERATOR.XOR, right));
+        }
         super.exitXorExpression(ctx);
     }
 
@@ -501,8 +607,8 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     @Override
     public void exitOrExpression(MiracleParser.OrExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
-                "|", (MiracleASTreeExpression) children.get(1)));
+        path.peek().add(new MiracleASTreeBinaryIntegral((MiracleASTreeExpression) children.get(0),
+                MiracleASTreeBinaryIntegral.OPERATOR.OR, (MiracleASTreeExpression) children.get(1)));
         super.exitOrExpression(ctx);
     }
 
@@ -515,8 +621,8 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     @Override
     public void exitLogicAndExpression(MiracleParser.LogicAndExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
-                "&&", (MiracleASTreeExpression) children.get(1)));
+        path.peek().add(new MiracleASTreeBinaryLogic((MiracleASTreeExpression) children.get(0),
+                MiracleASTreeBinaryLogic.OPERATOR.AND, (MiracleASTreeExpression) children.get(1)));
         super.exitLogicAndExpression(ctx);
     }
 
@@ -529,8 +635,8 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     @Override
     public void exitLogicOrExpression(MiracleParser.LogicOrExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
-                "||", (MiracleASTreeExpression) children.get(1)));
+        path.peek().add(new MiracleASTreeBinaryLogic((MiracleASTreeExpression) children.get(0),
+                MiracleASTreeBinaryLogic.OPERATOR.OR, (MiracleASTreeExpression) children.get(1)));
         super.exitLogicOrExpression(ctx);
     }
 
@@ -543,8 +649,8 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     @Override
     public void exitAssignExpression(MiracleParser.AssignExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
-                "=", (MiracleASTreeExpression) children.get(1)));
+        path.peek().add(new MiracleASTreeAssign((MiracleASTreeExpression) children.get(0),
+                (MiracleASTreeExpression) children.get(1));
         super.exitAssignExpression(ctx);
     }
 
@@ -609,6 +715,20 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     }
 
     @Override
+    public void enterSubscriptExpression(MiracleParser.SubscriptExpressionContext ctx) {
+        super.enterSubscriptExpression(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitSubscriptExpression(MiracleParser.SubscriptExpressionContext ctx) {
+        List<MiracleASTreeNode> children = path.pop();
+        path.peek().add(new MiracleASTreeSubscript((MiracleASTreeExpression) children.get(0),
+                (MiracleASTreeExpression) children.get(1)));
+        super.exitSubscriptExpression(ctx);
+    }
+
+    @Override
     public void enterFunctionCallExpression(MiracleParser.FunctionCallExpressionContext ctx) {
         super.enterFunctionCallExpression(ctx);
         path.push(new LinkedList<>());
@@ -634,20 +754,6 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
         }
         path.peek().add(new MiracleASTreeCallExpression(head, args));
         super.exitFunctionCallExpression(ctx);
-    }
-
-    @Override
-    public void enterSubscriptExpression(MiracleParser.SubscriptExpressionContext ctx) {
-        super.enterSubscriptExpression(ctx);
-        path.push(new LinkedList<>());
-    }
-
-    @Override
-    public void exitSubscriptExpression(MiracleParser.SubscriptExpressionContext ctx) {
-        List<MiracleASTreeNode> children = path.pop();
-        path.peek().add(MiracleASTreeExpressionFactory.getInstance((MiracleASTreeExpression) children.get(0),
-                "[]", (MiracleASTreeExpression) children.get(1)));
-        super.exitSubscriptExpression(ctx);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.miracle.scanner;
 
-import com.miracle.astree.visitor.MiracleASTreePrinter;
 import com.miracle.cstree.MiracleLexer;
 import com.miracle.cstree.MiracleParser;
 import com.miracle.exceptions.MiracleException;
@@ -29,8 +28,6 @@ public class MiracleScanner {
             parser.reset();
             MiracleASTreeBuilder builder = new MiracleASTreeBuilder();
             walker.walk(builder, parser.miracle());
-            MiracleASTreePrinter printer = new MiracleASTreePrinter();
-            builder.getTree().visit(printer);
         } catch(MiracleException e) {
             throw new Exception(e.getMessage());
         }
