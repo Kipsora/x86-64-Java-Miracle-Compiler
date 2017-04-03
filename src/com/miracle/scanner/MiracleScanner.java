@@ -22,12 +22,19 @@ public class MiracleScanner {
         parser.removeErrorListeners();
         parser.addErrorListener(new MiracleSyntaxErrorListener());
         ParseTreeWalker walker = new ParseTreeWalker();
-        parser.reset(); walker.walk(new MiracleClassDeclarationFetcher(), parser.miracle());
-        parser.reset(); walker.walk(new MiracleDetailedDeclarationFetcher(), parser.miracle());
-        parser.reset();
-        MiracleASTreeBuilder builder = new MiracleASTreeBuilder();
-        walker.walk(builder, parser.miracle());
-        MiracleASTreePrinter printer = new MiracleASTreePrinter();
-        builder.getTree().visit(printer);
+
+        try {
+            parser.reset();
+            walker.walk(new MiracleClassDeclarationFetcher(), parser.miracle());
+            parser.reset();
+            walker.walk(new MiracleDetailedDeclarationFetcher(), parser.miracle());
+            parser.reset();
+            MiracleASTreeBuilder builder = new MiracleASTreeBuilder();
+            walker.walk(builder, parser.miracle());
+            MiracleASTreePrinter printer = new MiracleASTreePrinter();
+            builder.getTree().visit(printer);
+        } catch(MiracleException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

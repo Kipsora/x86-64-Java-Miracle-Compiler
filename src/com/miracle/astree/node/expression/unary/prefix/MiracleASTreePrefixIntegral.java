@@ -11,7 +11,7 @@ import static com.miracle.scanner.listener.MiracleRuntimeMaintainer.MiracleASTre
 public class MiracleASTreePrefixIntegral extends MiracleASTreeUnaryExpression {
     public MiracleASTreePrefixIntegral(OPERATOR operator, MiracleASTreeExpression node) {
         super(operator.toString(), node);
-        if (!node.getMutable()) {
+        if ((operator.equals(OPERATOR.ADD) || operator.equals(OPERATOR.SUB)) && !node.getMutable()) {
             throw new MiracleExceptionLeftValue();
         }
         if (!node.getType().equals(MiracleASTreeINT)) {

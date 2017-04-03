@@ -4,7 +4,7 @@ import com.miracle.astree.node.expression.MiracleASTreeExpression;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
 import com.miracle.exceptions.MiracleExceptionBinaryExpression;
 
-public abstract class MiracleASTreeArithmetic extends MiracleASTreeBinaryExpression {
+abstract class MiracleASTreeArithmetic extends MiracleASTreeBinaryExpression {
     MiracleASTreeArithmetic(MiracleASTreeTypename type, MiracleASTreeExpression left, String operator, MiracleASTreeExpression right, boolean mutable) {
         super(type, left, operator, right, mutable);
         if (!left.getType().equals(right.getType())) {
