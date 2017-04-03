@@ -650,7 +650,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     public void exitAssignExpression(MiracleParser.AssignExpressionContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
         path.peek().add(new MiracleASTreeAssign((MiracleASTreeExpression) children.get(0),
-                (MiracleASTreeExpression) children.get(1));
+                (MiracleASTreeExpression) children.get(1)));
         super.exitAssignExpression(ctx);
     }
 
