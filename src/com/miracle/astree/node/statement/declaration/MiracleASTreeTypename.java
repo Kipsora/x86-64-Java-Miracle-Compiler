@@ -2,7 +2,6 @@ package com.miracle.astree.node.statement.declaration;
 
 import com.miracle.astree.node.MiracleASTreeNode;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
-import com.miracle.exceptions.MiracleException;
 
 import java.util.List;
 import java.util.Objects;
@@ -107,14 +106,14 @@ public class MiracleASTreeTypename extends MiracleASTreeNode {
 
     public TYPE getTypenameType() {
         if (arguments == null) {
-            return TYPE.TN_VAR;
+            return TYPE.TN_TYPE;
         } else {
             return TYPE.TN_FUNC;
         }
     }
 
     public enum TYPE {
-        TN_FUNC, TN_VAR;
+        TN_FUNC, TN_TYPE;
 
         @Override
         public String toString() {

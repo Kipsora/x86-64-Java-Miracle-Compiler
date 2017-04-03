@@ -310,10 +310,6 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             } else {
                 throw new MiracleExceptionThis();
             }
-        } else if (MiracleEnvironmentManager.containVariable(id)) {
-            path.peek().add(MiracleEnvironmentManager.getVariable(id).toValue());
-        } else if (MiracleEnvironmentManager.containFunction(id)) {
-            path.peek().add(MiracleEnvironmentManager.getFunction(id).toValue());
         } else if (id.equals("print")) {
             path.peek().add(MiracleASTreePRINT.toValue());
         } else if (id.equals("println")) {
@@ -324,6 +320,10 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             path.peek().add(MiracleASTreeGETSTRING.toValue());
         } else if (id.equals("getInt")) {
             path.peek().add(MiracleASTreeGETINT.toValue());
+        } else if (MiracleEnvironmentManager.containVariable(id)) {
+            path.peek().add(MiracleEnvironmentManager.getVariable(id).toValue());
+        } else if (MiracleEnvironmentManager.containFunction(id)) {
+            path.peek().add(MiracleEnvironmentManager.getFunction(id).toValue());
         } else {
             throw new MiracleExceptionUndefinedIdentifier(id);
         }
@@ -767,7 +767,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
         List<MiracleASTreeNode> children = path.pop();
         MiracleASTreeExpression head = (MiracleASTreeExpression) children.get(0);
         MiracleASTreeTypename orgtype = head.getType();
-        if (orgtype.getTypenameType().equals(MiracleASTreeTypename.TYPE.TN_VAR)) {
+        if (orgtype.getTypenameType().equals(MiracleASTreeTypename.TYPE.TN_TYPE)) {
             throw new MiracleExceptionCallVariable();
         }
         List<MiracleASTreeTypename> argtype = new LinkedList<>();
