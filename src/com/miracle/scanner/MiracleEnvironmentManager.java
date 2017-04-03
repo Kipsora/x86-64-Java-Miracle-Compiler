@@ -38,8 +38,11 @@ public class MiracleEnvironmentManager {
     private static List<HashMap<String, MiracleASTreeFunctionDeclaration>> mapfunc = new ArrayList<>();
     private static List<HashMap<String, MiracleASTreeVariableDeclaration>> mapvari = new ArrayList<>();
 
-    private static HashMap<String, ImmutablePair<Integer, MiracleASTreeDeclaration>> declared = new HashMap<>();
-    private static Stack<ImmutableTriple<Integer, String, MiracleASTreeDeclaration>> recover = new Stack<>();
+    private static HashMap<String, ImmutablePair<Integer, MiracleASTreeMemberDeclaration>> declared = new HashMap<>();
+    private static Stack<ImmutableTriple<Integer, String, MiracleASTreeMemberDeclaration>> recover = new Stack<>();
+
+    private static HashMap<String, ImmutablePair<Integer, MiracleASTreeClassDeclaration>> declaredClass = new HashMap<>();
+    private static Stack<ImmutableTriple<Integer, String, MiracleASTreeClassDeclaration>> recclass = new Stack<>();
 
     private static Stack<ImmutableTriple<Integer, Boolean, Boolean>> scope = new Stack<>();
 
@@ -89,12 +92,12 @@ public class MiracleEnvironmentManager {
             mapclass.add(new HashMap<>());
         }
         mapclass.get(scope.peek().getLeft()).forEach((key, value) -> {
-            if (declared.containsKey(key)) {
-                recover.push(ImmutableTriple.of(scope.peek().getLeft(), key, declared.get(key).getRight()));
+            if (declaredClass.containsKey(key)) {
+                recclass.push(ImmutableTriple.of(scope.peek().getLeft(), key, declaredClass.get(key).getRight()));
             } else {
-                recover.push(ImmutableTriple.of(scope.peek().getLeft(), key, null));
+                recclass.push(ImmutableTriple.of(scope.peek().getLeft(), key, null));
             }
-            declared.put(key, ImmutablePair.of(scope.peek().getLeft(), value));
+            declaredClass.put(key, ImmutablePair.of(scope.peek().getLeft(), value));
         });
         if (mapfunc.size() < scopeNumber) {
             mapfunc.add(new HashMap<>());
@@ -138,12 +141,12 @@ public class MiracleEnvironmentManager {
         checkDeclaration(identifier, "class");
         MiracleASTreeClassDeclaration node = new MiracleASTreeClassDeclaration(identifier);
         mapclass.get(scope.peek().getLeft()).put(identifier, node);
-        if (declared.containsKey(identifier)) {
-            recover.push(ImmutableTriple.of(scope.peek().getLeft(), identifier, declared.get(identifier).getRight()));
+        if (declaredClass.containsKey(identifier)) {
+            recclass.push(ImmutableTriple.of(scope.peek().getLeft(), identifier, declaredClass.get(identifier).getRight()));
         } else {
-            recover.push(ImmutableTriple.of(scope.peek().getLeft(), identifier, null));
+            recclass.push(ImmutableTriple.of(scope.peek().getLeft(), identifier, null));
         }
-        declared.put(identifier, ImmutablePair.of(scope.peek().getLeft(), node));
+        declaredClass.put(identifier, ImmutablePair.of(scope.peek().getLeft(), node));
     }
 
     public static void declareFunction(String identifier, MiracleASTreeTypename returnType,
@@ -187,11 +190,10 @@ public class MiracleEnvironmentManager {
     }
 
     public static MiracleASTreeClassDeclaration getClass(String identifier) {
-        if (!declared.containsKey(identifier)
-                || !declared.get(identifier).getRight().getDeclarationType().equals(MiracleASTreeDeclaration.DECTYPE.DEC_CLASS)) {
+        if (!declaredClass.containsKey(identifier)) {
             throw new MiracleExceptionUndefinedIdentifier(identifier);
         }
-        return (MiracleASTreeClassDeclaration) declared.get(identifier).getRight();
+        return declaredClass.get(identifier).getRight();
     }
 
     public static MiracleASTreeFunctionDeclaration getFunction(String identifier) {
@@ -216,8 +218,7 @@ public class MiracleEnvironmentManager {
     }
 
     public static boolean containClass(String identifier) {
-        return declared.containsKey(identifier)
-                && declared.get(identifier).getRight().getDeclarationType().equals(MiracleASTreeDeclaration.DECTYPE.DEC_CLASS);
+        return declaredClass.containsKey(identifier);
     }
 
     public static boolean containFunction(String identifier) {

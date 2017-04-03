@@ -1,5 +1,6 @@
 package com.miracle.scanner.listener;
 
+import com.miracle.Miracle;
 import com.miracle.astree.MiracleASTree;
 import com.miracle.astree.node.MiracleASTreeNode;
 import com.miracle.astree.node.MiracleASTreeRoot;
@@ -29,16 +30,7 @@ import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeIteration;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
 import com.miracle.cstree.MiracleParser;
-import com.miracle.exceptions.MiracleExceptionArguments;
-import com.miracle.exceptions.MiracleExceptionCallVariable;
-import com.miracle.exceptions.MiracleExceptionMember;
-import com.miracle.exceptions.MiracleExceptionNewBaseType;
-import com.miracle.exceptions.MiracleExceptionNewSubscript;
-import com.miracle.exceptions.MiracleExceptionNewType;
-import com.miracle.exceptions.MiracleExceptionReturn;
-import com.miracle.exceptions.MiracleExceptionStatementScope;
-import com.miracle.exceptions.MiracleExceptionThis;
-import com.miracle.exceptions.MiracleExceptionUndefinedIdentifier;
+import com.miracle.exceptions.*;
 import com.miracle.scanner.MiracleEnvironmentManager;
 
 import java.util.LinkedList;
@@ -695,7 +687,7 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
         if (type.getTypenameType().equals(MiracleASTreeTypename.TYPE.TN_FUNC)) {
             throw new MiracleExceptionMember(type.toString(), identifier);
         }
-        if (MiracleEnvironmentManager.contain(type.toString())) {
+        if (MiracleEnvironmentManager.containClass(type.toString())) {
             if (!MiracleEnvironmentManager.containClass(type.toString())) {
                 throw new MiracleExceptionMember(type.toString(), identifier);
             }

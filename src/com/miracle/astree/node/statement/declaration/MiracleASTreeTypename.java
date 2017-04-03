@@ -1,7 +1,9 @@
 package com.miracle.astree.node.statement.declaration;
 
+import com.miracle.astree.MiracleASTree;
 import com.miracle.astree.node.MiracleASTreeNode;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
+import com.miracle.scanner.listener.MiracleClassDeclarationFetcher;
 
 import java.util.List;
 import java.util.Objects;
