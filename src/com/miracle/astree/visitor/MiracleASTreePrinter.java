@@ -21,6 +21,7 @@ import com.miracle.astree.node.statement.declaration.MiracleASTreeClassDeclarati
 import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclaration;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeMemberDeclaration;
 import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
+import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
 import com.miracle.exceptions.MiracleExceptionMember;
 import com.miracle.exceptions.MiracleExceptionThis;
 
@@ -125,7 +126,7 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTreeNewExpression miracleASTreeNewExpression) {
-        System.out.print("new " + miracleASTreeNewExpression.getType().getBasetype().toString() + " ");
+        System.out.print("new " + miracleASTreeNewExpression.getType().getBasetype() + " ");
         for (MiracleASTreeExpression size : miracleASTreeNewExpression.getSize()) {
             System.out.print("[");
             size.accept(this);
@@ -156,18 +157,19 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
             first = false;
             exp.accept(this);
         }
-        System.out.println(")");
+        System.out.print(")");
         exit();
     }
 
     @Override
     public void visit(MiracleASTreeBlock miracleASTreeBlock) {
         enter();
+        smartPrintln("(");
         for (MiracleASTreeStatement statement : miracleASTreeBlock.getStatement()) {
-            smartPrint(")");
+            smartPrint("");
             statement.accept(this);
-            System.out.println(')');
         }
+        smartPrintln(")");
         exit();
     }
 
@@ -219,5 +221,29 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
     @Override
     public void visit(MiracleASTreeThis miracleASTreeThis) {
         System.out.print("this");
+    }
+
+    @Override
+    public void visit(MiracleASTreeFor miracleASTreeFor) {
+        smartPrintln("for");
+        if (miracleASTreeFor.getLeftExpression() != null) {
+            smartPrint("  init: ");
+            miracleASTreeFor.getLeftExpression().accept(this);
+            System.out.println();
+        }
+        if (miracleASTreeFor.getMiddleExpression() != null) {
+            smartPrint("  exp: ");
+            miracleASTreeFor.getMiddleExpression().accept(this);
+            System.out.println();
+        }
+        if (miracleASTreeFor.getRightExpression() != null) {
+            smartPrint("  each: ");
+            miracleASTreeFor.getRightExpression().accept(this);
+            System.out.println();
+        }
+        smartPrintln("  statement:");
+        if (miracleASTreeFor.getStatement() != null) {
+            miracleASTreeFor.getStatement().accept(this);
+        }
     }
 }

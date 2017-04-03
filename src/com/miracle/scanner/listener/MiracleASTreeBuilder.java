@@ -155,19 +155,16 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
         MiracleASTreeExpression[] node = new MiracleASTreeExpression[3];
         MiracleASTreeStatement statement = null;
         int consumed = 0;
-        for (int i = 0, j = 0; i < ctx.getChildCount() && j < 3; i++) {
+        for (int i = 0, j = 0; j < ctx.expression().size(); i++) {
             if (ctx.getChild(i).getText().equals(";") || ctx.getChild(i).getText().equals(")")) {
-                if (!ctx.getChild(i - 1).getText().equals("(") && !ctx.getChild(i - 1).getText().equals(";")
-                        && ctx.getChild(i).getText().equals(";")) {
-                    node[j] = (MiracleASTreeExpression) children.get(consumed++);
+                if (!ctx.getChild(i - 1).getText().equals("(") && !ctx.getChild(i - 1).getText().equals(";")) {
+                    node[j++] = (MiracleASTreeExpression) children.get(consumed++);
                 }
-                j++;
-            }
-            if (ctx.getChild(i).getText().equals(")") && !ctx.getChild(i - 1).getText().equals(";")) {
-                statement = (MiracleASTreeStatement) children.get(consumed++);
             }
         }
-        assert statement != null;
+        if (consumed < children.size()) {
+            statement = (MiracleASTreeStatement) children.get(consumed);
+        }
         MiracleASTreeFor fornode = (MiracleASTreeFor) iterationBuffer.pop();
         fornode.setLeftExpression(node[0]);
         fornode.setMiddleExpression(node[1]);
