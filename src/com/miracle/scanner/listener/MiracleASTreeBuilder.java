@@ -167,8 +167,10 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
 
     @Override
     public void exitSelectionElseStatement(MiracleParser.SelectionElseStatementContext ctx) {
-        MiracleASTreeStatement children = (MiracleASTreeStatement) path.pop().get(0);
-        path.peek().add(children);
+        List<MiracleASTreeNode> children = path.pop();
+        if (children.size() > 0) {
+            path.peek().add(children.get(0));
+        }
         super.exitSelectionElseStatement(ctx);
     }
 
