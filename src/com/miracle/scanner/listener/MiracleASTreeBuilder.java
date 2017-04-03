@@ -24,11 +24,7 @@ import com.miracle.astree.node.statement.MiracleASTreeStatement;
 import com.miracle.astree.node.statement.control.MiracleASTreeBreak;
 import com.miracle.astree.node.statement.control.MiracleASTreeContinue;
 import com.miracle.astree.node.statement.control.MiracleASTreeReturn;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeClassDeclaration;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeFunctionDeclaration;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeMemberDeclaration;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeTypename;
-import com.miracle.astree.node.statement.declaration.MiracleASTreeVariableDeclaration;
+import com.miracle.astree.node.statement.declaration.*;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeFor;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeIteration;
 import com.miracle.astree.node.statement.iteration.MiracleASTreeWhile;
@@ -310,6 +306,13 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             } else {
                 throw new MiracleExceptionThis();
             }
+        } else if (MiracleEnvironmentManager.contain(id)) {
+            MiracleASTreeDeclaration declaration = MiracleEnvironmentManager.getDeclaration(id);
+            if (declaration.getDeclarationType().equals(MiracleASTreeDeclaration.DECTYPE.DEC_FUNC)) {
+                path.peek().add(MiracleEnvironmentManager.getFunction(id).toValue());
+            } else if (declaration.getDeclarationType().equals(MiracleASTreeDeclaration.DECTYPE.DEC_VAR)) {
+                path.peek().add(MiracleEnvironmentManager.getVariable(id).toValue());
+            }
         } else if (id.equals("print")) {
             path.peek().add(MiracleASTreePRINT.toValue());
         } else if (id.equals("println")) {
@@ -320,10 +323,6 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             path.peek().add(MiracleASTreeGETSTRING.toValue());
         } else if (id.equals("getInt")) {
             path.peek().add(MiracleASTreeGETINT.toValue());
-        } else if (MiracleEnvironmentManager.containVariable(id)) {
-            path.peek().add(MiracleEnvironmentManager.getVariable(id).toValue());
-        } else if (MiracleEnvironmentManager.containFunction(id)) {
-            path.peek().add(MiracleEnvironmentManager.getFunction(id).toValue());
         } else {
             throw new MiracleExceptionUndefinedIdentifier(id);
         }
