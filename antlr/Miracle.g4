@@ -14,14 +14,16 @@ blockStatement: '{' statement* '}';
 
 statement: blockStatement
     | variableDeclarationStatement
-    | selectionStatement
+    | selectionIfStatement
     | iterationStatement
     | controlStatement
     | expressionStatement
     | emptyStatement
     ;
 
-selectionStatement: 'if' '(' expression ')' statement ('else' statement)?;
+selectionIfStatement: 'if' '(' expression ')' statement selectionElseStatement?;
+
+selectionElseStatement: 'else' statement;
 
 iterationStatement: 'for' '(' expression? ';' expression? ';' expression? ')' statement     #forStatement
     | 'while' '(' expression ')' statement                                                  #whileStatement

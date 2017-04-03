@@ -177,12 +177,22 @@ public abstract class MiracleRuntimeMaintainer extends MiracleBaseListener {
     }
 
     @Override
-    public void enterSelectionStatement(MiracleParser.SelectionStatementContext ctx) {
+    public void enterSelectionIfStatement(MiracleParser.SelectionIfStatementContext ctx) {
         MiracleEnvironmentManager.newscope(false);
     }
 
     @Override
-    public void exitSelectionStatement(MiracleParser.SelectionStatementContext ctx) {
+    public void exitSelectionIfStatement(MiracleParser.SelectionIfStatementContext ctx) {
+        MiracleEnvironmentManager.exitscope();
+    }
+
+    @Override
+    public void enterSelectionElseStatement(MiracleParser.SelectionElseStatementContext ctx) {
+        MiracleEnvironmentManager.newscope(false);
+    }
+
+    @Override
+    public void exitSelectionElseStatement(MiracleParser.SelectionElseStatementContext ctx) {
         MiracleEnvironmentManager.exitscope();
     }
 

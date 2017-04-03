@@ -77,15 +77,25 @@ public interface MiracleListener extends ParseTreeListener {
 	 */
 	void exitStatement(MiracleParser.StatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MiracleParser#selectionStatement}.
+	 * Enter a parse tree produced by {@link MiracleParser#selectionIfStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterSelectionStatement(MiracleParser.SelectionStatementContext ctx);
+	void enterSelectionIfStatement(MiracleParser.SelectionIfStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MiracleParser#selectionStatement}.
+	 * Exit a parse tree produced by {@link MiracleParser#selectionIfStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitSelectionStatement(MiracleParser.SelectionStatementContext ctx);
+	void exitSelectionIfStatement(MiracleParser.SelectionIfStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiracleParser#selectionElseStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterSelectionElseStatement(MiracleParser.SelectionElseStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiracleParser#selectionElseStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitSelectionElseStatement(MiracleParser.SelectionElseStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code forStatement}
 	 * labeled alternative in {@link MiracleParser#iterationStatement}.

@@ -4,7 +4,13 @@ import com.miracle.astree.MiracleASTree;
 import com.miracle.astree.node.MiracleASTreeNode;
 import com.miracle.astree.node.MiracleASTreeRoot;
 import com.miracle.astree.node.expression.MiracleASTreeExpression;
-import com.miracle.astree.node.expression.binary.*;
+import com.miracle.astree.node.expression.binary.MiracleASTreeAssign;
+import com.miracle.astree.node.expression.binary.MiracleASTreeBinaryIntegral;
+import com.miracle.astree.node.expression.binary.MiracleASTreeBinaryLogic;
+import com.miracle.astree.node.expression.binary.MiracleASTreeCompare;
+import com.miracle.astree.node.expression.binary.MiracleASTreeField;
+import com.miracle.astree.node.expression.binary.MiracleASTreeStringConcat;
+import com.miracle.astree.node.expression.binary.MiracleASTreeSubscript;
 import com.miracle.astree.node.expression.multiary.MiracleASTreeCallExpression;
 import com.miracle.astree.node.expression.multiary.MiracleASTreeNewExpression;
 import com.miracle.astree.node.expression.unary.prefix.MiracleASTreeNegate;
@@ -135,13 +141,13 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
     }
 
     @Override
-    public void enterSelectionStatement(MiracleParser.SelectionStatementContext ctx) {
-        super.enterSelectionStatement(ctx);
+    public void enterSelectionIfStatement(MiracleParser.SelectionIfStatementContext ctx) {
+        super.enterSelectionIfStatement(ctx);
         path.push(new LinkedList<>());
     }
 
     @Override
-    public void exitSelectionStatement(MiracleParser.SelectionStatementContext ctx) {
+    public void exitSelectionIfStatement(MiracleParser.SelectionIfStatementContext ctx) {
         List<MiracleASTreeNode> children = path.pop();
         if (children.size() > 2) {
             path.peek().add(new MiracleASTreeSelection((MiracleASTreeExpression) children.get(0),
@@ -150,7 +156,20 @@ public class MiracleASTreeBuilder extends MiracleRuntimeMaintainer {
             path.peek().add(new MiracleASTreeSelection((MiracleASTreeExpression) children.get(0),
                     (MiracleASTreeStatement) children.get(1), null));
         }
-        super.exitSelectionStatement(ctx);
+        super.exitSelectionIfStatement(ctx);
+    }
+
+    @Override
+    public void enterSelectionElseStatement(MiracleParser.SelectionElseStatementContext ctx) {
+        super.enterSelectionElseStatement(ctx);
+        path.push(new LinkedList<>());
+    }
+
+    @Override
+    public void exitSelectionElseStatement(MiracleParser.SelectionElseStatementContext ctx) {
+        MiracleASTreeStatement children = (MiracleASTreeStatement) path.pop().get(0);
+        path.peek().add(children);
+        super.exitSelectionElseStatement(ctx);
     }
 
     @Override
