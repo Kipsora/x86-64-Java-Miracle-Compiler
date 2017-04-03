@@ -10,10 +10,7 @@ import com.miracle.exceptions.MiracleExceptionUndefinedIdentifier;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class MiracleEnvironmentManager {
     private static int scopeNumber = 0;
@@ -37,9 +34,9 @@ public class MiracleEnvironmentManager {
         add("this");
     }};
 
-    private static HashMap<Integer, HashMap<String, MiracleASTreeClassDeclaration>> mapclass = new HashMap<>();
-    private static HashMap<Integer, HashMap<String, MiracleASTreeFunctionDeclaration>> mapfunc = new HashMap<>();
-    private static HashMap<Integer, HashMap<String, MiracleASTreeVariableDeclaration>> mapvari = new HashMap<>();
+    private static List<HashMap<String, MiracleASTreeClassDeclaration>> mapclass = new ArrayList<>();
+    private static List<HashMap<String, MiracleASTreeFunctionDeclaration>> mapfunc = new ArrayList<>();
+    private static List<HashMap<String, MiracleASTreeVariableDeclaration>> mapvari = new ArrayList<>();
 
     private static HashMap<String, ImmutablePair<Integer, MiracleASTreeClassDeclaration>> declaredClass = new HashMap<>();
     private static HashMap<String, ImmutablePair<Integer, MiracleASTreeFunctionDeclaration>> declaredFunction = new HashMap<>();
@@ -54,10 +51,6 @@ public class MiracleEnvironmentManager {
     private static MiracleEnvironmentManager instance = new MiracleEnvironmentManager();
 
     private MiracleEnvironmentManager() {
-    }
-
-    public static MiracleEnvironmentManager getInstance() {
-        return instance;
     }
 
     private static void checkDeclaration(String identifier, String type) {
@@ -92,12 +85,12 @@ public class MiracleEnvironmentManager {
 
     public static void newscope(boolean member) {
         if (!scope.empty()) {
-            scope.push(ImmutableTriple.of(++scopeNumber, scope.peek().getMiddle() | member, member));
+            scope.push(ImmutableTriple.of(scopeNumber++, scope.peek().getMiddle() | member, member));
         } else {
-            scope.push(ImmutableTriple.of(++scopeNumber, member, member));
+            scope.push(ImmutableTriple.of(scopeNumber++, member, member));
         }
-        if (!mapclass.containsKey(scope.peek().getLeft())) {
-            mapclass.put(scope.peek().getLeft(), new HashMap<>());
+        if (mapclass.size() < scope.peek().getLeft()) {
+            mapclass.add(new HashMap<>());
         }
         mapclass.get(scope.peek().getLeft()).forEach((key, value) -> {
             if (declaredClass.containsKey(key)) {
@@ -107,8 +100,8 @@ public class MiracleEnvironmentManager {
             }
             declaredClass.put(key, ImmutablePair.of(scope.peek().getLeft(), value));
         });
-        if (!mapfunc.containsKey(scope.peek().getLeft())) {
-            mapfunc.put(scope.peek().getLeft(), new HashMap<>());
+        if (mapfunc.size() < scope.peek().getLeft()) {
+            mapfunc.add(new HashMap<>());
         }
         mapfunc.get(scope.peek().getLeft()).forEach((key, value) -> {
             if (declaredFunction.containsKey(key)) {
@@ -118,8 +111,8 @@ public class MiracleEnvironmentManager {
             }
             declaredFunction.put(key, ImmutablePair.of(scope.peek().getLeft(), value));
         });
-        if (!mapvari.containsKey(scope.peek().getLeft())) {
-            mapvari.put(scope.peek().getLeft(), new HashMap<>());
+        if (mapvari.size() < scope.peek().getLeft()) {
+            mapvari.add(new HashMap<>());
         }
         if (scope.peek().getRight()) {
             mapvari.get(scope.peek().getLeft()).forEach((key, value) -> {
