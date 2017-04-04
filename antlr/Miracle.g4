@@ -2,7 +2,7 @@ grammar Miracle;
 
 miracle: (classDeclarationStatement | functionDeclarationStatement | variableDeclarationStatement)*;
 
-classDeclarationStatement: 'class' IDENTIFIER '{' (functionDeclarationStatement | variableDeclarationStatement | constructorDeclarationStatement)* '}';
+classDeclarationStatement: 'class' IDENTIFIER '{' (functionDeclarationStatement | variableDeclarationStatement | constructorDeclarationStatement)* '}' ';'*?;
 
 functionDeclarationStatement: typename IDENTIFIER '(' (typename IDENTIFIER)?(',' typename IDENTIFIER)* ')' '{' statement* '}';
 

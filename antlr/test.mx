@@ -1,6 +1,11 @@
-class A{
-}
+class A {
+	void a() {
+	}
+};;
 
 int main() {
-int a;
+	A c = new A;
+    c.a();
+	// c.a; // in case you want to implement function pointer
 }
+
