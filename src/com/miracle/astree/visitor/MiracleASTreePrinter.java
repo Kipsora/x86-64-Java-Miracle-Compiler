@@ -222,16 +222,24 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
     @Override
     public void visit(MiracleASTreeFor miracleASTreeFor) {
         System.out.print("for init:(");
-        miracleASTreeFor.getLeftExpression().accept(this);
+        if (miracleASTreeFor.getLeftExpression() != null) {
+            miracleASTreeFor.getLeftExpression().accept(this);
+        }
         System.out.print(") judge:(");
-        miracleASTreeFor.getMiddleExpression().accept(this);
+        if (miracleASTreeFor.getMiddleExpression() != null) {
+            miracleASTreeFor.getMiddleExpression().accept(this);
+        }
         System.out.print(") each:(");
-        miracleASTreeFor.getRightExpression().accept(this);
+        if (miracleASTreeFor.getRightExpression() != null) {
+            miracleASTreeFor.getRightExpression().accept(this);
+        }
         System.out.println(")");
-        scopeDepth++;
-        print("");
-        miracleASTreeFor.getStatement().accept(this);
-        scopeDepth--;
+        if (miracleASTreeFor.getStatement() != null) {
+            scopeDepth++;
+            print("");
+            miracleASTreeFor.getStatement().accept(this);
+            scopeDepth--;
+        }
     }
 
     @Override
@@ -239,10 +247,12 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
         System.out.print("while judge:(");
         miracleASTreeWhile.getExpression().accept(this);
         System.out.println(")");
-        scopeDepth++;
-        print("");
-        miracleASTreeWhile.getStatement().accept(this);
-        scopeDepth--;
+        if (miracleASTreeWhile.getStatement() != null) {
+            scopeDepth++;
+            print("");
+            miracleASTreeWhile.getStatement().accept(this);
+            scopeDepth--;
+        }
     }
 
     @Override
