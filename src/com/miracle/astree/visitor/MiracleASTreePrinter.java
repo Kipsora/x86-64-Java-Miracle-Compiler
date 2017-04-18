@@ -268,7 +268,9 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
     @Override
     public void visit(MiracleASTreeReturn miracleASTreeReturn) {
         System.out.print("return (");
-        miracleASTreeReturn.getExpression().accept(this);
+        if (miracleASTreeReturn.getExpression() != null) {
+            miracleASTreeReturn.getExpression().accept(this);
+        }
         System.out.print(")");
     }
 
