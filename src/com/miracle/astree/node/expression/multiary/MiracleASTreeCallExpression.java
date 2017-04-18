@@ -13,7 +13,7 @@ public class MiracleASTreeCallExpression extends MiracleASTreeExpression {
     public MiracleASTreeCallExpression(MiracleASTreeExpression function,
                                        List<MiracleASTreeExpression> arguments) {
         super(new MiracleASTreeTypename(function.getType().getBasetype(), function.getType().getDimension()),
-                "function call", false);
+                "call", false);
         this.function = function;
         this.arguments = arguments;
     }

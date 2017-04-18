@@ -1,5 +1,6 @@
 package com.miracle.scanner;
 
+import com.miracle.astree.MiracleASTree;
 import com.miracle.cstree.MiracleLexer;
 import com.miracle.cstree.MiracleParser;
 import com.miracle.exceptions.MiracleException;
@@ -14,20 +15,20 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import java.io.InputStream;
 
 public class MiracleScanner {
-    public static void scan(InputStream stream) throws Exception {
-        MiracleLexer lexer = new MiracleLexer(new ANTLRInputStream(stream));
-        MiracleParser parser = new MiracleParser(new CommonTokenStream(lexer));
-        parser.removeErrorListeners();
-        parser.addErrorListener(new MiracleSyntaxErrorListener());
-        ParseTreeWalker walker = new ParseTreeWalker();
+    public static MiracleASTree scan(InputStream stream) throws Exception {
         try {
-            parser.reset();
+            MiracleLexer lexer = new MiracleLexer(new ANTLRInputStream(stream));
+            MiracleParser parser = new MiracleParser(new CommonTokenStream(lexer));
+            parser.removeErrorListeners();
+            parser.addErrorListener(new MiracleSyntaxErrorListener());
+            ParseTreeWalker walker = new ParseTreeWalker();
             walker.walk(new MiracleClassDeclarationFetcher(), parser.miracle());
             parser.reset();
             walker.walk(new MiracleDetailedDeclarationFetcher(), parser.miracle());
             parser.reset();
             MiracleASTreeBuilder builder = new MiracleASTreeBuilder();
             walker.walk(builder, parser.miracle());
+            return builder.getTree();
         } catch (MiracleException e) {
             throw new Exception(e.getMessage());
         }

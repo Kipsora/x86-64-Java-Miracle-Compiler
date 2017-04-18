@@ -43,7 +43,9 @@ public class MiracleASTreeBaseVisitor implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeRoot miracleASTreeRoot) {
-
+        miracleASTreeRoot.getChildren().forEach((entry) -> {
+            entry.accept(this);
+        });
     }
 
     @Override
@@ -107,11 +109,6 @@ public class MiracleASTreeBaseVisitor implements MiracleASTreeVisitor {
     }
 
     @Override
-    public void visit(MiracleASTreeArray miracleASTreeArray) {
-
-    }
-
-    @Override
     public void visit(MiracleASTreeThis miracleASTreeThis) {
 
     }
@@ -120,7 +117,6 @@ public class MiracleASTreeBaseVisitor implements MiracleASTreeVisitor {
     public void visit(MiracleASTreeField miracleASTreeField) {
 
     }
-
 
     @Override
     public void visit(MiracleASTreeBlock miracleASTreeBlock) {

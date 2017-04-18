@@ -77,8 +77,6 @@ public interface MiracleASTreeVisitor {
 
     void visit(MiracleASTreeSubscript miracleASTreeSubscript);
 
-    void visit(MiracleASTreeArray miracleASTreeArray);
-
     void visit(MiracleASTreeThis miracleASTreeThis);
 
     void visit(MiracleASTreeField miracleASTreeField);

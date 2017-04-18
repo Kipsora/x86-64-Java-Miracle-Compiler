@@ -45,10 +45,6 @@ public class MiracleASTreeFor extends MiracleASTreeIteration {
         return rightExpression;
     }
 
-    public void setRightExpression(MiracleASTreeExpression rightExpression) {
-        this.rightExpression = rightExpression;
-    }
-
     public MiracleASTreeStatement getStatement() {
         return statement;
     }
