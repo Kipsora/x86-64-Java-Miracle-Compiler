@@ -14,16 +14,14 @@ blockStatement: '{' statement* '}';
 
 statement: blockStatement
     | variableDeclarationStatement
-    | selectionIfStatement
+    | selectionStatement
     | iterationStatement
     | controlStatement
     | expressionStatement
     | emptyStatement
     ;
 
-selectionIfStatement: 'if' '(' expression ')' statement selectionElseStatement?;
-
-selectionElseStatement: 'else' statement;
+selectionStatement: 'if' '(' expression ')' statement ('else' statement)?;
 
 iterationStatement: 'for' '(' expression? ';' expression? ';' expression? ')' statement     #forStatement
     | 'while' '(' expression ')' statement                                                  #whileStatement
@@ -58,18 +56,18 @@ expression: constant                                                            
     | expression operator=('<<' | '>>') expression                                          #binaryExpression
     | expression operator=('<' | '<=' | '>' | '>=') expression                              #binaryExpression
     | expression operator=('==' | '!=') expression                                          #binaryExpression
-    | expression '&' expression                                                             #binaryExpression
-    | expression '^' expression                                                             #binaryExpression
-    | expression '|' expression                                                             #binaryExpression
-    | expression '&&' expression                                                            #binaryExpression
-    | expression '||' expression                                                            #binaryExpression
-    | <assoc=right> expression '=' expression                                               #binaryExpression
+    | expression operator='&' expression                                                    #binaryExpression
+    | expression operator='^' expression                                                    #binaryExpression
+    | expression operator='|' expression                                                    #binaryExpression
+    | expression operator='&&' expression                                                   #binaryExpression
+    | expression operator='||' expression                                                   #binaryExpression
+    | <assoc=right> expression operator='=' expression                                      #binaryExpression
     ;
 
-constant: INTEGER
-    | STRING
-    | ('true' | 'false')
-    | 'null'
+constant: INTEGER                                                                           #integerConstant
+    | STRING                                                                                #stringConstant
+    | ('true' | 'false')                                                                    #boolConstant
+    | 'null'                                                                                #nullConstant
     ;
 
 BASETYPE: 'void' | 'int' | 'bool' | 'string';
