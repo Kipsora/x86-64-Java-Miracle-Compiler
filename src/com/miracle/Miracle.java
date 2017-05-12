@@ -1,9 +1,14 @@
 package com.miracle;
 
 import com.miracle.astree.MiracleASTree;
+import com.miracle.astree.visitor.MiracleASTreeClassFetcher;
+import com.miracle.astree.visitor.MiracleASTreeSemanticChecker;
+import com.miracle.astree.visitor.MiracleASTreePrinter;
+import com.miracle.astree.visitor.MiracleASTreeScopeBuilder;
 import com.miracle.cstree.parser.MiracleLexer;
 import com.miracle.cstree.parser.MiracleParser;
 import com.miracle.exception.MiracleExceptionContainer;
+import com.miracle.symbol.MiracleSymbolTable;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -22,12 +27,12 @@ public class Miracle {
     final private MiracleExceptionContainer exceptionContainer = new MiracleExceptionContainer();
 
     private Miracle(String args[]) {
-        boolean printASTree = false;
-        boolean printIR = false;
-        boolean hasInputStream = false;
-        boolean hasOutputStream = false;
-        FileInputStream inputStream = null;
-        FileOutputStream outputStream = null;
+        boolean printASTree;
+        boolean printIR;
+        boolean hasInputStream;
+        boolean hasOutputStream;
+        FileInputStream inputStream;
+        FileOutputStream outputStream;
         try {
             Options options = new Options();
             options.addOption("h", "help", false, "except this help information");
@@ -45,8 +50,8 @@ public class Miracle {
             printIR = line.hasOption("intermediate");
             hasInputStream = line.hasOption("input");
             hasOutputStream = line.hasOption("output");
-            inputStream = new FileInputStream(line.getOptionValue("input"));
-            outputStream = new FileOutputStream(line.getOptionValue("output"));
+            inputStream = line.hasOption("input") ? new FileInputStream(line.getOptionValue("input")) : null;
+            outputStream = line.hasOption("output") ? new FileOutputStream(line.getOptionValue("output")) : null;
         } catch (FileNotFoundException | ParseException exception) {
             throw MiracleExceptionContainer.fatal(exception.getMessage());
         }
@@ -71,6 +76,15 @@ public class Miracle {
 
     private void run() {
         MiracleASTree tree = getASTree();
+        if (this.printASTree) {
+            tree.accept(new MiracleASTreePrinter());
+        }
+        MiracleSymbolTable symbolTable = new MiracleSymbolTable(null);
+        tree.accept(new MiracleASTreeScopeBuilder(symbolTable));
+        tree.accept(new MiracleASTreeClassFetcher(exceptionContainer, symbolTable));
+        exceptionContainer.except(errorStream);
+        tree.accept(new MiracleASTreeSemanticChecker(exceptionContainer, symbolTable));
+        exceptionContainer.except(errorStream);
     }
 
     public static void main(String args[]) {

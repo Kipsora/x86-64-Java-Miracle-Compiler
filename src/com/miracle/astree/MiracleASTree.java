@@ -1,31 +1,25 @@
 package com.miracle.astree;
 
-import com.miracle.astree.declaration.*;
+import com.miracle.astree.statement.declaration.*;
 import com.miracle.astree.expression.*;
 import com.miracle.astree.statement.*;
 import com.miracle.astree.type.MiracleASTreeArrayType;
 import com.miracle.astree.type.MiracleASTreeBaseType;
-import com.miracle.astree.type.MiracleASTreeType;
 import com.miracle.astree.type.MiracleASTreeVariableType;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.cstree.parser.MiracleBaseListener;
 import com.miracle.cstree.parser.MiracleParser;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 public class MiracleASTree extends MiracleASTreeNode {
-    public final List<MiracleASTreeClassDeclaration> classDeclarations;
-    public final List<MiracleASTreeFunctionDeclaration> functionDeclarations;
-    public final List<MiracleASTreeVariableDeclaration> variableDeclarations;
+    public final List<MiracleASTreeDeclaration> declarations;
 
-    public MiracleASTree(List<MiracleASTreeClassDeclaration> classDeclarations,
-                         List<MiracleASTreeFunctionDeclaration> functionDeclarations,
-                         List<MiracleASTreeVariableDeclaration> variableDeclarations) {
-        this.classDeclarations = classDeclarations;
-        this.functionDeclarations = functionDeclarations;
-        this.variableDeclarations = variableDeclarations;
+    public MiracleASTree(List<MiracleASTreeDeclaration> declarations) {
+        this.declarations = Collections.unmodifiableList(declarations);
     }
 
     @Override
@@ -43,51 +37,45 @@ public class MiracleASTree extends MiracleASTreeNode {
 
         @Override
         public void exitMiracle(MiracleParser.MiracleContext ctx) {
-            List<MiracleASTreeClassDeclaration> classDeclarations = new LinkedList<>();
-            List<MiracleASTreeVariableDeclaration> variableDeclarations = new LinkedList<>();
-            List<MiracleASTreeFunctionDeclaration> functionDeclarations = new LinkedList<>();
-            ctx.classDeclarationStatement().forEach((element) ->
-                    classDeclarations.add((MiracleASTreeClassDeclaration) property.get(element))
-            );
-            ctx.functionDeclarationStatement().forEach((element) ->
-                    functionDeclarations.add((MiracleASTreeFunctionDeclaration) property.get(element))
-            );
-            ctx.variableDeclarationStatement().forEach((element) ->
-                    variableDeclarations.add((MiracleASTreeVariableDeclaration) property.get(element))
-            );
-            root = new MiracleASTree(classDeclarations, functionDeclarations, variableDeclarations);
+            List<MiracleASTreeDeclaration> declarations = new LinkedList<>();
+            ctx.children.forEach(element -> {
+                if (property.get(element) != null) {
+                    declarations.add((MiracleASTreeDeclaration) property.get(element));
+                }
+            });
+            root = new MiracleASTree(declarations);
         }
 
         @Override
         public void exitClassDeclarationStatement(MiracleParser.ClassDeclarationStatementContext ctx) {
-            List<MiracleASTreeFunctionDeclaration> functionDeclarations = new LinkedList<>();
             List<MiracleASTreeVariableDeclaration> variableDeclarations = new LinkedList<>();
-            ctx.constructorDeclarationStatement().forEach((element) ->
-                    functionDeclarations.add((MiracleASTreeFunctionDeclaration) property.get(element))
+            List<MiracleASTreeFunctionDeclaration> functionDeclarations = new LinkedList<>();
+            ctx.variableDeclarationStatement().forEach(element -> {
+                variableDeclarations.add((MiracleASTreeVariableDeclaration) property.get(element));
+            });
+            ctx.functionDeclarationStatement().forEach(element -> {
+                functionDeclarations.add((MiracleASTreeFunctionDeclaration) property.get(element));
+            });
+            property.put(ctx, new MiracleASTreeClassDeclaration(
+                    ctx.IDENTIFIER().getText(),
+                    variableDeclarations,
+                    functionDeclarations)
             );
-            ctx.functionDeclarationStatement().forEach((element) ->
-                    functionDeclarations.add((MiracleASTreeFunctionDeclaration) property.get(element))
-            );
-            ctx.variableDeclarationStatement().forEach((element) ->
-                    variableDeclarations.add((MiracleASTreeVariableDeclaration) property.get(element))
-            );
-            property.put(ctx, new MiracleASTreeClassDeclaration(ctx.IDENTIFIER().getText(),
-                    functionDeclarations, variableDeclarations));
         }
 
         @Override
         public void exitFunctionDeclarationStatement(MiracleParser.FunctionDeclarationStatementContext ctx) {
             List<MiracleASTreeStatement> body = new LinkedList<>();
             List<MiracleASTreeVariableDeclaration> parameters = new LinkedList<>();
-            ctx.statement().forEach((element) ->
-                    body.add((MiracleASTreeStatement) property.get(element)));
+            ctx.statement().forEach((element) -> body.add((MiracleASTreeStatement) property.get(element)));
             for (int i = 1; i < ctx.IDENTIFIER().size(); i++) {
                 parameters.add(new MiracleASTreeVariableDeclaration(ctx.IDENTIFIER(i).getText(),
-                        (MiracleASTreeVariableType) property.get(ctx.typename(i)),null));
+                        (MiracleASTreeVariableType) property.get(ctx.typename(i)),null)
+                );
             }
             property.put(ctx, new MiracleASTreeFunctionDeclaration(
                     ctx.IDENTIFIER().get(0).getText(),
-                    (MiracleASTreeType) property.get(ctx.typename(0)),
+                    (MiracleASTreeVariableType) property.get(ctx.typename(0)),
                     parameters, body
             ));
         }
@@ -106,7 +94,7 @@ public class MiracleASTree extends MiracleASTreeNode {
                     body.add((MiracleASTreeStatement) property.get(element)));
             property.put(ctx, new MiracleASTreeFunctionDeclaration(
                     null,
-                    (MiracleASTreeType) property.get(ctx.typename()),
+                    (MiracleASTreeVariableType) property.get(ctx.typename()),
                     parameters, body
             ));
         }
@@ -138,7 +126,7 @@ public class MiracleASTree extends MiracleASTreeNode {
         }
 
         @Override
-        public void enterSelectionStatement(MiracleParser.SelectionStatementContext ctx) {
+        public void exitSelectionStatement(MiracleParser.SelectionStatementContext ctx) {
             property.put(ctx, new MiracleASTreeSelection(
                     (MiracleASTreeExpression) property.get(ctx.expression()),
                     (MiracleASTreeStatement) property.get(ctx.statement(0)),
@@ -230,7 +218,7 @@ public class MiracleASTree extends MiracleASTreeNode {
 
         @Override
         public void exitBinaryExpression(MiracleParser.BinaryExpressionContext ctx) {
-            MiracleASTreeBinaryExpression.OPERATOR operator = null;
+            MiracleASTreeBinaryExpression.OPERATOR operator;
             switch (ctx.operator.getText()) {
                 case "+": operator = MiracleASTreeBinaryExpression.OPERATOR.ADD; break;
                 case "-": operator = MiracleASTreeBinaryExpression.OPERATOR.SUB; break;
@@ -263,8 +251,8 @@ public class MiracleASTree extends MiracleASTreeNode {
         }
 
         @Override
-        public void exitSuffixExpression(MiracleParser.SuffixExpressionContext ctx) {
-            MiracleASTreePrefixExpression.OPERATOR operator = null;
+        public void exitPrefixExpression(MiracleParser.PrefixExpressionContext ctx) {
+            MiracleASTreePrefixExpression.OPERATOR operator;
             switch (ctx.operator.getText()) {
                 case "!": operator = MiracleASTreePrefixExpression.OPERATOR.NEGATE; break;
                 case "~": operator = MiracleASTreePrefixExpression.OPERATOR.REV; break;
@@ -281,8 +269,8 @@ public class MiracleASTree extends MiracleASTreeNode {
         }
 
         @Override
-        public void enterSuffixExpression(MiracleParser.SuffixExpressionContext ctx) {
-            MiracleASTreeSuffixExpression.OPERATOR operator = null;
+        public void exitSuffixExpression(MiracleParser.SuffixExpressionContext ctx) {
+            MiracleASTreeSuffixExpression.OPERATOR operator;
             switch (ctx.operator.getText()) {
                 case "++": operator = MiracleASTreeSuffixExpression.OPERATOR.INC; break;
                 case "--": operator = MiracleASTreeSuffixExpression.OPERATOR.DEC; break;
@@ -329,6 +317,11 @@ public class MiracleASTree extends MiracleASTreeNode {
         @Override
         public void exitNullConstant(MiracleParser.NullConstantContext ctx) {
             property.put(ctx, new MiracleASTreeNull());
+        }
+
+        @Override
+        public void exitStatement(MiracleParser.StatementContext ctx) {
+            property.put(ctx, property.get(ctx.getChild(0)));
         }
     }
 }

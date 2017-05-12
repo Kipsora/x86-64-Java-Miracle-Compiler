@@ -1,13 +1,11 @@
-package com.miracle.astree.declaration;
+package com.miracle.astree.statement.declaration;
 
 import com.miracle.astree.expression.MiracleASTreeExpression;
-import com.miracle.astree.expression.MiracleASTreeVariable;
-import com.miracle.astree.statement.MiracleASTreeStatement;
 import com.miracle.astree.type.MiracleASTreeVariableType;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.astree.type.MiracleASTreeType;
 
-public class MiracleASTreeVariableDeclaration extends MiracleASTreeDeclaration {
+public class MiracleASTreeVariableDeclaration extends MiracleASTreeMemberDeclaration {
     public final MiracleASTreeExpression expression;
     public final MiracleASTreeVariableType type;
 

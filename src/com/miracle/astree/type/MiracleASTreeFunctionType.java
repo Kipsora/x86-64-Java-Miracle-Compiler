@@ -1,5 +1,6 @@
 package com.miracle.astree.type;
 
+import com.miracle.astree.expression.MiracleASTreeExpression;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 
 import java.util.Collections;
@@ -15,13 +16,38 @@ public class MiracleASTreeFunctionType extends MiracleASTreeType {
         this.parameters = Collections.unmodifiableList(parameters);
     }
 
-    public boolean equals(MiracleASTreeFunctionType o) {
-        return returnType.equals(o.returnType) &&
-                parameters.equals(o.parameters);
+    public boolean match(List<MiracleASTreeExpression> parameters) {
+        if (parameters.size() != this.parameters.size()) {
+            return false;
+        }
+        for (int i = 0; i < this.parameters.size(); i++) {
+            if (parameters.get(i).type == null || !(parameters.get(i).type instanceof MiracleASTreeVariableType)) {
+                return false;
+            }
+            if (!this.parameters.get(i).isSameType((MiracleASTreeVariableType) parameters.get(i).type)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public String toPrintableString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(returnType.toPrintableString());
+        builder.append("(");
+        for (int i = 0; i < parameters.size(); i++) {
+            if (i != 0) {
+                builder.append(",");
+            }
+            builder.append(parameters.get(i).toPrintableString());
+        }
+        builder.append(")");
+        return builder.toString();
     }
 }

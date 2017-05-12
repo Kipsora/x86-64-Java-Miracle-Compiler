@@ -6,7 +6,6 @@ public class MiracleASTreeVariable extends MiracleASTreeExpression {
     public final String identifier;
 
     public MiracleASTreeVariable(String identifier) {
-        super(left, right);
         this.identifier = identifier;
     }
 

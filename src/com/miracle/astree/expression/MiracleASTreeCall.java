@@ -11,7 +11,6 @@ public class MiracleASTreeCall extends MiracleASTreeExpression {
 
     public MiracleASTreeCall(MiracleASTreeExpression function,
                              List<MiracleASTreeExpression> parameters) {
-        super(left, right);
         this.function = function;
         this.parameters = Collections.unmodifiableList(parameters);
     }

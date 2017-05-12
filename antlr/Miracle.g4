@@ -47,7 +47,7 @@ expression: constant                                                            
     | '(' expression ')'                                                                    #braceExpression
     | expression '(' expression? (',' expression)* ')'                                      #functionCallExpression
     | expression '[' expression ']'                                                         #subscriptExpression
-    | expression '.' IDENTIFIER                                                             #binaryExpression
+    | expression operator='.' expression                                                    #binaryExpression
     | <assoc=right> expression operator=('++' | '--')                                       #suffixExpression
     | <assoc=right> operator=('!' | '+' | '-' | '~' | '++' | '--') expression               #prefixExpression
     | 'new' typename (('[' expression? ']')+ | '(' ')')?                                    #newExpression

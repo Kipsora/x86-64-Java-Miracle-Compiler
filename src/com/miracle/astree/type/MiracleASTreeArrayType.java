@@ -11,22 +11,22 @@ public class MiracleASTreeArrayType extends MiracleASTreeVariableType {
         this.dimension = dimension;
     }
 
-    @Override
-    public int getDimension() {
-        return dimension;
-    }
-
-    @Override
-    public MiracleASTreeBaseType getBaseType() {
-        return baseType;
-    }
-
-    public boolean equals(MiracleASTreeArrayType o) {
-        return o.baseType.equals(this.baseType) && o.dimension == this.dimension;
+    public boolean isSameType(MiracleASTreeArrayType type) {
+        return type.baseType.isSameType(this.baseType) && type.dimension == this.dimension;
     }
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public String toPrintableString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(baseType.toPrintableString());
+        for (int i = 0; i < dimension; i++) {
+            builder.append("[]");
+        }
+        return builder.toString();
     }
 }

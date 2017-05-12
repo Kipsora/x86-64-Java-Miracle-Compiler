@@ -1,13 +1,12 @@
 package com.miracle.astree.visitor;
 
 import com.miracle.astree.MiracleASTree;
-import com.miracle.astree.declaration.*;
+import com.miracle.astree.statement.declaration.*;
 import com.miracle.astree.expression.*;
 import com.miracle.astree.statement.*;
 import com.miracle.astree.type.MiracleASTreeArrayType;
 import com.miracle.astree.type.MiracleASTreeBaseType;
 import com.miracle.astree.type.MiracleASTreeFunctionType;
-import com.miracle.astree.type.MiracleASTreeVariableType;
 
 public interface MiracleASTreeVisitor {
     void visit(MiracleASTreeFunctionDeclaration miracleASTreeFunctionDeclaration);
