@@ -1,67 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1a1af29a-b77a-4b8c-9654-4271264bd490" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/MiracleExceptionContainer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/astree/base/MiracleASTreeTypeNode.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeExpression.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeField.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeNew.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeThis.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/constant/MiracleASTreeBooleanConstant.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/constant/MiracleASTreeConstant.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/constant/MiracleASTreeIntegerConstant.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/constant/MiracleASTreeNullConstant.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/constant/MiracleASTreeStringConstant.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeMemberFetcher.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/symbol/type/MiracleType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/symbol/type/MiracleVariableType.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/expression/MiracleASTreeBooleanConstant.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/expression/MiracleASTreeConstant.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/expression/MiracleASTreeExpression.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/expression/MiracleASTreeIntegerConstant.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/expression/MiracleASTreeNew.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/expression/MiracleASTreeNull.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/expression/MiracleASTreeStringConstant.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/type/MiracleASTreeType.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/type/MiracleASTreeVariableType.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeScopeBuilder.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticChecker.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/exception/MiracleException.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/exception/MiracleExceptionContainer.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/MiracleASTreeNode.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/base/MiracleASTreeNode.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/expression/MiracleASTreeBinaryExpression.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeBinaryExpression.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/expression/MiracleASTreeCall.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeCall.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/expression/MiracleASTreePrefixExpression.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreePrefixExpression.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/expression/MiracleASTreeSubscript.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeSubscript.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/expression/MiracleASTreeSuffixExpression.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeSuffixExpression.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/expression/MiracleASTreeVariable.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeVariable.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/type/MiracleASTreeArrayType.java" afterPath="$PROJECT_DIR$/src/com/miracle/symbol/type/MiracleArrayType.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/type/MiracleASTreeBaseType.java" afterPath="$PROJECT_DIR$/src/com/miracle/symbol/type/MiracleBaseType.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/type/MiracleASTreeFunctionType.java" afterPath="$PROJECT_DIR$/src/com/miracle/symbol/type/MiracleFunctionType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antlr/Miracle.g4" afterPath="$PROJECT_DIR$/antlr/Miracle.g4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/Miracle.java" afterPath="$PROJECT_DIR$/src/com/miracle/Miracle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeBlock.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeBlock.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeBreak.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeBreak.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeContinue.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeContinue.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeIteration.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeIteration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeReturn.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeReturn.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeSelection.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeSelection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeStatement.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeStatement.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeClassDeclaration.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeClassDeclaration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeDeclaration.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeDeclaration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeFunctionDeclaration.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeFunctionDeclaration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeMemberDeclaration.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeMemberDeclaration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeVariableDeclaration.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeVariableDeclaration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeBaseVisitor.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeBaseVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeClassFetcher.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeClassFetcher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreePrinter.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreePrinter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeVisitor.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolTable.java" afterPath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolTable.java" />
-    </list>
+    <list default="true" id="1a1af29a-b77a-4b8c-9654-4271264bd490" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -97,7 +37,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/miracle/Miracle.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1380">
-              <caret line="85" column="28" lean-forward="true" selection-start-line="85" selection-start-column="28" selection-end-line="85" selection-end-column="28" />
+              <caret line="85" column="28" lean-forward="false" selection-start-line="85" selection-start-column="28" selection-end-line="85" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -1294,7 +1234,7 @@
       <workItem from="1494652727005" duration="17537000" />
       <workItem from="1494691278126" duration="8922000" />
       <workItem from="1494732419185" duration="7209000" />
-      <workItem from="1494760948014" duration="15474000" />
+      <workItem from="1494760948014" duration="15540000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit.">
       <created>1494578117985</created>
@@ -1310,11 +1250,18 @@
       <option name="project" value="LOCAL" />
       <updated>1494602240009</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Front end has been rewritten.">
+      <created>1494779453938</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1494779453938</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="99082000" />
+    <option name="totallyTimeSpent" value="99148000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
@@ -1397,7 +1344,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Commit." />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit." />
+    <MESSAGE value="Front end has been rewritten." />
+    <option name="LAST_COMMIT_MESSAGE" value="Front end has been rewritten." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1913,7 +1861,7 @@
     <entry file="file://$PROJECT_DIR$/src/com/miracle/Miracle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1380">
-          <caret line="85" column="28" lean-forward="true" selection-start-line="85" selection-start-column="28" selection-end-line="85" selection-end-column="28" />
+          <caret line="85" column="28" lean-forward="false" selection-start-line="85" selection-start-column="28" selection-end-line="85" selection-end-column="28" />
           <folding />
         </state>
       </provider>
