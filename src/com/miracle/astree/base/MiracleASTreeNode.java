@@ -1,4 +1,4 @@
-package com.miracle.astree;
+package com.miracle.astree.base;
 
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 

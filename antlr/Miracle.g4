@@ -2,7 +2,12 @@ grammar Miracle;
 
 miracle: (classDeclarationStatement | functionDeclarationStatement | variableDeclarationStatement)*;
 
-classDeclarationStatement: 'class' IDENTIFIER '{' (functionDeclarationStatement | variableDeclarationStatement | constructorDeclarationStatement)* '}';
+classDeclarationStatement:
+    'class' IDENTIFIER '{'
+        ((functionDeclarationStatement | variableDeclarationStatement)*
+        constructorDeclarationStatement?
+        (functionDeclarationStatement | variableDeclarationStatement)*)
+    '}';
 
 functionDeclarationStatement: typename IDENTIFIER '(' (typename IDENTIFIER)?(',' typename IDENTIFIER)* ')' '{' statement* '}';
 
@@ -43,11 +48,12 @@ typename: (BASETYPE | IDENTIFIER) ('[' ']')*;
  * particularly, the void expression.
  */
 expression: constant                                                                        #constantExpression
+    | 'this'                                                                                #thisExpression
     | IDENTIFIER                                                                            #variableExpression
     | '(' expression ')'                                                                    #braceExpression
     | expression '(' expression? (',' expression)* ')'                                      #functionCallExpression
     | expression '[' expression ']'                                                         #subscriptExpression
-    | expression operator='.' expression                                                    #binaryExpression
+    | expression operator='.' IDENTIFIER                                                    #fieldExpression
     | <assoc=right> expression operator=('++' | '--')                                       #suffixExpression
     | <assoc=right> operator=('!' | '+' | '-' | '~' | '++' | '--') expression               #prefixExpression
     | 'new' typename (('[' expression? ']')+ | '(' ')')?                                    #newExpression

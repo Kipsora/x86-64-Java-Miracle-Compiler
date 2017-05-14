@@ -1,15 +1,21 @@
-package com.miracle.astree.expression;
+package com.miracle.astree.statement.expression;
 
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
+import com.miracle.cstree.MiracleSourcePosition;
 
 public class MiracleASTreeBinaryExpression extends MiracleASTreeExpression {
     public final MiracleASTreeExpression left;
     public final MiracleASTreeExpression right;
     public final OPERATOR operator;
+    public final MiracleSourcePosition operatorPosition;
 
     public MiracleASTreeBinaryExpression(MiracleASTreeExpression left,
                                          OPERATOR operator,
-                                         MiracleASTreeExpression right) {
+                                         MiracleASTreeExpression right,
+                                         MiracleSourcePosition startPosition,
+                                         MiracleSourcePosition operatorPosition) {
+        super(startPosition);
+        this.operatorPosition = operatorPosition;
         this.left = left;
         this.right = right;
         this.operator = operator;
@@ -20,9 +26,14 @@ public class MiracleASTreeBinaryExpression extends MiracleASTreeExpression {
         visitor.visit(this);
     }
 
+    @Override
+    public String toPrintableString() {
+        return operator.toString() + "{" + left.toPrintableString() + "," + right.toPrintableString() + "}";
+    }
+
     public enum OPERATOR {
         ADD, SUB, MUL, DIV, MOD,
-        DOT, SHL, SHR, LT, RT,
+        SHL, SHR, LT, RT,
         LEQ, REQ, EQL, NEQ, AND,
         XOR, OR, CONJ, DISJ, ASS;
 
@@ -38,8 +49,6 @@ public class MiracleASTreeBinaryExpression extends MiracleASTreeExpression {
                 return "/";
             } else if (this.equals(MOD)) {
                 return "%";
-            } else if (this.equals(DOT)) {
-                return ".";
             } else if (this.equals(SHL)) {
                 return "<<";
             } else if (this.equals(SHR)) {

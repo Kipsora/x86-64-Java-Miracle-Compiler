@@ -1,19 +1,31 @@
-package com.miracle.astree.expression;
+package com.miracle.astree.statement.expression;
 
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
+import com.miracle.cstree.MiracleSourcePosition;
 
 public class MiracleASTreePrefixExpression extends MiracleASTreeExpression {
     public final OPERATOR operator;
+    public final MiracleSourcePosition operatorPosition;
     public final MiracleASTreeExpression expression;
 
-    public MiracleASTreePrefixExpression(OPERATOR operator, MiracleASTreeExpression expression) {
+    public MiracleASTreePrefixExpression(OPERATOR operator,
+                                         MiracleASTreeExpression expression,
+                                         MiracleSourcePosition startPosition,
+                                         MiracleSourcePosition operatorPosition) {
+        super(startPosition);
         this.operator = operator;
         this.expression = expression;
+        this.operatorPosition = operatorPosition;
     }
 
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public String toPrintableString() {
+        return "p" + operator.toString() + " " + expression.toPrintableString();
     }
 
     public enum OPERATOR {

@@ -1,53 +1,63 @@
 package com.miracle.astree.visitor;
 
 import com.miracle.astree.MiracleASTree;
-import com.miracle.astree.statement.declaration.*;
-import com.miracle.astree.expression.*;
+import com.miracle.astree.base.MiracleASTreeTypeNode;
 import com.miracle.astree.statement.*;
-import com.miracle.astree.type.MiracleASTreeArrayType;
-import com.miracle.astree.type.MiracleASTreeBaseType;
-import com.miracle.astree.type.MiracleASTreeFunctionType;
+import com.miracle.astree.statement.declaration.MiracleASTreeClassDeclaration;
+import com.miracle.astree.statement.declaration.MiracleASTreeFunctionDeclaration;
+import com.miracle.astree.statement.declaration.MiracleASTreeVariableDeclaration;
+import com.miracle.astree.statement.expression.*;
+import com.miracle.astree.statement.expression.constant.MiracleASTreeBooleanConstant;
+import com.miracle.astree.statement.expression.constant.MiracleASTreeIntegerConstant;
+import com.miracle.astree.statement.expression.constant.MiracleASTreeNullConstant;
+import com.miracle.astree.statement.expression.constant.MiracleASTreeStringConstant;
 
 public interface MiracleASTreeVisitor {
-    void visit(MiracleASTreeFunctionDeclaration miracleASTreeFunctionDeclaration);
+    void visit(MiracleASTreeFunctionDeclaration functionDeclaration);
 
-    void visit(MiracleASTreeClassDeclaration miracleASTreeClassDeclaration);
+    void visit(MiracleASTreeClassDeclaration classDeclaration);
 
-    void visit(MiracleASTree miracleASTree);
+    void visit(MiracleASTree astree);
 
-    void visit(MiracleASTreeVariableDeclaration miracleASTreeVariableDeclaration);
+    void visit(MiracleASTreeVariableDeclaration variableDeclaration);
 
-    void visit(MiracleASTreeBlock miracleASTreeBlock);
+    void visit(MiracleASTreeBlock block);
 
-    void visit(MiracleASTreeSelection miracleASTreeSelection);
+    void visit(MiracleASTreeSelection selection);
 
-    void visit(MiracleASTreeIteration miracleASTreeIteration);
+    void visit(MiracleASTreeIteration iteration);
 
-    void visit(MiracleASTreeBreak miracleASTreeBreak);
+    void visit(MiracleASTreeBreak breakLiteral);
 
-    void visit(MiracleASTreeContinue miracleASTreeContinue);
+    void visit(MiracleASTreeContinue continueLiteral);
 
-    void visit(MiracleASTreeReturn miracleASTreeReturn);
+    void visit(MiracleASTreeReturn returnLiteral);
 
-    void visit(MiracleASTreeVariable miracleASTreeVariable);
+    void visit(MiracleASTreeVariable variable);
 
-    void visit(MiracleASTreeCall miracleASTreeCall);
+    void visit(MiracleASTreeCall call);
 
-    void visit(MiracleASTreeSubscript miracleASTreeSubscript);
+    void visit(MiracleASTreeSubscript subscript);
 
-    void visit(MiracleASTreeBinaryExpression miracleASTreeBinaryExpression);
+    void visit(MiracleASTreeBinaryExpression binaryExpression);
 
-    void visit(MiracleASTreePrefixExpression miracleASTreePrefixExpression);
+    void visit(MiracleASTreePrefixExpression prefixExpression);
 
-    void visit(MiracleASTreeSuffixExpression miracleASTreeSuffixExpression);
+    void visit(MiracleASTreeSuffixExpression suffixExpression);
 
-    void visit(MiracleASTreeNew miracleASTreeNew);
+    void visit(MiracleASTreeNew newNode);
 
-    void visit(MiracleASTreeConstant miracleASTreeConstant);
+    void visit(MiracleASTreeStringConstant stringConstant);
 
-    void visit(MiracleASTreeFunctionType miracleASTreeFunctionType);
+    void visit(MiracleASTreeIntegerConstant integerConstant);
 
-    void visit(MiracleASTreeBaseType miracleASTreeBaseType);
+    void visit(MiracleASTreeBooleanConstant booleanConstant);
 
-    void visit(MiracleASTreeArrayType miracleASTreeArrayType);
+    void visit(MiracleASTreeNullConstant nullConstant);
+
+    void visit(MiracleASTreeThis thisNode);
+
+    void visit(MiracleASTreeField field);
+
+    void visit(MiracleASTreeTypeNode typeNode);
 }

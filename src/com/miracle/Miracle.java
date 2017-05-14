@@ -2,12 +2,11 @@ package com.miracle;
 
 import com.miracle.astree.MiracleASTree;
 import com.miracle.astree.visitor.MiracleASTreeClassFetcher;
-import com.miracle.astree.visitor.MiracleASTreeSemanticChecker;
+import com.miracle.astree.visitor.MiracleASTreeMemberFetcher;
 import com.miracle.astree.visitor.MiracleASTreePrinter;
-import com.miracle.astree.visitor.MiracleASTreeScopeBuilder;
+import com.miracle.astree.visitor.MiracleASTreeSemanticAnalyser;
 import com.miracle.cstree.parser.MiracleLexer;
 import com.miracle.cstree.parser.MiracleParser;
-import com.miracle.exception.MiracleExceptionContainer;
 import com.miracle.symbol.MiracleSymbolTable;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BailErrorStrategy;
@@ -24,7 +23,8 @@ public class Miracle {
     final private OutputStream outputStream;
 
     final private PrintStream errorStream = System.err;
-    final private MiracleExceptionContainer exceptionContainer = new MiracleExceptionContainer();
+
+    final private MiracleExceptionContainer exceptionContainer = new MiracleExceptionContainer(errorStream);
 
     private Miracle(String args[]) {
         boolean printASTree;
@@ -35,10 +35,10 @@ public class Miracle {
         FileOutputStream outputStream;
         try {
             Options options = new Options();
-            options.addOption("h", "help", false, "except this help information");
-            options.addOption(null, "astree", false, "except abstract syntax tree");
+            options.addOption("h", "help", false, "judge this help information");
+            options.addOption(null, "astree", false, "judge abstract syntax tree");
             options.addOption(null, "intermediate", false,
-                    "except intermediate represention code");
+                    "judge intermediate represention code");
             options.addOption("i", "input", true, "specify input file");
             options.addOption("o", "output", true, "specify output file");
             CommandLine line = new DefaultParser().parse(options, args);
@@ -53,7 +53,7 @@ public class Miracle {
             inputStream = line.hasOption("input") ? new FileInputStream(line.getOptionValue("input")) : null;
             outputStream = line.hasOption("output") ? new FileOutputStream(line.getOptionValue("output")) : null;
         } catch (FileNotFoundException | ParseException exception) {
-            throw MiracleExceptionContainer.fatal(exception.getMessage());
+            throw MiracleExceptionContainer.getRuntimeException(exception.getMessage());
         }
         this.printASTree = printASTree;
         this.printIR = printIR;
@@ -61,33 +61,38 @@ public class Miracle {
         this.outputStream = !hasOutputStream ? System.out : outputStream;
     }
 
-    private MiracleASTree getASTree() {
+    public static void main(String args[]) {
+        new Miracle(args).run();
+    }
+
+    private MiracleParser.MiracleContext getCSTree() {
         try {
             MiracleParser parser = new MiracleParser(new CommonTokenStream(
                     new MiracleLexer(new ANTLRInputStream(inputStream))));
             parser.setErrorHandler(new BailErrorStrategy());
-            MiracleASTree.Builder builder = new MiracleASTree.Builder();
-            new ParseTreeWalker().walk(builder, parser.miracle());
-            return builder.build();
+            return parser.miracle();
         } catch (IOException e) {
-            throw MiracleExceptionContainer.fatal(e.getMessage());
+            throw MiracleExceptionContainer.getRuntimeException(e.getMessage());
         }
     }
 
     private void run() {
-        MiracleASTree tree = getASTree();
-        if (this.printASTree) {
-            tree.accept(new MiracleASTreePrinter());
-        }
-        MiracleSymbolTable symbolTable = new MiracleSymbolTable(null);
-        tree.accept(new MiracleASTreeScopeBuilder(symbolTable));
-        tree.accept(new MiracleASTreeClassFetcher(exceptionContainer, symbolTable));
-        exceptionContainer.except(errorStream);
-        tree.accept(new MiracleASTreeSemanticChecker(exceptionContainer, symbolTable));
-        exceptionContainer.except(errorStream);
-    }
+        try {
+            MiracleParser.MiracleContext cstree = getCSTree();
+            MiracleASTree.Builder builder = new MiracleASTree.Builder();
+            new ParseTreeWalker().walk(builder, cstree);
+            MiracleASTree astree = builder.build();
 
-    public static void main(String args[]) {
-        new Miracle(args).run();
+            if (this.printASTree) {
+                astree.accept(new MiracleASTreePrinter());
+            }
+            MiracleSymbolTable symbolTable = new MiracleSymbolTable(null);
+            astree.accept(new MiracleASTreeClassFetcher(exceptionContainer, symbolTable));
+            astree.accept(new MiracleASTreeMemberFetcher(exceptionContainer, symbolTable));
+            astree.accept(new MiracleASTreeSemanticAnalyser(exceptionContainer, symbolTable));
+            exceptionContainer.judge();
+        } catch (RuntimeException e) {
+            exceptionContainer.judge(e.toString());
+        }
     }
 }

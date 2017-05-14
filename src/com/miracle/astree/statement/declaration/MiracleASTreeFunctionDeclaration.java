@@ -1,28 +1,32 @@
 package com.miracle.astree.statement.declaration;
 
+import com.miracle.astree.base.MiracleASTreeTypeNode;
 import com.miracle.astree.statement.MiracleASTreeStatement;
-import com.miracle.astree.type.MiracleASTreeFunctionType;
-import com.miracle.astree.type.MiracleASTreeVariableType;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
-import com.miracle.astree.type.MiracleASTreeType;
+import com.miracle.cstree.MiracleSourcePosition;
 import com.miracle.symbol.MiracleSymbolTable;
+import com.miracle.symbol.type.MiracleFunctionType;
+import com.miracle.symbol.type.MiracleType;
+import com.miracle.symbol.type.MiracleVariableType;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclaration {
-    private final MiracleASTreeFunctionType type;
-    public final MiracleASTreeVariableType returnType;
+    public final MiracleASTreeTypeNode returnType;
     public final List<MiracleASTreeVariableDeclaration> parameters;
     public final List<MiracleASTreeStatement> body;
-    public MiracleSymbolTable scope;
+    private final MiracleFunctionType type;
+    private MiracleSymbolTable scope;
 
     public MiracleASTreeFunctionDeclaration(String identifier,
-                                            MiracleASTreeVariableType returnType,
+                                            MiracleASTreeTypeNode returnType,
                                             List<MiracleASTreeVariableDeclaration> parameters,
-                                            List<MiracleASTreeStatement> body) {
-        super(identifier);
+                                            List<MiracleASTreeStatement> body,
+                                            MiracleSourcePosition startPosition,
+                                            MiracleSourcePosition identifierPosition) {
+        super(identifier, startPosition, identifierPosition);
         this.returnType = returnType;
         this.parameters = Collections.unmodifiableList(parameters);
         if (body != null) {
@@ -30,9 +34,17 @@ public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclara
         } else {
             this.body = null;
         }
-        List<MiracleASTreeVariableType> argtype = new LinkedList<>();
-        parameters.forEach((element) -> argtype.add((MiracleASTreeVariableType) element.getType()));
-        this.type = new MiracleASTreeFunctionType(returnType, argtype);
+        List<MiracleVariableType> argtype = new LinkedList<>();
+        parameters.forEach((element) -> argtype.add((MiracleVariableType) element.getType()));
+        this.type = new MiracleFunctionType(returnType.type, argtype);
+    }
+
+    public MiracleSymbolTable getScope() {
+        return scope;
+    }
+
+    public void setScope(MiracleSymbolTable scope) {
+        this.scope = scope;
     }
 
     @Override
@@ -41,7 +53,7 @@ public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclara
     }
 
     @Override
-    public MiracleASTreeType getType() {
+    public MiracleType getType() {
         return type;
     }
 }

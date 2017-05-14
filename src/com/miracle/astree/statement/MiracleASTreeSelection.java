@@ -1,8 +1,8 @@
 package com.miracle.astree.statement;
 
-import com.miracle.astree.MiracleASTreeNode;
+import com.miracle.astree.statement.expression.MiracleASTreeExpression;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
-import com.miracle.astree.expression.MiracleASTreeExpression;
+import com.miracle.cstree.MiracleSourcePosition;
 
 public class MiracleASTreeSelection extends MiracleASTreeStatement {
     public final MiracleASTreeExpression expression;
@@ -11,7 +11,9 @@ public class MiracleASTreeSelection extends MiracleASTreeStatement {
 
     public MiracleASTreeSelection(MiracleASTreeExpression expression,
                                   MiracleASTreeStatement branchTrue,
-                                  MiracleASTreeStatement branchFalse) {
+                                  MiracleASTreeStatement branchFalse,
+                                  MiracleSourcePosition startPosition) {
+        super(startPosition);
         this.expression = expression;
         this.branchTrue = branchTrue;
         this.branchFalse = branchFalse;

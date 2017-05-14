@@ -1,26 +1,33 @@
 package com.miracle.astree.visitor;
 
 import com.miracle.astree.MiracleASTree;
+import com.miracle.astree.statement.*;
 import com.miracle.astree.statement.declaration.MiracleASTreeClassDeclaration;
 import com.miracle.astree.statement.declaration.MiracleASTreeFunctionDeclaration;
 import com.miracle.astree.statement.declaration.MiracleASTreeVariableDeclaration;
-import com.miracle.astree.expression.*;
-import com.miracle.astree.statement.*;
-import com.miracle.astree.type.MiracleASTreeArrayType;
-import com.miracle.astree.type.MiracleASTreeBaseType;
-import com.miracle.astree.type.MiracleASTreeFunctionType;
+import com.miracle.astree.statement.expression.*;
+import com.miracle.astree.statement.expression.constant.MiracleASTreeStringConstant;
 
 public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
     private int indent;
 
-    public void println(String message) {
+    private boolean isIndent(Object element) {
+        return !(element instanceof MiracleASTreeVariableDeclaration) &&
+                !(element instanceof MiracleASTreeSelection) &&
+                !(element instanceof MiracleASTreeIteration) &&
+                !(element instanceof MiracleASTreeBreak) &&
+                !(element instanceof MiracleASTreeContinue) &&
+                !(element instanceof MiracleASTreeBlock);
+    }
+
+    private void println(String message) {
         for (int i = 1; i <= indent; i++) {
             System.out.print("    ");
         }
         System.out.println(message);
     }
 
-    public void print(String message) {
+    private void print(String message) {
         for (int i = 1; i <= indent; i++) {
             System.out.print("    ");
         }
@@ -28,49 +35,45 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
     }
 
     @Override
-    public void visit(MiracleASTree miracleASTree) {
+    public void visit(MiracleASTree astree) {
         println("[Miracle Program]");
         indent++;
-        miracleASTree.declarations.forEach((element) -> element.accept(this));
+        astree.declarations.forEach((element) -> element.accept(this));
         indent--;
     }
 
     @Override
-    public void visit(MiracleASTreeNew miracleASTreeNew) {
-        System.out.print("new ");
-        miracleASTreeNew.type.accept(this);
-        System.out.print(" ");
-        miracleASTreeNew.expressions.forEach((element) -> {
+    public void visit(MiracleASTreeNew newNode) {
+        System.out.print("new " + newNode.variableType.type.toPrintableString() + " ");
+        newNode.expressions.forEach((element) -> {
             if (element == null) {
                 System.out.print("[]");
             } else {
-                System.out.print('[');
-                element.accept(this);
-                System.out.print(']');
+                System.out.print('[' + element.toPrintableString() + "]");
             }
         });
     }
 
     @Override
-    public void visit(MiracleASTreeCall miracleASTreeCall) {
+    public void visit(MiracleASTreeCall call) {
         System.out.print("call ");
-        miracleASTreeCall.function.accept(this);
+        call.function.accept(this);
         System.out.print("(");
-        for (int i = 0; i < miracleASTreeCall.parameters.size(); i++) {
+        for (int i = 0; i < call.parameters.size(); i++) {
             if (i > 0) {
                 System.out.print(", ");
             }
-            miracleASTreeCall.parameters.get(i).accept(this);
+            call.parameters.get(i).accept(this);
         }
         System.out.print(')');
     }
 
     @Override
-    public void visit(MiracleASTreeBlock miracleASTreeBlock) {
+    public void visit(MiracleASTreeBlock block) {
         println("[Block]");
         indent++;
-        miracleASTreeBlock.statements.forEach((element) -> {
-            if (!(element instanceof MiracleASTreeVariableDeclaration)) {
+        block.statements.forEach((element) -> {
+            if (isIndent(element)) {
                 print("");
                 element.accept(this);
                 System.out.println();
@@ -82,115 +85,110 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
     }
 
     @Override
-    public void visit(MiracleASTreeBreak miracleASTreeBreak) {
+    public void visit(MiracleASTreeBreak breakLiteral) {
         println("break");
     }
 
     @Override
-    public void visit(MiracleASTreeReturn miracleASTreeReturn) {
+    public void visit(MiracleASTreeReturn returnLiteral) {
         System.out.print("return ");
-        if (miracleASTreeReturn.expression != null) {
-            miracleASTreeReturn.expression.accept(this);
+        if (returnLiteral.expression != null) {
+            System.out.print(returnLiteral.expression.toPrintableString());
         }
     }
 
     @Override
-    public void visit(MiracleASTreeBaseType miracleASTreeBaseType) {
-        System.out.print(miracleASTreeBaseType.identifier);
+    public void visit(MiracleASTreeStringConstant stringConstant) {
+        System.out.print(stringConstant.getValue());
     }
 
     @Override
-    public void visit(MiracleASTreeConstant miracleASTreeConstant) {
-        System.out.print(miracleASTreeConstant.getValue());
-    }
-
-    @Override
-    public void visit(MiracleASTreeContinue miracleASTreeContinue) {
+    public void visit(MiracleASTreeContinue continueLiteral) {
         println("continue");
     }
 
     @Override
-    public void visit(MiracleASTreeVariable miracleASTreeVariable) {
-        System.out.print(miracleASTreeVariable.identifier);
+    public void visit(MiracleASTreeVariable variable) {
+        System.out.print(variable.identifier);
     }
 
     @Override
-    public void visit(MiracleASTreeArrayType miracleASTreeArrayType) {
-        System.out.print(miracleASTreeArrayType.baseType.identifier);
-        for (int i = 0; i < miracleASTreeArrayType.dimension; i++) {
-            System.out.print("[]");
+    public void visit(MiracleASTreeIteration iteration) {
+        if (iteration.initializeExpression != null) {
+            print("for init: ");
+            System.out.println(iteration.incrementExpression.toPrintableString());
         }
-    }
-
-    @Override
-    public void visit(MiracleASTreeIteration miracleASTreeIteration) {
-        print("for init: ");
-        if (miracleASTreeIteration.initializeExpression != null) {
-            miracleASTreeIteration.initializeExpression.accept(this);
+        if (iteration.conditionExpression != null) {
+            print("for condition: ");
+            System.out.println(iteration.conditionExpression.toPrintableString());
         }
-        println("");
-        print("for condition: ");
-        if (miracleASTreeIteration.conditionExpression != null) {
-            miracleASTreeIteration.conditionExpression.accept(this);
+        if (iteration.incrementExpression != null) {
+            print("for increment: ");
+            System.out.println(iteration.incrementExpression.toPrintableString());
         }
-        println("");
-        print("for increment: ");
-        if (miracleASTreeIteration.incrementExpression != null) {
-            miracleASTreeIteration.incrementExpression.accept(this);
-        }
-        println("");
         indent++;
-        miracleASTreeIteration.body.accept(this);
+        if (iteration.body instanceof MiracleASTreeBreak) {
+            iteration.body.accept(this);
+        } else {
+            if (isIndent(iteration.body)) {
+                print("");
+                iteration.body.accept(this);
+                System.out.println();
+            } else {
+                iteration.body.accept(this);
+            }
+        }
         indent--;
     }
 
     @Override
-    public void visit(MiracleASTreeSelection miracleASTreeSelection) {
-        print("if (");
-        miracleASTreeSelection.expression.accept(this);
-        println(") then");
+    public void visit(MiracleASTreeSelection selection) {
+        println("if (" + selection.expression.toPrintableString() + ") then");
         indent++;
-        miracleASTreeSelection.branchTrue.accept(this);
+        if (isIndent(selection.branchTrue)) {
+            print("");
+            selection.branchTrue.accept(this);
+            System.out.println();
+        } else {
+            selection.branchTrue.accept(this);
+        }
         indent--;
-        if (miracleASTreeSelection.branchFalse != null) {
+        if (selection.branchFalse != null) {
             println("else");
             indent++;
-            miracleASTreeSelection.branchFalse.accept(this);
+            if (isIndent(selection.branchFalse)) {
+                print("");
+                selection.branchFalse.accept(this);
+                System.out.println();
+            } else {
+                selection.branchFalse.accept(this);
+            }
             indent--;
         }
     }
 
     @Override
-    public void visit(MiracleASTreeSubscript miracleASTreeSubscript) {
-        miracleASTreeSubscript.base.accept(this);
+    public void visit(MiracleASTreeSubscript subscript) {
+        subscript.base.accept(this);
         System.out.print('[');
-        miracleASTreeSubscript.coordinate.accept(this);
+        subscript.coordinate.accept(this);
         System.out.print(']');
     }
 
     @Override
-    public void visit(MiracleASTreeFunctionType miracleASTreeFunctionType) {
-        super.visit(miracleASTreeFunctionType);
+    public void visit(MiracleASTreeBinaryExpression binaryExpression) {
+        System.out.print(binaryExpression.toPrintableString());
     }
 
     @Override
-    public void visit(MiracleASTreeBinaryExpression miracleASTreeBinaryExpression) {
-        System.out.print(miracleASTreeBinaryExpression.operator.toString());
-        System.out.print(" ");
-        miracleASTreeBinaryExpression.left.accept(this);
-        System.out.print(" ");
-        miracleASTreeBinaryExpression.right.accept(this);
-    }
-
-    @Override
-    public void visit(MiracleASTreeClassDeclaration miracleASTreeClassDeclaration) {
+    public void visit(MiracleASTreeClassDeclaration classDeclaration) {
         println("[Class Declaration]");
         indent++;
-        println("identifier: " + miracleASTreeClassDeclaration.identifier);
+        println("identifier: " + classDeclaration.identifier);
         indent++;
-        miracleASTreeClassDeclaration.variableDeclarations.forEach((element) ->
+        classDeclaration.variableDeclarations.forEach((element) ->
                 element.accept(this));
-        miracleASTreeClassDeclaration.functionDeclarations.forEach((element) ->
+        classDeclaration.functionDeclarations.forEach((element) ->
                 element.accept(this));
         println("");
         indent--;
@@ -198,52 +196,55 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
     }
 
     @Override
-    public void visit(MiracleASTreePrefixExpression miracleASTreePrefixExpression) {
-        System.out.print("p" + miracleASTreePrefixExpression.operator.toString() + " ");
-        miracleASTreePrefixExpression.expression.accept(this);
+    public void visit(MiracleASTreePrefixExpression prefixExpression) {
+        System.out.print(prefixExpression.toPrintableString());
     }
 
     @Override
-    public void visit(MiracleASTreeSuffixExpression miracleASTreeSuffixExpression) {
-        System.out.print("s" + miracleASTreeSuffixExpression.operator.toString() + " ");
-        miracleASTreeSuffixExpression.expression.accept(this);
+    public void visit(MiracleASTreeSuffixExpression suffixExpression) {
+        System.out.print(suffixExpression.toPrintableString());
     }
 
     @Override
-    public void visit(MiracleASTreeFunctionDeclaration miracleASTreeFunctionDeclaration) {
+    public void visit(MiracleASTreeFunctionDeclaration functionDeclaration) {
         println("[Function Declaration]");
         indent++;
-        println("identifier: " + miracleASTreeFunctionDeclaration.identifier);
-        print("returnType: ");
-        miracleASTreeFunctionDeclaration.returnType.accept(this);
-        println("");
+        println("identifier: " + functionDeclaration.identifier);
+        println("returnType: " + functionDeclaration.returnType.type.toPrintableString());
+        println("parameter:");
+        indent++;
+        functionDeclaration.parameters.forEach((element) -> element.accept(this));
+        indent--;
         println("body:");
         indent++;
-        miracleASTreeFunctionDeclaration.parameters.forEach((element) -> element.accept(this));
-        miracleASTreeFunctionDeclaration.body.forEach((element) -> {
-            if (!(element instanceof MiracleASTreeVariableDeclaration)) {
-                print("");
-                element.accept(this);
-                System.out.println();
-            } else {
-                element.accept(this);
-            }
-        });
+        if (functionDeclaration.body != null) {
+            functionDeclaration.body.forEach((element) -> {
+                if (!(element instanceof MiracleASTreeVariableDeclaration) &&
+                        !(element instanceof MiracleASTreeIteration) &&
+                        !(element instanceof MiracleASTreeSelection) &&
+                        !(element instanceof MiracleASTreeBreak) &&
+                        !(element instanceof MiracleASTreeContinue)) {
+                    print("");
+                    element.accept(this);
+                    System.out.println();
+                } else {
+                    element.accept(this);
+                }
+            });
+        }
         indent--;
         indent--;
     }
 
     @Override
-    public void visit(MiracleASTreeVariableDeclaration miracleASTreeVariableDeclaration) {
+    public void visit(MiracleASTreeVariableDeclaration variableDeclaration) {
         println("[Variable Declaration]");
         indent++;
-        print("type: ");
-        miracleASTreeVariableDeclaration.type.accept(this);
-        println("");
-        println("identifier: " + miracleASTreeVariableDeclaration.identifier);
-        if (miracleASTreeVariableDeclaration.expression != null) {
+        println("variableType: " + variableDeclaration.typenode.type.toPrintableString());
+        println("identifier: " + variableDeclaration.identifier);
+        if (variableDeclaration.expression != null) {
             print("init: ");
-            miracleASTreeVariableDeclaration.expression.accept(this);
+            variableDeclaration.expression.accept(this);
             println("");
         }
         indent--;

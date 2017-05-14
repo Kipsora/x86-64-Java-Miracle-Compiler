@@ -1,13 +1,12 @@
 package com.miracle.symbol;
 
-import com.miracle.astree.statement.MiracleASTreeIteration;
+import com.miracle.astree.base.MiracleASTreeTypeNode;
+import com.miracle.astree.statement.declaration.MiracleASTreeClassDeclaration;
 import com.miracle.astree.statement.declaration.MiracleASTreeDeclaration;
 import com.miracle.astree.statement.declaration.MiracleASTreeFunctionDeclaration;
 import com.miracle.astree.statement.declaration.MiracleASTreeVariableDeclaration;
-import com.miracle.astree.type.MiracleASTreeArrayType;
-import com.miracle.astree.type.MiracleASTreeBaseType;
-import com.miracle.astree.type.MiracleASTreeFunctionType;
-import com.miracle.astree.type.MiracleASTreeVariableType;
+import com.miracle.symbol.type.MiracleBaseType;
+import com.miracle.symbol.type.MiracleType;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,210 +14,370 @@ import java.util.LinkedList;
 import java.util.Map;
 
 public class MiracleSymbolTable {
-    public static MiracleASTreeBaseType __builtin_void = new MiracleASTreeBaseType("void");
-    public static MiracleASTreeBaseType __builtin_int = new MiracleASTreeBaseType("int");
-    public static MiracleASTreeBaseType __builtin_bool = new MiracleASTreeBaseType("bool");
-    public static MiracleASTreeBaseType __builtin_string = new MiracleASTreeBaseType("string");
+    public static MiracleBaseType __builtin_void;
+    public static MiracleBaseType __builtin_int;
+    public static MiracleBaseType __builtin_bool;
+    public static MiracleBaseType __builtin_string;
+    public static MiracleBaseType __builtin_array;
+    public static MiracleBaseType __builtin_null;
 
-    private static MiracleASTreeBaseType __builtin_null = new MiracleASTreeBaseType("null");
-    private static MiracleASTreeArrayType __builtin_array = new MiracleASTreeArrayType(null, 0);
+    private static MiracleASTreeFunctionDeclaration __builtin_print;
+    private static MiracleASTreeFunctionDeclaration __builtin_println;
+    private static MiracleASTreeFunctionDeclaration __builtin_getString;
+    private static MiracleASTreeFunctionDeclaration __builtin_getInt;
+    private static MiracleASTreeFunctionDeclaration __builtin_toString;
 
-    private static MiracleASTreeFunctionDeclaration __builtin_print = new MiracleASTreeFunctionDeclaration(
-            "print",
-            __builtin_void,
-            new LinkedList<MiracleASTreeVariableDeclaration>() {
-                private static final long serialVersionUID = 1397849931823570227L;
-                {
-                    add(new MiracleASTreeVariableDeclaration("a", __builtin_string, null));
+    private static MiracleASTreeFunctionDeclaration __builtin_string_lessthan;
+    private static MiracleASTreeFunctionDeclaration __builtin_string_concat;
+    private static MiracleASTreeFunctionDeclaration __builtin_string_length;
+    private static MiracleASTreeFunctionDeclaration __builtin_string_substring;
+    private static MiracleASTreeFunctionDeclaration __builtin_string_parseInt;
+    private static MiracleASTreeFunctionDeclaration __builtin_string_ord;
+
+    private static MiracleASTreeFunctionDeclaration __builtin_array_size;
+
+    private static MiracleASTreeClassDeclaration __builtin_Void;
+    private static MiracleASTreeClassDeclaration __builtin_Int;
+    private static MiracleASTreeClassDeclaration __builtin_Bool;
+    private static MiracleASTreeClassDeclaration __builtin_String;
+    private static MiracleASTreeClassDeclaration __builtin_Array;
+    private static MiracleASTreeClassDeclaration __builtin_Null;
+    private static Map<String, MiracleASTreeFunctionDeclaration> builtinMethod;
+    private static Map<String, MiracleASTreeClassDeclaration> builtinType;
+
+    static {
+        __builtin_void = new MiracleBaseType("void");
+        __builtin_int = new MiracleBaseType("int");
+        __builtin_bool = new MiracleBaseType("bool");
+        __builtin_string = new MiracleBaseType("string");
+        __builtin_array = new MiracleBaseType("$array");
+        __builtin_null = new MiracleBaseType("null");
+
+        __builtin_print = new MiracleASTreeFunctionDeclaration(
+                "print",
+                new MiracleASTreeTypeNode(__builtin_void, null),
+                new LinkedList<MiracleASTreeVariableDeclaration>() {
+                    private static final long serialVersionUID = 1397849931823570227L;
+
+                    {
+                        add(new MiracleASTreeVariableDeclaration(
+                                "a",
+                                new MiracleASTreeTypeNode(__builtin_string, null),
+                                null,
+                                null,
+                                null,
+                                false)
+                        );
+                    }
+                },
+                null,
+                null,
+                null
+        );
+        __builtin_println = new MiracleASTreeFunctionDeclaration(
+                "println",
+                new MiracleASTreeTypeNode(__builtin_void, null),
+                new LinkedList<MiracleASTreeVariableDeclaration>() {
+                    private static final long serialVersionUID = 1397849931823570227L;
+
+                    {
+                        add(new MiracleASTreeVariableDeclaration(
+                                "a",
+                                new MiracleASTreeTypeNode(__builtin_string, null),
+                                null,
+                                null,
+                                null,
+                                false)
+                        );
+                    }
+                },
+                null,
+                null,
+                null
+        );
+        __builtin_getString = new MiracleASTreeFunctionDeclaration(
+                "getString",
+                new MiracleASTreeTypeNode(__builtin_string, null),
+                new LinkedList<>(),
+                null,
+                null,
+                null
+        );
+        __builtin_getInt = new MiracleASTreeFunctionDeclaration(
+                "getInt",
+                new MiracleASTreeTypeNode(__builtin_int, null),
+                new LinkedList<>(),
+                null,
+                null,
+                null
+        );
+        __builtin_toString = new MiracleASTreeFunctionDeclaration(
+                "toString",
+                new MiracleASTreeTypeNode(__builtin_string, null),
+                new LinkedList<MiracleASTreeVariableDeclaration>() {
+                    private static final long serialVersionUID = 1397849931823570227L;
+
+                    {
+                        add(new MiracleASTreeVariableDeclaration(
+                                "a",
+                                new MiracleASTreeTypeNode(__builtin_int, null),
+                                null,
+                                null,
+                                null,
+                                false
+                        ));
+                    }
+                },
+                null,
+                null,
+                null
+        );
+        __builtin_string_concat = new MiracleASTreeFunctionDeclaration(
+                "$string.concat",
+                new MiracleASTreeTypeNode(__builtin_string, null),
+                new LinkedList<MiracleASTreeVariableDeclaration>() {
+                    private static final long serialVersionUID = 289980611494618290L;
+
+                    {
+                        add(new MiracleASTreeVariableDeclaration(
+                                "a",
+                                new MiracleASTreeTypeNode(__builtin_string, null),
+                                null,
+                                null,
+                                null,
+                                false
+                        ));
+                        add(new MiracleASTreeVariableDeclaration(
+                                "b",
+                                new MiracleASTreeTypeNode(__builtin_string, null),
+                                null,
+                                null,
+                                null,
+                                false
+                        ));
+                    }
+                },
+                null,
+                null,
+                null
+        );
+        __builtin_string_lessthan = new MiracleASTreeFunctionDeclaration(
+                "$string.less",
+                new MiracleASTreeTypeNode(__builtin_bool, null),
+                new LinkedList<MiracleASTreeVariableDeclaration>() {
+                    private static final long serialVersionUID = 289980611494618290L;
+
+                    {
+                        add(new MiracleASTreeVariableDeclaration(
+                                "a",
+                                new MiracleASTreeTypeNode(__builtin_string, null),
+                                null,
+                                null,
+                                null,
+                                false
+                        ));
+                        add(new MiracleASTreeVariableDeclaration(
+                                "b",
+                                new MiracleASTreeTypeNode(__builtin_string, null),
+                                null,
+                                null,
+                                null,
+                                false
+                        ));
+                    }
+                },
+                null,
+                null,
+                null
+        );
+        __builtin_string_length = new MiracleASTreeFunctionDeclaration(
+                "length",
+                new MiracleASTreeTypeNode(__builtin_int, null),
+                new LinkedList<MiracleASTreeVariableDeclaration>() {
+                    private static final long serialVersionUID = -5600580671280003543L;
+
+                    {
+                        add(new MiracleASTreeVariableDeclaration(
+                                "self",
+                                new MiracleASTreeTypeNode(__builtin_string, null),
+                                null,
+                                null,
+                                null,
+                                false
+                        ));
+                    }
+                },
+                null,
+                null,
+                null
+        );
+        __builtin_string_substring = new MiracleASTreeFunctionDeclaration(
+                "substring",
+                new MiracleASTreeTypeNode(__builtin_string, null),
+                new LinkedList<MiracleASTreeVariableDeclaration>() {
+                    private static final long serialVersionUID = 419070340520120804L;
+
+                    {
+                        add(new MiracleASTreeVariableDeclaration(
+                                "a",
+                                new MiracleASTreeTypeNode(__builtin_int, null),
+                                null,
+                                null,
+                                null,
+                                false
+                        ));
+                        add(new MiracleASTreeVariableDeclaration(
+                                "b",
+                                new MiracleASTreeTypeNode(__builtin_int, null),
+                                null,
+                                null,
+                                null,
+                                false
+                        ));
+                    }
+                },
+                null,
+                null,
+                null
+        );
+        __builtin_string_parseInt = new MiracleASTreeFunctionDeclaration(
+                "parseInt",
+                new MiracleASTreeTypeNode(__builtin_int, null),
+                new LinkedList<MiracleASTreeVariableDeclaration>(),
+                null,
+                null,
+                null
+        );
+        __builtin_string_ord = new MiracleASTreeFunctionDeclaration(
+                "ord",
+                new MiracleASTreeTypeNode(__builtin_int, null),
+                new LinkedList<MiracleASTreeVariableDeclaration>() {
+                    private static final long serialVersionUID = 5968958016338308327L;
+
+                    {
+                        add(new MiracleASTreeVariableDeclaration(
+                                "a",
+                                new MiracleASTreeTypeNode(__builtin_int, null),
+                                null,
+                                null,
+                                null,
+                                false
+                        ));
+                    }
+                },
+                null,
+                null,
+                null
+        );
+        __builtin_array_size = new MiracleASTreeFunctionDeclaration(
+                "size",
+                new MiracleASTreeTypeNode(__builtin_int, null),
+                new LinkedList<MiracleASTreeVariableDeclaration>(),
+                null,
+                null,
+                null
+        );
+
+        __builtin_Void = new MiracleASTreeClassDeclaration("void",
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        __builtin_Int = new MiracleASTreeClassDeclaration("int",
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        __builtin_Bool = new MiracleASTreeClassDeclaration("bool",
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        __builtin_Null = new MiracleASTreeClassDeclaration("null",
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        __builtin_String = new MiracleASTreeClassDeclaration("string",
+                null,
+                new LinkedList<MiracleASTreeFunctionDeclaration>() {
+                    private static final long serialVersionUID = -8896859257944921595L;
+
+                    {
+                        add(__builtin_string_substring);
+                        add(__builtin_string_length);
+                        add(__builtin_string_ord);
+                        add(__builtin_string_parseInt);
+                        add(__builtin_string_lessthan);
+                        add(__builtin_string_concat);
+                    }
+                },
+                null,
+                null,
+                null
+        );
+        __builtin_Array = new MiracleASTreeClassDeclaration("$array",
+                null,
+                new LinkedList<MiracleASTreeFunctionDeclaration>() {
+                    private static final long serialVersionUID = 1397849931823570227L;
+
+                    {
+                        add(__builtin_array_size);
+                    }
+                },
+                null,
+                null,
+                null
+        );
+        builtinMethod = Collections.unmodifiableMap(
+                new HashMap<String, MiracleASTreeFunctionDeclaration>() {
+                    private static final long serialVersionUID = -8896859257944921595L;
+
+                    {
+                        put(__builtin_print.identifier, __builtin_print);
+                        put(__builtin_println.identifier, __builtin_println);
+                        put(__builtin_getInt.identifier, __builtin_getInt);
+                        put(__builtin_getString.identifier, __builtin_getString);
+                        put(__builtin_toString.identifier, __builtin_toString);
+                    }
                 }
-            },
-            null
-    );
+        );
+        builtinType = Collections.unmodifiableMap(
+                new HashMap<String, MiracleASTreeClassDeclaration>() {
+                    private static final long serialVersionUID = -7246160769398647470L;
 
-    private static MiracleASTreeFunctionDeclaration __builtin_println = new MiracleASTreeFunctionDeclaration(
-            "println",
-            __builtin_void,
-            new LinkedList<MiracleASTreeVariableDeclaration>() {
-                private static final long serialVersionUID = 1397849931823570227L;
-                {
-                    add(new MiracleASTreeVariableDeclaration("a", __builtin_string, null));
+                    {
+                        put(__builtin_Void.identifier, __builtin_Void);
+                        put(__builtin_Int.identifier, __builtin_Int);
+                        put(__builtin_Bool.identifier, __builtin_Bool);
+                        put(__builtin_String.identifier, __builtin_String);
+                        put(__builtin_Array.identifier, __builtin_Array);
+                        put(__builtin_Null.identifier, __builtin_Null);
+                    }
                 }
-            },
-            null
-    );
-
-    private static MiracleASTreeFunctionDeclaration __builtin_getString = new MiracleASTreeFunctionDeclaration(
-            "getString",
-            __builtin_string,
-            new LinkedList<MiracleASTreeVariableDeclaration>(),
-            null
-    );
-
-    private static MiracleASTreeFunctionDeclaration __builtin_getInt = new MiracleASTreeFunctionDeclaration(
-            "getInt",
-            __builtin_int,
-            new LinkedList<MiracleASTreeVariableDeclaration>(),
-            null
-    );
-
-    private static MiracleASTreeFunctionDeclaration __builtin_toString = new MiracleASTreeFunctionDeclaration(
-            "toString",
-            __builtin_string,
-            new LinkedList<MiracleASTreeVariableDeclaration>() {
-                private static final long serialVersionUID = 1397849931823570227L;
-                {
-                    add(new MiracleASTreeVariableDeclaration("a", __builtin_int, null));
-                }
-            },
-            null
-    );
-
-    private static MiracleASTreeFunctionDeclaration __builtin_string_lessthan = new MiracleASTreeFunctionDeclaration(
-            "$string.less",
-            __builtin_bool,
-            new LinkedList<MiracleASTreeVariableDeclaration>() {
-                private static final long serialVersionUID = 289980611494618290L;
-                {
-                    add(new MiracleASTreeVariableDeclaration("a", __builtin_string, null));
-                    add(new MiracleASTreeVariableDeclaration("b", __builtin_string, null));
-                }
-            },
-            null
-    );
-
-    private static MiracleASTreeFunctionDeclaration __builtin_string_length = new MiracleASTreeFunctionDeclaration(
-            "$string.length",
-            __builtin_int,
-            new LinkedList<MiracleASTreeVariableDeclaration>() {
-                private static final long serialVersionUID = -5600580671280003543L;
-                {
-                    add(new MiracleASTreeVariableDeclaration("self", __builtin_string, null));
-                }
-            },
-            null
-    );
-
-    private static MiracleASTreeFunctionDeclaration __builtin_string_substring = new MiracleASTreeFunctionDeclaration(
-            "$string.substring",
-            __builtin_string,
-            new LinkedList<MiracleASTreeVariableDeclaration>() {
-                private static final long serialVersionUID = 419070340520120804L;
-                {
-                    add(new MiracleASTreeVariableDeclaration("self", __builtin_string, null));
-                    add(new MiracleASTreeVariableDeclaration("l", __builtin_int, null));
-                    add(new MiracleASTreeVariableDeclaration("r", __builtin_int, null));
-                }
-            },
-            null
-    );
-
-    private static MiracleASTreeFunctionDeclaration __builtin_string_parseInt = new MiracleASTreeFunctionDeclaration(
-            "$string.parseInt",
-            __builtin_int,
-            new LinkedList<MiracleASTreeVariableDeclaration>() {
-                private static final long serialVersionUID = -975205882602668267L;
-                {
-                    add(new MiracleASTreeVariableDeclaration("self", __builtin_string, null));
-                }
-            },
-            null
-    );
-
-    private static MiracleASTreeFunctionDeclaration __builtin_string_ord = new MiracleASTreeFunctionDeclaration(
-            "$string.ord",
-            __builtin_int,
-            new LinkedList<MiracleASTreeVariableDeclaration>() {
-                private static final long serialVersionUID = 5968958016338308327L;
-                {
-                    add(new MiracleASTreeVariableDeclaration("self", __builtin_string, null));
-                    add(new MiracleASTreeVariableDeclaration("x", __builtin_int, null));
-                }
-            },
-            null
-    );
-
-    private static MiracleASTreeFunctionDeclaration __builtin_array_size = new MiracleASTreeFunctionDeclaration(
-            "$array.size",
-            __builtin_int,
-            new LinkedList<MiracleASTreeVariableDeclaration>() {
-                private static final long serialVersionUID = 5968958016338308327L;
-                {
-                    add(new MiracleASTreeVariableDeclaration("self", __builtin_array, null));
-                }
-            },
-            null
-    );
-
-    private static Map<String, MiracleASTreeFunctionDeclaration> builtinMethod = Collections.unmodifiableMap(
-            new HashMap<String, MiracleASTreeFunctionDeclaration>() {
-                private static final long serialVersionUID = 1397849931823570227L;
-                {
-                    put(__builtin_print.identifier, __builtin_print);
-                    put(__builtin_println.identifier, __builtin_println);
-                    put(__builtin_getInt.identifier, __builtin_getInt);
-                    put(__builtin_getString.identifier, __builtin_getString);
-                    put(__builtin_toString.identifier, __builtin_toString);
-
-                    put(__builtin_array_size.identifier, __builtin_array_size);
-                    put(__builtin_string_ord.identifier, __builtin_string_ord);
-                    put(__builtin_string_length.identifier, __builtin_string_length);
-                    put(__builtin_string_lessthan.identifier, __builtin_string_lessthan);
-                    put(__builtin_string_parseInt.identifier, __builtin_string_parseInt);
-                    put(__builtin_string_substring.identifier, __builtin_string_substring);
-                }
-            }
-    );
-
-    private static Map<String, MiracleASTreeBaseType> builtinType = Collections.unmodifiableMap(
-            new HashMap<String, MiracleASTreeBaseType>() {
-                private static final long serialVersionUID = -7246160769398647470L;
-                {
-                    put(__builtin_void.identifier, __builtin_void);
-                    put(__builtin_int.identifier, __builtin_int);
-                    put(__builtin_bool.identifier, __builtin_bool);
-                    put(__builtin_string.identifier, __builtin_string);
-                    put(__builtin_null.identifier, __builtin_null);
-                }
-            }
-    );
+        );
+    }
 
     private final MiracleSymbolTable parentSymbolTable;
     private final Map<String, MiracleASTreeDeclaration> currentSymbolTable = new HashMap<>();
-    private MiracleASTreeFunctionDeclaration functionDeclaration;
-    private MiracleASTreeIteration iteration;
 
     public MiracleSymbolTable(MiracleSymbolTable parentSymbolTable) {
         this.parentSymbolTable = parentSymbolTable;
-        this.functionDeclaration = functionDeclaration;
-        this.iteration = iteration;
     }
 
-    public void setFunctionDeclaration(MiracleASTreeFunctionDeclaration functionDeclaration) {
-        this.functionDeclaration = functionDeclaration;
-    }
-
-    public void setIteration(MiracleASTreeIteration iteration) {
-        this.iteration = iteration;
-    }
-
-    public final MiracleASTreeFunctionDeclaration getFunctionDeclaration() {
-        if (functionDeclaration != null) {
-            return functionDeclaration;
-        }
-        if (parentSymbolTable != null) {
-            return parentSymbolTable.getFunctionDeclaration();
-        }
-        return null;
-    }
-
-    public final MiracleASTreeIteration getIteration() {
-        if (iteration != null) {
-            return iteration;
-        }
-        if (parentSymbolTable != null) {
-            return parentSymbolTable.getIteration();
-        }
-        return null;
+    public static boolean isBuiltinType(MiracleType type) {
+        return type.isSameType(__builtin_bool) ||
+                type.isSameType(__builtin_int) ||
+                type.isSameType(__builtin_string) ||
+                type.isSameType(__builtin_void);
     }
 
     public boolean put(String name, MiracleASTreeDeclaration declaration) {
@@ -235,39 +394,105 @@ public class MiracleSymbolTable {
         return true;
     }
 
-    public boolean contain(String name) {
-        return currentSymbolTable.containsKey(name);
-    }
-
-    public boolean containIncludeAncestor(String name) {
-        if (currentSymbolTable.containsKey(name)) {
-            return true;
-        }
-        if (builtinMethod.containsKey(name)) {
-            return true;
-        }
-        if (builtinType.containsKey(name)) {
-            return true;
-        }
-        if (parentSymbolTable != null) {
-            return parentSymbolTable.containIncludeAncestor(name);
-        }
-        return false;
-    }
-
     public MiracleASTreeDeclaration get(String name) {
-        if (builtinMethod.containsKey(name)) {
-            return builtinMethod.get(name);
-        }
         if (currentSymbolTable.containsKey(name)) {
             return currentSymbolTable.get(name);
+        }
+        if (builtinType.containsKey(name)) {
+            return builtinType.get(name);
+        }
+        if (builtinMethod.containsKey(name)) {
+            return builtinMethod.get(name);
         }
         return null;
     }
 
-    public MiracleASTreeBaseType getBuiltinType(String name) {
+    public boolean contain(String name) {
+        return currentSymbolTable.containsKey(name) ||
+                builtinMethod.containsKey(name) ||
+                builtinType.containsKey(name);
+    }
+
+    public boolean containIncludeAncestor(String name) {
+        return currentSymbolTable.containsKey(name) ||
+                builtinMethod.containsKey(name) ||
+                builtinType.containsKey(name) ||
+                parentSymbolTable != null &&
+                        parentSymbolTable.containIncludeAncestor(name);
+    }
+
+    public MiracleASTreeFunctionDeclaration getFunctionIncludeAncestor(String name) {
+        if (builtinMethod.containsKey(name)) {
+            return builtinMethod.get(name);
+        }
+        MiracleASTreeDeclaration declaration = currentSymbolTable.getOrDefault(name, null);
+        if (declaration != null && (declaration instanceof MiracleASTreeFunctionDeclaration)) {
+            return (MiracleASTreeFunctionDeclaration) declaration;
+        }
+        if (parentSymbolTable != null) {
+            return parentSymbolTable.getFunctionIncludeAncestor(name);
+        }
+        return null;
+    }
+
+    public MiracleASTreeVariableDeclaration getVariableIncludeAncestor(String name) {
+        MiracleASTreeDeclaration declaration = currentSymbolTable.getOrDefault(name, null);
+        if (declaration != null && (declaration instanceof MiracleASTreeVariableDeclaration)) {
+            return (MiracleASTreeVariableDeclaration) declaration;
+        }
+        if (parentSymbolTable != null) {
+            return parentSymbolTable.getVariableIncludeAncestor(name);
+        }
+        return null;
+    }
+
+    public MiracleASTreeClassDeclaration getClassIncludeAncestor(String name) {
         if (builtinType.containsKey(name)) {
             return builtinType.get(name);
+        }
+        MiracleASTreeDeclaration declaration = currentSymbolTable.getOrDefault(name, null);
+        if (declaration != null && (declaration instanceof MiracleASTreeClassDeclaration)) {
+            return (MiracleASTreeClassDeclaration) declaration;
+        }
+        if (parentSymbolTable != null) {
+            return parentSymbolTable.getClassIncludeAncestor(name);
+        }
+        return null;
+    }
+
+    public MiracleASTreeFunctionDeclaration getFunction(String name) {
+        if (builtinMethod.containsKey(name)) {
+            return builtinMethod.get(name);
+        }
+        MiracleASTreeDeclaration declaration = currentSymbolTable.getOrDefault(name, null);
+        if (declaration != null && (declaration instanceof MiracleASTreeFunctionDeclaration)) {
+            return (MiracleASTreeFunctionDeclaration) declaration;
+        }
+        return null;
+    }
+
+    public MiracleASTreeVariableDeclaration getVariable(String name) {
+        MiracleASTreeDeclaration declaration = currentSymbolTable.getOrDefault(name, null);
+        if (declaration != null && (declaration instanceof MiracleASTreeVariableDeclaration)) {
+            return (MiracleASTreeVariableDeclaration) declaration;
+        }
+        return null;
+    }
+
+    public MiracleASTreeClassDeclaration getClass(String name) {
+        if (builtinType.containsKey(name)) {
+            return builtinType.get(name);
+        }
+        MiracleASTreeDeclaration declaration = currentSymbolTable.getOrDefault(name, null);
+        if (declaration != null && (declaration instanceof MiracleASTreeClassDeclaration)) {
+            return (MiracleASTreeClassDeclaration) declaration;
+        }
+        return null;
+    }
+
+    public MiracleBaseType getBuiltinType(String name) {
+        if (builtinType.containsKey(name)) {
+            return (MiracleBaseType) builtinType.get(name).getType();
         }
         return null;
     }
