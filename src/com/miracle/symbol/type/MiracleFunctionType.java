@@ -20,8 +20,8 @@ public class MiracleFunctionType extends MiracleType {
         if (parameters.size() != miracleFunctionType.parameters.size()) {
             return false;
         }
-        for (int i = 0; i < parameters.size(); i++) {
-            if (!parameters.get(i).isSameType(miracleFunctionType.returnType)) {
+        for (MiracleVariableType parameter : parameters) {
+            if (!parameter.isSameType(miracleFunctionType.returnType)) {
                 return false;
             }
         }

@@ -304,6 +304,24 @@ public class MiracleBaseListener implements MiracleListener {
      * <p>The default implementation does nothing.</p>
      */
     @Override
+    public void enterBasetype(MiracleParser.BasetypeContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void exitBasetype(MiracleParser.BasetypeContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
     public void enterBinaryExpression(MiracleParser.BinaryExpressionContext ctx) {
     }
 

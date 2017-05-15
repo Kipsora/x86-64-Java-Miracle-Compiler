@@ -1,6 +1,5 @@
 package com.miracle.astree.statement.expression;
 
-import com.miracle.Miracle;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.cstree.MiracleSourcePosition;
 

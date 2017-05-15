@@ -41,7 +41,15 @@ expressionStatement: expression ';';
 
 emptyStatement: ';';
 
-typename: (BASETYPE | IDENTIFIER) ('[' ']')*;
+typename: basetype ('[' ']')*;
+
+basetype
+    : type=BUILTIN_INT
+    | type=BUILTIN_BOOL
+    | type=BUILTIN_VOID
+    | type=BUILTIN_STRING
+    | IDENTIFIER
+    ;
 
 /**
  * Here expression means every expression has a expression after processed,
@@ -76,7 +84,10 @@ constant: INTEGER                                                               
     | 'null'                                                                                #nullConstant
     ;
 
-BASETYPE: 'void' | 'int' | 'bool' | 'string';
+BUILTIN_INT: 'int';
+BUILTIN_BOOL: 'bool';
+BUILTIN_STRING: 'string';
+BUILTIN_VOID: 'void';
 
 DECORATOR: 'public' | 'private' | 'protected';
 

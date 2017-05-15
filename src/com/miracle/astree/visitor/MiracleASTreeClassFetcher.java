@@ -1,12 +1,12 @@
 package com.miracle.astree.visitor;
 
-import com.miracle.exception.MiracleExceptionContainer;
 import com.miracle.astree.MiracleASTree;
 import com.miracle.astree.statement.MiracleASTreeBlock;
 import com.miracle.astree.statement.MiracleASTreeIteration;
 import com.miracle.astree.statement.MiracleASTreeSelection;
 import com.miracle.astree.statement.declaration.MiracleASTreeClassDeclaration;
 import com.miracle.astree.statement.declaration.MiracleASTreeFunctionDeclaration;
+import com.miracle.exception.MiracleExceptionContainer;
 import com.miracle.symbol.MiracleSymbolTable;
 
 public class MiracleASTreeClassFetcher extends MiracleASTreeBaseVisitor {
@@ -33,6 +33,9 @@ public class MiracleASTreeClassFetcher extends MiracleASTreeBaseVisitor {
         }
         classDeclaration.setScope(symbolTable = new MiracleSymbolTable(symbolTable));
         classDeclaration.functionDeclarations.forEach(element -> element.accept(this));
+        if (classDeclaration.constructorDeclaration != null) {
+            classDeclaration.constructorDeclaration.accept(this);
+        }
         symbolTable = symbolTable.getParentSymbolTable();
     }
 

@@ -1,7 +1,5 @@
 package com.miracle.symbol.type;
 
-import static com.miracle.symbol.type.MiracleBaseType.*;
-
 public abstract class MiracleType {
 
     public abstract String toClassTypeString();
@@ -14,7 +12,8 @@ public abstract class MiracleType {
         if (this instanceof MiracleBaseType) {
             if (type instanceof MiracleBaseType) {
                 return ((MiracleBaseType) this).isSameType((MiracleBaseType) type);
-            } if (type instanceof MiracleArrayType) {
+            }
+            if (type instanceof MiracleArrayType) {
                 return ((MiracleBaseType) this).identifier.equals("null");
             }
         } else if (this instanceof MiracleArrayType) {

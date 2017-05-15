@@ -35,7 +35,10 @@ public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclara
             this.body = null;
         }
         List<MiracleVariableType> argtype = new LinkedList<>();
-        parameters.forEach((element) -> argtype.add((MiracleVariableType) element.getType()));
+        for (int i = 0, parametersSize = parameters.size(); i < parametersSize; i++) {
+            MiracleASTreeVariableDeclaration element = parameters.get(i);
+            argtype.add((MiracleVariableType) element.getType());
+        }
         this.type = new MiracleFunctionType(returnType.type, argtype);
     }
 

@@ -1,6 +1,5 @@
 package com.miracle.astree.visitor;
 
-import com.miracle.exception.MiracleExceptionContainer;
 import com.miracle.astree.MiracleASTree;
 import com.miracle.astree.base.MiracleASTreeTypeNode;
 import com.miracle.astree.statement.*;
@@ -11,8 +10,12 @@ import com.miracle.astree.statement.expression.constant.MiracleASTreeIntegerCons
 import com.miracle.astree.statement.expression.constant.MiracleASTreeNullConstant;
 import com.miracle.astree.statement.expression.constant.MiracleASTreeStringConstant;
 import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.exception.MiracleExceptionContainer;
 import com.miracle.symbol.MiracleSymbolTable;
-import com.miracle.symbol.type.*;
+import com.miracle.symbol.type.MiracleArrayType;
+import com.miracle.symbol.type.MiracleBaseType;
+import com.miracle.symbol.type.MiracleFunctionType;
+import com.miracle.symbol.type.MiracleType;
 
 import java.util.Stack;
 
@@ -38,6 +41,9 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         symbolTable = functionDeclaration.getScope();
 
         MiracleBaseType baseType = functionDeclaration.returnType.type.getBaseType();
+        if (symbolTable == null || baseType.identifier == null) {
+            System.out.println(functionDeclaration.identifier);
+        }
         if (symbolTable.getClassIncludeAncestor(baseType.identifier) == null) {
             exceptionContainer.add("cannot find class `" + baseType.identifier + "`",
                     functionDeclaration.returnType.startPosition);

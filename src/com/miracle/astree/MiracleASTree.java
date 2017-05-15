@@ -1,6 +1,5 @@
 package com.miracle.astree;
 
-import com.miracle.Miracle;
 import com.miracle.astree.base.MiracleASTreeNode;
 import com.miracle.astree.base.MiracleASTreeTypeNode;
 import com.miracle.astree.statement.*;
@@ -17,10 +16,11 @@ import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.cstree.MiracleSourcePosition;
 import com.miracle.cstree.parser.MiracleBaseListener;
 import com.miracle.cstree.parser.MiracleParser;
-import com.miracle.symbol.MiracleSymbolTable;
 import com.miracle.symbol.type.MiracleArrayType;
 import com.miracle.symbol.type.MiracleBaseType;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -49,11 +49,15 @@ public class MiracleASTree extends MiracleASTreeNode {
         @Override
         public void exitMiracle(MiracleParser.MiracleContext ctx) {
             List<MiracleASTreeDeclaration> declarations = new LinkedList<>();
-            ctx.children.forEach(element -> {
+
+            List<ParseTree> children = ctx.children;
+            for (int i = 0, childrenSize = children.size(); i < childrenSize; i++) {
+                ParseTree element = children.get(i);
                 if (property.get(element) != null) {
                     declarations.add((MiracleASTreeDeclaration) property.get(element));
                 }
-            });
+            }
+
             root = new MiracleASTree(declarations);
         }
 
@@ -62,11 +66,19 @@ public class MiracleASTree extends MiracleASTreeNode {
             List<MiracleASTreeVariableDeclaration> variableDeclarations = new LinkedList<>();
             List<MiracleASTreeFunctionDeclaration> functionDeclarations = new LinkedList<>();
             MiracleASTreeFunctionDeclaration constructorDeclaration = null;
-            ctx.variableDeclarationStatement().forEach(element ->
-                    variableDeclarations.add((MiracleASTreeVariableDeclaration) property.get(element))
-            );
-            ctx.functionDeclarationStatement().forEach(element ->
-                    functionDeclarations.add((MiracleASTreeFunctionDeclaration) property.get(element)));
+
+            List<MiracleParser.VariableDeclarationStatementContext> variableDeclarationStatement = ctx.variableDeclarationStatement();
+            for (int i = 0, variableDeclarationStatementSize = variableDeclarationStatement.size(); i < variableDeclarationStatementSize; i++) {
+                MiracleParser.VariableDeclarationStatementContext element = variableDeclarationStatement.get(i);
+                variableDeclarations.add((MiracleASTreeVariableDeclaration) property.get(element));
+            }
+
+            List<MiracleParser.FunctionDeclarationStatementContext> functionDeclarationStatement = ctx.functionDeclarationStatement();
+            for (int i = 0, functionDeclarationStatementSize = functionDeclarationStatement.size(); i < functionDeclarationStatementSize; i++) {
+                MiracleParser.FunctionDeclarationStatementContext element = functionDeclarationStatement.get(i);
+                functionDeclarations.add((MiracleASTreeFunctionDeclaration) property.get(element));
+            }
+
             if (ctx.constructorDeclarationStatement() != null) {
                 constructorDeclaration = (MiracleASTreeFunctionDeclaration)
                         property.get(ctx.constructorDeclarationStatement());
@@ -85,12 +97,16 @@ public class MiracleASTree extends MiracleASTreeNode {
         public void exitFunctionDeclarationStatement(MiracleParser.FunctionDeclarationStatementContext ctx) {
             List<MiracleASTreeStatement> body = new LinkedList<>();
             List<MiracleASTreeVariableDeclaration> parameters = new LinkedList<>();
-            ctx.statement().forEach((element) -> {
+
+            List<MiracleParser.StatementContext> statement = ctx.statement();
+            for (int i = 0, statementSize = statement.size(); i < statementSize; i++) {
+                MiracleParser.StatementContext element = statement.get(i);
                 if (property.get(element) != null) { // empty statement
                     body.add((MiracleASTreeStatement) property.get(element));
                 }
-            });
-            for (int i = 1; i < ctx.IDENTIFIER().size(); i++) {
+            }
+
+            for (int i = 1, size = ctx.IDENTIFIER().size(); i < size; i++) {
                 parameters.add(new MiracleASTreeVariableDeclaration(
                         ctx.IDENTIFIER(i).getText(),
                         (MiracleASTreeTypeNode) property.get(ctx.typename(i)),
@@ -112,22 +128,23 @@ public class MiracleASTree extends MiracleASTreeNode {
 
         @Override
         public void exitVariableDeclarationStatement(MiracleParser.VariableDeclarationStatementContext ctx) {
+            TerminalNode identifier = ctx.IDENTIFIER();
             if (ctx.expression() != null) {
                 property.put(ctx, new MiracleASTreeVariableDeclaration(
-                        ctx.IDENTIFIER().getText(),
+                        identifier.getText(),
                         (MiracleASTreeTypeNode) property.get(ctx.typename()),
                         (MiracleASTreeExpression) property.get(ctx.expression()),
                         new MiracleSourcePosition(ctx),
-                        new MiracleSourcePosition(ctx.IDENTIFIER().getSymbol()),
+                        new MiracleSourcePosition(identifier.getSymbol()),
                         ctx.getParent() instanceof MiracleParser.ClassDeclarationStatementContext
                 ));
             } else {
                 property.put(ctx, new MiracleASTreeVariableDeclaration(
-                        ctx.IDENTIFIER().getText(),
+                        identifier.getText(),
                         (MiracleASTreeTypeNode) property.get(ctx.typename()),
                         null,
                         new MiracleSourcePosition(ctx),
-                        new MiracleSourcePosition(ctx.IDENTIFIER().getSymbol()),
+                        new MiracleSourcePosition(identifier.getSymbol()),
                         ctx.getParent() instanceof MiracleParser.ClassDeclarationStatementContext
                 ));
             }
@@ -137,8 +154,13 @@ public class MiracleASTree extends MiracleASTreeNode {
         public void exitConstructorDeclarationStatement(MiracleParser.ConstructorDeclarationStatementContext ctx) {
             List<MiracleASTreeStatement> body = new LinkedList<>();
             List<MiracleASTreeVariableDeclaration> parameters = new LinkedList<>();
-            ctx.statement().forEach((element) ->
-                    body.add((MiracleASTreeStatement) property.get(element)));
+
+            List<MiracleParser.StatementContext> statement = ctx.statement();
+            for (int i = 0, statementSize = statement.size(); i < statementSize; i++) {
+                MiracleParser.StatementContext element = statement.get(i);
+                body.add((MiracleASTreeStatement) property.get(element));
+            }
+
             property.put(ctx, new MiracleASTreeFunctionDeclaration(
                     null,
                     (MiracleASTreeTypeNode) property.get(ctx.typename()),
@@ -151,39 +173,18 @@ public class MiracleASTree extends MiracleASTreeNode {
 
         @Override
         public void exitTypename(MiracleParser.TypenameContext ctx) {
-            MiracleBaseType baseType;
-            MiracleSourcePosition position;
-            if (ctx.IDENTIFIER() == null) {
-                position = new MiracleSourcePosition(ctx.BASETYPE().getSymbol());
-                switch (ctx.BASETYPE().getText()) {
-                    case "int":
-                        baseType = MiracleSymbolTable.__builtin_int;
-                        break;
-                    case "string":
-                        baseType = MiracleSymbolTable.__builtin_string;
-                        break;
-                    case "void":
-                        baseType = MiracleSymbolTable.__builtin_void;
-                        break;
-                    case "bool":
-                        baseType = MiracleSymbolTable.__builtin_bool;
-                        break;
-                    default:
-                        throw new RuntimeException("unsupported primitive typenode");
-                }
-            } else {
-                position = new MiracleSourcePosition(ctx.IDENTIFIER().getSymbol());
-                baseType = new MiracleBaseType(ctx.IDENTIFIER().getText());
-            }
             if (ctx.getChildCount() == 1) {
-                property.put(ctx, new MiracleASTreeTypeNode(baseType, position));
+                property.put(ctx, new MiracleASTreeTypeNode(
+                        new MiracleBaseType(ctx.basetype().getText()),
+                        new MiracleSourcePosition(ctx.basetype())
+                ));
             } else {
                 property.put(ctx, new MiracleASTreeTypeNode(
                         new MiracleArrayType(
-                                baseType,
+                                new MiracleBaseType(ctx.basetype().getText()),
                                 (ctx.getChildCount() - 1) >> 1
                         ),
-                        position
+                        new MiracleSourcePosition(ctx.basetype())
                 ));
             }
         }
@@ -191,11 +192,15 @@ public class MiracleASTree extends MiracleASTreeNode {
         @Override
         public void exitBlockStatement(MiracleParser.BlockStatementContext ctx) {
             List<MiracleASTreeStatement> statements = new LinkedList<>();
-            ctx.statement().forEach((element) -> {
-                    if (property.get(element) != null) {
-                        statements.add((MiracleASTreeStatement) property.get(element));
-                    }
-            });
+
+            List<MiracleParser.StatementContext> statement = ctx.statement();
+            for (int i = 0, statementSize = statement.size(); i < statementSize; i++) {
+                MiracleParser.StatementContext element = statement.get(i);
+                if (property.get(element) != null) {
+                    statements.add((MiracleASTreeStatement) property.get(element));
+                }
+            }
+
             property.put(ctx, new MiracleASTreeBlock(
                     statements,
                     new MiracleSourcePosition(ctx)
@@ -237,7 +242,7 @@ public class MiracleASTree extends MiracleASTreeNode {
         @Override
         public void exitForStatement(MiracleParser.ForStatementContext ctx) {
             MiracleASTreeExpression[] node = new MiracleASTreeExpression[3];
-            for (int i = 0, j = 0; i < ctx.getChildCount() && j < 3; i++) {
+            for (int i = 0, j = 0, size = ctx.getChildCount(); i < size && j < 3; i++) {
                 if (ctx.getChild(i).getText().equals(";") || ctx.getChild(i).getText().equals(")")) {
                     if (!ctx.getChild(i - 1).getText().equals(";")
                             && !ctx.getChild(i - 1).getText().equals("(")) {
@@ -320,7 +325,7 @@ public class MiracleASTree extends MiracleASTreeNode {
         @Override
         public void exitFunctionCallExpression(MiracleParser.FunctionCallExpressionContext ctx) {
             List<MiracleASTreeExpression> parameters = new LinkedList<>();
-            for (int i = 1; i < ctx.expression().size(); i++) {
+            for (int i = 1, size = ctx.expression().size(); i < size; i++) {
                 parameters.add((MiracleASTreeExpression) property.get(ctx.expression(i)));
             }
             property.put(ctx, new MiracleASTreeCall(
@@ -469,7 +474,7 @@ public class MiracleASTree extends MiracleASTreeNode {
         @Override
         public void exitNewExpression(MiracleParser.NewExpressionContext ctx) {
             List<MiracleASTreeExpression> expressions = new LinkedList<>();
-            for (int i = 0; i < ctx.getChildCount(); i++) {
+            for (int i = 0, size = ctx.getChildCount(); i < size; i++) {
                 if (ctx.getChild(i).getText().equals("]")) {
                     if (ctx.getChild(i - 1).getText().equals("[")) {
                         expressions.add(null);

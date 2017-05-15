@@ -242,6 +242,20 @@ public interface MiracleListener extends ParseTreeListener {
     void exitTypename(MiracleParser.TypenameContext ctx);
 
     /**
+     * Enter a parse tree produced by {@link MiracleParser#basetype}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterBasetype(MiracleParser.BasetypeContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link MiracleParser#basetype}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitBasetype(MiracleParser.BasetypeContext ctx);
+
+    /**
      * Enter a parse tree produced by the {@code binaryExpression}
      * labeled alternative in {@link MiracleParser#expression}.
      *
