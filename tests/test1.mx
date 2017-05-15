@@ -1,17 +1,4 @@
-int main(int main) {
-    main(7);
+int main() {
+ int a;
+ if (true) int a;
 }
-
-
-/*!! metadata:
-=== comment ===
-func-6-5130309059-lijiajun.mx
-=== assert ===
-failure_compile
-=== phase ===
-semantic pretest
-=== is_public ===
-True
-
-!!*/
-

@@ -1,6 +1,6 @@
 package com.miracle.astree.visitor;
 
-import com.miracle.MiracleExceptionContainer;
+import com.miracle.exception.MiracleExceptionContainer;
 import com.miracle.astree.MiracleASTree;
 import com.miracle.astree.statement.declaration.MiracleASTreeClassDeclaration;
 import com.miracle.astree.statement.declaration.MiracleASTreeFunctionDeclaration;

@@ -1,4 +1,4 @@
-package com.miracle;
+package com.miracle.exception;
 
 import com.miracle.cstree.MiracleSourcePosition;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -11,11 +11,11 @@ public class MiracleExceptionContainer {
     private final PrintStream ostream;
     private List<ImmutablePair<MiracleSourcePosition, String>> container = new LinkedList<>();
 
-    MiracleExceptionContainer(PrintStream ostream) {
+    public MiracleExceptionContainer(PrintStream ostream) {
         this.ostream = ostream;
     }
 
-    static RuntimeException getRuntimeException(String message) throws RuntimeException {
+    public static RuntimeException getRuntimeException(String message) throws RuntimeException {
         return new RuntimeException("Miracle: FATAL Error: " + message);
     }
 
@@ -23,7 +23,7 @@ public class MiracleExceptionContainer {
         container.add(ImmutablePair.of(position, message));
     }
 
-    void judge() {
+    public void judge() {
         if (!container.isEmpty()) {
             container.sort((x, y) -> {
                 MiracleSourcePosition xPosition = x.getLeft();

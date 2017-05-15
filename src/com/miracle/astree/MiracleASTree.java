@@ -207,10 +207,28 @@ public class MiracleASTree extends MiracleASTreeNode {
             MiracleASTreeStatement trueStatement = (MiracleASTreeStatement) property.get(ctx.statement(0));
             MiracleASTreeStatement falseStatement = (ctx.statement().size() > 1 ? (MiracleASTreeStatement) property.get(ctx.statement(1)) : null);
             if (trueStatement != null || falseStatement != null) {
+                if (trueStatement != null && !(trueStatement instanceof MiracleASTreeBlock)) {
+                    MiracleASTreeStatement finalTrueStatement = trueStatement;
+                    trueStatement = new MiracleASTreeBlock(new LinkedList<MiracleASTreeStatement>() {
+                        private static final long serialVersionUID = -694271397082132527L;
+                        {
+                            add(finalTrueStatement);
+                        }
+                    }, trueStatement.startPosition);
+                }
+                if (falseStatement != null && !(falseStatement instanceof MiracleASTreeBlock)) {
+                    MiracleASTreeStatement finalFalseStatement = falseStatement;
+                    falseStatement = new MiracleASTreeBlock(new LinkedList<MiracleASTreeStatement>() {
+                        private static final long serialVersionUID = -694271397082132527L;
+                        {
+                            add(finalFalseStatement);
+                        }
+                    }, falseStatement.startPosition);
+                }
                 property.put(ctx, new MiracleASTreeSelection(
                         (MiracleASTreeExpression) property.get(ctx.expression()),
-                        (MiracleASTreeStatement) property.get(ctx.statement(0)),
-                        ctx.statement().size() > 1 ? (MiracleASTreeStatement) property.get(ctx.statement(1)) : null,
+                        trueStatement,
+                        falseStatement,
                         new MiracleSourcePosition(ctx)
                 ));
             }
@@ -228,11 +246,22 @@ public class MiracleASTree extends MiracleASTreeNode {
                     j++;
                 }
             }
+            MiracleASTreeStatement statement = (MiracleASTreeStatement) property.get(ctx.statement());
+            if (statement != null && !(statement instanceof MiracleASTreeBlock)) {
+                MiracleASTreeStatement finalStatement = statement;
+                statement = new MiracleASTreeBlock(new LinkedList<MiracleASTreeStatement>()
+                {
+                    private static final long serialVersionUID = 6113359493637144909L;
+                    {
+                        add(finalStatement);
+                    }
+                }, statement.startPosition);
+            }
             property.put(ctx, new MiracleASTreeIteration(
                     node[0],
                     node[1],
                     node[2],
-                    (MiracleASTreeStatement) property.get(ctx.statement()),
+                    statement,
                     new MiracleSourcePosition(ctx)
             ));
         }

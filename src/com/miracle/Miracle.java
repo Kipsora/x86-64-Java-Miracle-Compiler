@@ -7,6 +7,8 @@ import com.miracle.astree.visitor.MiracleASTreePrinter;
 import com.miracle.astree.visitor.MiracleASTreeSemanticAnalyser;
 import com.miracle.cstree.parser.MiracleLexer;
 import com.miracle.cstree.parser.MiracleParser;
+import com.miracle.exception.MiracleCSTreeErrorHandler;
+import com.miracle.exception.MiracleExceptionContainer;
 import com.miracle.symbol.MiracleSymbolTable;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BailErrorStrategy;
@@ -69,7 +71,8 @@ public class Miracle {
         try {
             MiracleParser parser = new MiracleParser(new CommonTokenStream(
                     new MiracleLexer(new ANTLRInputStream(inputStream))));
-            parser.setErrorHandler(new BailErrorStrategy());
+            parser.removeErrorListeners();
+            parser.addErrorListener(new MiracleCSTreeErrorHandler(exceptionContainer));
             return parser.miracle();
         } catch (IOException e) {
             throw MiracleExceptionContainer.getRuntimeException(e.getMessage());
@@ -81,16 +84,16 @@ public class Miracle {
             MiracleParser.MiracleContext cstree = getCSTree();
             MiracleASTree.Builder builder = new MiracleASTree.Builder();
             new ParseTreeWalker().walk(builder, cstree);
-
+            exceptionContainer.judge();
             MiracleASTree astree = builder.build();
-            if (this.printASTree) {
-                astree.accept(new MiracleASTreePrinter());
-            }
             MiracleSymbolTable symbolTable = new MiracleSymbolTable(null);
             astree.accept(new MiracleASTreeClassFetcher(exceptionContainer, symbolTable));
             astree.accept(new MiracleASTreeMemberFetcher(exceptionContainer, symbolTable));
             astree.accept(new MiracleASTreeSemanticAnalyser(exceptionContainer, symbolTable));
             exceptionContainer.judge();
+            if (this.printASTree) {
+                astree.accept(new MiracleASTreePrinter());
+            }
         } catch (RuntimeException e) {
             e.printStackTrace();
         }

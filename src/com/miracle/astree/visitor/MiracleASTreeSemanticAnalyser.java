@@ -1,6 +1,6 @@
 package com.miracle.astree.visitor;
 
-import com.miracle.MiracleExceptionContainer;
+import com.miracle.exception.MiracleExceptionContainer;
 import com.miracle.astree.MiracleASTree;
 import com.miracle.astree.base.MiracleASTreeTypeNode;
 import com.miracle.astree.statement.*;
@@ -280,7 +280,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         MiracleType rType = binaryExpression.right.getResultType();
         if (lType == null || rType == null) return;
         if (!lType.isSameType(rType)) {
-            exceptionContainer.add("4no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
+            exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
                     binaryExpression.operatorPosition);
         }
         boolean flag = true;

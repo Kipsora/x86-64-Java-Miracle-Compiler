@@ -26,7 +26,7 @@ public class MiracleASTreeCall extends MiracleASTreeExpression {
     @Override
     public String toPrintableString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("call([").append(function.toPrintableString()).append("],(");
+        builder.append(function.toPrintableString()).append("(");
         for (int i = 0; i < parameters.size(); i++) {
             if (i != 0) {
                 builder.append(",");
@@ -35,6 +35,7 @@ public class MiracleASTreeCall extends MiracleASTreeExpression {
             builder.append(parameters.get(i).toPrintableString());
             builder.append("]");
         }
+        builder.append(")");
         return builder.toString();
     }
 }
