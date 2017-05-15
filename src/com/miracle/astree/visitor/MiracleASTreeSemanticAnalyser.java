@@ -189,21 +189,37 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                     returnLiteral.startPosition);
         } else {
             MiracleASTreeFunctionDeclaration function = funcStack.peek();
-            if (returnLiteral.expression != null) {
-                returnLiteral.expression.accept(this);
-                if (returnLiteral.expression.getResultType() != null &&
-                        !returnLiteral.expression.getResultType().isSameType(function.returnType.type)) {
-                    exceptionContainer.add("the return value differs from declaration",
-                            returnLiteral.expression.startPosition);
+            if (function.identifier == null) {
+                if (returnLiteral.expression != null) {
+                    returnLiteral.expression.accept(this);
+                    if (returnLiteral.expression.getResultType() != null &&
+                            !returnLiteral.expression.getResultType().isSameType(__builtin_void)) {
+                        exceptionContainer.add("cannot return any value in constructor declaration",
+                                returnLiteral.expression.startPosition);
+                    } else {
+                        returnLiteral.setFunction(function);
+                    }
                 } else {
                     returnLiteral.setFunction(function);
                 }
+
             } else {
-                if (!function.returnType.type.isSameType(__builtin_void)) {
-                    exceptionContainer.add("the return value differs from declaration",
-                            returnLiteral.startPosition);
+                if (returnLiteral.expression != null) {
+                    returnLiteral.expression.accept(this);
+                    if (returnLiteral.expression.getResultType() != null &&
+                            !returnLiteral.expression.getResultType().isSameType(function.returnType.type)) {
+                        exceptionContainer.add("the return value differs from declaration",
+                                returnLiteral.expression.startPosition);
+                    } else {
+                        returnLiteral.setFunction(function);
+                    }
                 } else {
-                    returnLiteral.setFunction(function);
+                    if (!function.returnType.type.isSameType(__builtin_void)) {
+                        exceptionContainer.add("the return value differs from declaration",
+                                returnLiteral.startPosition);
+                    } else {
+                        returnLiteral.setFunction(function);
+                    }
                 }
             }
         }
