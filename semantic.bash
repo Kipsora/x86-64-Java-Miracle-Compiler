@@ -7,6 +7,6 @@
 
 set -e
 cd "$(dirname "$0")"
-export CCHK="java -cp ./utility/*:./bin com.miracle.Miracle --astree --input=/home/kipsora/IdeaProjects/x86-64-Miralce-Java-Compiler/tests/test2.mx"
+export CCHK="java -cp ./utility/*:./bin com.miracle.Miracle --astree"
 #cat > program.txt   # save everything in stdin to program.txt
 $CCHK
