@@ -13,6 +13,8 @@ import com.miracle.symbol.MiracleSymbolTable;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.DefaultErrorStrategy;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.apache.commons.cli.*;
 
@@ -70,7 +72,8 @@ public class Miracle {
     private MiracleParser.MiracleContext getCSTree() {
         try {
             MiracleParser parser = new MiracleParser(new CommonTokenStream(
-                    new MiracleLexer(new ANTLRInputStream(inputStream))));
+                    new MiracleLexer(new ANTLRInputStream(inputStream))
+            ));
             parser.removeErrorListeners();
             parser.addErrorListener(new MiracleCSTreeErrorHandler(exceptionContainer));
             return parser.miracle();
@@ -82,9 +85,9 @@ public class Miracle {
     private void run() {
         try {
             MiracleParser.MiracleContext cstree = getCSTree();
+            exceptionContainer.judge();
             MiracleASTree.Builder builder = new MiracleASTree.Builder();
             new ParseTreeWalker().walk(builder, cstree);
-            exceptionContainer.judge();
             MiracleASTree astree = builder.build();
             MiracleSymbolTable symbolTable = new MiracleSymbolTable(null);
             astree.accept(new MiracleASTreeClassFetcher(exceptionContainer, symbolTable));
