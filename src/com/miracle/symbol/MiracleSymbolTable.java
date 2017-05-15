@@ -230,7 +230,7 @@ public class MiracleSymbolTable {
         __builtin_string_parseInt = new MiracleASTreeFunctionDeclaration(
                 "parseInt",
                 new MiracleASTreeTypeNode(__builtin_int, null),
-                new LinkedList<MiracleASTreeVariableDeclaration>(),
+                new LinkedList<>(),
                 null,
                 null,
                 null
@@ -360,13 +360,6 @@ public class MiracleSymbolTable {
         this.parentSymbolTable = parentSymbolTable;
     }
 
-    public static boolean isBuiltinType(MiracleType type) {
-        if (!(type instanceof MiracleBaseType)) return false;
-        String identifier = ((MiracleBaseType) type).identifier;
-        return identifier.equals("int") || identifier.equals("bool") ||
-                identifier.equals("string") || identifier.equals("void");
-    }
-
     public boolean put(String name, MiracleASTreeDeclaration declaration) {
         if (builtinType.containsKey(name)) {
             return false;
@@ -474,7 +467,7 @@ public class MiracleSymbolTable {
         return null;
     }
 
-    public MiracleBaseType getBuiltinType(String name) {
+    public static MiracleBaseType getBuiltinType(String name) {
         if (builtinType.containsKey(name)) {
             return (MiracleBaseType) builtinType.get(name).getType();
         }

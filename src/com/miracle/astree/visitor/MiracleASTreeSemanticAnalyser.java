@@ -36,6 +36,13 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
     public void visit(MiracleASTreeFunctionDeclaration functionDeclaration) {
         funcStack.add(functionDeclaration);
         symbolTable = functionDeclaration.getScope();
+
+        MiracleBaseType baseType = functionDeclaration.returnType.type.getBaseType();
+        if (symbolTable.getClassIncludeAncestor(baseType.identifier) == null) {
+            exceptionContainer.add("cannot find class `" + baseType.identifier + "`",
+                    functionDeclaration.returnType.startPosition);
+        }
+
         functionDeclaration.parameters.forEach(e -> e.accept(this));
         functionDeclaration.body.forEach(e -> e.accept(this));
         symbolTable = symbolTable.getParentSymbolTable();
@@ -79,7 +86,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         MiracleBaseType baseType = variableDeclaration.typenode.type.getBaseType();
         boolean flag = true;
         if (symbolTable.getClassIncludeAncestor(baseType.identifier) == null) {
-            exceptionContainer.add("cannot find class `" + baseType.identifier + "\"",
+            exceptionContainer.add("cannot find class `" + baseType.identifier + "`",
                     variableDeclaration.typenode.startPosition);
             flag = false;
         } else if (baseType.isSameType(__builtin_void)) {

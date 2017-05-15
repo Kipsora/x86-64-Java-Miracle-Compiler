@@ -3,6 +3,7 @@ package com.miracle.symbol.type;
 import com.miracle.symbol.MiracleSymbolTable;
 
 public class MiracleBaseType extends MiracleVariableType {
+
     public final String identifier;
 
     public MiracleBaseType(String identifier) {
@@ -10,6 +11,11 @@ public class MiracleBaseType extends MiracleVariableType {
     }
 
     public boolean isSameType(MiracleBaseType type) {
+        if (identifier.equals("null")) {
+            return MiracleSymbolTable.getBuiltinType(type.identifier) == null;
+        } else if (type.identifier.equals("null")) {
+            return MiracleSymbolTable.getBuiltinType(identifier) == null;
+        }
         return identifier.equals(type.identifier);
     }
 
