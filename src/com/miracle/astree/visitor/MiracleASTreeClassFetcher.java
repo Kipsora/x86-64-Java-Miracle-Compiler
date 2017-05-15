@@ -47,7 +47,9 @@ public class MiracleASTreeClassFetcher extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTreeSelection selection) {
-        selection.branchTrue.accept(this);
+        if (selection.branchTrue != null) {
+            selection.branchTrue.accept(this);
+        }
         if (selection.branchFalse != null) {
             selection.branchFalse.accept(this);
         }

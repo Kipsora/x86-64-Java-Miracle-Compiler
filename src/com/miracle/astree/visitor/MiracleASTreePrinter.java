@@ -145,12 +145,14 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
     public void visit(MiracleASTreeSelection selection) {
         println("if (" + selection.expression.toPrintableString() + ") then");
         indent++;
-        if (isIndent(selection.branchTrue)) {
-            print("");
-            selection.branchTrue.accept(this);
-            System.out.println();
-        } else {
-            selection.branchTrue.accept(this);
+        if (selection.branchTrue != null) {
+            if (isIndent(selection.branchTrue)) {
+                print("");
+                selection.branchTrue.accept(this);
+                System.out.println();
+            } else {
+                selection.branchTrue.accept(this);
+            }
         }
         indent--;
         if (selection.branchFalse != null) {

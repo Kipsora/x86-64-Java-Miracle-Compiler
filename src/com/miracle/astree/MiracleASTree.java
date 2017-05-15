@@ -1,5 +1,6 @@
 package com.miracle.astree;
 
+import com.miracle.Miracle;
 import com.miracle.astree.base.MiracleASTreeNode;
 import com.miracle.astree.base.MiracleASTreeTypeNode;
 import com.miracle.astree.statement.*;
@@ -190,9 +191,11 @@ public class MiracleASTree extends MiracleASTreeNode {
         @Override
         public void exitBlockStatement(MiracleParser.BlockStatementContext ctx) {
             List<MiracleASTreeStatement> statements = new LinkedList<>();
-            ctx.statement().forEach((element) ->
-                    statements.add((MiracleASTreeStatement) property.get(element))
-            );
+            ctx.statement().forEach((element) -> {
+                    if (property.get(element) != null) {
+                        statements.add((MiracleASTreeStatement) property.get(element));
+                    }
+            });
             property.put(ctx, new MiracleASTreeBlock(
                     statements,
                     new MiracleSourcePosition(ctx)
@@ -201,12 +204,16 @@ public class MiracleASTree extends MiracleASTreeNode {
 
         @Override
         public void exitSelectionStatement(MiracleParser.SelectionStatementContext ctx) {
-            property.put(ctx, new MiracleASTreeSelection(
-                    (MiracleASTreeExpression) property.get(ctx.expression()),
-                    (MiracleASTreeStatement) property.get(ctx.statement(0)),
-                    ctx.statement().size() > 1 ? (MiracleASTreeStatement) property.get(ctx.statement(1)) : null,
-                    new MiracleSourcePosition(ctx)
-            ));
+            MiracleASTreeStatement trueStatement = (MiracleASTreeStatement) property.get(ctx.statement(0));
+            MiracleASTreeStatement falseStatement = (ctx.statement().size() > 1 ? (MiracleASTreeStatement) property.get(ctx.statement(1)) : null);
+            if (trueStatement != null || falseStatement != null) {
+                property.put(ctx, new MiracleASTreeSelection(
+                        (MiracleASTreeExpression) property.get(ctx.expression()),
+                        (MiracleASTreeStatement) property.get(ctx.statement(0)),
+                        ctx.statement().size() > 1 ? (MiracleASTreeStatement) property.get(ctx.statement(1)) : null,
+                        new MiracleSourcePosition(ctx)
+                ));
+            }
         }
 
         @Override

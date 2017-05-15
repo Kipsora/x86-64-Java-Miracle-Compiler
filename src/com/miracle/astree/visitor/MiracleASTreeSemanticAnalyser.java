@@ -128,7 +128,9 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             exceptionContainer.add("conditional expresson must be `bool`",
                     selection.expression.startPosition);
         }
-        selection.branchTrue.accept(this);
+        if (selection.branchTrue != null) {
+            selection.branchTrue.accept(this);
+        }
         if (selection.branchFalse != null) {
             selection.branchFalse.accept(this);
         }
