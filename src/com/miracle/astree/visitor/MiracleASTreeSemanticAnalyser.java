@@ -223,23 +223,28 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
     @Override
     public void visit(MiracleASTreeCall call) {
         call.function.accept(this);
-        MiracleFunctionType type = (MiracleFunctionType) call.function.getResultType();
-        if (type != null) {
-            if (call.parameters.size() != type.parameters.size()) {
-                System.err.println(call.function.toPrintableString());
-                exceptionContainer.add("function needs " + String.valueOf(type.parameters.size()) + " parameter(s), but found " + String.valueOf(call.parameters.size()) + " parameter(s)",
-                        call.startPosition);
-            } else {
-                for (int i = 0; i < type.parameters.size(); i++) {
-                    MiracleASTreeExpression node = call.parameters.get(i);
-                    node.accept(this);
-                    MiracleType argType = node.getResultType();
-                    if (argType != null && !argType.isSameType(type.parameters.get(i))) {
-                        exceptionContainer.add("function needs parameter of type `" + type.parameters.get(i).toPrintableString() + "`, but `" + argType.toPrintableString() + "` was found",
-                                node.startPosition);
+        if (!(call.function.getResultType() instanceof MiracleFunctionType)) {
+            exceptionContainer.add("expression is not a function, thus not callable",
+                    call.startPosition);
+        } else {
+            MiracleFunctionType type = (MiracleFunctionType) call.function.getResultType();
+            if (type != null) {
+                if (call.parameters.size() != type.parameters.size()) {
+                    System.err.println(call.function.toPrintableString());
+                    exceptionContainer.add("function needs " + String.valueOf(type.parameters.size()) + " parameter(s), but found " + String.valueOf(call.parameters.size()) + " parameter(s)",
+                            call.startPosition);
+                } else {
+                    for (int i = 0; i < type.parameters.size(); i++) {
+                        MiracleASTreeExpression node = call.parameters.get(i);
+                        node.accept(this);
+                        MiracleType argType = node.getResultType();
+                        if (argType != null && !argType.isSameType(type.parameters.get(i))) {
+                            exceptionContainer.add("function needs parameter of type `" + type.parameters.get(i).toPrintableString() + "`, but `" + argType.toPrintableString() + "` was found",
+                                    node.startPosition);
+                        }
                     }
+                    call.setResultType(type.returnType);
                 }
-                call.setResultType(type.returnType);
             }
         }
     }

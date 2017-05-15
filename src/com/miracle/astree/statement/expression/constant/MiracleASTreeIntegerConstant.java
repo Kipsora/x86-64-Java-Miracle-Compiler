@@ -4,17 +4,17 @@ import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.cstree.MiracleSourcePosition;
 
 public class MiracleASTreeIntegerConstant extends MiracleASTreeConstant {
-    public final int value;
+    public final String value;
 
     public MiracleASTreeIntegerConstant(String value,
                                         MiracleSourcePosition startPosition) {
         super(startPosition);
-        this.value = Integer.valueOf(value);
+        this.value = value;
     }
 
     @Override
     public String getValue() {
-        return String.valueOf(value);
+        return value;
     }
 
     @Override

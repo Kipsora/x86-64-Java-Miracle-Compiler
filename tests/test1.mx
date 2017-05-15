@@ -1,28 +1,11 @@
-int h(){
-	if (true) int c = 1;
-	return c;
-}
-
-int k(){
-	if (true) ;
-	else int d = 1;
-	return d;
-}
-
-int l(){
-	if (true) ;
-	else if (true) int e = 1;
-	return e;
-}
-
-int main(){
-	return 0;
+int main(int main) {
+    main(7);
 }
 
 
 /*!! metadata:
 === comment ===
-scope-2-5140519064-youyurong.mx
+func-6-5130309059-lijiajun.mx
 === assert ===
 failure_compile
 === phase ===
