@@ -193,20 +193,7 @@ public class MiracleSymbolTable {
         __builtin_string_length = new MiracleASTreeFunctionDeclaration(
                 "length",
                 new MiracleASTreeTypeNode(__builtin_int, null),
-                new LinkedList<MiracleASTreeVariableDeclaration>() {
-                    private static final long serialVersionUID = -5600580671280003543L;
-
-                    {
-                        add(new MiracleASTreeVariableDeclaration(
-                                "self",
-                                new MiracleASTreeTypeNode(__builtin_string, null),
-                                null,
-                                null,
-                                null,
-                                false
-                        ));
-                    }
-                },
+                new LinkedList<>(),
                 null,
                 null,
                 null
@@ -374,17 +361,14 @@ public class MiracleSymbolTable {
     }
 
     public static boolean isBuiltinType(MiracleType type) {
-        return type.isSameType(__builtin_bool) ||
-                type.isSameType(__builtin_int) ||
-                type.isSameType(__builtin_string) ||
-                type.isSameType(__builtin_void);
+        if (!(type instanceof MiracleBaseType)) return false;
+        String identifier = ((MiracleBaseType) type).identifier;
+        return identifier.equals("int") || identifier.equals("bool") ||
+                identifier.equals("string") || identifier.equals("void");
     }
 
     public boolean put(String name, MiracleASTreeDeclaration declaration) {
         if (builtinType.containsKey(name)) {
-            return false;
-        }
-        if (builtinMethod.containsKey(name)) {
             return false;
         }
         if (currentSymbolTable.containsKey(name)) {
@@ -461,12 +445,12 @@ public class MiracleSymbolTable {
     }
 
     public MiracleASTreeFunctionDeclaration getFunction(String name) {
-        if (builtinMethod.containsKey(name)) {
-            return builtinMethod.get(name);
-        }
         MiracleASTreeDeclaration declaration = currentSymbolTable.getOrDefault(name, null);
         if (declaration != null && (declaration instanceof MiracleASTreeFunctionDeclaration)) {
             return (MiracleASTreeFunctionDeclaration) declaration;
+        }
+        if (builtinMethod.containsKey(name)) {
+            return builtinMethod.get(name);
         }
         return null;
     }
@@ -498,14 +482,14 @@ public class MiracleSymbolTable {
     }
 
     public MiracleASTreeDeclaration getIncludeAncestor(String name) {
-        if (builtinMethod.containsKey(name)) {
-            return builtinMethod.get(name);
-        }
         if (currentSymbolTable.containsKey(name)) {
             return currentSymbolTable.get(name);
         }
         if (parentSymbolTable != null) {
             return parentSymbolTable.getIncludeAncestor(name);
+        }
+        if (builtinMethod.containsKey(name)) {
+            return builtinMethod.get(name);
         }
         return null;
     }

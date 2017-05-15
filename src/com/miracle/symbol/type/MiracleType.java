@@ -1,5 +1,8 @@
 package com.miracle.symbol.type;
 
+import static com.miracle.symbol.MiracleSymbolTable.__builtin_null;
+import static com.miracle.symbol.MiracleSymbolTable.isBuiltinType;
+
 public abstract class MiracleType {
     public abstract String toClassTypeString();
 
@@ -8,6 +11,12 @@ public abstract class MiracleType {
     public abstract String toPrintableString(String identifier);
 
     public boolean isSameType(MiracleType type) {
+        if (this.toPrintableString().equals("null")) {
+            return !isBuiltinType(type);
+        }
+        if (type.toPrintableString().equals("null")) {
+            return !isBuiltinType(this);
+        }
         if (this instanceof MiracleBaseType) {
             if (type instanceof MiracleBaseType) {
                 return ((MiracleBaseType) this).isSameType((MiracleBaseType) type);

@@ -81,8 +81,8 @@ public class Miracle {
             MiracleParser.MiracleContext cstree = getCSTree();
             MiracleASTree.Builder builder = new MiracleASTree.Builder();
             new ParseTreeWalker().walk(builder, cstree);
-            MiracleASTree astree = builder.build();
 
+            MiracleASTree astree = builder.build();
             if (this.printASTree) {
                 astree.accept(new MiracleASTreePrinter());
             }
@@ -92,7 +92,7 @@ public class Miracle {
             astree.accept(new MiracleASTreeSemanticAnalyser(exceptionContainer, symbolTable));
             exceptionContainer.judge();
         } catch (RuntimeException e) {
-            exceptionContainer.judge(e.toString());
+            e.printStackTrace();
         }
     }
 }

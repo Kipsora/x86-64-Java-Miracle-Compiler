@@ -45,11 +45,13 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
     @Override
     public void visit(MiracleASTreeClassDeclaration classDeclaration) {
         symbolTable = classDeclaration.getScope();
+        classStack.push(classDeclaration);
         if (classDeclaration.constructorDeclaration != null) {
             classDeclaration.constructorDeclaration.accept(this);
         }
         classDeclaration.functionDeclarations.forEach(element -> element.accept(this));
         classDeclaration.variableDeclarations.forEach(element -> element.accept(this));
+        classStack.pop();
         symbolTable = symbolTable.getParentSymbolTable();
     }
 
@@ -171,14 +173,23 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             exceptionContainer.add("return literal must be in function statment",
                     returnLiteral.startPosition);
         } else {
-            returnLiteral.expression.accept(this);
             MiracleASTreeFunctionDeclaration function = funcStack.peek();
-            if (returnLiteral.expression.getResultType() != null &&
-                    !returnLiteral.expression.getResultType().isSameType(function.returnType.type)) {
-                exceptionContainer.add("the return value differs from declaration",
-                        returnLiteral.expression.startPosition);
+            if (returnLiteral.expression != null) {
+                returnLiteral.expression.accept(this);
+                if (returnLiteral.expression.getResultType() != null &&
+                        !returnLiteral.expression.getResultType().isSameType(function.returnType.type)) {
+                    exceptionContainer.add("the return value differs from declaration",
+                            returnLiteral.expression.startPosition);
+                } else {
+                    returnLiteral.setFunction(function);
+                }
             } else {
-                returnLiteral.setFunction(function);
+                if (!function.returnType.type.isSameType(__builtin_void)) {
+                    exceptionContainer.add("the return value differs from declaration",
+                            returnLiteral.startPosition);
+                } else {
+                    returnLiteral.setFunction(function);
+                }
             }
         }
     }
@@ -206,6 +217,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         MiracleFunctionType type = (MiracleFunctionType) call.function.getResultType();
         if (type != null) {
             if (call.parameters.size() != type.parameters.size()) {
+                System.err.println(call.function.toPrintableString());
                 exceptionContainer.add("function needs " + String.valueOf(type.parameters.size()) + " parameter(s), but found " + String.valueOf(call.parameters.size()) + " parameter(s)",
                         call.startPosition);
             } else {
@@ -254,8 +266,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         MiracleType rType = binaryExpression.right.getResultType();
         if (lType == null || rType == null) return;
         if (!lType.isSameType(rType)) {
-            lType.isSameType(rType);
-            exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (oprands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
+            exceptionContainer.add("4no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
                     binaryExpression.operatorPosition);
         }
         boolean flag = true;
@@ -269,12 +280,12 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             case SUB:
             case OR:
                 if (!lType.isSameType(__builtin_int)) {
-                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (oprands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
+                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
                             binaryExpression.left.startPosition);
                     flag = false;
                 }
                 if (!rType.isSameType(__builtin_int)) {
-                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (oprands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
+                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
                             binaryExpression.right.startPosition);
                     flag = false;
                 }
@@ -282,12 +293,12 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                 break;
             case ADD:
                 if (!lType.isSameType(__builtin_int) && !lType.isSameType(__builtin_string)) {
-                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (oprands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
+                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
                             binaryExpression.left.startPosition);
                     flag = false;
                 }
                 if (!rType.isSameType(__builtin_int) && !rType.isSameType(__builtin_string)) {
-                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (oprands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
+                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
                             binaryExpression.right.startPosition);
                     flag = false;
                 }
@@ -299,26 +310,16 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             case LEQ:
             case NEQ:
             case REQ:
-                if (!lType.isSameType(__builtin_int) && !lType.isSameType(__builtin_string)) {
-                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (oprands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
-                            binaryExpression.left.startPosition);
-                    flag = false;
-                }
-                if (!rType.isSameType(__builtin_int) && !rType.isSameType(__builtin_string)) {
-                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (oprands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
-                            binaryExpression.right.startPosition);
-                    flag = false;
-                }
-                if (flag) binaryExpression.setResultType(__builtin_bool);
+                binaryExpression.setResultType(__builtin_bool);
                 break;
             case XOR:
                 if (!lType.isSameType(__builtin_int) && !lType.isSameType(__builtin_bool)) {
-                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (oprands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
+                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
                             binaryExpression.left.startPosition);
                     flag = false;
                 }
                 if (!rType.isSameType(__builtin_int) && !rType.isSameType(__builtin_bool)) {
-                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (oprands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
+                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
                             binaryExpression.right.startPosition);
                     flag = false;
                 }
@@ -327,12 +328,12 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             case CONJ:
             case DISJ:
                 if (!lType.isSameType(__builtin_bool)) {
-                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (oprands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
+                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
                             binaryExpression.left.startPosition);
                     flag = false;
                 }
                 if (!rType.isSameType(__builtin_bool)) {
-                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (oprands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
+                    exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
                             binaryExpression.right.startPosition);
                     flag = false;
                 }
@@ -364,7 +365,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             case INC:
             case DEC:
                 if (!type.isSameType(__builtin_int)) {
-                    exceptionContainer.add("no match for operator `" + prefixExpression.operator + "` (oprand is `" + type.toPrintableString() + "`)",
+                    exceptionContainer.add("no match for operator `" + prefixExpression.operator + "` (operand is `" + type.toPrintableString() + "`)",
                             prefixExpression.expression.startPosition);
                     flag = false;
                 }
@@ -377,7 +378,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                 break;
             case NEGATE:
                 if (!type.isSameType(__builtin_bool)) {
-                    exceptionContainer.add("no match for operator `" + prefixExpression.operator + "` (oprand is `" + type.toPrintableString() + "`)",
+                    exceptionContainer.add("no match for operator `" + prefixExpression.operator + "` (operand is `" + type.toPrintableString() + "`)",
                             prefixExpression.expression.startPosition);
                     flag = false;
                 }
@@ -386,8 +387,8 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             case NEGATIVE:
             case POSITIVE:
             case REV:
-                if (type.isSameType(__builtin_int)) {
-                    exceptionContainer.add("no match for operator `" + prefixExpression.operator + "` (oprand is `" + type.toPrintableString() + "`)",
+                if (!type.isSameType(__builtin_int)) {
+                    exceptionContainer.add("no match for operator `" + prefixExpression.operator + "` (operand is `" + type.toPrintableString() + "`)",
                             prefixExpression.expression.startPosition);
                     flag = false;
                 }
@@ -405,7 +406,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         if (type == null) return;
         boolean flag = true;
         if (!type.isSameType(__builtin_int)) {
-            exceptionContainer.add("no match for operator `" + suffixExpression.operator + "` (oprand is `" + type.toPrintableString() + "`)",
+            exceptionContainer.add("no match for operator `" + suffixExpression.operator + "` (operand is `" + type.toPrintableString() + "`)",
                     suffixExpression.expression.startPosition);
             flag = false;
         }

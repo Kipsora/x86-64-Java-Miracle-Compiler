@@ -65,8 +65,7 @@ public class MiracleASTree extends MiracleASTreeNode {
                     variableDeclarations.add((MiracleASTreeVariableDeclaration) property.get(element))
             );
             ctx.functionDeclarationStatement().forEach(element ->
-                    functionDeclarations.add((MiracleASTreeFunctionDeclaration) property.get(element))
-            );
+                    functionDeclarations.add((MiracleASTreeFunctionDeclaration) property.get(element)));
             if (ctx.constructorDeclarationStatement() != null) {
                 constructorDeclaration = (MiracleASTreeFunctionDeclaration)
                         property.get(ctx.constructorDeclarationStatement());
@@ -85,7 +84,11 @@ public class MiracleASTree extends MiracleASTreeNode {
         public void exitFunctionDeclarationStatement(MiracleParser.FunctionDeclarationStatementContext ctx) {
             List<MiracleASTreeStatement> body = new LinkedList<>();
             List<MiracleASTreeVariableDeclaration> parameters = new LinkedList<>();
-            ctx.statement().forEach((element) -> body.add((MiracleASTreeStatement) property.get(element)));
+            ctx.statement().forEach((element) -> {
+                if (property.get(element) != null) { // empty statement
+                    body.add((MiracleASTreeStatement) property.get(element));
+                }
+            });
             for (int i = 1; i < ctx.IDENTIFIER().size(); i++) {
                 parameters.add(new MiracleASTreeVariableDeclaration(
                         ctx.IDENTIFIER(i).getText(),
@@ -209,7 +212,7 @@ public class MiracleASTree extends MiracleASTreeNode {
         @Override
         public void exitForStatement(MiracleParser.ForStatementContext ctx) {
             MiracleASTreeExpression[] node = new MiracleASTreeExpression[3];
-            for (int i = 0, j = 0; i < ctx.getChildCount(); i++) {
+            for (int i = 0, j = 0; i < ctx.getChildCount() && j < 3; i++) {
                 if (ctx.getChild(i).getText().equals(";") || ctx.getChild(i).getText().equals(")")) {
                     if (!ctx.getChild(i - 1).getText().equals(";")
                             && !ctx.getChild(i - 1).getText().equals("(")) {

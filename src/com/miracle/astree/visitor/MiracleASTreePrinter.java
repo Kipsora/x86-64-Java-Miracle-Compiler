@@ -57,13 +57,13 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
     @Override
     public void visit(MiracleASTreeCall call) {
         System.out.print("call ");
-        call.function.accept(this);
+        System.out.print(call.function.toPrintableString());
         System.out.print("(");
         for (int i = 0; i < call.parameters.size(); i++) {
             if (i > 0) {
                 System.out.print(", ");
             }
-            call.parameters.get(i).accept(this);
+            System.out.print(call.parameters.get(i).toPrintableString());
         }
         System.out.print(')');
     }

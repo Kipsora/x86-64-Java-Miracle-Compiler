@@ -10,13 +10,7 @@ public class MiracleBaseType extends MiracleVariableType {
     }
 
     public boolean isSameType(MiracleBaseType type) {
-        if (identifier.equals("null")) {
-            return !MiracleSymbolTable.isBuiltinType(this);
-        } else if (type.identifier.equals("null")) {
-            return !MiracleSymbolTable.isBuiltinType(type);
-        } else {
-            return identifier.equals(type.identifier);
-        }
+        return identifier.equals(type.identifier);
     }
 
     @Override
