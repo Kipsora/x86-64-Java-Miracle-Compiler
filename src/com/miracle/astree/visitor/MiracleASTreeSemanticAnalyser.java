@@ -80,7 +80,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         MiracleASTreeFunctionDeclaration function = symbolTable.getFunction("main");
         if (function == null) {
             exceptionContainer.add("the main function is not found",
-                    new MiracleSourcePosition(1, 0));
+                    null);
         } else {
             if (!function.returnType.type.isSameType(__builtin_int)) {
                 exceptionContainer.add("the main function must return `int`",
@@ -312,6 +312,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         if (!lType.isSameType(rType)) {
             exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
                     binaryExpression.operatorPosition);
+            return;
         }
         boolean flag = true;
         switch (binaryExpression.operator) {

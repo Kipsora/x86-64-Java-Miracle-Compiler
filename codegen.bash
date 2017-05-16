@@ -1,1 +1,19 @@
-# This file is to test the codegen part of my compiler
+int main() {
+    int a = 1;
+    int x = a[1];
+    return 0;
+}
+
+
+/*!! metadata:
+=== comment ===
+arrop-1-5100379071-puyouer.mx
+=== assert ===
+failure_compile
+=== phase ===
+semantic pretest
+=== is_public ===
+True
+
+!!*/
+

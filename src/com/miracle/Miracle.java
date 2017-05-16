@@ -13,6 +13,7 @@ import com.miracle.intermediate.MiracleIR;
 import com.miracle.symbol.MiracleSymbolTable;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.misc.Interval;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.apache.commons.cli.*;
 
@@ -26,7 +27,9 @@ public class Miracle {
 
     final private PrintStream errorStream = System.err;
 
-    final private MiracleExceptionContainer exceptionContainer = new MiracleExceptionContainer(errorStream);
+    final private MiracleExceptionContainer exceptionContainer = new MiracleExceptionContainer(
+            errorStream
+    );
 
     private Miracle(String args[]) {
         boolean printASTree;
@@ -62,14 +65,16 @@ public class Miracle {
         this.outputStream = outputStream == null ? System.out : new PrintStream(outputStream);
     }
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException {
         new Miracle(args).run();
     }
 
     private MiracleParser.MiracleContext getCSTree() {
         try {
+            ANTLRInputStream istream = new ANTLRInputStream(inputStream);
+            exceptionContainer.setInputStream(istream.toString());
             MiracleParser parser = new MiracleParser(new CommonTokenStream(
-                    new MiracleLexer(new ANTLRInputStream(inputStream))
+                    new MiracleLexer(istream)
             ));
             parser.removeErrorListeners();
             parser.addErrorListener(new MiracleCSTreeErrorHandler(exceptionContainer));
@@ -81,7 +86,7 @@ public class Miracle {
         }
     }
 
-    private MiracleASTree getASTree(MiracleParser.MiracleContext cstree) {
+    private MiracleASTree getASTree(MiracleParser.MiracleContext cstree) throws IOException {
         MiracleASTree.Builder builder = new MiracleASTree.Builder();
         new ParseTreeWalker().walk(builder, cstree);
         MiracleASTree astree = builder.build();
@@ -97,7 +102,7 @@ public class Miracle {
         return new MiracleIR();
     }
 
-    private void run() {
+    private void run() throws IOException {
         try {
             MiracleParser.MiracleContext cstree = getCSTree();
             MiracleASTree astree = getASTree(cstree);

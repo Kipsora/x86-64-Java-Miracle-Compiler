@@ -14,6 +14,6 @@ public class MiracleCSTreeErrorHandler extends ConsoleErrorListener {
 
     @Override
     public void syntaxError(Recognizer<?, ?> recognizer, Object o, int i, int i1, String s, RecognitionException e) {
-        exceptionContainer.add(s, new MiracleSourcePosition(i, i1));
+        exceptionContainer.add(s, new MiracleSourcePosition(i, i1, i1 + s.length()));
     }
 }
