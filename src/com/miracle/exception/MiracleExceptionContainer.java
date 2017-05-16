@@ -55,10 +55,10 @@ public class MiracleExceptionContainer {
                         j++;
                     }
                     int space = line.length() - line.trim().length();
-                    line = line.trim();
+
                     ostream.println("Miracle:" + left.toPrintableString()
                             + ": error: " + element.getRight());
-                    ostream.println("  " + line);
+                    ostream.println("  " + line.trim());
                     for (int k = 0; k < left.getPosition() - space + 2; k++) {
                         ostream.print(' ');
                     }

@@ -111,7 +111,7 @@ public class MiracleASTree extends MiracleASTreeNode {
                         ctx.IDENTIFIER(i).getText(),
                         (MiracleASTreeTypeNode) property.get(ctx.typename(i)),
                         null,
-                        new MiracleSourcePosition(ctx),
+                        new MiracleSourcePosition(ctx.typename(i)),
                         new MiracleSourcePosition(ctx.IDENTIFIER(i).getSymbol()),
                         false
                 ));

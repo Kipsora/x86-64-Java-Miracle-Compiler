@@ -87,7 +87,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             }
             if (!function.parameters.isEmpty()) {
                 exceptionContainer.add("the parameters of the main function must be empty",
-                        function.parameters.get(0).startPosition);
+                        function.parameters.get(0).identifierPosition);
             }
         }
     }
@@ -255,7 +255,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         call.function.accept(this);
         if (!(call.function.getResultType() instanceof MiracleFunctionType)) {
             exceptionContainer.add("expression is not a function, thus not callable",
-                    call.startPosition);
+                    call.function.startPosition);
         } else {
             MiracleFunctionType type = (MiracleFunctionType) call.function.getResultType();
             if (type != null) {
