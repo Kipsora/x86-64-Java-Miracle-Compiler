@@ -1,11 +1,12 @@
 package com.miracle.exception;
 
 import com.miracle.cstree.MiracleSourcePosition;
-import jdk.internal.util.xml.impl.Input;
-import org.antlr.v4.runtime.ANTLRInputStream;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,16 +15,16 @@ public class MiracleExceptionContainer {
     private BufferedReader source;
     private List<ImmutablePair<MiracleSourcePosition, String>> container = new LinkedList<>();
 
-    public void setInputStream(String source) throws IOException {
-        this.source = new BufferedReader(new StringReader(source));
-    }
-
     public MiracleExceptionContainer(PrintStream ostream) {
         this.ostream = ostream;
     }
 
     public static RuntimeException getRuntimeException(String message) throws RuntimeException {
         return new RuntimeException("Miracle: FATAL Error: " + message);
+    }
+
+    public void setInputStream(String source) throws IOException {
+        this.source = new BufferedReader(new StringReader(source));
     }
 
     public void add(String message, MiracleSourcePosition position) {

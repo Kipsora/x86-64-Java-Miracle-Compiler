@@ -11,8 +11,8 @@ import com.miracle.astree.statement.expression.constant.MiracleASTreeStringConst
 import java.io.PrintStream;
 
 public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
-    private int indent;
     private final PrintStream ostream;
+    private int indent;
 
     public MiracleASTreePrinter(PrintStream ostream) {
         this.ostream = ostream;

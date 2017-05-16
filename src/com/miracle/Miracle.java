@@ -13,7 +13,6 @@ import com.miracle.intermediate.MiracleIR;
 import com.miracle.symbol.MiracleSymbolTable;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.misc.Interval;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.apache.commons.cli.*;
 

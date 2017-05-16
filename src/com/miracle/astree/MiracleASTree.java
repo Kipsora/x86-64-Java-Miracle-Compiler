@@ -215,6 +215,7 @@ public class MiracleASTree extends MiracleASTreeNode {
                 MiracleASTreeStatement finalTrueStatement = trueStatement;
                 trueStatement = new MiracleASTreeBlock(new LinkedList<MiracleASTreeStatement>() {
                     private static final long serialVersionUID = -694271397082132527L;
+
                     {
                         add(finalTrueStatement);
                     }
@@ -224,6 +225,7 @@ public class MiracleASTree extends MiracleASTreeNode {
                 MiracleASTreeStatement finalFalseStatement = falseStatement;
                 falseStatement = new MiracleASTreeBlock(new LinkedList<MiracleASTreeStatement>() {
                     private static final long serialVersionUID = -694271397082132527L;
+
                     {
                         add(finalFalseStatement);
                     }
@@ -252,9 +254,9 @@ public class MiracleASTree extends MiracleASTreeNode {
             MiracleASTreeStatement statement = (MiracleASTreeStatement) property.get(ctx.statement());
             if (statement != null && !(statement instanceof MiracleASTreeBlock)) {
                 MiracleASTreeStatement finalStatement = statement;
-                statement = new MiracleASTreeBlock(new LinkedList<MiracleASTreeStatement>()
-                {
+                statement = new MiracleASTreeBlock(new LinkedList<MiracleASTreeStatement>() {
                     private static final long serialVersionUID = 6113359493637144909L;
+
                     {
                         add(finalStatement);
                     }
