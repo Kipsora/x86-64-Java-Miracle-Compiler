@@ -50,7 +50,9 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         }
 
         functionDeclaration.parameters.forEach(e -> e.accept(this));
-        functionDeclaration.body.forEach(e -> e.accept(this));
+        if (functionDeclaration.body != null) {
+            functionDeclaration.body.forEach(e -> e.accept(this));
+        }
         symbolTable = symbolTable.getParentSymbolTable();
         funcStack.pop();
     }
@@ -62,8 +64,12 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         if (classDeclaration.constructorDeclaration != null) {
             classDeclaration.constructorDeclaration.accept(this);
         }
-        classDeclaration.functionDeclarations.forEach(element -> element.accept(this));
-        classDeclaration.variableDeclarations.forEach(element -> element.accept(this));
+        if (classDeclaration.functionDeclarations != null) {
+            classDeclaration.functionDeclarations.forEach(element -> element.accept(this));
+        }
+        if (classDeclaration.variableDeclarations != null) {
+            classDeclaration.variableDeclarations.forEach(element -> element.accept(this));
+        }
         classStack.pop();
         symbolTable = symbolTable.getParentSymbolTable();
     }
@@ -255,7 +261,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             MiracleFunctionType type = (MiracleFunctionType) call.function.getResultType();
             if (type != null) {
                 if (call.parameters.size() != type.parameters.size()) {
-                    System.err.println(call.function.toPrintableString());
                     exceptionContainer.add("function needs " + String.valueOf(type.parameters.size()) + " parameter(s), but found " + String.valueOf(call.parameters.size()) + " parameter(s)",
                             call.startPosition);
                 } else {
