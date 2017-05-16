@@ -7,143 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a1af29a-b77a-4b8c-9654-4271264bd490" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIR.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIRBasicBlock.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIRInstruction.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/MiracleExceptionContainer.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/MiracleASTreeNode.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreeBinaryExpression$OPERATOR.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreeBinaryExpression.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreeBooleanConstant.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreeCall.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreeConstant.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreeExpression.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreeIntegerConstant.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreeNew.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreeNull.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreePrefixExpression$OPERATOR.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreePrefixExpression.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreeStringConstant.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreeSubscript.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreeSuffixExpression$OPERATOR.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreeSuffixExpression.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/expression/MiracleASTreeVariable.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/type/MiracleASTreeArrayType.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/type/MiracleASTreeBaseType.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/type/MiracleASTreeFunctionType.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/type/MiracleASTreeType.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/type/MiracleASTreeVariableType.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/visitor/MiracleASTreeScopeBuilder.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/visitor/MiracleASTreeSemanticChecker.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/exception/MiracleException.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/symbol/MiracleSymbolTable$10.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/symbol/MiracleSymbolTable$11.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/com/miracle/symbol/MiracleSymbolTable$12.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/cstree/parser/Miracle.tokens" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/cstree/parser/MiracleBaseListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/cstree/parser/MiracleLexer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/cstree/parser/MiracleLexer.tokens" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/cstree/parser/MiracleListener.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/cstree/parser/MiracleParser.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/test1.mx" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/Miracle.class" afterPath="$PROJECT_DIR$/bin/com/miracle/Miracle.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/statement/expression/MiracleASTreeField.class" afterPath="$PROJECT_DIR$/bin/com/miracle/astree/statement/expression/MiracleASTreeField.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/visitor/MiracleASTreePrinter.class" afterPath="$PROJECT_DIR$/bin/com/miracle/astree/visitor/MiracleASTreePrinter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser$1.class" afterPath="$PROJECT_DIR$/bin/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.class" afterPath="$PROJECT_DIR$/bin/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleBaseListener.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleBaseListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleLexer.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleLexer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$BinaryExpressionContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$BinaryExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$BlockStatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$BlockStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$BoolConstantContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$BoolConstantContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$BraceExpressionContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$BraceExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$BreakStatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$BreakStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ClassDeclarationStatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ClassDeclarationStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ConstantContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ConstantContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ConstantExpressionContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ConstantExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ConstructorDeclarationStatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ConstructorDeclarationStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ContinueStatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ContinueStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ControlStatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ControlStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$EmptyStatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$EmptyStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ExpressionContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ExpressionStatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ExpressionStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$FieldExpressionContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$FieldExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ForStatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ForStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$FunctionCallExpressionContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$FunctionCallExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$FunctionDeclarationStatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$FunctionDeclarationStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$IntegerConstantContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$IntegerConstantContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$IterationStatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$IterationStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$MiracleContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$MiracleContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$NewExpressionContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$NewExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$NullConstantContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$NullConstantContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$PrefixExpressionContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$PrefixExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ReturnStatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ReturnStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$SelectionStatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$SelectionStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$StatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$StatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$StringConstantContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$StringConstantContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$SubscriptExpressionContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$SubscriptExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$SuffixExpressionContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$SuffixExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ThisExpressionContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$ThisExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$TypenameContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$TypenameContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$VariableDeclarationStatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$VariableDeclarationStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$VariableExpressionContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$VariableExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$WhileStatementContext.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser$WhileStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser.class" afterPath="$PROJECT_DIR$/bin/com/miracle/cstree/parser/MiracleParser.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/Miracle.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/Miracle.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/astree/MiracleASTree$Builder.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/astree/MiracleASTree$Builder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/astree/statement/declaration/MiracleASTreeFunctionDeclaration.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/astree/statement/declaration/MiracleASTreeFunctionDeclaration.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/astree/statement/expression/MiracleASTreeField.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/astree/statement/expression/MiracleASTreeField.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/astree/visitor/MiracleASTreePrinter.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/astree/visitor/MiracleASTreePrinter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser$1.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleBaseListener.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleBaseListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleLexer.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleLexer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$BinaryExpressionContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$BinaryExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$BlockStatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$BlockStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$BoolConstantContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$BoolConstantContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$BraceExpressionContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$BraceExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$BreakStatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$BreakStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ClassDeclarationStatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ClassDeclarationStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ConstantContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ConstantContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ConstantExpressionContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ConstantExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ConstructorDeclarationStatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ConstructorDeclarationStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ContinueStatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ContinueStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ControlStatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ControlStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$EmptyStatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$EmptyStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ExpressionContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ExpressionStatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ExpressionStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$FieldExpressionContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$FieldExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ForStatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ForStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$FunctionCallExpressionContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$FunctionCallExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$FunctionDeclarationStatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$FunctionDeclarationStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$IntegerConstantContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$IntegerConstantContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$IterationStatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$IterationStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$MiracleContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$MiracleContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$NewExpressionContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$NewExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$NullConstantContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$NullConstantContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$PrefixExpressionContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$PrefixExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ReturnStatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ReturnStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$SelectionStatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$SelectionStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$StatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$StatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$StringConstantContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$StringConstantContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$SubscriptExpressionContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$SubscriptExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$SuffixExpressionContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$SuffixExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ThisExpressionContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$ThisExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$TypenameContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$TypenameContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$VariableDeclarationStatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$VariableDeclarationStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$VariableExpressionContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$VariableExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$WhileStatementContext.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser$WhileStatementContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser.class" afterPath="$PROJECT_DIR$/out/production/x86-64-Miralce-Java-Compiler/com/miracle/cstree/parser/MiracleParser.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antlr/Miracle.g4" afterPath="$PROJECT_DIR$/antlr/Miracle.g4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/semantic.bash" afterPath="$PROJECT_DIR$/semantic.bash" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/Miracle.java" afterPath="$PROJECT_DIR$/src/com/miracle/Miracle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeField.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeField.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeClassFetcher.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeClassFetcher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreePrinter.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreePrinter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -159,8 +23,8 @@
       <file leaf-file-name="Miracle.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/miracle/Miracle.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="20">
-              <caret line="96" column="31" lean-forward="false" selection-start-line="96" selection-start-column="31" selection-end-line="96" selection-end-column="31" />
+            <state relative-caret-position="280">
+              <caret line="20" column="22" lean-forward="false" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#4309#4310#0" expanded="true" />
@@ -170,11 +34,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MiracleASTreeSemanticAnalyser.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="codegen.bash" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/codegen.bash">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="54" lean-forward="false" selection-start-line="0" selection-start-column="54" selection-end-line="0" selection-end-column="54" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MiracleASTreeSemanticAnalyser.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="552" column="9" lean-forward="true" selection-start-line="552" selection-start-column="9" selection-end-line="552" selection-end-column="9" />
+            <state relative-caret-position="230">
+              <caret line="462" column="35" lean-forward="false" selection-start-line="462" selection-start-column="35" selection-end-line="462" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -214,7 +88,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>substring</find>
       <find>parseint</find>
       <find>__builtin_string_ord</find>
       <find>__builtin_string_length</find>
@@ -244,6 +117,7 @@
       <find>pw</find>
       <find>Selection</find>
       <find>iteration</find>
+      <find>base</find>
     </findStrings>
     <replaceStrings>
       <replace>T</replace>
@@ -263,7 +137,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/miracle/astree/expression/constant/MiracleASTreeBooleanConstant.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/astree/expression/constant/MiracleASTreeConstant.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/astree/expression/constant/MiracleASTreeIntegerConstant.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/astree/expression/constant/MiracleASTreeNullConstant.java" />
@@ -314,6 +187,7 @@
         <option value="$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreePrinter.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java" />
+        <option value="$PROJECT_DIR$/codegen.bash" />
       </list>
     </option>
   </component>
@@ -607,95 +481,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intermediate" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="astree" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="astree" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visitor" />
+              <option name="myItemId" value="out" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1200,7 +986,7 @@
       <workItem from="1494832392487" duration="530000" />
       <workItem from="1494837393142" duration="9143000" />
       <workItem from="1494850552590" duration="6577000" />
-      <workItem from="1494893395681" duration="396000" />
+      <workItem from="1494893395681" duration="1305000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit.">
       <created>1494578117985</created>
@@ -1279,11 +1065,18 @@
       <option name="project" value="LOCAL" />
       <updated>1494850306735</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="IR interface added &amp; bugs fixed for semantic analyser.">
+      <created>1494893945244</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1494893945244</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="125461000" />
+    <option name="totallyTimeSpent" value="126370000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1537" height="912" extended-state="6" />
@@ -1308,10 +1101,10 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.289456" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.289456" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1371,7 +1164,8 @@
     <MESSAGE value="Bugs fixed for antlr parser." />
     <MESSAGE value="Code optimized." />
     <MESSAGE value="Bugs fixed for return literal validator." />
-    <option name="LAST_COMMIT_MESSAGE" value="Bugs fixed for return literal validator." />
+    <MESSAGE value="IR interface added &amp; bugs fixed for semantic analyser." />
+    <option name="LAST_COMMIT_MESSAGE" value="IR interface added &amp; bugs fixed for semantic analyser." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1412,36 +1206,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="uml://JAVA/com.miracle.astree">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JAVA</ID>
-          <OriginalElement>com.miracle.astree</OriginalElement>
-          <nodes>
-            <node x="" y="">com.miracle.astree.statement.declaration</node>
-            <node x="" y="">com.miracle.astree.statement.MiracleASTreeBlock</node>
-            <node x="" y="">com.miracle.astree.MiracleASTree</node>
-            <node x="" y="">com.miracle.astree.base.MiracleASTreeTypeNode</node>
-            <node x="" y="">com.miracle.astree.statement.MiracleASTreeContinue</node>
-            <node x="" y="">com.miracle.astree.statement.MiracleASTreeBreak</node>
-            <node x="" y="">com.miracle.astree.statement.MiracleASTreeStatement</node>
-            <node x="" y="">com.miracle.astree.statement.MiracleASTreeSelection</node>
-            <node x="" y="">com.miracle.astree.visitor</node>
-            <node x="" y="">com.miracle.astree.statement.MiracleASTreeIteration</node>
-            <node x="" y="">com.miracle.astree.statement.expression</node>
-            <node x="" y="">com.miracle.astree.statement.MiracleASTreeReturn</node>
-            <node x="" y="">com.miracle.astree.base.MiracleASTreeNode</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="1246.0" y="96.0" />
-          <SelectedNodes />
-          <Categories />
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>private</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/base/MiracleASTreeTypeNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
@@ -1454,6 +1218,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="528">
           <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1540,6 +1305,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1677,6 +1443,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
           <caret line="7" column="40" lean-forward="false" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1819,10 +1586,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="462" column="35" lean-forward="false" selection-start-line="462" selection-start-column="35" selection-end-line="462" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/Miracle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="96" column="31" lean-forward="false" selection-start-line="96" selection-start-column="31" selection-end-line="96" selection-end-column="31" />
+        <state relative-caret-position="280">
+          <caret line="20" column="22" lean-forward="false" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#4309#4310#0" expanded="true" />
@@ -1831,10 +1606,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java">
+    <entry file="file://$PROJECT_DIR$/codegen.bash">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="552" column="9" lean-forward="true" selection-start-line="552" selection-start-column="9" selection-end-line="552" selection-end-column="9" />
+        <state relative-caret-position="0">
+          <caret line="0" column="54" lean-forward="false" selection-start-line="0" selection-start-column="54" selection-end-line="0" selection-end-column="54" />
           <folding />
         </state>
       </provider>
