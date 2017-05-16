@@ -1,6 +1,6 @@
 grammar Miracle;
 
-miracle: (classDeclarationStatement | functionDeclarationStatement | variableDeclarationStatement)*;
+miracle: (classDeclarationStatement | functionDeclarationStatement | variableDeclarationStatement)+;
 
 classDeclarationStatement:
     'class' IDENTIFIER '{'

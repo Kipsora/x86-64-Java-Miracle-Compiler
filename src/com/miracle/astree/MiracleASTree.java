@@ -211,32 +211,30 @@ public class MiracleASTree extends MiracleASTreeNode {
         public void exitSelectionStatement(MiracleParser.SelectionStatementContext ctx) {
             MiracleASTreeStatement trueStatement = (MiracleASTreeStatement) property.get(ctx.statement(0));
             MiracleASTreeStatement falseStatement = (ctx.statement().size() > 1 ? (MiracleASTreeStatement) property.get(ctx.statement(1)) : null);
-            if (trueStatement != null || falseStatement != null) {
-                if (trueStatement != null && !(trueStatement instanceof MiracleASTreeBlock)) {
-                    MiracleASTreeStatement finalTrueStatement = trueStatement;
-                    trueStatement = new MiracleASTreeBlock(new LinkedList<MiracleASTreeStatement>() {
-                        private static final long serialVersionUID = -694271397082132527L;
-                        {
-                            add(finalTrueStatement);
-                        }
-                    }, trueStatement.startPosition);
-                }
-                if (falseStatement != null && !(falseStatement instanceof MiracleASTreeBlock)) {
-                    MiracleASTreeStatement finalFalseStatement = falseStatement;
-                    falseStatement = new MiracleASTreeBlock(new LinkedList<MiracleASTreeStatement>() {
-                        private static final long serialVersionUID = -694271397082132527L;
-                        {
-                            add(finalFalseStatement);
-                        }
-                    }, falseStatement.startPosition);
-                }
-                property.put(ctx, new MiracleASTreeSelection(
-                        (MiracleASTreeExpression) property.get(ctx.expression()),
-                        trueStatement,
-                        falseStatement,
-                        new MiracleSourcePosition(ctx)
-                ));
+            if (trueStatement != null && !(trueStatement instanceof MiracleASTreeBlock)) {
+                MiracleASTreeStatement finalTrueStatement = trueStatement;
+                trueStatement = new MiracleASTreeBlock(new LinkedList<MiracleASTreeStatement>() {
+                    private static final long serialVersionUID = -694271397082132527L;
+                    {
+                        add(finalTrueStatement);
+                    }
+                }, trueStatement.startPosition);
             }
+            if (falseStatement != null && !(falseStatement instanceof MiracleASTreeBlock)) {
+                MiracleASTreeStatement finalFalseStatement = falseStatement;
+                falseStatement = new MiracleASTreeBlock(new LinkedList<MiracleASTreeStatement>() {
+                    private static final long serialVersionUID = -694271397082132527L;
+                    {
+                        add(finalFalseStatement);
+                    }
+                }, falseStatement.startPosition);
+            }
+            property.put(ctx, new MiracleASTreeSelection(
+                    (MiracleASTreeExpression) property.get(ctx.expression()),
+                    trueStatement,
+                    falseStatement,
+                    new MiracleSourcePosition(ctx)
+            ));
         }
 
         @Override

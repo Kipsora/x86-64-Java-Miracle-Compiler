@@ -28,6 +28,6 @@ public class MiracleASTreeField extends MiracleASTreeExpression {
 
     @Override
     public String toPrintableString() {
-        return null;
+        return this.expression.toPrintableString() + "." + this.identifier;
     }
 }

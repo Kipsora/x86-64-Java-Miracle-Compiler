@@ -60,7 +60,9 @@ public class MiracleASTreeClassFetcher extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTreeIteration iteration) {
-        iteration.body.accept(this);
+        if (iteration.body != null) {
+            iteration.body.accept(this);
+        }
     }
 
     @Override

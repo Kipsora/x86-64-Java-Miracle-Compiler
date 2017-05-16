@@ -159,6 +159,9 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         if (iteration.incrementExpression != null) {
             iteration.incrementExpression.accept(this);
         }
+        if (iteration.body != null) {
+            iteration.body.accept(this);
+        }
         loopStack.pop();
     }
 
