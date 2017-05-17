@@ -1,6 +1,6 @@
 package com.miracle.intermediate.number;
 
-import com.miracle.intermediate.base.MiracleIRBase;
+import com.miracle.intermediate.MiracleIRBase;
 
 public abstract class MiracleIRNumber extends MiracleIRBase {
     final int value;
