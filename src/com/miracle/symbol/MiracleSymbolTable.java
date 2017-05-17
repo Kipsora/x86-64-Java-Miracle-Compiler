@@ -15,12 +15,13 @@ public class MiracleSymbolTable {
     public final static MiracleSymbolPrimitiveType __builtin_string = new MiracleSymbolPrimitiveType(STRING) {{
         addMethod("length", new MiracleSymbolFunctionType(__builtin_int));
         addMethod("substring", new MiracleSymbolFunctionType(__builtin_string) {{
-            addParameter("x", __builtin_string);
-            addParameter("y", __builtin_string);
+            addParameter("x", __builtin_int);
+            addParameter("y", __builtin_int);
         }});
         addMethod("parseInt", new MiracleSymbolFunctionType(__builtin_int));
         addMethod("substring", new MiracleSymbolFunctionType(__builtin_string) {{
             addParameter("x", __builtin_int);
+            addParameter("y", __builtin_int);
         }});
         addMethod("ord", new MiracleSymbolFunctionType(__builtin_int) {{
             addParameter("x", __builtin_int);

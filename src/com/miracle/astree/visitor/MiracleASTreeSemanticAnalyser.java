@@ -387,6 +387,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                 }
                 if (flag) {
                     binaryExpression.setResultType(rType);
+
                     binaryExpression.setMutable();
                 }
                 break;
