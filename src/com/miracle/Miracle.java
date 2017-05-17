@@ -9,7 +9,6 @@ import com.miracle.cstree.parser.MiracleLexer;
 import com.miracle.cstree.parser.MiracleParser;
 import com.miracle.exception.MiracleCSTreeErrorHandler;
 import com.miracle.exception.MiracleExceptionContainer;
-import com.miracle.intermediate.base.MiracleIRFunction;
 import com.miracle.symbol.MiracleSymbolTable;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -97,16 +96,12 @@ public class Miracle {
         return astree;
     }
 
-    private MiracleIRFunction getIR(MiracleASTree astree) {
-        return new MiracleIRFunction();
-    }
-
     private void run() throws IOException {
         try {
             MiracleParser.MiracleContext cstree = getCSTree();
             MiracleASTree astree = getASTree(cstree);
             if (this.printASTree) astree.accept(new MiracleASTreePrinter(outputStream));
-            MiracleIRFunction ir = getIR(astree);
+            //MiracleIRFunction ir = getIR(astree);
             if (this.printIR) {
 
             }

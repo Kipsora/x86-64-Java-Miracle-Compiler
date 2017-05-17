@@ -12,6 +12,14 @@ public class MiracleASTreeVariableDeclaration extends MiracleASTreeMemberDeclara
     public final boolean isMember;
 
     public MiracleASTreeVariableDeclaration(String identifier,
+                                            MiracleASTreeTypeNode typenode) {
+        super(identifier, null, null);
+        this.typenode = typenode;
+        this.isMember = false;
+        this.expression = null;
+    }
+
+    public MiracleASTreeVariableDeclaration(String identifier,
                                             MiracleASTreeTypeNode typenode,
                                             MiracleASTreeExpression expression,
                                             MiracleSourcePosition startPosition,

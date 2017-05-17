@@ -45,93 +45,41 @@ public class MiracleSymbolTable {
                 new MiracleASTreeTypeNode(__builtin_void, null),
                 Collections.singletonList(new MiracleASTreeVariableDeclaration(
                         "a",
-                        new MiracleASTreeTypeNode(__builtin_string, null),
-                        null,
-                        null,
-                        null,
-                        false)
-                ),
-                null,
-                null,
-                null
+                        new MiracleASTreeTypeNode(__builtin_string, null)
+                ))
         );
         __builtin_println = new MiracleASTreeFunctionDeclaration(
                 "println",
                 new MiracleASTreeTypeNode(__builtin_void, null),
                 Collections.singletonList(new MiracleASTreeVariableDeclaration(
                         "a",
-                        new MiracleASTreeTypeNode(__builtin_string, null),
-                        null,
-                        null,
-                        null,
-                        false
-                )),
-                null,
-                null,
-                null
+                        new MiracleASTreeTypeNode(__builtin_string, null)
+                ))
         );
         __builtin_getString = new MiracleASTreeFunctionDeclaration(
                 "getString",
                 new MiracleASTreeTypeNode(__builtin_string, null),
-                new LinkedList<>(),
-                null,
-                null,
-                null
+                new LinkedList<>()
         );
         __builtin_getInt = new MiracleASTreeFunctionDeclaration(
                 "getInt",
                 new MiracleASTreeTypeNode(__builtin_int, null),
-                new LinkedList<>(),
-                null,
-                null,
-                null
+                new LinkedList<>()
         );
         __builtin_toString = new MiracleASTreeFunctionDeclaration(
                 "toString",
                 new MiracleASTreeTypeNode(__builtin_string, null),
                 Collections.singletonList(new MiracleASTreeVariableDeclaration(
                         "a",
-                        new MiracleASTreeTypeNode(__builtin_int, null),
-                        null,
-                        null,
-                        null,
-                        false
-                )),
-                null,
-                null,
-                null
+                        new MiracleASTreeTypeNode(__builtin_int, null)
+                ))
         );
 
-        __builtin_Void = new MiracleASTreeClassDeclaration("void",
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-        __builtin_Int = new MiracleASTreeClassDeclaration("int",
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-        __builtin_Bool = new MiracleASTreeClassDeclaration("bool",
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-        __builtin_Null = new MiracleASTreeClassDeclaration("null",
-                null,
-                null,
-                null,
-                null,
-                null
-        );
+        __builtin_Void = new MiracleASTreeClassDeclaration("void");
+        __builtin_Int = new MiracleASTreeClassDeclaration("int");
+        __builtin_Bool = new MiracleASTreeClassDeclaration("bool");
+        __builtin_Null = new MiracleASTreeClassDeclaration("null");
         __builtin_String = new MiracleASTreeClassDeclaration("string",
-                null,
                 Arrays.asList(
                         new MiracleASTreeFunctionDeclaration(
                                 "substring",
@@ -139,55 +87,31 @@ public class MiracleSymbolTable {
                                 Arrays.asList(
                                         new MiracleASTreeVariableDeclaration(
                                                 "a",
-                                                new MiracleASTreeTypeNode(__builtin_int, null),
-                                                null,
-                                                null,
-                                                null,
-                                                false
+                                                new MiracleASTreeTypeNode(__builtin_int, null)
                                         ),
                                         new MiracleASTreeVariableDeclaration(
                                                 "b",
-                                                new MiracleASTreeTypeNode(__builtin_int, null),
-                                                null,
-                                                null,
-                                                null,
-                                                false
+                                                new MiracleASTreeTypeNode(__builtin_int, null)
                                         )
-                                ),
-                                null,
-                                null,
-                                null
+                                )
                         ),
                         new MiracleASTreeFunctionDeclaration(
                                 "length",
                                 new MiracleASTreeTypeNode(__builtin_int, null),
-                                new LinkedList<>(),
-                                null,
-                                null,
-                                null
+                                new LinkedList<>()
                         ),
                         new MiracleASTreeFunctionDeclaration(
                                 "ord",
                                 new MiracleASTreeTypeNode(__builtin_int, null),
                                 Collections.singletonList(new MiracleASTreeVariableDeclaration(
                                         "a",
-                                        new MiracleASTreeTypeNode(__builtin_int, null),
-                                        null,
-                                        null,
-                                        null,
-                                        false
-                                )),
-                                null,
-                                null,
-                                null
+                                        new MiracleASTreeTypeNode(__builtin_int, null)
+                                ))
                         ),
                         new MiracleASTreeFunctionDeclaration(
                                 "parseInt",
                                 new MiracleASTreeTypeNode(__builtin_int, null),
-                                new LinkedList<>(),
-                                null,
-                                null,
-                                null
+                                new LinkedList<>()
                         ),
                         new MiracleASTreeFunctionDeclaration(
                                 "$string.less",
@@ -195,24 +119,13 @@ public class MiracleSymbolTable {
                                 Arrays.asList(
                                         new MiracleASTreeVariableDeclaration(
                                                 "a",
-                                                new MiracleASTreeTypeNode(__builtin_string, null),
-                                                null,
-                                                null,
-                                                null,
-                                                false
+                                                new MiracleASTreeTypeNode(__builtin_string, null)
                                         ),
                                         new MiracleASTreeVariableDeclaration(
                                                 "b",
-                                                new MiracleASTreeTypeNode(__builtin_string, null),
-                                                null,
-                                                null,
-                                                null,
-                                                false
+                                                new MiracleASTreeTypeNode(__builtin_string, null)
                                         )
-                                ),
-                                null,
-                                null,
-                                null
+                                )
                         ),
                         new MiracleASTreeFunctionDeclaration(
                                 "$string.concat",
@@ -220,71 +133,38 @@ public class MiracleSymbolTable {
                                 Arrays.asList(
                                         new MiracleASTreeVariableDeclaration(
                                                 "a",
-                                                new MiracleASTreeTypeNode(__builtin_string, null),
-                                                null,
-                                                null,
-                                                null,
-                                                false
+                                                new MiracleASTreeTypeNode(__builtin_string, null)
                                         ),
                                         new MiracleASTreeVariableDeclaration(
                                                 "b",
-                                                new MiracleASTreeTypeNode(__builtin_string, null),
-                                                null,
-                                                null,
-                                                null,
-                                                false
+                                                new MiracleASTreeTypeNode(__builtin_string, null)
                                         )
-                                ),
-                                null,
-                                null,
-                                null
+                                )
                         )
-                ),
-                null,
-                null,
-                null
+                )
         );
         __builtin_Array = new MiracleASTreeClassDeclaration("$array",
-                null,
                 Collections.singletonList(new MiracleASTreeFunctionDeclaration(
                         "size",
                         new MiracleASTreeTypeNode(__builtin_int, null),
-                        new LinkedList<MiracleASTreeVariableDeclaration>(),
-                        null,
-                        null,
-                        null
-                )),
-                null,
-                null,
-                null
+                        new LinkedList<>()
+                ))
         );
-        builtinMethod = Collections.unmodifiableMap(
-                new HashMap<String, MiracleASTreeFunctionDeclaration>() {
-                    private static final long serialVersionUID = -8896859257944921595L;
-
-                    {
-                        put(__builtin_print.identifier, __builtin_print);
-                        put(__builtin_println.identifier, __builtin_println);
-                        put(__builtin_getInt.identifier, __builtin_getInt);
-                        put(__builtin_getString.identifier, __builtin_getString);
-                        put(__builtin_toString.identifier, __builtin_toString);
-                    }
-                }
-        );
-        builtinType = Collections.unmodifiableMap(
-                new HashMap<String, MiracleASTreeClassDeclaration>() {
-                    private static final long serialVersionUID = -7246160769398647470L;
-
-                    {
-                        put(__builtin_Void.identifier, __builtin_Void);
-                        put(__builtin_Int.identifier, __builtin_Int);
-                        put(__builtin_Bool.identifier, __builtin_Bool);
-                        put(__builtin_String.identifier, __builtin_String);
-                        put(__builtin_Array.identifier, __builtin_Array);
-                        put(__builtin_Null.identifier, __builtin_Null);
-                    }
-                }
-        );
+        builtinMethod = Collections.unmodifiableMap(new HashMap<String, MiracleASTreeFunctionDeclaration>() {{
+            put(__builtin_print.identifier, __builtin_print);
+            put(__builtin_println.identifier, __builtin_println);
+            put(__builtin_getInt.identifier, __builtin_getInt);
+            put(__builtin_getString.identifier, __builtin_getString);
+            put(__builtin_toString.identifier, __builtin_toString);
+        }});
+        builtinType = Collections.unmodifiableMap(new HashMap<String, MiracleASTreeClassDeclaration>() {{
+            put(__builtin_Void.identifier, __builtin_Void);
+            put(__builtin_Int.identifier, __builtin_Int);
+            put(__builtin_Bool.identifier, __builtin_Bool);
+            put(__builtin_String.identifier, __builtin_String);
+            put(__builtin_Array.identifier, __builtin_Array);
+            put(__builtin_Null.identifier, __builtin_Null);
+        }});
     }
 
     private final MiracleSymbolTable parentSymbolTable;
@@ -294,11 +174,8 @@ public class MiracleSymbolTable {
         this.parentSymbolTable = parentSymbolTable;
     }
 
-    public static MiracleBaseType getBuiltinType(String name) {
-        if (builtinType.containsKey(name)) {
-            return (MiracleBaseType) builtinType.get(name).getType();
-        }
-        return null;
+    public static boolean hasBuiltinType(String name) {
+        return builtinType.containsKey(name);
     }
 
     public boolean put(String name, MiracleASTreeDeclaration declaration) {
@@ -310,31 +187,6 @@ public class MiracleSymbolTable {
         }
         currentSymbolTable.put(name, declaration);
         return true;
-    }
-
-    public MiracleASTreeFunctionDeclaration getFunctionIncludeAncestor(String name) {
-        if (builtinMethod.containsKey(name)) {
-            return builtinMethod.get(name);
-        }
-        MiracleASTreeDeclaration declaration = currentSymbolTable.getOrDefault(name, null);
-        if (declaration != null && (declaration instanceof MiracleASTreeFunctionDeclaration)) {
-            return (MiracleASTreeFunctionDeclaration) declaration;
-        }
-        if (parentSymbolTable != null) {
-            return parentSymbolTable.getFunctionIncludeAncestor(name);
-        }
-        return null;
-    }
-
-    public MiracleASTreeVariableDeclaration getVariableIncludeAncestor(String name) {
-        MiracleASTreeDeclaration declaration = currentSymbolTable.getOrDefault(name, null);
-        if (declaration != null && (declaration instanceof MiracleASTreeVariableDeclaration)) {
-            return (MiracleASTreeVariableDeclaration) declaration;
-        }
-        if (parentSymbolTable != null) {
-            return parentSymbolTable.getVariableIncludeAncestor(name);
-        }
-        return null;
     }
 
     public MiracleASTreeClassDeclaration getClassIncludeAncestor(String name) {
@@ -351,32 +203,10 @@ public class MiracleSymbolTable {
         return null;
     }
 
-    public MiracleASTreeFunctionDeclaration getFunction(String name) {
-        MiracleASTreeDeclaration declaration = currentSymbolTable.getOrDefault(name, null);
+    public MiracleASTreeFunctionDeclaration getMainFunction() {
+        MiracleASTreeDeclaration declaration = currentSymbolTable.getOrDefault("main", null);
         if (declaration != null && (declaration instanceof MiracleASTreeFunctionDeclaration)) {
             return (MiracleASTreeFunctionDeclaration) declaration;
-        }
-        if (builtinMethod.containsKey(name)) {
-            return builtinMethod.get(name);
-        }
-        return null;
-    }
-
-    public MiracleASTreeVariableDeclaration getVariable(String name) {
-        MiracleASTreeDeclaration declaration = currentSymbolTable.getOrDefault(name, null);
-        if (declaration != null && (declaration instanceof MiracleASTreeVariableDeclaration)) {
-            return (MiracleASTreeVariableDeclaration) declaration;
-        }
-        return null;
-    }
-
-    public MiracleASTreeClassDeclaration getClass(String name) {
-        if (builtinType.containsKey(name)) {
-            return builtinType.get(name);
-        }
-        MiracleASTreeDeclaration declaration = currentSymbolTable.getOrDefault(name, null);
-        if (declaration != null && (declaration instanceof MiracleASTreeClassDeclaration)) {
-            return (MiracleASTreeClassDeclaration) declaration;
         }
         return null;
     }

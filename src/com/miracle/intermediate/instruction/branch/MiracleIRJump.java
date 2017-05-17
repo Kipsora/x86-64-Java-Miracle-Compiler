@@ -5,7 +5,7 @@ import com.miracle.intermediate.visitor.MiracleIRVisitor;
 
 public class MiracleIRJump extends MiracleIRBranch {
     public MiracleIRJump(MiracleIRBasicBlock branchTrue, MiracleIRBasicBlock branchFalse, MiracleIRBasicBlock branchAfter) {
-        super(branchTrue, branchFalse, branchAfter);
+        //super(branchTrue, branchFalse, branchAfter);
     }
 
     @Override

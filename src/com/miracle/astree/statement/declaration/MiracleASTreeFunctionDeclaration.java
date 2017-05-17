@@ -22,6 +22,21 @@ public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclara
 
     public MiracleASTreeFunctionDeclaration(String identifier,
                                             MiracleASTreeTypeNode returnType,
+                                            List<MiracleASTreeVariableDeclaration> parameters) {
+        super(identifier, null, null);
+        this.returnType = returnType;
+        this.parameters = Collections.unmodifiableList(parameters);
+        this.body = null;
+        List<MiracleVariableType> argtype = new LinkedList<>();
+        for (int i = 0, parametersSize = parameters.size(); i < parametersSize; i++) {
+            MiracleASTreeVariableDeclaration element = parameters.get(i);
+            argtype.add((MiracleVariableType) element.getType());
+        }
+        this.type = new MiracleFunctionType(returnType.type, argtype);
+    }
+
+    public MiracleASTreeFunctionDeclaration(String identifier,
+                                            MiracleASTreeTypeNode returnType,
                                             List<MiracleASTreeVariableDeclaration> parameters,
                                             List<MiracleASTreeStatement> body,
                                             MiracleSourcePosition startPosition,

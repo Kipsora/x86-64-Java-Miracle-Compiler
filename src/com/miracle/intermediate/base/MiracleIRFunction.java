@@ -40,19 +40,24 @@ public class MiracleIRFunction extends MiracleIRBase {
 
     public static class Builder implements MiracleASTreeVisitor {
         private MiracleIRFunction currentFunction;
+        private boolean isArgumentParameter;
 
         @Override
         public void visit(MiracleASTreeFunctionDeclaration functionDeclaration) {
             currentFunction = new MiracleIRFunction(functionDeclaration.returnType.type);
 
-            if (functionDeclaration.body != null) { // avoid builtin functions
+            isArgumentParameter = true;
+            functionDeclaration.parameters.forEach(element -> element.accept(this));
+            isArgumentParameter = false;
 
+            if (functionDeclaration.body != null) { // non-builtin functions
                 List<MiracleASTreeStatement> body = functionDeclaration.body;
                 for (int i = 0, bodySize = body.size(); i < bodySize; i++) {
                     MiracleASTreeStatement element = body.get(i);
                     element.accept(this);
                 }
             }
+            currentFunction = null;
         }
 
         @Override

@@ -76,7 +76,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
     @Override
     public void visit(MiracleASTree astree) {
         astree.declarations.forEach(element -> element.accept(this));
-        MiracleASTreeFunctionDeclaration function = symbolTable.getFunction("main");
+        MiracleASTreeFunctionDeclaration function = symbolTable.getMainFunction();
         if (function == null) {
             exceptionContainer.add("the main function is not found",
                     null);

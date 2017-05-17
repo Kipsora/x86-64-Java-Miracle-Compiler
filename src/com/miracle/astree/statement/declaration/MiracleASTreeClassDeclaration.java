@@ -19,6 +19,32 @@ public class MiracleASTreeClassDeclaration extends MiracleASTreeDeclaration {
     private final Map<String, MiracleASTreeMemberDeclaration> map;
     private MiracleSymbolTable scope;
 
+    public MiracleASTreeClassDeclaration(String identifier) {
+        super(identifier, null, null);
+        this.constructorDeclaration = null;
+        this.variableDeclarations = null;
+        this.functionDeclarations = null;
+        this.type = new MiracleBaseType(identifier);
+        this.map = Collections.unmodifiableMap(new HashMap<String, MiracleASTreeMemberDeclaration>());
+    }
+
+    public MiracleASTreeClassDeclaration(String identifier, List<MiracleASTreeFunctionDeclaration> functionDeclarations) {
+        super(identifier, null, null);
+        this.constructorDeclaration = null;
+        this.variableDeclarations = null;
+        if (functionDeclarations != null) {
+            this.functionDeclarations = Collections.unmodifiableList(functionDeclarations);
+        } else {
+            this.functionDeclarations = null;
+        }
+        this.type = new MiracleBaseType(identifier);
+        this.map = Collections.unmodifiableMap(new HashMap<String, MiracleASTreeMemberDeclaration>() {{
+            if (functionDeclarations != null) {
+                functionDeclarations.forEach(element -> put(element.identifier, element));
+            }
+        }});
+    }
+
     public MiracleASTreeClassDeclaration(String identifier,
                                          List<MiracleASTreeVariableDeclaration> variableDeclarations,
                                          List<MiracleASTreeFunctionDeclaration> functionDeclarations,
