@@ -1,6 +1,6 @@
 package com.miracle.intermediate.instruction.branch;
 
-import com.miracle.intermediate.MiracleIRBasicBlock;
+import com.miracle.intermediate.base.MiracleIRBasicBlock;
 import com.miracle.intermediate.visitor.MiracleIRVisitor;
 
 public class MiracleIRJump extends MiracleIRBranch {

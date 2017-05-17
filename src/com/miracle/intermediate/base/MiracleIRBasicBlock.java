@@ -1,4 +1,4 @@
-package com.miracle.intermediate;
+package com.miracle.intermediate.base;
 
 import com.miracle.intermediate.instruction.MiracleIRInstruction;
 
