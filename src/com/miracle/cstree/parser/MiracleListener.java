@@ -1,5 +1,4 @@
 package com.miracle.cstree.parser;// Generated from Miracle.g4 by ANTLR 4.6
-
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -62,20 +61,6 @@ public interface MiracleListener extends ParseTreeListener {
      * @param ctx the parse tree
      */
     void exitVariableDeclarationStatement(MiracleParser.VariableDeclarationStatementContext ctx);
-
-    /**
-     * Enter a parse tree produced by {@link MiracleParser#constructorDeclarationStatement}.
-     *
-     * @param ctx the parse tree
-     */
-    void enterConstructorDeclarationStatement(MiracleParser.ConstructorDeclarationStatementContext ctx);
-
-    /**
-     * Exit a parse tree produced by {@link MiracleParser#constructorDeclarationStatement}.
-     *
-     * @param ctx the parse tree
-     */
-    void exitConstructorDeclarationStatement(MiracleParser.ConstructorDeclarationStatementContext ctx);
 
     /**
      * Enter a parse tree produced by {@link MiracleParser#blockStatement}.

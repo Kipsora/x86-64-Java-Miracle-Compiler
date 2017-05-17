@@ -243,6 +243,5 @@ public class MiracleLexer extends Lexer {
 
     @Override
     public ATN getATN() {
-        return _ATN;
-    }
+        return _ATN; }
 }

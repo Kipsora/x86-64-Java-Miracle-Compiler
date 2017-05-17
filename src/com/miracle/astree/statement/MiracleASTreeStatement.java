@@ -4,9 +4,9 @@ import com.miracle.astree.base.MiracleASTreeNode;
 import com.miracle.cstree.MiracleSourcePosition;
 
 public abstract class MiracleASTreeStatement extends MiracleASTreeNode {
-    public final MiracleSourcePosition startPosition;
+    public final MiracleSourcePosition position;
 
-    public MiracleASTreeStatement(MiracleSourcePosition startPosition) {
-        this.startPosition = startPosition;
+    public MiracleASTreeStatement(MiracleSourcePosition position) {
+        this.position = position;
     }
 }

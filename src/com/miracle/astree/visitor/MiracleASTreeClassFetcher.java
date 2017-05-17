@@ -25,7 +25,7 @@ public class MiracleASTreeClassFetcher extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTreeClassDeclaration classDeclaration) {
-        if (!symbolTable.put(classDeclaration.identifier, classDeclaration)) {
+        if (!symbolTable.put(classDeclaration)) {
             this.exceptionContainer.add("duplicate declarations of identifier \""
                             + classDeclaration.identifier + "\"",
                     classDeclaration.identifierPosition

@@ -85,7 +85,7 @@ public class Miracle {
     }
 
     private MiracleASTree getASTree(MiracleParser.MiracleContext cstree) throws IOException {
-        MiracleASTree.Builder builder = new MiracleASTree.Builder();
+        MiracleASTree.Builder builder = new MiracleASTree.Builder(exceptionContainer);
         new ParseTreeWalker().walk(builder, cstree);
         MiracleASTree astree = builder.build();
         MiracleSymbolTable symbolTable = new MiracleSymbolTable(null);

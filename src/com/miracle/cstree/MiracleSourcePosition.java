@@ -15,7 +15,9 @@ public class MiracleSourcePosition {
     }
 
     public MiracleSourcePosition(ParserRuleContext ctx) {
-        this(ctx.getStart());
+        this.row = ctx.getStart().getLine();
+        this.columnStart = ctx.getStart().getCharPositionInLine();
+        this.columnEnd = this.columnStart + ctx.getText().length();
     }
 
     public MiracleSourcePosition(int row, int columnStart, int columnEnd) {

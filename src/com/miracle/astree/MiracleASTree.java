@@ -16,8 +16,7 @@ import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.cstree.MiracleSourcePosition;
 import com.miracle.cstree.parser.MiracleBaseListener;
 import com.miracle.cstree.parser.MiracleParser;
-import com.miracle.symbol.type.MiracleArrayType;
-import com.miracle.symbol.type.MiracleBaseType;
+import com.miracle.exception.MiracleExceptionContainer;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -39,8 +38,13 @@ public class MiracleASTree extends MiracleASTreeNode {
     }
 
     public static class Builder extends MiracleBaseListener {
+        private final MiracleExceptionContainer exceptionContainer;
         private MiracleASTree root;
         private ParseTreeProperty<Object> property = new ParseTreeProperty<>();
+
+        public Builder(MiracleExceptionContainer exceptionContainer) {
+            this.exceptionContainer = exceptionContainer;
+        }
 
         public MiracleASTree build() {
             return root;
@@ -76,13 +80,18 @@ public class MiracleASTree extends MiracleASTreeNode {
             List<MiracleParser.FunctionDeclarationStatementContext> functionDeclarationStatement = ctx.functionDeclarationStatement();
             for (int i = 0, functionDeclarationStatementSize = functionDeclarationStatement.size(); i < functionDeclarationStatementSize; i++) {
                 MiracleParser.FunctionDeclarationStatementContext element = functionDeclarationStatement.get(i);
-                functionDeclarations.add((MiracleASTreeFunctionDeclaration) property.get(element));
+                if (element.IDENTIFIER() == null) {
+                    if (constructorDeclaration != null) {
+                        exceptionContainer.add("multiple declarations of constructors are found",
+                                new MiracleSourcePosition(element.typename(0)));
+                    } else {
+                        constructorDeclaration = (MiracleASTreeFunctionDeclaration) property.get(element);
+                    }
+                } else {
+                    functionDeclarations.add((MiracleASTreeFunctionDeclaration) property.get(element));
+                }
             }
 
-            if (ctx.constructorDeclarationStatement() != null) {
-                constructorDeclaration = (MiracleASTreeFunctionDeclaration)
-                        property.get(ctx.constructorDeclarationStatement());
-            }
             property.put(ctx, new MiracleASTreeClassDeclaration(
                     ctx.IDENTIFIER().getText(),
                     variableDeclarations,
@@ -151,42 +160,12 @@ public class MiracleASTree extends MiracleASTreeNode {
         }
 
         @Override
-        public void exitConstructorDeclarationStatement(MiracleParser.ConstructorDeclarationStatementContext ctx) {
-            List<MiracleASTreeStatement> body = new LinkedList<>();
-            List<MiracleASTreeVariableDeclaration> parameters = new LinkedList<>();
-
-            List<MiracleParser.StatementContext> statement = ctx.statement();
-            for (int i = 0, statementSize = statement.size(); i < statementSize; i++) {
-                MiracleParser.StatementContext element = statement.get(i);
-                body.add((MiracleASTreeStatement) property.get(element));
-            }
-
-            property.put(ctx, new MiracleASTreeFunctionDeclaration(
-                    null,
-                    (MiracleASTreeTypeNode) property.get(ctx.typename()),
-                    parameters,
-                    body,
-                    new MiracleSourcePosition(ctx),
-                    null
-            ));
-        }
-
-        @Override
         public void exitTypename(MiracleParser.TypenameContext ctx) {
-            if (ctx.getChildCount() == 1) {
-                property.put(ctx, new MiracleASTreeTypeNode(
-                        new MiracleBaseType(ctx.basetype().getText()),
-                        new MiracleSourcePosition(ctx.basetype())
-                ));
-            } else {
-                property.put(ctx, new MiracleASTreeTypeNode(
-                        new MiracleArrayType(
-                                new MiracleBaseType(ctx.basetype().getText()),
-                                (ctx.getChildCount() - 1) >> 1
-                        ),
-                        new MiracleSourcePosition(ctx.basetype())
-                ));
-            }
+            property.put(ctx, new MiracleASTreeTypeNode(
+                    ctx.basetype().getText(),
+                    (ctx.getChildCount() - 1) >> 1,
+                    new MiracleSourcePosition(ctx.basetype())
+            ));
         }
 
         @Override
@@ -219,7 +198,7 @@ public class MiracleASTree extends MiracleASTreeNode {
                     {
                         add(finalTrueStatement);
                     }
-                }, trueStatement.startPosition);
+                }, trueStatement.position);
             }
             if (falseStatement != null && !(falseStatement instanceof MiracleASTreeBlock)) {
                 MiracleASTreeStatement finalFalseStatement = falseStatement;
@@ -229,7 +208,7 @@ public class MiracleASTree extends MiracleASTreeNode {
                     {
                         add(finalFalseStatement);
                     }
-                }, falseStatement.startPosition);
+                }, falseStatement.position);
             }
             property.put(ctx, new MiracleASTreeSelection(
                     (MiracleASTreeExpression) property.get(ctx.expression()),
@@ -260,7 +239,7 @@ public class MiracleASTree extends MiracleASTreeNode {
                     {
                         add(finalStatement);
                     }
-                }, statement.startPosition);
+                }, statement.position);
             }
             property.put(ctx, new MiracleASTreeIteration(
                     node[0],

@@ -4,16 +4,12 @@ miracle: (classDeclarationStatement | functionDeclarationStatement | variableDec
 
 classDeclarationStatement:
     'class' IDENTIFIER '{'
-        ((functionDeclarationStatement | variableDeclarationStatement)*
-        constructorDeclarationStatement?
-        (functionDeclarationStatement | variableDeclarationStatement)*)
+        (functionDeclarationStatement | variableDeclarationStatement)*
     '}';
 
-functionDeclarationStatement: typename IDENTIFIER '(' (typename IDENTIFIER)?(',' typename IDENTIFIER)* ')' '{' statement* '}';
+functionDeclarationStatement: typename IDENTIFIER? '(' (typename IDENTIFIER)?(',' typename IDENTIFIER)* ')' '{' statement* '}';
 
 variableDeclarationStatement: typename IDENTIFIER ('=' expression)? ';';
-
-constructorDeclarationStatement: typename '(' ')' '{' statement* '}';
 
 blockStatement: '{' statement* '}';
 

@@ -4,20 +4,11 @@ import com.miracle.astree.base.MiracleASTreeTypeNode;
 import com.miracle.astree.statement.expression.MiracleASTreeExpression;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.cstree.MiracleSourcePosition;
-import com.miracle.symbol.type.MiracleType;
 
 public class MiracleASTreeVariableDeclaration extends MiracleASTreeMemberDeclaration {
     public final MiracleASTreeExpression expression;
     public final MiracleASTreeTypeNode typenode;
     public final boolean isMember;
-
-    public MiracleASTreeVariableDeclaration(String identifier,
-                                            MiracleASTreeTypeNode typenode) {
-        super(identifier, null, null);
-        this.typenode = typenode;
-        this.isMember = false;
-        this.expression = null;
-    }
 
     public MiracleASTreeVariableDeclaration(String identifier,
                                             MiracleASTreeTypeNode typenode,
@@ -34,10 +25,5 @@ public class MiracleASTreeVariableDeclaration extends MiracleASTreeMemberDeclara
     @Override
     public void accept(MiracleASTreeVisitor visitor) {
         visitor.visit(this);
-    }
-
-    @Override
-    public MiracleType getType() {
-        return typenode.type;
     }
 }

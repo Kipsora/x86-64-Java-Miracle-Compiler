@@ -59,7 +59,7 @@ public class MiracleExceptionContainer {
                     ostream.println("Miracle:" + left.toPrintableString()
                             + ": error: " + element.getRight());
                     ostream.println("  " + line.trim());
-                    for (int k = 0; k < left.getPosition() - space + 2; k++) {
+                    for (int k = 0; k < left.columnStart - space + 2; k++) {
                         ostream.print(' ');
                     }
                     ostream.println('^');

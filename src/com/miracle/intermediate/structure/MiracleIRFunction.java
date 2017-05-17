@@ -1,4 +1,4 @@
-package com.miracle.intermediate.base;
+package com.miracle.intermediate.structure;
 
 import com.miracle.astree.MiracleASTree;
 import com.miracle.astree.base.MiracleASTreeTypeNode;
@@ -12,21 +12,22 @@ import com.miracle.astree.statement.expression.constant.MiracleASTreeIntegerCons
 import com.miracle.astree.statement.expression.constant.MiracleASTreeNullConstant;
 import com.miracle.astree.statement.expression.constant.MiracleASTreeStringConstant;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
-import com.miracle.symbol.type.MiracleVariableType;
+import com.miracle.intermediate.MiracleIRBase;
+import com.miracle.symbol.MiracleSymbolType;
 
 import java.util.List;
 
 public class MiracleIRFunction extends MiracleIRBase {
-    private final MiracleVariableType returnType;
+    private final MiracleSymbolType returnType;
     private MiracleIRBasicBlock entryBasicBlock;
 
-    public MiracleIRFunction(MiracleVariableType returnType,
+    public MiracleIRFunction(MiracleSymbolType returnType,
                              MiracleIRBasicBlock block) {
         this.returnType = returnType;
         this.entryBasicBlock = block;
     }
 
-    public MiracleIRFunction(MiracleVariableType returnType) {
+    public MiracleIRFunction(MiracleSymbolType returnType) {
         this.returnType = returnType;
     }
 
@@ -44,7 +45,7 @@ public class MiracleIRFunction extends MiracleIRBase {
 
         @Override
         public void visit(MiracleASTreeFunctionDeclaration functionDeclaration) {
-            currentFunction = new MiracleIRFunction(functionDeclaration.returnType.type);
+            currentFunction = new MiracleIRFunction(functionDeclaration.returnType.getType());
 
             isArgumentParameter = true;
             functionDeclaration.parameters.forEach(element -> element.accept(this));

@@ -51,7 +51,7 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTreeNew newNode) {
-        ostream.print("new " + newNode.variableType.type.toPrintableString() + " ");
+        ostream.print("new " + newNode.variableType.getType().toPrintableString() + " ");
         newNode.expressions.forEach((element) -> {
             if (element == null) {
                 ostream.print("[]");
@@ -221,7 +221,7 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
         println("[Function Declaration]");
         indent++;
         println("identifier: " + functionDeclaration.identifier);
-        println("returnType: " + functionDeclaration.returnType.type.toPrintableString());
+        println("returnType: " + functionDeclaration.returnType.getType().toPrintableString());
         println("parameter:");
         indent++;
         functionDeclaration.parameters.forEach((element) -> element.accept(this));
@@ -251,7 +251,7 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
     public void visit(MiracleASTreeVariableDeclaration variableDeclaration) {
         println("[Variable Declaration]");
         indent++;
-        println("variableType: " + variableDeclaration.typenode.type.toPrintableString());
+        println("variableType: " + variableDeclaration.typenode.getType().toPrintableString());
         println("identifier: " + variableDeclaration.identifier);
         if (variableDeclaration.expression != null) {
             print("init: ");

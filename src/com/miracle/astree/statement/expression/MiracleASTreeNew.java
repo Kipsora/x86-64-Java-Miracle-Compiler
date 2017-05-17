@@ -27,7 +27,7 @@ public class MiracleASTreeNew extends MiracleASTreeExpression {
     @Override
     public String toPrintableString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("new ").append(variableType.type.toPrintableString()).append(" (");
+        builder.append("new ").append(variableType.typename).append(" (");
         expressions.forEach(element -> {
             if (element != null) {
                 builder.append('[').append(element.toPrintableString()).append(']');

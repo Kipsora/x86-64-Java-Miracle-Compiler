@@ -2,9 +2,9 @@ package com.miracle.astree.statement.declaration;
 
 import com.miracle.astree.statement.MiracleASTreeStatement;
 import com.miracle.cstree.MiracleSourcePosition;
-import com.miracle.symbol.type.MiracleType;
+import com.miracle.symbol.MiracleSymbol;
 
-public abstract class MiracleASTreeDeclaration extends MiracleASTreeStatement {
+public abstract class MiracleASTreeDeclaration extends MiracleASTreeStatement implements MiracleSymbol {
     public final String identifier;
     public final MiracleSourcePosition identifierPosition;
 
@@ -15,6 +15,4 @@ public abstract class MiracleASTreeDeclaration extends MiracleASTreeStatement {
         this.identifier = identifier;
         this.identifierPosition = identifierPosition;
     }
-
-    public abstract MiracleType getType();
 }

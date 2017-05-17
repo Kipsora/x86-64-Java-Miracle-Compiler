@@ -1,5 +1,6 @@
-package com.miracle.intermediate.base;
+package com.miracle.intermediate.structure;
 
+import com.miracle.intermediate.MiracleIRBase;
 import com.miracle.intermediate.instruction.MiracleIRInstruction;
 
 import java.util.LinkedList;

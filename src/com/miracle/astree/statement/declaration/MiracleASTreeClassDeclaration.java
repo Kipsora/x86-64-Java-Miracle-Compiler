@@ -2,9 +2,8 @@ package com.miracle.astree.statement.declaration;
 
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.symbol.MiracleSymbolClassType;
 import com.miracle.symbol.MiracleSymbolTable;
-import com.miracle.symbol.type.MiracleBaseType;
-import com.miracle.symbol.type.MiracleType;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,35 +14,9 @@ public class MiracleASTreeClassDeclaration extends MiracleASTreeDeclaration {
     public final List<MiracleASTreeVariableDeclaration> variableDeclarations;
     public final List<MiracleASTreeFunctionDeclaration> functionDeclarations;
     public final MiracleASTreeFunctionDeclaration constructorDeclaration;
-    private final MiracleBaseType type;
     private final Map<String, MiracleASTreeMemberDeclaration> map;
+    private final MiracleSymbolClassType symbol;
     private MiracleSymbolTable scope;
-
-    public MiracleASTreeClassDeclaration(String identifier) {
-        super(identifier, null, null);
-        this.constructorDeclaration = null;
-        this.variableDeclarations = null;
-        this.functionDeclarations = null;
-        this.type = new MiracleBaseType(identifier);
-        this.map = Collections.unmodifiableMap(new HashMap<String, MiracleASTreeMemberDeclaration>());
-    }
-
-    public MiracleASTreeClassDeclaration(String identifier, List<MiracleASTreeFunctionDeclaration> functionDeclarations) {
-        super(identifier, null, null);
-        this.constructorDeclaration = null;
-        this.variableDeclarations = null;
-        if (functionDeclarations != null) {
-            this.functionDeclarations = Collections.unmodifiableList(functionDeclarations);
-        } else {
-            this.functionDeclarations = null;
-        }
-        this.type = new MiracleBaseType(identifier);
-        this.map = Collections.unmodifiableMap(new HashMap<String, MiracleASTreeMemberDeclaration>() {{
-            if (functionDeclarations != null) {
-                functionDeclarations.forEach(element -> put(element.identifier, element));
-            }
-        }});
-    }
 
     public MiracleASTreeClassDeclaration(String identifier,
                                          List<MiracleASTreeVariableDeclaration> variableDeclarations,
@@ -63,19 +36,15 @@ public class MiracleASTreeClassDeclaration extends MiracleASTreeDeclaration {
         } else {
             this.functionDeclarations = null;
         }
-        this.type = new MiracleBaseType(identifier);
-        this.map = Collections.unmodifiableMap(new HashMap<String, MiracleASTreeMemberDeclaration>() {
-            private static final long serialVersionUID = 4184390405285077379L;
-
-            {
-                if (variableDeclarations != null) {
-                    variableDeclarations.forEach(element -> put(element.identifier, element));
-                }
-                if (functionDeclarations != null) {
-                    functionDeclarations.forEach(element -> put(element.identifier, element));
-                }
+        this.map = Collections.unmodifiableMap(new HashMap<String, MiracleASTreeMemberDeclaration>() {{
+            if (variableDeclarations != null) {
+                variableDeclarations.forEach(element -> put(element.identifier, element));
             }
-        });
+            if (functionDeclarations != null) {
+                functionDeclarations.forEach(element -> put(element.identifier, element));
+            }
+        }});
+        this.symbol = new MiracleSymbolClassType(identifier);
     }
 
     public MiracleSymbolTable getScope() {
@@ -95,8 +64,7 @@ public class MiracleASTreeClassDeclaration extends MiracleASTreeDeclaration {
         visitor.visit(this);
     }
 
-    @Override
-    public MiracleType getType() {
-        return type;
+    public MiracleSymbolClassType getSymbol() {
+        return symbol;
     }
 }

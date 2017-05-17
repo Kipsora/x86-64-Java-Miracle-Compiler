@@ -7,6 +7,6 @@
 
 set -e
 cd "$(dirname "$0")"
-export CCHK="java -cp ./utility/*:./bin com.miracle.Miracle --show-astree"
+export CCHK="java -cp ./utility/*:./bin com.miracle.Miracle"
 #cat > program.txt   # save everything in stdin to program.txt
 $CCHK
