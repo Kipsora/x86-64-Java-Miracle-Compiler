@@ -8,8 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1a1af29a-b77a-4b8c-9654-4271264bd490" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolTable.java" afterPath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolTable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java" afterPath="$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,255 +21,24 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MiracleASTreeSemanticAnalyser.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java">
+      <file leaf-file-name="Collections.class" pinned="false" current-in-tab="false">
+        <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/rt.jar!/java/util/Collections.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="268" column="25" lean-forward="true" selection-start-line="268" selection-start-column="25" selection-end-line="268" selection-end-column="25" />
+            <state relative-caret-position="164">
+              <caret line="1546" column="0" lean-forward="false" selection-start-line="1546" selection-start-column="0" selection-end-line="1546" selection-end-column="0" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#45285#45286#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MiracleSymbolPrimitiveType.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolPrimitiveType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-              <folding>
-                <element signature="e#987#988#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MiracleASTreeField.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeField.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
-              <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-              <folding>
-                <element signature="e#1073#1074#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MiracleASTree.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MiracleASTree.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="305" column="0" lean-forward="false" selection-start-line="305" selection-start-column="0" selection-end-line="305" selection-end-column="0" />
+            <state relative-caret-position="308">
+              <caret line="86" column="24" lean-forward="true" selection-start-line="86" selection-start-column="24" selection-end-line="86" selection-end-column="24" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MiracleSymbolTable.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolTable.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="23" column="27" lean-forward="false" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JAVA/com.miracle" pinned="false" current-in-tab="false">
-        <entry file="uml://JAVA/com.miracle">
-          <provider selected="true" editor-type-id="UmlEditorProvider">
-            <state>
-              <ID>JAVA</ID>
-              <OriginalElement>com.miracle</OriginalElement>
-              <nodes>
-                <node x="504.896666666667" y="184.0">com.miracle.symbol.MiracleSymbolType</node>
-                <node x="232.75" y="266.0">com.miracle.symbol.MiracleSymbolVariableType</node>
-                <node x="483.0" y="584.0">com.miracle.astree.MiracleASTree.Builder</node>
-                <node x="667.0" y="507.0">com.miracle.MiracleOption</node>
-                <node x="361.25" y="348.0">com.miracle.symbol.MiracleSymbolArrayType</node>
-                <node x="0.0" y="584.0">com.miracle.cstree</node>
-                <node x="2162.75" y="82.0">com.miracle.astree.MiracleASTree</node>
-                <node x="823.5066666666668" y="82.0">com.miracle.symbol.MiracleSymbol</node>
-                <node x="2330.75" y="82.0">com.miracle.astree.base.MiracleASTreeTypeNode</node>
-                <node x="1616.25" y="184.0">com.miracle.astree.statement.MiracleASTreeContinue</node>
-                <node x="1136.25" y="348.0">com.miracle.astree.statement.declaration.MiracleASTreeFunctionDeclaration</node>
-                <node x="232.0" y="507.0">com.miracle.intermediate</node>
-                <node x="1922.75" y="82.0">com.miracle.astree.statement.MiracleASTreeStatement</node>
-                <node x="2479.25" y="184.0">com.miracle.astree.statement.MiracleASTreeSelection</node>
-                <node x="861.0" y="507.0">com.miracle.astree.visitor</node>
-                <node x="831.25" y="348.0">com.miracle.astree.statement.declaration.MiracleASTreeVariableDeclaration</node>
-                <node x="721.75" y="266.0">com.miracle.symbol.MiracleSymbolFunctionType</node>
-                <node x="491.75" y="266.0">com.miracle.symbol.MiracleSymbolNullType</node>
-                <node x="2036.25" y="184.0">com.miracle.astree.statement.MiracleASTreeReturn</node>
-                <node x="0.0" y="430.0">com.miracle.symbol.MiracleSymbolClassType</node>
-                <node x="338.0" y="584.0">com.miracle.Miracle</node>
-                <node x="1160.25" y="184.0">com.miracle.astree.statement.declaration.MiracleASTreeDeclaration</node>
-                <node x="2144.25" y="0.0">com.miracle.astree.base.MiracleASTreeNode</node>
-                <node x="2710.25" y="184.0">com.miracle.astree.statement.MiracleASTreeBlock</node>
-                <node x="126.25" y="348.0">com.miracle.symbol.MiracleSymbolBaseType</node>
-                <node x="1408.25" y="184.0">com.miracle.astree.statement.MiracleASTreeBreak</node>
-                <node x="628.0" y="584.0">com.miracle.symbol.MiracleSymbolPrimitiveType.Types</node>
-                <node x="181.0" y="584.0">com.miracle.symbol.MiracleSymbolType.Category</node>
-                <node x="460.0" y="507.0">com.miracle.exception</node>
-                <node x="0.0" y="507.0">com.miracle.symbol.MiracleSymbolTable</node>
-                <node x="1289.75" y="266.0">com.miracle.astree.statement.declaration.MiracleASTreeClassDeclaration</node>
-                <node x="2251.25" y="184.0">com.miracle.astree.statement.MiracleASTreeIteration</node>
-                <node x="1847.25" y="184.0">com.miracle.astree.statement.expression</node>
-                <node x="984.75" y="266.0">com.miracle.astree.statement.declaration.MiracleASTreeMemberDeclaration</node>
-                <node x="237.0" y="430.0">com.miracle.symbol.MiracleSymbolPrimitiveType</node>
-              </nodes>
-              <notes />
-              <edges>
-                <edge source="com.miracle.symbol.MiracleSymbolClassType" target="com.miracle.symbol.MiracleSymbolBaseType">
-                  <point x="0.0" y="-16.0" />
-                  <point x="108.5" y="405.0" />
-                  <point x="180.0" y="405.0" />
-                  <point x="-53.75" y="16.0" />
-                </edge>
-                <edge source="com.miracle.symbol.MiracleSymbolType" target="com.miracle.symbol.MiracleSymbol">
-                  <point x="0.0" y="-16.0" />
-                  <point x="595.896666666667" y="164.0" />
-                  <point x="861.0066666666668" y="164.0" />
-                  <point x="-37.5" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.statement.expression" target="com.miracle.astree.statement.MiracleASTreeStatement">
-                  <point x="0.0" y="-16.0" />
-                  <point x="1931.75" y="164.0" />
-                  <point x="2019.0" y="164.0" />
-                  <point x="-13.75" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.statement.MiracleASTreeReturn" target="com.miracle.astree.statement.MiracleASTreeStatement">
-                  <point x="0.0" y="-16.0" />
-                  <point x="2133.75" y="164.0" />
-                  <point x="2046.5" y="164.0" />
-                  <point x="13.75" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.statement.MiracleASTreeSelection" target="com.miracle.astree.statement.MiracleASTreeStatement">
-                  <point x="0.0" y="-16.0" />
-                  <point x="2584.75" y="144.0" />
-                  <point x="2101.5" y="144.0" />
-                  <point x="68.75" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.statement.MiracleASTreeBreak" target="com.miracle.astree.statement.MiracleASTreeStatement">
-                  <point x="0.0" y="-16.0" />
-                  <point x="1502.25" y="144.0" />
-                  <point x="1964.0" y="144.0" />
-                  <point x="-68.75" y="16.0" />
-                </edge>
-                <edge source="com.miracle.symbol.MiracleSymbolFunctionType" target="com.miracle.symbol.MiracleSymbolType">
-                  <point x="0.0" y="-16.0" />
-                  <point x="843.25" y="241.0" />
-                  <point x="656.5633333333336" y="241.0" />
-                  <point x="60.66666666666663" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.statement.declaration.MiracleASTreeDeclaration" target="com.miracle.astree.statement.MiracleASTreeStatement">
-                  <point x="57.0" y="-16.0" />
-                  <point x="1331.25" y="134.0" />
-                  <point x="1936.5" y="134.0" />
-                  <point x="-96.25" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.statement.MiracleASTreeBlock" target="com.miracle.astree.statement.MiracleASTreeStatement">
-                  <point x="0.0" y="-16.0" />
-                  <point x="2803.25" y="134.0" />
-                  <point x="2129.0" y="134.0" />
-                  <point x="96.25" y="16.0" />
-                </edge>
-                <edge source="com.miracle.symbol.MiracleSymbolPrimitiveType" target="com.miracle.symbol.MiracleSymbolBaseType">
-                  <point x="0.0" y="-16.0" />
-                  <point x="359.0" y="405.0" />
-                  <point x="287.5" y="405.0" />
-                  <point x="53.75" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.statement.declaration.MiracleASTreeFunctionDeclaration" target="com.miracle.astree.statement.declaration.MiracleASTreeMemberDeclaration">
-                  <point x="0.0" y="-16.0" />
-                  <point x="1280.75" y="323.0" />
-                  <point x="1198.5" y="323.0" />
-                  <point x="71.25" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.statement.MiracleASTreeStatement" target="com.miracle.astree.base.MiracleASTreeNode">
-                  <point x="0.0" y="-16.0" />
-                  <point x="2032.75" y="57.0" />
-                  <point x="2175.0833333333335" y="57.0" />
-                  <point x="-61.666666666666515" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.statement.declaration.MiracleASTreeDeclaration" target="com.miracle.symbol.MiracleSymbol">
-                  <point x="-57.0" y="-16.0" />
-                  <point x="1217.25" y="164.0" />
-                  <point x="936.0066666666668" y="164.0" />
-                  <point x="37.5" y="16.0" />
-                </edge>
-                <edge source="com.miracle.symbol.MiracleSymbolBaseType" target="com.miracle.symbol.MiracleSymbolVariableType">
-                  <point x="0.0" y="-16.0" />
-                  <point x="233.75" y="323.0" />
-                  <point x="292.5" y="323.0" />
-                  <point x="-59.75" y="16.0" />
-                </edge>
-                <edge source="com.miracle.symbol.MiracleSymbolNullType" target="com.miracle.symbol.MiracleSymbolType">
-                  <point x="0.0" y="-16.0" />
-                  <point x="0.0" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.statement.declaration.MiracleASTreeClassDeclaration" target="com.miracle.astree.statement.declaration.MiracleASTreeDeclaration">
-                  <point x="0.0" y="-16.0" />
-                  <point x="1421.25" y="241.0" />
-                  <point x="1331.25" y="241.0" />
-                  <point x="57.0" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.statement.MiracleASTreeContinue" target="com.miracle.astree.statement.MiracleASTreeStatement">
-                  <point x="0.0" y="-16.0" />
-                  <point x="1721.75" y="154.0" />
-                  <point x="1991.5" y="154.0" />
-                  <point x="-41.25" y="16.0" />
-                </edge>
-                <edge source="com.miracle.symbol.MiracleSymbolVariableType" target="com.miracle.symbol.MiracleSymbolType">
-                  <point x="0.0" y="-16.0" />
-                  <point x="352.25" y="241.0" />
-                  <point x="535.2300000000004" y="241.0" />
-                  <point x="-60.66666666666663" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.statement.declaration.MiracleASTreeVariableDeclaration" target="com.miracle.astree.statement.declaration.MiracleASTreeMemberDeclaration">
-                  <point x="0.0" y="-16.0" />
-                  <point x="973.75" y="323.0" />
-                  <point x="1056.0" y="323.0" />
-                  <point x="-71.25" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.base.MiracleASTreeTypeNode" target="com.miracle.astree.base.MiracleASTreeNode">
-                  <point x="0.0" y="-16.0" />
-                  <point x="2439.25" y="57.0" />
-                  <point x="2298.4166666666665" y="57.0" />
-                  <point x="61.666666666666515" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.statement.declaration.MiracleASTreeMemberDeclaration" target="com.miracle.astree.statement.declaration.MiracleASTreeDeclaration">
-                  <point x="0.0" y="-16.0" />
-                  <point x="1127.25" y="241.0" />
-                  <point x="1217.25" y="241.0" />
-                  <point x="-57.0" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.statement.MiracleASTreeIteration" target="com.miracle.astree.statement.MiracleASTreeStatement">
-                  <point x="0.0" y="-16.0" />
-                  <point x="2355.25" y="154.0" />
-                  <point x="2074.0" y="154.0" />
-                  <point x="41.25" y="16.0" />
-                </edge>
-                <edge source="com.miracle.astree.MiracleASTree" target="com.miracle.astree.base.MiracleASTreeNode">
-                  <point x="0.0" y="-16.0" />
-                  <point x="0.0" y="16.0" />
-                </edge>
-                <edge source="com.miracle.symbol.MiracleSymbolArrayType" target="com.miracle.symbol.MiracleSymbolVariableType">
-                  <point x="0.0" y="-16.0" />
-                  <point x="470.75" y="323.0" />
-                  <point x="412.0" y="323.0" />
-                  <point x="59.75" y="16.0" />
-                </edge>
-              </edges>
-              <settings layout="Hierarchic Group" zoom="1.0" x="622.0" y="238.0" />
-              <SelectedNodes>
-                <node>com.miracle.symbol.MiracleSymbolType</node>
-              </SelectedNodes>
-              <Categories />
-              <SCOPE>All</SCOPE>
-              <VISIBILITY>private</VISIBILITY>
             </state>
           </provider>
         </entry>
@@ -287,7 +55,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>class</find>
       <find>invalid</find>
       <find>invalid use of this</find>
       <find>Function</find>
@@ -305,7 +72,6 @@
       <find>Miracle</find>
       <find>mmp</find>
       <find>binary</find>
-      <find>exception</find>
       <find>constructor</find>
       <find>s</find>
       <find>subscription</find>
@@ -315,8 +81,10 @@
       <find>Binary</find>
       <find>Variable</find>
       <find>Call</find>
-      <find>function needs</find>
       <find>println</find>
+      <find>function needs</find>
+      <find>cannot find</find>
+      <find>exception</find>
     </findStrings>
     <replaceStrings>
       <replace>T</replace>
@@ -385,11 +153,11 @@
         <option value="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeMemberFetcher.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolFunctionType.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/Miracle.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolArrayType.java" />
         <option value="$PROJECT_DIR$/antlr/Miracle.g4" />
         <option value="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolTable.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java" />
       </list>
     </option>
   </component>
@@ -702,354 +470,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="symbol" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intermediate" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intermediate" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visitor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intermediate" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="structure" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intermediate" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="number" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="intermediate" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="instruction" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="exception" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cstree" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cstree" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="parser" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="astree" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="astree" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="visitor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="astree" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="statement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="astree" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="statement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="declaration" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="miracle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="astree" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="base" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1572,7 +992,7 @@
       <workItem from="1494998618830" duration="1218000" />
       <workItem from="1495006450111" duration="10204000" />
       <workItem from="1495017617267" duration="17491000" />
-      <workItem from="1495038003454" duration="5186000" />
+      <workItem from="1495038003454" duration="5817000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit.">
       <created>1494578117985</created>
@@ -1728,11 +1148,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495042282745</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Bugs fixed for functions calling.">
+      <created>1495043220249</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1495043220249</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="188724000" />
+    <option name="totallyTimeSpent" value="189355000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
@@ -1758,7 +1185,7 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14652957" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.8714653" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29415715" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1810,6 +1237,32 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
@@ -1829,7 +1282,8 @@
     <MESSAGE value="Bulletin files added." />
     <MESSAGE value="More swift code added &amp; symbol table changed." />
     <MESSAGE value="G4 modified &amp; Bugs fixed." />
-    <option name="LAST_COMMIT_MESSAGE" value="G4 modified &amp; Bugs fixed." />
+    <MESSAGE value="Bugs fixed for functions calling." />
+    <option name="LAST_COMMIT_MESSAGE" value="Bugs fixed for functions calling." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1844,40 +1298,10 @@
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java</url>
-          <line>555</line>
-          <properties />
-          <option name="timeStamp" value="49" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java</url>
-          <line>558</line>
-          <properties />
-          <option name="timeStamp" value="50" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java</url>
-          <line>562</line>
-          <properties />
-          <option name="timeStamp" value="51" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java</url>
-          <line>301</line>
-          <properties />
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java</url>
-          <line>305</line>
+          <line>316</line>
           <properties />
           <option name="timeStamp" value="58" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java</url>
-          <line>249</line>
-          <properties />
-          <option name="timeStamp" value="59" />
         </line-breakpoint>
       </breakpoints>
       <option name="time" value="60" />
@@ -1889,14 +1313,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/MiracleOption.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="74" lean-forward="false" selection-start-line="3" selection-start-column="74" selection-end-line="3" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/rt.jar!/java/util/LinkedHashMap.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -2466,29 +1882,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="305" column="0" lean-forward="false" selection-start-line="305" selection-start-column="0" selection-end-line="305" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeField.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding>
-            <element signature="e#1073#1074#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolTable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="23" column="27" lean-forward="false" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-344">
+          <caret line="534" column="9" lean-forward="true" selection-start-line="534" selection-start-column="9" selection-end-line="534" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2502,13 +1910,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeField.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="268" column="25" lean-forward="true" selection-start-line="268" selection-start-column="25" selection-end-line="268" selection-end-column="25" />
+        <state relative-caret-position="300">
+          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#1073#1074#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/rt.jar!/java/util/Collections.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="1546" column="0" lean-forward="false" selection-start-line="1546" selection-start-column="0" selection-end-line="1546" selection-end-column="0" />
+          <folding>
+            <element signature="e#45285#45286#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="86" column="24" lean-forward="true" selection-start-line="86" selection-start-column="24" selection-end-line="86" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
