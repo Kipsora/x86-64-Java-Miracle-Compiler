@@ -5,7 +5,7 @@ import com.miracle.MiracleOption;
 import static com.miracle.symbol.MiracleSymbolTable.__builtin_int;
 
 public class MiracleSymbolArrayType extends MiracleSymbolVariableType {
-    public final MiracleSymbolVariableType baseType;
+    public final MiracleSymbolBaseType baseType;
     public final int dimension;
 
     public MiracleSymbolArrayType(MiracleSymbolBaseType baseType,
@@ -17,7 +17,11 @@ public class MiracleSymbolArrayType extends MiracleSymbolVariableType {
     }
 
     public MiracleSymbolType subscript() {
-        return baseType;
+        if (dimension > 1) {
+            return new MiracleSymbolArrayType(baseType, dimension - 1);
+        } else {
+            return baseType;
+        }
     }
 
     @Override

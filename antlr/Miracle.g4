@@ -40,10 +40,10 @@ emptyStatement: ';';
 typename: basetype ('[' ']')*;
 
 basetype
-    : type=BUILTIN_INT
-    | type=BUILTIN_BOOL
-    | type=BUILTIN_VOID
-    | type=BUILTIN_STRING
+    : 'int'
+    | 'bool'
+    | 'void'
+    | 'string'
     | IDENTIFIER
     ;
 
@@ -79,11 +79,6 @@ constant: INTEGER                                                               
     | ('true' | 'false')                                                                    #boolConstant
     | 'null'                                                                                #nullConstant
     ;
-
-BUILTIN_INT: 'int';
-BUILTIN_BOOL: 'bool';
-BUILTIN_STRING: 'string';
-BUILTIN_VOID: 'void';
 
 DECORATOR: 'public' | 'private' | 'protected';
 
