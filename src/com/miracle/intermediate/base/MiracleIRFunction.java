@@ -1,4 +1,4 @@
-package com.miracle.intermediate;
+package com.miracle.intermediate.base;
 
 import com.miracle.astree.MiracleASTree;
 import com.miracle.astree.base.MiracleASTreeTypeNode;
@@ -12,14 +12,47 @@ import com.miracle.astree.statement.expression.constant.MiracleASTreeIntegerCons
 import com.miracle.astree.statement.expression.constant.MiracleASTreeNullConstant;
 import com.miracle.astree.statement.expression.constant.MiracleASTreeStringConstant;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
+import com.miracle.symbol.type.MiracleVariableType;
 
-public class MiracleIR {
+import java.util.List;
 
+public class MiracleIRFunction extends MiracleIRBase {
+    private final MiracleVariableType returnType;
+    private MiracleIRBasicBlock entryBasicBlock;
+
+    public MiracleIRFunction(MiracleVariableType returnType,
+                             MiracleIRBasicBlock block) {
+        this.returnType = returnType;
+        this.entryBasicBlock = block;
+    }
+
+    public MiracleIRFunction(MiracleVariableType returnType) {
+        this.returnType = returnType;
+    }
+
+    public MiracleIRBasicBlock getEntryBasicBlock() {
+        return entryBasicBlock;
+    }
+
+    public void setEntryBasicBlock(MiracleIRBasicBlock entryBasicBlock) {
+        this.entryBasicBlock = entryBasicBlock;
+    }
 
     public static class Builder implements MiracleASTreeVisitor {
+        private MiracleIRFunction currentFunction;
+
         @Override
         public void visit(MiracleASTreeFunctionDeclaration functionDeclaration) {
+            currentFunction = new MiracleIRFunction(functionDeclaration.returnType.type);
 
+            if (functionDeclaration.body != null) { // avoid builtin functions
+
+                List<MiracleASTreeStatement> body = functionDeclaration.body;
+                for (int i = 0, bodySize = body.size(); i < bodySize; i++) {
+                    MiracleASTreeStatement element = body.get(i);
+                    element.accept(this);
+                }
+            }
         }
 
         @Override

@@ -3,7 +3,6 @@ package com.miracle.symbol.type;
 import com.miracle.symbol.MiracleSymbolTable;
 
 public class MiracleBaseType extends MiracleVariableType {
-
     public final String identifier;
 
     public MiracleBaseType(String identifier) {
