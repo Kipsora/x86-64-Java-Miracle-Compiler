@@ -80,9 +80,9 @@ public class MiracleASTree extends MiracleASTreeNode {
             List<MiracleParser.FunctionDeclarationStatementContext> functionDeclarationStatement = ctx.functionDeclarationStatement();
             for (int i = 0, functionDeclarationStatementSize = functionDeclarationStatement.size(); i < functionDeclarationStatementSize; i++) {
                 MiracleParser.FunctionDeclarationStatementContext element = functionDeclarationStatement.get(i);
-                if (element.IDENTIFIER() == null) {
+                if (element.IDENTIFIER().isEmpty()) {
                     if (constructorDeclaration != null) {
-                        exceptionContainer.add("multiple declarations of constructors are found",
+                        exceptionContainer.add("multiple declarations of constructors in class `" + ctx.IDENTIFIER().getText() + " `are found",
                                 new MiracleSourcePosition(element.typename(0)));
                     } else {
                         constructorDeclaration = (MiracleASTreeFunctionDeclaration) property.get(element);
@@ -125,14 +125,25 @@ public class MiracleASTree extends MiracleASTreeNode {
                         false
                 ));
             }
-            property.put(ctx, new MiracleASTreeFunctionDeclaration(
-                    ctx.IDENTIFIER().get(0).getText(),
-                    (MiracleASTreeTypeNode) property.get(ctx.typename(0)),
-                    parameters,
-                    body,
-                    new MiracleSourcePosition(ctx),
-                    new MiracleSourcePosition(ctx.IDENTIFIER(0).getSymbol())
-            ));
+            if (ctx.IDENTIFIER().isEmpty()) {
+                property.put(ctx, new MiracleASTreeFunctionDeclaration(
+                        null,
+                        (MiracleASTreeTypeNode) property.get(ctx.typename(0)),
+                        parameters,
+                        body,
+                        new MiracleSourcePosition(ctx),
+                        null
+                ));
+            } else {
+                property.put(ctx, new MiracleASTreeFunctionDeclaration(
+                        ctx.IDENTIFIER().get(0).getText(),
+                        (MiracleASTreeTypeNode) property.get(ctx.typename(0)),
+                        parameters,
+                        body,
+                        new MiracleSourcePosition(ctx),
+                        new MiracleSourcePosition(ctx.IDENTIFIER(0).getSymbol())
+                ));
+            }
         }
 
         @Override
