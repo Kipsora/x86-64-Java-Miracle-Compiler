@@ -12,21 +12,7 @@ public class MiracleSymbolTable {
     public final static MiracleSymbolPrimitiveType __builtin_void = new MiracleSymbolPrimitiveType(VOID);
     public final static MiracleSymbolPrimitiveType __builtin_int = new MiracleSymbolPrimitiveType(INT);
     public final static MiracleSymbolPrimitiveType __builtin_bool = new MiracleSymbolPrimitiveType(BOOL);
-    public final static MiracleSymbolPrimitiveType __builtin_string = new MiracleSymbolPrimitiveType(STRING) {{
-        addMethod("length", new MiracleSymbolFunctionType(__builtin_int));
-        addMethod("substring", new MiracleSymbolFunctionType(__builtin_string) {{
-            addParameter("x", __builtin_int);
-            addParameter("y", __builtin_int);
-        }});
-        addMethod("parseInt", new MiracleSymbolFunctionType(__builtin_int));
-        addMethod("substring", new MiracleSymbolFunctionType(__builtin_string) {{
-            addParameter("x", __builtin_int);
-            addParameter("y", __builtin_int);
-        }});
-        addMethod("ord", new MiracleSymbolFunctionType(__builtin_int) {{
-            addParameter("x", __builtin_int);
-        }});
-    }};
+    public final static MiracleSymbolPrimitiveType __builtin_string = new MiracleSymbolPrimitiveType(STRING);
 
     private final static MiracleSymbolFunctionType __builtin_print = new MiracleSymbolFunctionType(__builtin_void) {{
         addParameter("x", __builtin_string);
@@ -53,6 +39,22 @@ public class MiracleSymbolTable {
         put("string", __builtin_string);
         put("void", __builtin_void);
     }};
+
+    static {
+        __builtin_string.addMethod("length", new MiracleSymbolFunctionType(__builtin_int));
+        __builtin_string.addMethod("substring", new MiracleSymbolFunctionType(__builtin_string) {{
+            addParameter("x", __builtin_int);
+            addParameter("y", __builtin_int);
+        }});
+        __builtin_string.addMethod("parseInt", new MiracleSymbolFunctionType(__builtin_int));
+        __builtin_string.addMethod("substring", new MiracleSymbolFunctionType(__builtin_string) {{
+            addParameter("x", __builtin_int);
+            addParameter("y", __builtin_int);
+        }});
+        __builtin_string.addMethod("ord", new MiracleSymbolFunctionType(__builtin_int) {{
+            addParameter("x", __builtin_int);
+        }});
+    }
 
     private final MiracleSymbolTable parentSymbolTable;
     private final Map<String, MiracleASTreeDeclaration> currentSymbolTable = new HashMap<>();
