@@ -1,9 +1,8 @@
-package com.miracle.intermediate.instruction.branch;
+package com.miracle.intermediate.value;
 
 import com.miracle.intermediate.visitor.MiracleIRVisitor;
 
-public class MiracleIRReturn extends MiracleIRBranch {
-    @Override
+public class MiracleIRStaticString {
     public void accept(MiracleIRVisitor visitor) {
         visitor.visit(this);
     }

@@ -1,76 +1,71 @@
 package com.miracle.intermediate.structure;
 
-import com.miracle.intermediate.MiracleIRBase;
 import com.miracle.intermediate.instruction.MiracleIRInstruction;
+import com.miracle.intermediate.visitor.MiracleIRVisitor;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class MiracleIRBasicBlock extends MiracleIRBase {
-    public final Node head = new Node(null, null, null, this);
-    public final Node tail = new Node(null, null, null, this);
-    private final List<MiracleIRBasicBlock> prevBasicBlock = new LinkedList<>();
-    private final List<MiracleIRBasicBlock> succBasicBlock = new LinkedList<>();
+public class MiracleIRBasicBlock {
+    public final Node head;
+    public final Node tail;
+
+    private List<MiracleIRBasicBlock> predBB = new LinkedList<>();
+    private List<MiracleIRBasicBlock> succBB = new LinkedList<>();
 
     public MiracleIRBasicBlock() {
-        head.succ = tail;
-        tail.prev = head;
+        this.head = new Node(null, null, null);
+        this.tail = new Node(null, null, null);
+
+        this.head.setSucc(this.tail);
+        this.tail.setPrev(this.head);
     }
 
-    public Node append(MiracleIRInstruction data) {
-        Node node = new Node(tail.prev, tail, data, this);
-        tail.prev.succ = node;
-        tail.prev = node;
-        return node;
+    public void addPredBB(MiracleIRBasicBlock block) {
+        predBB.add(block);
     }
 
-    public Node prepend(MiracleIRInstruction data) {
-        Node node = new Node(head, head.succ, data, this);
-        head.succ.prev = node;
-        head.succ = node;
-        return node;
+    public void addSuccBB(MiracleIRBasicBlock block) {
+        succBB.add(block);
     }
 
-    public void remove(Node node) {
-        if (node.currentBasicBlock == this) {
-            throw new RuntimeException("Invalid operation");
-        }
-        node.prev.succ = node.succ;
-        node.succ.prev = node.prev;
-        node.prev = node.succ = null;
+    public void accept(MiracleIRVisitor visitor) {
+        visitor.visit(this);
     }
 
-    public void addPrevBlock(MiracleIRBasicBlock block) {
-        prevBasicBlock.add(block);
-        block.succBasicBlock.add(this);
-    }
-
-    public void addSuccBlock(MiracleIRBasicBlock block) {
-        succBasicBlock.add(block);
-        block.prevBasicBlock.add(this);
+    public void append(MiracleIRInstruction data) {
+        Node node = new Node(tail.prev, tail, data);
+        tail.prev.setSucc(node);
+        tail.setPrev(node);
     }
 
     public static class Node {
-        private final MiracleIRBasicBlock currentBasicBlock;
-        private MiracleIRInstruction data;
+        public final MiracleIRInstruction instruction;
         private Node prev;
         private Node succ;
 
-        private Node(Node prev,
-                     Node succ,
-                     MiracleIRInstruction data, MiracleIRBasicBlock currentBasicBlock) {
+        private Node(Node prev, Node succ, MiracleIRInstruction instruction) {
             this.prev = prev;
             this.succ = succ;
-            this.data = data;
-            this.currentBasicBlock = currentBasicBlock;
+            this.instruction = instruction;
         }
 
-        public MiracleIRInstruction getInstruction() {
-            return data;
+        public Node getSucc() {
+            return succ;
         }
 
-        public void setInstruction(MiracleIRInstruction data) {
-            this.data = data;
+        private Node setSucc(Node succ) {
+            this.succ = succ;
+            return this;
+        }
+
+        public Node getPrev() {
+            return prev;
+        }
+
+        private Node setPrev(Node prev) {
+            this.prev = prev;
+            return this;
         }
     }
 }

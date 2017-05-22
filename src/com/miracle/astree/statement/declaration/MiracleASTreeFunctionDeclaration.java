@@ -5,7 +5,6 @@ import com.miracle.astree.statement.MiracleASTreeStatement;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.cstree.MiracleSourcePosition;
 import com.miracle.symbol.MiracleSymbolFunctionType;
-import com.miracle.symbol.MiracleSymbolTable;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +14,6 @@ public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclara
     public final List<MiracleASTreeVariableDeclaration> parameters;
     public final List<MiracleASTreeStatement> body;
     private final MiracleSymbolFunctionType symbol;
-    private MiracleSymbolTable scope;
 
     public MiracleASTreeFunctionDeclaration(String identifier,
                                             MiracleASTreeTypeNode returnType,
@@ -32,14 +30,6 @@ public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclara
             this.body = null;
         }
         this.symbol = new MiracleSymbolFunctionType();
-    }
-
-    public MiracleSymbolTable getScope() {
-        return scope;
-    }
-
-    public void setScope(MiracleSymbolTable scope) {
-        this.scope = scope;
     }
 
     @Override

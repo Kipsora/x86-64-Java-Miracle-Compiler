@@ -46,4 +46,9 @@ public class MiracleSymbolArrayType extends MiracleSymbolVariableType {
     public String getName() {
         return "$array";
     }
+
+    @Override
+    public int getMemorySize() {
+        return 0;
+    }
 }

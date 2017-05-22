@@ -30,6 +30,11 @@ public class MiracleSymbolPrimitiveType extends MiracleSymbolBaseType {
     }
 
     @Override
+    public int getMemorySize() {
+        return 0;
+    }
+
+    @Override
     public void addMethod(String identifier, MiracleSymbolFunctionType method) {
         functions.put(identifier, method);
     }

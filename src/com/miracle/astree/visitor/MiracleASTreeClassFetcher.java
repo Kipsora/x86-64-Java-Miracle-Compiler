@@ -13,13 +13,13 @@ public class MiracleASTreeClassFetcher extends MiracleASTreeBaseVisitor {
     private final MiracleExceptionContainer exceptionContainer;
     private MiracleSymbolTable symbolTable;
 
-    public MiracleASTreeClassFetcher(MiracleExceptionContainer exceptionContainer, MiracleSymbolTable symbolTable) {
+    public MiracleASTreeClassFetcher(MiracleExceptionContainer exceptionContainer) {
         this.exceptionContainer = exceptionContainer;
-        this.symbolTable = symbolTable;
     }
 
     @Override
     public void visit(MiracleASTree astree) {
+        astree.setScope(symbolTable = new MiracleSymbolTable(null));
         astree.declarations.forEach((element) -> element.accept(this));
     }
 
@@ -31,7 +31,8 @@ public class MiracleASTreeClassFetcher extends MiracleASTreeBaseVisitor {
                     classDeclaration.identifierPosition
             );
         }
-        classDeclaration.setScope(symbolTable = new MiracleSymbolTable(symbolTable));
+        classDeclaration.setScope(symbolTable);
+        symbolTable = new MiracleSymbolTable(symbolTable);
         classDeclaration.functionDeclarations.forEach(element -> element.accept(this));
         if (classDeclaration.constructorDeclaration != null) {
             classDeclaration.constructorDeclaration.accept(this);
@@ -41,7 +42,8 @@ public class MiracleASTreeClassFetcher extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTreeFunctionDeclaration functionDeclaration) {
-        functionDeclaration.setScope(symbolTable = new MiracleSymbolTable(symbolTable));
+        functionDeclaration.setScope(symbolTable);
+        symbolTable = new MiracleSymbolTable(symbolTable);
         if (functionDeclaration.body != null) {
             functionDeclaration.body.forEach(element -> element.accept(this));
         }
@@ -67,7 +69,8 @@ public class MiracleASTreeClassFetcher extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTreeBlock block) {
-        block.setScope(symbolTable = new MiracleSymbolTable(symbolTable));
+        block.setScope(symbolTable);
+        symbolTable = new MiracleSymbolTable(symbolTable);
         block.statements.forEach(element -> element.accept(this));
         symbolTable = symbolTable.getParentSymbolTable();
     }

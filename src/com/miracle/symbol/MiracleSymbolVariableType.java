@@ -6,4 +6,6 @@ public abstract class MiracleSymbolVariableType extends MiracleSymbolType {
     }
 
     public abstract String getName();
+
+    public abstract int getMemorySize();
 }

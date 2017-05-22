@@ -1,14 +1,14 @@
-package com.miracle.intermediate.structure;
+package com.miracle.intermediate.value;
 
 import com.miracle.intermediate.visitor.MiracleIRVisitor;
 
-public class MiracleIRFunction {
+public class MiracleIRStaticVariable {
     public final String identifier;
-    public final MiracleIRBasicBlock entryBB;
+    public final int size;
 
-    public MiracleIRFunction(String identifier) {
+    public MiracleIRStaticVariable(String identifier, int size) {
         this.identifier = identifier;
-        this.entryBB = new MiracleIRBasicBlock();
+        this.size = size;
     }
 
     public void accept(MiracleIRVisitor visitor) {

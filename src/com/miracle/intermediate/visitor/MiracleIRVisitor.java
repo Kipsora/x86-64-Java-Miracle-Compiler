@@ -1,16 +1,25 @@
 package com.miracle.intermediate.visitor;
 
-import com.miracle.intermediate.instruction.MiracleIRAllocate;
-import com.miracle.intermediate.instruction.MiracleIRAssign;
-import com.miracle.intermediate.instruction.branch.MiracleIRJump;
-import com.miracle.intermediate.instruction.branch.MiracleIRReturn;
+import com.miracle.intermediate.MiracleIR;
+import com.miracle.intermediate.instruction.MiracleIRBinary;
+import com.miracle.intermediate.instruction.MiracleIRMove;
+import com.miracle.intermediate.structure.MiracleIRBasicBlock;
+import com.miracle.intermediate.structure.MiracleIRFunction;
+import com.miracle.intermediate.value.MiracleIRStaticString;
+import com.miracle.intermediate.value.MiracleIRStaticVariable;
 
 public interface MiracleIRVisitor {
-    void visit(MiracleIRAllocate allocate);
+    void visit(MiracleIR ir);
 
-    void visit(MiracleIRAssign assign);
+    void visit(MiracleIRBinary binary);
 
-    void visit(MiracleIRJump jump);
+    void visit(MiracleIRStaticString staticString);
 
-    void visit(MiracleIRReturn returnInstruction);
+    void visit(MiracleIRStaticVariable staticVariable);
+
+    void visit(MiracleIRFunction function);
+
+    void visit(MiracleIRBasicBlock block);
+
+    void visit(MiracleIRMove move);
 }

@@ -47,14 +47,6 @@ public class MiracleASTreeClassDeclaration extends MiracleASTreeDeclaration {
         this.symbol = new MiracleSymbolClassType(identifier);
     }
 
-    public MiracleSymbolTable getScope() {
-        return scope;
-    }
-
-    public void setScope(MiracleSymbolTable scope) {
-        this.scope = scope;
-    }
-
     public MiracleASTreeMemberDeclaration get(String name) {
         return map.getOrDefault(name, null);
     }

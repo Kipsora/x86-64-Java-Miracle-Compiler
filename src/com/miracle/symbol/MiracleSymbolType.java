@@ -13,7 +13,7 @@ public abstract class MiracleSymbolType implements MiracleSymbol {
         this.size = size;
     }
 
-    public int getSize() {
+    public int getRegisterSize() {
         return size;
     }
 

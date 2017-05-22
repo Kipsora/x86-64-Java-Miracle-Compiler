@@ -10,17 +10,15 @@ import com.miracle.symbol.*;
 
 public class MiracleASTreeMemberFetcher extends MiracleASTreeBaseVisitor {
     private final MiracleExceptionContainer exceptionContainer;
-    private final MiracleSymbolTable globalSymbolTable;
     private MiracleSymbolTable symbolTable;
 
-    public MiracleASTreeMemberFetcher(MiracleExceptionContainer exceptionContainer, MiracleSymbolTable symbolTable) {
+    public MiracleASTreeMemberFetcher(MiracleExceptionContainer exceptionContainer) {
         this.exceptionContainer = exceptionContainer;
-        this.symbolTable = symbolTable;
-        this.globalSymbolTable = symbolTable;
     }
 
     @Override
     public void visit(MiracleASTree astree) {
+        symbolTable = astree.getScope();
         astree.declarations.forEach((element) -> {
             if (element instanceof MiracleASTreeClassDeclaration) {
                 element.accept(this);

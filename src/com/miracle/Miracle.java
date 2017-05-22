@@ -9,7 +9,8 @@ import com.miracle.cstree.parser.MiracleLexer;
 import com.miracle.cstree.parser.MiracleParser;
 import com.miracle.exception.MiracleCSTreeErrorHandler;
 import com.miracle.exception.MiracleExceptionContainer;
-import com.miracle.symbol.MiracleSymbolTable;
+import com.miracle.intermediate.MiracleIR;
+import com.miracle.intermediate.visitor.MiracleAssemblyGenerator;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -88,23 +89,32 @@ public class Miracle {
         MiracleASTree.Builder builder = new MiracleASTree.Builder(exceptionContainer);
         new ParseTreeWalker().walk(builder, cstree);
         MiracleASTree astree = builder.build();
-        MiracleSymbolTable symbolTable = new MiracleSymbolTable(null);
-        astree.accept(new MiracleASTreeClassFetcher(exceptionContainer, symbolTable));
-        astree.accept(new MiracleASTreeMemberFetcher(exceptionContainer, symbolTable));
-        astree.accept(new MiracleASTreeSemanticAnalyser(exceptionContainer, symbolTable));
+        astree.accept(new MiracleASTreeClassFetcher(exceptionContainer));
+        astree.accept(new MiracleASTreeMemberFetcher(exceptionContainer));
+        astree.accept(new MiracleASTreeSemanticAnalyser(exceptionContainer));
         exceptionContainer.judge();
         return astree;
+    }
+
+    private MiracleIR getIR(MiracleASTree astree) {
+        MiracleIR.Builder builder = new MiracleIR.Builder();
+        astree.accept(builder);
+        return builder.build();
     }
 
     private void run() throws IOException {
         try {
             MiracleParser.MiracleContext cstree = getCSTree();
             MiracleASTree astree = getASTree(cstree);
-            if (this.printASTree) astree.accept(new MiracleASTreePrinter(outputStream));
-            //MiracleIRFunction ir = getIR(astree);
-            if (this.printIR) {
-
+            if (this.printASTree) {
+                astree.accept(new MiracleASTreePrinter(outputStream));
             }
+            MiracleIR ir = getIR(astree);
+            if (this.printIR) {
+            }
+            MiracleAssemblyGenerator generator = new MiracleAssemblyGenerator();
+            ir.accept(generator);
+            System.out.println(generator.getOutput());
         } catch (RuntimeException e) {
             e.printStackTrace();
         }

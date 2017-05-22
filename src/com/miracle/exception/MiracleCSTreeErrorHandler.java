@@ -1,12 +1,12 @@
 package com.miracle.exception;
 
 import com.miracle.cstree.MiracleSourcePosition;
+import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.CommonToken;
-import org.antlr.v4.runtime.ConsoleErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 
-public class MiracleCSTreeErrorHandler extends ConsoleErrorListener {
+public class MiracleCSTreeErrorHandler extends BaseErrorListener {
     private final MiracleExceptionContainer exceptionContainer;
 
     public MiracleCSTreeErrorHandler(MiracleExceptionContainer exceptionContainer) {

@@ -1,8 +1,6 @@
 package com.miracle.intermediate.instruction;
 
-import com.miracle.intermediate.MiracleIRBase;
-import com.miracle.intermediate.visitor.MiracleIRVisitor;
+import com.miracle.intermediate.MiracleIRNode;
 
-public abstract class MiracleIRInstruction extends MiracleIRBase {
-    public abstract void accept(MiracleIRVisitor visitor);
+public abstract class MiracleIRInstruction extends MiracleIRNode {
 }
