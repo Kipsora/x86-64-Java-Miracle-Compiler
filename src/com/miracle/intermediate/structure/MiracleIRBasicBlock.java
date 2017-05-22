@@ -3,40 +3,26 @@ package com.miracle.intermediate.structure;
 import com.miracle.intermediate.instruction.MiracleIRInstruction;
 import com.miracle.intermediate.visitor.MiracleIRVisitor;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class MiracleIRBasicBlock {
-    public final Node head;
+    public final String name;
+
     public final Node tail;
+    private final Node head;
 
-    private List<MiracleIRBasicBlock> predBB = new LinkedList<>();
-    private List<MiracleIRBasicBlock> succBB = new LinkedList<>();
-
-    public MiracleIRBasicBlock() {
-        this.head = new Node(null, null, null);
-        this.tail = new Node(null, null, null);
-
-        this.head.setSucc(this.tail);
-        this.tail.setPrev(this.head);
+    public MiracleIRBasicBlock(String name) {
+        this.name = name;
+        this.head = new Node(null);
+        this.tail = new Node(null);
+        this.head.succ = this.tail;
+        this.tail.prev = this.head;
     }
 
-    public void addPredBB(MiracleIRBasicBlock block) {
-        predBB.add(block);
-    }
-
-    public void addSuccBB(MiracleIRBasicBlock block) {
-        succBB.add(block);
+    public Node getHead() {
+        return head.succ;
     }
 
     public void accept(MiracleIRVisitor visitor) {
         visitor.visit(this);
-    }
-
-    public void append(MiracleIRInstruction data) {
-        Node node = new Node(tail.prev, tail, data);
-        tail.prev.setSucc(node);
-        tail.setPrev(node);
     }
 
     public static class Node {
@@ -44,9 +30,7 @@ public class MiracleIRBasicBlock {
         private Node prev;
         private Node succ;
 
-        private Node(Node prev, Node succ, MiracleIRInstruction instruction) {
-            this.prev = prev;
-            this.succ = succ;
+        public Node(MiracleIRInstruction instruction) {
             this.instruction = instruction;
         }
 
@@ -54,18 +38,24 @@ public class MiracleIRBasicBlock {
             return succ;
         }
 
-        private Node setSucc(Node succ) {
-            this.succ = succ;
-            return this;
-        }
-
         public Node getPrev() {
             return prev;
         }
 
-        private Node setPrev(Node prev) {
-            this.prev = prev;
-            return this;
+        public void append(MiracleIRInstruction instruction) {
+            Node node = new Node(instruction);
+            node.prev = this;
+            node.succ = this.succ;
+            if (succ != null) succ.prev = node;
+            this.succ = node;
+        }
+
+        public void prepend(MiracleIRInstruction instruction) {
+            Node node = new Node(instruction);
+            node.succ = this;
+            node.prev = this.prev;
+            if (prev != null) prev.succ = node;
+            this.prev = node;
         }
     }
 }

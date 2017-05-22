@@ -1,22 +1,20 @@
 package com.miracle.intermediate.instruction;
 
-import com.miracle.intermediate.value.MiracleIRRegister;
+import com.miracle.intermediate.number.MiracleIRNumber;
+import com.miracle.intermediate.number.MiracleIRRegister;
 import com.miracle.intermediate.visitor.MiracleIRVisitor;
 
-public class MiracleIRBinary extends MiracleIRInstruction {
-    public final Types operator;
-    public final MiracleIRRegister sourceA;
-    public final MiracleIRRegister sourceB;
+public class MiracleIRBinaryArithmetic extends MiracleIRInstruction {
     public final MiracleIRRegister target;
+    public final MiracleIRNumber source;
+    public final Types operator;
 
-    public MiracleIRBinary(MiracleIRRegister sourceA,
-                           Types operator,
-                           MiracleIRRegister sourceB,
-                           MiracleIRRegister target) {
+    public MiracleIRBinaryArithmetic(Types operator,
+                                     MiracleIRRegister target,
+                                     MiracleIRNumber source) {
         this.operator = operator;
-        this.sourceA = sourceA;
-        this.sourceB = sourceB;
         this.target = target;
+        this.source = source;
     }
 
     @Override
@@ -26,7 +24,7 @@ public class MiracleIRBinary extends MiracleIRInstruction {
 
     public enum Types {
         ADD, SUB, MUL, DIV, MOD,
-        SHL, SHR, AND, OR, XOR;
+        SHL, SHR, XOR, AND, OR;
 
         @Override
         public String toString() {
@@ -44,12 +42,12 @@ public class MiracleIRBinary extends MiracleIRInstruction {
                 return "shl";
             } else if (this.equals(SHR)) {
                 return "sar";
+            } else if (this.equals(XOR)) {
+                return "xor";
             } else if (this.equals(AND)) {
                 return "and";
-            } else if (this.equals(OR)) {
-                return "or";
             } else {
-                return "xor";
+                return "or";
             }
         }
     }

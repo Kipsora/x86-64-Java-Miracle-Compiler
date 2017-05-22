@@ -45,6 +45,9 @@ public class MiracleASTreeScopeBuilder implements MiracleASTreeVisitor {
     public void visit(MiracleASTreeVariableDeclaration variableDeclaration) {
         variableDeclaration.setScope(scope);
         variableDeclaration.typenode.accept(this);
+        if (variableDeclaration.expression != null) {
+            variableDeclaration.expression.accept(this);
+        }
     }
 
     @Override
@@ -58,6 +61,7 @@ public class MiracleASTreeScopeBuilder implements MiracleASTreeVisitor {
     @Override
     public void visit(MiracleASTreeSelection selection) {
         selection.setScope(scope);
+        selection.expression.accept(this);
         if (selection.branchTrue != null) {
             if (selection.branchTrue instanceof MiracleASTreeBlock) {
                 selection.branchTrue.accept(this);
@@ -81,6 +85,15 @@ public class MiracleASTreeScopeBuilder implements MiracleASTreeVisitor {
     @Override
     public void visit(MiracleASTreeIteration iteration) {
         iteration.setScope(scope);
+        if (iteration.initializeExpression != null) {
+            iteration.initializeExpression.accept(this);
+        }
+        if (iteration.conditionExpression != null) {
+            iteration.conditionExpression.accept(this);
+        }
+        if (iteration.incrementExpression != null) {
+            iteration.incrementExpression.accept(this);
+        }
         if (iteration.body != null) {
             if (iteration.body instanceof MiracleASTreeBlock) {
                 iteration.body.accept(this);
@@ -105,7 +118,9 @@ public class MiracleASTreeScopeBuilder implements MiracleASTreeVisitor {
     @Override
     public void visit(MiracleASTreeReturn returnLiteral) {
         returnLiteral.setScope(scope);
-        returnLiteral.expression.accept(this);
+        if (returnLiteral.expression != null) {
+            returnLiteral.expression.accept(this);
+        }
     }
 
     @Override

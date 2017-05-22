@@ -31,7 +31,7 @@ public class MiracleSymbolPrimitiveType extends MiracleSymbolBaseType {
 
     @Override
     public int getMemorySize() {
-        return 0;
+        return type.getSize();
     }
 
     @Override

@@ -13,19 +13,34 @@ public class MiracleSymbolTable {
     public final static MiracleSymbolPrimitiveType __builtin_int = new MiracleSymbolPrimitiveType(INT);
     public final static MiracleSymbolPrimitiveType __builtin_bool = new MiracleSymbolPrimitiveType(BOOL);
     public final static MiracleSymbolPrimitiveType __builtin_string = new MiracleSymbolPrimitiveType(STRING);
-
+    public final static MiracleSymbolFunctionType __builtin_strcat = new MiracleSymbolFunctionType(__builtin_string) {{
+        addParameter("x", __builtin_string);
+        addParameter("y", __builtin_string);
+        setAddress("@strcat");
+    }};
+    public final static MiracleSymbolFunctionType __builtin_strcmp = new MiracleSymbolFunctionType(__builtin_int) {{
+        addParameter("x", __builtin_string);
+        addParameter("y", __builtin_string);
+        setAddress("@strcmp");
+    }};
     private final static MiracleSymbolFunctionType __builtin_print = new MiracleSymbolFunctionType(__builtin_void) {{
         addParameter("x", __builtin_string);
+        setAddress("@print");
     }};
     private final static MiracleSymbolFunctionType __builtin_println = new MiracleSymbolFunctionType(__builtin_void) {{
         addParameter("x", __builtin_string);
+        setAddress("@println");
     }};
-    private final static MiracleSymbolFunctionType __builtin_getString = new MiracleSymbolFunctionType(__builtin_string);
-    private final static MiracleSymbolFunctionType __builtin_getInt = new MiracleSymbolFunctionType(__builtin_int);
+    private final static MiracleSymbolFunctionType __builtin_getString = new MiracleSymbolFunctionType(__builtin_string) {{
+        setAddress("@getString");
+    }};
+    private final static MiracleSymbolFunctionType __builtin_getInt = new MiracleSymbolFunctionType(__builtin_int) {{
+        setAddress("@getInt");
+    }};
     private final static MiracleSymbolFunctionType __builtin_toString = new MiracleSymbolFunctionType(__builtin_string) {{
         addParameter("x", __builtin_int);
+        setAddress("@toString");
     }};
-
     private final static Map<String, MiracleSymbolFunctionType> builtinMethod = new HashMap<String, MiracleSymbolFunctionType>() {{
         put("print", __builtin_print);
         put("println", __builtin_println);

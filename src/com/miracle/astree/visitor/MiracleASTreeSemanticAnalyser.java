@@ -12,9 +12,12 @@ import com.miracle.astree.statement.expression.constant.MiracleASTreeIntegerCons
 import com.miracle.astree.statement.expression.constant.MiracleASTreeNullConstant;
 import com.miracle.astree.statement.expression.constant.MiracleASTreeStringConstant;
 import com.miracle.exception.MiracleExceptionContainer;
-import com.miracle.intermediate.value.MiracleIRStaticVariable;
+import com.miracle.intermediate.number.MiracleIRStaticVariable;
+import com.miracle.intermediate.number.MiracleIRVirtualRegister;
+import com.miracle.intermediate.structure.MiracleIRFunction;
 import com.miracle.symbol.*;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -26,6 +29,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
     private MiracleASTreeClassDeclaration currentClass = null;
     private MiracleASTreeFunctionDeclaration currentFunction = null;
     private Stack<MiracleASTreeIteration> loopStack = new Stack<>();
+    private boolean isParameter;
 
     public MiracleASTreeSemanticAnalyser(MiracleExceptionContainer exceptionContainer) {
         this.exceptionContainer = exceptionContainer;
@@ -34,9 +38,21 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
     @Override
     public void visit(MiracleASTreeFunctionDeclaration functionDeclaration) {
         currentFunction = functionDeclaration;
+        isParameter = true;
         functionDeclaration.parameters.forEach(e -> e.accept(this));
+        isParameter = false;
         if (functionDeclaration.body != null) {
             functionDeclaration.body.forEach(e -> e.accept(this));
+        }
+        if (functionDeclaration.getScope().getParentSymbolTable() == null) {
+            List<MiracleIRVirtualRegister> parameters = new LinkedList<>();
+            functionDeclaration.parameters.forEach(element ->
+                    parameters.add((MiracleIRVirtualRegister) element.getAddress())
+            );
+            functionDeclaration.setAddress(new MiracleIRFunction(
+                    functionDeclaration.identifier,
+                    parameters
+            ));
         }
         currentFunction = null;
     }
@@ -105,11 +121,11 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                         variableDeclaration.identifierPosition
                 );
             } else {
-                variableDeclaration.setAddress(new MiracleIRStaticVariable(
-                        variableDeclaration.identifier,
-                        variableDeclaration.typenode.getType().getMemorySize(),
-                        variableDeclaration
-                ));
+                if (variableDeclaration.getScope().getParentSymbolTable() == null) {
+                    variableDeclaration.setAddress(new MiracleIRStaticVariable(variableDeclaration));
+                } else {
+                    variableDeclaration.setAddress(new MiracleIRVirtualRegister(variableDeclaration));
+                }
             }
         }
     }
@@ -189,7 +205,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                     returnLiteral.expression.accept(this);
                     if (returnLiteral.expression.getResultType() != null &&
                             !returnLiteral.expression.getResultType().isSameType(__builtin_void)) {
-                        exceptionContainer.add("cannot return any value in constructor declaration",
+                        exceptionContainer.add("cannot return any number in constructor declaration",
                                 returnLiteral.expression.position);
                     } else {
                         returnLiteral.setFunction(currentFunction);
@@ -203,7 +219,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                     returnLiteral.expression.accept(this);
                     if (returnLiteral.expression.getResultType() != null &&
                             !returnLiteral.expression.getResultType().isSameType(currentFunction.returnType.getType())) {
-                        exceptionContainer.add("the return value differs from declaration",
+                        exceptionContainer.add("the return number differs from declaration",
                                 returnLiteral.expression.position);
                     } else {
                         returnLiteral.setFunction(currentFunction);
@@ -211,7 +227,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                 } else {
                     if (currentFunction.returnType.getType() == null ||
                             !currentFunction.returnType.getType().isSameType(__builtin_void)) {
-                        exceptionContainer.add("the return value differs from declaration",
+                        exceptionContainer.add("the return number differs from declaration",
                                 returnLiteral.position);
                     } else {
                         returnLiteral.setFunction(currentFunction);
@@ -256,7 +272,8 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                 List<MiracleSymbolVariableType> argType = type.getArgType();
                 if (call.parameters.size() != argType.size()) {
                     exceptionContainer.add("function needs " + String.valueOf(argType.size()) + " parameter(s), but found " + String.valueOf(call.parameters.size()) + " parameter(s)",
-                            call.position);
+                            call.position
+                    );
                 } else {
                     for (int i = 0, size = argType.size(); i < size; i++) {
                         MiracleASTreeExpression node = call.parameters.get(i);
@@ -280,7 +297,8 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         if (type != null) {
             if (!(type instanceof MiracleSymbolArrayType)) {
                 exceptionContainer.add("subscription can only be applied to array object",
-                        subscript.base.position);
+                        subscript.base.position
+                );
             } else {
                 subscript.setResultType(((MiracleSymbolArrayType) type).subscript());
                 if (subscript.base.isMutable()) {
@@ -292,7 +310,8 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         if (subscript.coordinate.getResultType() != null &&
                 !subscript.coordinate.getResultType().isSameType(__builtin_int)) {
             exceptionContainer.add("expected `int`, but `" + subscript.coordinate.getResultType().toPrintableString() + "\" was found",
-                    subscript.coordinate.position);
+                    subscript.coordinate.position
+            );
         }
     }
 
@@ -305,7 +324,8 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         if (lType == null || rType == null) return;
         if (!lType.isSameType(rType)) {
             exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
-                    binaryExpression.operatorPosition);
+                    binaryExpression.operatorPosition
+            );
             return;
         }
         boolean flag = true;
@@ -320,12 +340,14 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             case OR:
                 if (!lType.isSameType(__builtin_int)) {
                     exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
-                            binaryExpression.left.position);
+                            binaryExpression.left.position
+                    );
                     flag = false;
                 }
                 if (!rType.isSameType(__builtin_int)) {
                     exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
-                            binaryExpression.right.position);
+                            binaryExpression.right.position
+                    );
                     flag = false;
                 }
                 if (flag) binaryExpression.setResultType(lType);
@@ -333,12 +355,14 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             case ADD:
                 if (!lType.isSameType(__builtin_int) && !lType.isSameType(__builtin_string)) {
                     exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
-                            binaryExpression.left.position);
+                            binaryExpression.left.position
+                    );
                     flag = false;
                 }
                 if (!rType.isSameType(__builtin_int) && !rType.isSameType(__builtin_string)) {
                     exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
-                            binaryExpression.right.position);
+                            binaryExpression.right.position
+                    );
                     flag = false;
                 }
                 if (flag) binaryExpression.setResultType(lType);
@@ -354,12 +378,14 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             case XOR:
                 if (!lType.isSameType(__builtin_int) && !lType.isSameType(__builtin_bool)) {
                     exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
-                            binaryExpression.left.position);
+                            binaryExpression.left.position
+                    );
                     flag = false;
                 }
                 if (!rType.isSameType(__builtin_int) && !rType.isSameType(__builtin_bool)) {
                     exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
-                            binaryExpression.right.position);
+                            binaryExpression.right.position
+                    );
                     flag = false;
                 }
                 if (flag) binaryExpression.setResultType(lType);
@@ -368,12 +394,14 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             case DISJ:
                 if (!lType.isSameType(__builtin_bool)) {
                     exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
-                            binaryExpression.left.position);
+                            binaryExpression.left.position
+                    );
                     flag = false;
                 }
                 if (!rType.isSameType(__builtin_bool)) {
                     exceptionContainer.add("no match for operator `" + binaryExpression.operator + "` (operands are `" + lType.toPrintableString() + "` and `" + rType.toPrintableString() + "`)",
-                            binaryExpression.right.position);
+                            binaryExpression.right.position
+                    );
                     flag = false;
                 }
                 if (flag) binaryExpression.setResultType(lType);
@@ -381,7 +409,8 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             case ASS:
                 if (!binaryExpression.left.isMutable()) {
                     exceptionContainer.add("the result of left operand is not mutable",
-                            binaryExpression.left.position);
+                            binaryExpression.left.position
+                    );
                     flag = false;
                 }
                 if (flag) {
@@ -406,12 +435,14 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             case DEC:
                 if (!type.isSameType(__builtin_int)) {
                     exceptionContainer.add("no match for operator `" + prefixExpression.operator + "` (operand is `" + type.toPrintableString() + "`)",
-                            prefixExpression.expression.position);
+                            prefixExpression.expression.position
+                    );
                     flag = false;
                 }
                 if (!prefixExpression.expression.isMutable()) {
                     exceptionContainer.add("the result of operand is not mutable",
-                            prefixExpression.expression.position);
+                            prefixExpression.expression.position
+                    );
                     flag = false;
                 }
                 if (flag) prefixExpression.setResultType(type);
@@ -419,7 +450,8 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             case NEGATE:
                 if (!type.isSameType(__builtin_bool)) {
                     exceptionContainer.add("no match for operator `" + prefixExpression.operator + "` (operand is `" + type.toPrintableString() + "`)",
-                            prefixExpression.expression.position);
+                            prefixExpression.expression.position
+                    );
                     flag = false;
                 }
                 if (flag) prefixExpression.setResultType(type);
@@ -429,7 +461,8 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             case REV:
                 if (!type.isSameType(__builtin_int)) {
                     exceptionContainer.add("no match for operator `" + prefixExpression.operator + "` (operand is `" + type.toPrintableString() + "`)",
-                            prefixExpression.expression.position);
+                            prefixExpression.expression.position
+                    );
                     flag = false;
                 }
                 if (flag) prefixExpression.setResultType(type);
@@ -447,12 +480,14 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         boolean flag = true;
         if (!type.isSameType(__builtin_int)) {
             exceptionContainer.add("no match for operator `" + suffixExpression.operator + "` (operand is `" + type.toPrintableString() + "`)",
-                    suffixExpression.expression.position);
+                    suffixExpression.expression.position
+            );
             flag = false;
         }
         if (!suffixExpression.expression.isMutable()) {
             exceptionContainer.add("the result of operand is not mutable",
-                    suffixExpression.expression.position);
+                    suffixExpression.expression.position
+            );
             flag = false;
         }
         if (flag) suffixExpression.setResultType(type);
@@ -464,10 +499,12 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         if (newNode.variableType.getType() == null) return;
         if (!(newNode.variableType.getType() instanceof MiracleSymbolBaseType)) {
             exceptionContainer.add("base type is required here",
-                    newNode.variableType.startPosition);
+                    newNode.variableType.startPosition
+            );
         } else if (newNode.variableType.getType().isSameType(__builtin_void)) {
             exceptionContainer.add("cannot declare a variable of type `void`",
-                    newNode.variableType.startPosition);
+                    newNode.variableType.startPosition
+            );
         } else {
             boolean flag = true;
             for (int i = 0, empty = 0; i < newNode.expressions.size(); i++) {
@@ -477,14 +514,16 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                 } else {
                     if (empty == 1) {
                         exceptionContainer.add("invalid declaration of interleaved array",
-                                expression.position);
+                                expression.position
+                        );
                         flag = false;
                     }
                     expression.accept(this);
                     MiracleSymbolType type = expression.getResultType();
                     if (type != null && !type.isSameType(__builtin_int)) {
                         exceptionContainer.add("expected `int`, but `" + type.toPrintableString() + "` was found",
-                                expression.position);
+                                expression.position
+                        );
                         flag = false;
                     }
                 }
@@ -527,7 +566,8 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
     public void visit(MiracleASTreeThis thisNode) {
         if (currentClass == null) {
             exceptionContainer.add("invalid use of this literal",
-                    thisNode.position);
+                    thisNode.position
+            );
         } else {
             thisNode.setMutable();
             thisNode.setResultType(currentClass.getSymbol());
@@ -553,14 +593,17 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                     return;
                 }
                 exceptionContainer.add("class `" + exprType.toPrintableString() + "` has no member of \"" + field.identifier + "\"",
-                        field.identifierPosition);
+                        field.identifierPosition
+                );
             } else {
                 exceptionContainer.add("type `" + exprType.toPrintableString() + "` has no member of \"" + field.identifier + "\"",
-                        field.identifierPosition);
+                        field.identifierPosition
+                );
             }
         } else {
             exceptionContainer.add("not match for operator `.` (operands are `" + exprType.toPrintableString() + "` and \"" + field.identifier + "\")",
-                    field.operatorPosition);
+                    field.operatorPosition
+            );
         }
     }
 
@@ -569,7 +612,8 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
         MiracleSymbol result = typeNode.getScope().get(typeNode.typename);
         if (result == null) {
             exceptionContainer.add("cannot find identifier \"" + typeNode.typename + "\"",
-                    typeNode.startPosition);
+                    typeNode.startPosition
+            );
         } else if (result instanceof MiracleSymbolPrimitiveType) {
             if (typeNode.dimension == 0) {
                 typeNode.setType((MiracleSymbolVariableType) result);
@@ -590,7 +634,8 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             }
         } else {
             exceptionContainer.add("cannot find class `" + typeNode.typename + "`",
-                    typeNode.startPosition);
+                    typeNode.startPosition
+            );
         }
     }
 }

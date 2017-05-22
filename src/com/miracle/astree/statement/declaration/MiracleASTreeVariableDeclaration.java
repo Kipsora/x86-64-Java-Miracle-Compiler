@@ -4,14 +4,14 @@ import com.miracle.astree.base.MiracleASTreeTypeNode;
 import com.miracle.astree.statement.expression.MiracleASTreeExpression;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.cstree.MiracleSourcePosition;
-import com.miracle.intermediate.value.MiracleIRAddress;
+import com.miracle.intermediate.number.MiracleIRRegister;
 
 public class MiracleASTreeVariableDeclaration extends MiracleASTreeMemberDeclaration {
     public final MiracleASTreeExpression expression;
     public final MiracleASTreeTypeNode typenode;
     public final boolean isMember;
 
-    private MiracleIRAddress address;
+    private MiracleIRRegister address;
 
     public MiracleASTreeVariableDeclaration(String identifier,
                                             MiracleASTreeTypeNode typenode,
@@ -25,11 +25,11 @@ public class MiracleASTreeVariableDeclaration extends MiracleASTreeMemberDeclara
         this.isMember = isMember;
     }
 
-    public MiracleIRAddress getAddress() {
+    public MiracleIRRegister getAddress() {
         return address;
     }
 
-    public void setAddress(MiracleIRAddress address) {
+    public void setAddress(MiracleIRRegister address) {
         this.address = address;
     }
 

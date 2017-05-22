@@ -7,7 +7,6 @@ import com.miracle.cstree.parser.MiracleParser;
 import com.miracle.exception.MiracleCSTreeErrorHandler;
 import com.miracle.exception.MiracleExceptionContainer;
 import com.miracle.intermediate.MiracleIR;
-import com.miracle.intermediate.visitor.MiracleIRPrinter;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -107,12 +106,12 @@ public class Miracle {
             if (this.printASTree) {
                 astree.accept(new MiracleASTreePrinter(outputStream));
             }
-            MiracleIR ir = getIR(astree);
+            /*MiracleIR ir = getIR(astree);
             if (this.printIR) {
-            }
-            MiracleIRPrinter generator = new MiracleIRPrinter();
-            ir.accept(generator);
-            System.out.println(generator.getOutput());
+                MiracleIRPrinter generator = new MiracleIRPrinter();
+                ir.accept(generator);
+                outputStream.println(generator.getOutput());
+            }*/
         } catch (RuntimeException e) {
             e.printStackTrace();
         }

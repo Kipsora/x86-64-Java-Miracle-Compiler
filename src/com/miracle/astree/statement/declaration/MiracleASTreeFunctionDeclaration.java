@@ -4,6 +4,7 @@ import com.miracle.astree.base.MiracleASTreeTypeNode;
 import com.miracle.astree.statement.MiracleASTreeStatement;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.intermediate.structure.MiracleIRFunction;
 import com.miracle.symbol.MiracleSymbolFunctionType;
 
 import java.util.Collections;
@@ -14,6 +15,8 @@ public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclara
     public final List<MiracleASTreeVariableDeclaration> parameters;
     public final List<MiracleASTreeStatement> body;
     private final MiracleSymbolFunctionType symbol;
+
+    private MiracleIRFunction address;
 
     public MiracleASTreeFunctionDeclaration(String identifier,
                                             MiracleASTreeTypeNode returnType,
@@ -39,5 +42,13 @@ public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclara
 
     public MiracleSymbolFunctionType getSymbol() {
         return symbol;
+    }
+
+    public MiracleIRFunction getAddress() {
+        return address;
+    }
+
+    public void setAddress(MiracleIRFunction address) {
+        this.address = address;
     }
 }
