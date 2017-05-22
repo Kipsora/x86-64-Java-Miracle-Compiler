@@ -1,16 +1,13 @@
 package com.miracle;
 
 import com.miracle.astree.MiracleASTree;
-import com.miracle.astree.visitor.MiracleASTreeClassFetcher;
-import com.miracle.astree.visitor.MiracleASTreeMemberFetcher;
-import com.miracle.astree.visitor.MiracleASTreePrinter;
-import com.miracle.astree.visitor.MiracleASTreeSemanticAnalyser;
+import com.miracle.astree.visitor.*;
 import com.miracle.cstree.parser.MiracleLexer;
 import com.miracle.cstree.parser.MiracleParser;
 import com.miracle.exception.MiracleCSTreeErrorHandler;
 import com.miracle.exception.MiracleExceptionContainer;
 import com.miracle.intermediate.MiracleIR;
-import com.miracle.intermediate.visitor.MiracleAssemblyGenerator;
+import com.miracle.intermediate.visitor.MiracleIRPrinter;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -89,6 +86,7 @@ public class Miracle {
         MiracleASTree.Builder builder = new MiracleASTree.Builder(exceptionContainer);
         new ParseTreeWalker().walk(builder, cstree);
         MiracleASTree astree = builder.build();
+        astree.accept(new MiracleASTreeScopeBuilder());
         astree.accept(new MiracleASTreeClassFetcher(exceptionContainer));
         astree.accept(new MiracleASTreeMemberFetcher(exceptionContainer));
         astree.accept(new MiracleASTreeSemanticAnalyser(exceptionContainer));
@@ -112,7 +110,7 @@ public class Miracle {
             MiracleIR ir = getIR(astree);
             if (this.printIR) {
             }
-            MiracleAssemblyGenerator generator = new MiracleAssemblyGenerator();
+            MiracleIRPrinter generator = new MiracleIRPrinter();
             ir.accept(generator);
             System.out.println(generator.getOutput());
         } catch (RuntimeException e) {

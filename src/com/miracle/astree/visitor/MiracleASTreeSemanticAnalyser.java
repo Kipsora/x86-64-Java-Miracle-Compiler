@@ -12,6 +12,7 @@ import com.miracle.astree.statement.expression.constant.MiracleASTreeIntegerCons
 import com.miracle.astree.statement.expression.constant.MiracleASTreeNullConstant;
 import com.miracle.astree.statement.expression.constant.MiracleASTreeStringConstant;
 import com.miracle.exception.MiracleExceptionContainer;
+import com.miracle.intermediate.value.MiracleIRStaticVariable;
 import com.miracle.symbol.*;
 
 import java.util.List;
@@ -21,7 +22,6 @@ import static com.miracle.symbol.MiracleSymbolTable.*;
 
 public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
     private final MiracleExceptionContainer exceptionContainer;
-    private MiracleSymbolTable symbolTable;
 
     private MiracleASTreeClassDeclaration currentClass = null;
     private MiracleASTreeFunctionDeclaration currentFunction = null;
@@ -34,7 +34,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
     @Override
     public void visit(MiracleASTreeFunctionDeclaration functionDeclaration) {
         currentFunction = functionDeclaration;
-        symbolTable = functionDeclaration.getScope();
         functionDeclaration.parameters.forEach(e -> e.accept(this));
         if (functionDeclaration.body != null) {
             functionDeclaration.body.forEach(e -> e.accept(this));
@@ -44,7 +43,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeClassDeclaration classDeclaration) {
-        symbolTable = classDeclaration.getScope();
         currentClass = classDeclaration;
         if (classDeclaration.constructorDeclaration != null) {
             classDeclaration.constructorDeclaration.accept(this);
@@ -60,7 +58,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTree astree) {
-        symbolTable = astree.getScope();
+        MiracleSymbolTable symbolTable = astree.getScope();
         astree.declarations.forEach(element -> element.accept(this));
         MiracleSymbol function = symbolTable.get("main");
         if (function == null || !(function instanceof MiracleASTreeFunctionDeclaration)) {
@@ -81,7 +79,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeVariableDeclaration variableDeclaration) {
-        variableDeclaration.setScope(symbolTable);
+        MiracleSymbolTable symbolTable = variableDeclaration.getScope();
         variableDeclaration.typenode.accept(this);
         MiracleSymbolVariableType baseType = variableDeclaration.typenode.getType();
         boolean flag = true;
@@ -106,21 +104,23 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                                 + variableDeclaration.identifier + "\"",
                         variableDeclaration.identifierPosition
                 );
+            } else {
+                variableDeclaration.setAddress(new MiracleIRStaticVariable(
+                        variableDeclaration.identifier,
+                        variableDeclaration.typenode.getType().getMemorySize(),
+                        variableDeclaration
+                ));
             }
         }
     }
 
     @Override
     public void visit(MiracleASTreeBlock block) {
-        block.setScope(symbolTable);
-        symbolTable = block.getScope();
         block.statements.forEach(element -> element.accept(this));
-        symbolTable = symbolTable.getParentSymbolTable();
     }
 
     @Override
     public void visit(MiracleASTreeSelection selection) {
-        selection.setScope(symbolTable);
         selection.expression.accept(this);
         if (selection.expression.getResultType() != null &&
                 !selection.expression.getResultType().isSameType(__builtin_bool)) {
@@ -137,7 +137,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeIteration iteration) {
-        iteration.setScope(symbolTable);
         loopStack.push(iteration);
         if (iteration.initializeExpression != null) {
             iteration.initializeExpression.accept(this);
@@ -161,7 +160,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeBreak breakLiteral) {
-        breakLiteral.setScope(symbolTable);
         if (loopStack.empty()) {
             exceptionContainer.add("break literal must be in iteration statment",
                     breakLiteral.position);
@@ -172,7 +170,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeContinue continueLiteral) {
-        continueLiteral.setScope(symbolTable);
         if (loopStack.empty()) {
             exceptionContainer.add("break literal must be in iteration statment",
                     continueLiteral.position);
@@ -183,7 +180,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeReturn returnLiteral) {
-        returnLiteral.setScope(symbolTable);
         if (currentFunction == null) {
             exceptionContainer.add("return literal must be in function statment",
                     returnLiteral.position);
@@ -227,8 +223,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeVariable variable) {
-        variable.setScope(symbolTable);
-        MiracleSymbol type = symbolTable.get(variable.identifier);
+        MiracleSymbol type = variable.getScope().get(variable.identifier);
         if (type == null) {
             exceptionContainer.add("cannot find identifier named \"" + variable.identifier + "\"",
                     variable.position);
@@ -251,7 +246,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeCall call) {
-        call.setScope(symbolTable);
         call.function.accept(this);
         if (!(call.function.getResultType() instanceof MiracleSymbolFunctionType)) {
             exceptionContainer.add("expression is not a function, thus not callable",
@@ -281,7 +275,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeSubscript subscript) {
-        subscript.setScope(symbolTable);
         subscript.base.accept(this);
         MiracleSymbol type = subscript.base.getResultType();
         if (type != null) {
@@ -305,7 +298,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeBinaryExpression binaryExpression) {
-        binaryExpression.setScope(symbolTable);
         binaryExpression.left.accept(this);
         binaryExpression.right.accept(this);
         MiracleSymbolType lType = binaryExpression.left.getResultType();
@@ -405,7 +397,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreePrefixExpression prefixExpression) {
-        prefixExpression.setScope(symbolTable);
         prefixExpression.expression.accept(this);
         MiracleSymbolType type = prefixExpression.expression.getResultType();
         if (type == null) return;
@@ -450,7 +441,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeSuffixExpression suffixExpression) {
-        suffixExpression.setScope(symbolTable);
         suffixExpression.expression.accept(this);
         MiracleSymbolType type = suffixExpression.expression.getResultType();
         if (type == null) return;
@@ -470,7 +460,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeNew newNode) {
-        newNode.setScope(symbolTable);
         newNode.variableType.accept(this);
         if (newNode.variableType.getType() == null) return;
         if (!(newNode.variableType.getType() instanceof MiracleSymbolBaseType)) {
@@ -516,31 +505,26 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeStringConstant stringConstant) {
-        stringConstant.setScope(symbolTable);
         stringConstant.setResultType(__builtin_string);
     }
 
     @Override
     public void visit(MiracleASTreeIntegerConstant integerConstant) {
-        integerConstant.setScope(symbolTable);
         integerConstant.setResultType(__builtin_int);
     }
 
     @Override
     public void visit(MiracleASTreeBooleanConstant booleanConstant) {
-        booleanConstant.setScope(symbolTable);
         booleanConstant.setResultType(__builtin_bool);
     }
 
     @Override
     public void visit(MiracleASTreeNullConstant nullConstant) {
-        nullConstant.setScope(symbolTable);
         nullConstant.setResultType(__builtin_null);
     }
 
     @Override
     public void visit(MiracleASTreeThis thisNode) {
-        thisNode.setScope(symbolTable);
         if (currentClass == null) {
             exceptionContainer.add("invalid use of this literal",
                     thisNode.position);
@@ -552,7 +536,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeField field) {
-        field.setScope(symbolTable);
         field.expression.accept(this);
         MiracleSymbolType exprType = field.expression.getResultType();
         if (exprType == null) return;
@@ -583,8 +566,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeTypeNode typeNode) {
-        typeNode.setScope(symbolTable);
-        MiracleSymbol result = symbolTable.get(typeNode.typename);
+        MiracleSymbol result = typeNode.getScope().get(typeNode.typename);
         if (result == null) {
             exceptionContainer.add("cannot find identifier \"" + typeNode.typename + "\"",
                     typeNode.startPosition);

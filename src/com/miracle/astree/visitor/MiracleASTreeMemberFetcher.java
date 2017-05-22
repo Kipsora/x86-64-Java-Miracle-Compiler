@@ -10,7 +10,6 @@ import com.miracle.symbol.*;
 
 public class MiracleASTreeMemberFetcher extends MiracleASTreeBaseVisitor {
     private final MiracleExceptionContainer exceptionContainer;
-    private MiracleSymbolTable symbolTable;
 
     public MiracleASTreeMemberFetcher(MiracleExceptionContainer exceptionContainer) {
         this.exceptionContainer = exceptionContainer;
@@ -18,7 +17,6 @@ public class MiracleASTreeMemberFetcher extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTree astree) {
-        symbolTable = astree.getScope();
         astree.declarations.forEach((element) -> {
             if (element instanceof MiracleASTreeClassDeclaration) {
                 element.accept(this);
@@ -31,7 +29,6 @@ public class MiracleASTreeMemberFetcher extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTreeClassDeclaration classDeclaration) {
-        symbolTable = classDeclaration.getScope();
         classDeclaration.functionDeclarations.forEach(element -> {
             element.accept(this);
             classDeclaration.getSymbol().addMethod(element.identifier, element.getSymbol());
@@ -52,13 +49,12 @@ public class MiracleASTreeMemberFetcher extends MiracleASTreeBaseVisitor {
                         classDeclaration.constructorDeclaration.returnType.startPosition);
             }
         }
-        symbolTable = symbolTable.getParentSymbolTable();
     }
 
     @Override
     public void visit(MiracleASTreeVariableDeclaration variableDeclaration) {
         variableDeclaration.typenode.accept(this);
-        if (!symbolTable.put(variableDeclaration)) {
+        if (!variableDeclaration.getScope().put(variableDeclaration)) {
             this.exceptionContainer.add("duplicate declarations of identifier \""
                             + variableDeclaration.identifier + "\"",
                     variableDeclaration.identifierPosition
@@ -74,7 +70,7 @@ public class MiracleASTreeMemberFetcher extends MiracleASTreeBaseVisitor {
             functionDeclaration.getSymbol().addParameter(element.identifier, element.typenode.getType());
         });
         if (functionDeclaration.identifier != null) {
-            if (!symbolTable.put(functionDeclaration)) {
+            if (!functionDeclaration.getScope().put(functionDeclaration)) {
                 exceptionContainer.add("duplicate declarations of identifier \""
                                 + functionDeclaration.identifier + "\"",
                         functionDeclaration.identifierPosition
@@ -88,7 +84,7 @@ public class MiracleASTreeMemberFetcher extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTreeTypeNode typeNode) {
-        MiracleSymbol result = symbolTable.get(typeNode.typename);
+        MiracleSymbol result = typeNode.getScope().get(typeNode.typename);
         if (result == null) {
             exceptionContainer.add("cannot find identifier \"" + typeNode.typename + "\"",
                     typeNode.startPosition);

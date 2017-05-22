@@ -4,6 +4,7 @@ import com.miracle.astree.MiracleASTree;
 import com.miracle.astree.base.MiracleASTreeTypeNode;
 import com.miracle.astree.statement.*;
 import com.miracle.astree.statement.declaration.MiracleASTreeClassDeclaration;
+import com.miracle.astree.statement.declaration.MiracleASTreeDeclaration;
 import com.miracle.astree.statement.declaration.MiracleASTreeFunctionDeclaration;
 import com.miracle.astree.statement.declaration.MiracleASTreeVariableDeclaration;
 import com.miracle.astree.statement.expression.*;
@@ -16,10 +17,7 @@ import com.miracle.intermediate.instruction.MiracleIRBinary;
 import com.miracle.intermediate.instruction.MiracleIRMove;
 import com.miracle.intermediate.structure.MiracleIRBasicBlock;
 import com.miracle.intermediate.structure.MiracleIRFunction;
-import com.miracle.intermediate.value.MiracleIRRegister;
-import com.miracle.intermediate.value.MiracleIRStaticString;
-import com.miracle.intermediate.value.MiracleIRStaticVariable;
-import com.miracle.intermediate.value.MiracleIRVirtualRegister;
+import com.miracle.intermediate.value.*;
 import com.miracle.intermediate.visitor.MiracleIRVisitor;
 import com.miracle.symbol.MiracleSymbolTable;
 
@@ -95,15 +93,15 @@ public class MiracleIR extends MiracleIRNode {
             } else {
                 globalVariable.put(variableDeclaration.identifier, new MiracleIRStaticVariable(
                         variableDeclaration.identifier,
-                        variableDeclaration.typenode.getType().getMemorySize()
+                        variableDeclaration.typenode.getType().getMemorySize(),
+                        variableDeclaration
                 ));
             }
         }
 
         @Override
         public void visit(MiracleASTreeBlock block) {
-            scope = block.getScope();
-            scope = scope.getParentSymbolTable();
+            block.statements.forEach(element -> element.accept(this));
         }
 
         @Override
@@ -133,15 +131,9 @@ public class MiracleIR extends MiracleIRNode {
 
         @Override
         public void visit(MiracleASTreeVariable variable) {
-            if (scope.getParentSymbolTable() == null) {
-                MiracleASTreeVariableDeclaration declaration = (MiracleASTreeVariableDeclaration) scope.get(variable.identifier);
-                if (declaration.getAddress() != null) {
-
-                    //declaration.setAddress();
-                }
-
-                //curBB.append(new MiracleIRMove());
-                //variable.setResultRegister();
+            MiracleASTreeDeclaration declaration = (MiracleASTreeDeclaration) scope.get(variable.identifier);
+            if (declaration instanceof MiracleASTreeVariableDeclaration) {
+                variable.setResultAddress(((MiracleASTreeVariableDeclaration) declaration).getAddress());
             }
         }
 
@@ -168,20 +160,30 @@ public class MiracleIR extends MiracleIRNode {
                     throw new RuntimeException("unsupported operator");
             }
             MiracleIRRegister resultRegister = new MiracleIRVirtualRegister(String.valueOf(registerCounter++));
-            binaryExpression.setResultRegister(resultRegister);
+            binaryExpression.setResultAddress(resultRegister);
+            MiracleIRAddress leftAddress = binaryExpression.left.getResultAddress();
+            MiracleIRAddress rightAddress = binaryExpression.right.getResultAddress();
+            if (leftAddress instanceof MiracleIRMemory) {
+                curBB.append(new MiracleIRMove(leftAddress,
+                        (MiracleIRRegister) (leftAddress = new MiracleIRVirtualRegister(String.valueOf(registerCounter++))),
+                        binaryExpression.left.getResultType().getRegisterSize()
+                ));
+            }
             curBB.append(new MiracleIRBinary(
-                    binaryExpression.left.getResultRegister(),
+                    (MiracleIRRegister) leftAddress,
                     operator,
-                    binaryExpression.right.getResultRegister(),
+                    (MiracleIRRegister) rightAddress,
                     resultRegister
             ));
         }
 
         private void addAssignment(MiracleASTreeBinaryExpression binaryExpression) {
             curBB.append(new MiracleIRMove(
-                    binaryExpression.left.getResultRegister(),
-                    binaryExpression.right.getResultRegister()
+                    binaryExpression.left.getResultMemory(),
+                    binaryExpression.right.getResultRegister(),
+                    8
             ));
+            binaryExpression.setResultAddress(binaryExpression.left.getResultMemory());
         }
 
         @Override

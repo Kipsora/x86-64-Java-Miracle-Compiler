@@ -3,7 +3,6 @@ package com.miracle.astree.statement.declaration;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
 import com.miracle.cstree.MiracleSourcePosition;
 import com.miracle.symbol.MiracleSymbolClassType;
-import com.miracle.symbol.MiracleSymbolTable;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,9 +13,9 @@ public class MiracleASTreeClassDeclaration extends MiracleASTreeDeclaration {
     public final List<MiracleASTreeVariableDeclaration> variableDeclarations;
     public final List<MiracleASTreeFunctionDeclaration> functionDeclarations;
     public final MiracleASTreeFunctionDeclaration constructorDeclaration;
+
     private final Map<String, MiracleASTreeMemberDeclaration> map;
     private final MiracleSymbolClassType symbol;
-    private MiracleSymbolTable scope;
 
     public MiracleASTreeClassDeclaration(String identifier,
                                          List<MiracleASTreeVariableDeclaration> variableDeclarations,

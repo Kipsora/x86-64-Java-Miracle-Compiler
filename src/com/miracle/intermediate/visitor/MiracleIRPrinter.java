@@ -8,7 +8,7 @@ import com.miracle.intermediate.structure.MiracleIRFunction;
 import com.miracle.intermediate.value.MiracleIRStaticString;
 import com.miracle.intermediate.value.MiracleIRStaticVariable;
 
-public class MiracleAssemblyGenerator implements MiracleIRVisitor {
+public class MiracleIRPrinter implements MiracleIRVisitor {
     private StringBuilder buffer = new StringBuilder();
 
     public String getOutput() {
@@ -30,7 +30,9 @@ public class MiracleAssemblyGenerator implements MiracleIRVisitor {
         ir.globalVariable.forEach((key, value) ->
                 buffer.append(value.identifier)
                         .append(':').append('\t').append("resb")
-                        .append(' ').append(value.size).append('\n')
+                        .append(' ').append(value.size).append('\t').append(';').append(' ')
+                        .append(value.declaration.typenode.getType().toPrintableString())
+                        .append(' ').append(value.identifier).append('\n')
         );
     }
 
@@ -67,7 +69,7 @@ public class MiracleAssemblyGenerator implements MiracleIRVisitor {
 
     @Override
     public void visit(MiracleIRMove move) {
-        buffer.append('\t').append("mov").append(' ').append(move.source)
-                .append(' ').append(move.target).append('\n');
+        buffer.append('\t').append("mov").append(' ').append(move.target)
+                .append(' ').append(move.source).append('\n');
     }
 }

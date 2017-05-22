@@ -1,6 +1,6 @@
 package com.miracle.intermediate.value;
 
-public abstract class MiracleIRRegister extends MiracleIRDynamic {
+public abstract class MiracleIRRegister extends MiracleIRAddress {
     public final String name;
 
     public MiracleIRRegister(String name) {
