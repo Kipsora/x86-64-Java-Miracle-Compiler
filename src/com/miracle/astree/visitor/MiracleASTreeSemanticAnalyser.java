@@ -270,7 +270,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                         MiracleASTreeExpression node = call.parameters.get(i);
                         node.accept(this);
                         MiracleSymbolType exprType = node.getResultType();
-                        if (exprType != null && !exprType.isSameType(argType.get(i))) {
+                        if (argType.get(i) != null && exprType != null && !exprType.isSameType(argType.get(i))) {
                             exceptionContainer.add("function needs parameter of type `" + argType.get(i).toPrintableString() + "`, but `" + exprType.toPrintableString() + "` was found",
                                     node.position);
                         }
