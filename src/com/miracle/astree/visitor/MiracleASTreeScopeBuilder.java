@@ -32,6 +32,9 @@ public class MiracleASTreeScopeBuilder implements MiracleASTreeVisitor {
         scope = new MiracleSymbolTable(scope);
         classDeclaration.functionDeclarations.forEach(element -> element.accept(this));
         classDeclaration.variableDeclarations.forEach(element -> element.accept(this));
+        if (classDeclaration.constructorDeclaration != null) {
+            classDeclaration.constructorDeclaration.accept(this);
+        }
         scope = scope.getParentSymbolTable();
     }
 
