@@ -210,17 +210,17 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             } else {
                 if (returnLiteral.expression != null) {
                     returnLiteral.expression.accept(this);
-                    if (returnLiteral.expression.getResultType() != null &&
-                            !returnLiteral.expression.getResultType().isSameType(currentFunction.returnType.getType())) {
-                        exceptionContainer.add("the return number differs from declaration",
+                    if (currentFunction.returnType == null || (returnLiteral.expression.getResultType() != null &&
+                            !returnLiteral.expression.getResultType().isSameType(currentFunction.returnType.getType()))) {
+                        exceptionContainer.add("the return value differs from declaration",
                                 returnLiteral.expression.position);
                     } else {
                         returnLiteral.setFunction(currentFunction);
                     }
                 } else {
-                    if (currentFunction.returnType.getType() == null ||
+                    if (currentFunction.returnType != null && currentFunction.returnType.getType() != null &&
                             !currentFunction.returnType.getType().isSameType(__builtin_void)) {
-                        exceptionContainer.add("the return number differs from declaration",
+                        exceptionContainer.add("the return value differs from declaration",
                                 returnLiteral.position);
                     } else {
                         returnLiteral.setFunction(currentFunction);
