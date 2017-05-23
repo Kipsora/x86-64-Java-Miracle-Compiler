@@ -72,15 +72,15 @@ public class MiracleASTree extends MiracleASTreeNode {
             MiracleASTreeFunctionDeclaration constructorDeclaration = null;
 
             List<MiracleParser.VariableDeclarationStatementContext> variableDeclarationStatement = ctx.variableDeclarationStatement();
-            for (int i = 0, variableDeclarationStatementSize = variableDeclarationStatement.size(); i < variableDeclarationStatementSize; i++) {
+            for (int i = 0, size = variableDeclarationStatement.size(); i < size; i++) {
                 MiracleParser.VariableDeclarationStatementContext element = variableDeclarationStatement.get(i);
                 variableDeclarations.add((MiracleASTreeVariableDeclaration) property.get(element));
             }
 
             List<MiracleParser.FunctionDeclarationStatementContext> functionDeclarationStatement = ctx.functionDeclarationStatement();
-            for (int i = 0, functionDeclarationStatementSize = functionDeclarationStatement.size(); i < functionDeclarationStatementSize; i++) {
+            for (int i = 0, size = functionDeclarationStatement.size(); i < size; i++) {
                 MiracleParser.FunctionDeclarationStatementContext element = functionDeclarationStatement.get(i);
-                if (element.IDENTIFIER().isEmpty()) {
+                if (element.returnType == null) {
                     if (constructorDeclaration != null) {
                         exceptionContainer.add("multiple declarations of constructors in class `" + ctx.IDENTIFIER().getText() + " `are found",
                                 new MiracleSourcePosition(element.typename(0)));
@@ -121,14 +121,13 @@ public class MiracleASTree extends MiracleASTreeNode {
                         (MiracleASTreeTypeNode) property.get(ctx.typename(i)),
                         null,
                         new MiracleSourcePosition(ctx.typename(i)),
-                        new MiracleSourcePosition(ctx.IDENTIFIER(i).getSymbol()),
-                        false
+                        new MiracleSourcePosition(ctx.IDENTIFIER(i).getSymbol())
                 ));
             }
-            if (ctx.IDENTIFIER().isEmpty()) {
+            if (ctx.returnType == null) {
                 property.put(ctx, new MiracleASTreeFunctionDeclaration(
+                        ctx.IDENTIFIER(0).getText(),
                         null,
-                        (MiracleASTreeTypeNode) property.get(ctx.typename(0)),
                         parameters,
                         body,
                         new MiracleSourcePosition(ctx),
@@ -155,8 +154,7 @@ public class MiracleASTree extends MiracleASTreeNode {
                         (MiracleASTreeTypeNode) property.get(ctx.typename()),
                         (MiracleASTreeExpression) property.get(ctx.expression()),
                         new MiracleSourcePosition(ctx),
-                        new MiracleSourcePosition(identifier.getSymbol()),
-                        ctx.getParent() instanceof MiracleParser.ClassDeclarationStatementContext
+                        new MiracleSourcePosition(identifier.getSymbol())
                 ));
             } else {
                 property.put(ctx, new MiracleASTreeVariableDeclaration(
@@ -164,8 +162,7 @@ public class MiracleASTree extends MiracleASTreeNode {
                         (MiracleASTreeTypeNode) property.get(ctx.typename()),
                         null,
                         new MiracleSourcePosition(ctx),
-                        new MiracleSourcePosition(identifier.getSymbol()),
-                        ctx.getParent() instanceof MiracleParser.ClassDeclarationStatementContext
+                        new MiracleSourcePosition(identifier.getSymbol())
                 ));
             }
         }

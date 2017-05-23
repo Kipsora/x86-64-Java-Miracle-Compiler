@@ -19,7 +19,9 @@ public class MiracleASTreeScopeBuilder implements MiracleASTreeVisitor {
     @Override
     public void visit(MiracleASTreeFunctionDeclaration functionDeclaration) {
         functionDeclaration.setScope(scope);
-        functionDeclaration.returnType.accept(this);
+        if (functionDeclaration.returnType != null) {
+            functionDeclaration.returnType.accept(this);
+        }
         scope = new MiracleSymbolTable(scope);
         functionDeclaration.parameters.forEach(element -> element.accept(this));
         functionDeclaration.body.forEach(element -> element.accept(this));

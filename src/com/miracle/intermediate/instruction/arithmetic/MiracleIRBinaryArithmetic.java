@@ -1,5 +1,6 @@
-package com.miracle.intermediate.instruction;
+package com.miracle.intermediate.instruction.arithmetic;
 
+import com.miracle.intermediate.instruction.MiracleIRInstruction;
 import com.miracle.intermediate.number.MiracleIRNumber;
 import com.miracle.intermediate.number.MiracleIRRegister;
 import com.miracle.intermediate.visitor.MiracleIRVisitor;

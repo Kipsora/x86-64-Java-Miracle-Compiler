@@ -7,7 +7,7 @@ classDeclarationStatement:
         (functionDeclarationStatement | variableDeclarationStatement)*
     '}';
 
-functionDeclarationStatement: typename IDENTIFIER? '(' (typename IDENTIFIER)?(',' typename IDENTIFIER)* ')' '{' statement* '}';
+functionDeclarationStatement: returnType=typename? IDENTIFIER '(' (typename IDENTIFIER)?(',' typename IDENTIFIER)* ')' '{' statement* '}';
 
 variableDeclarationStatement: typename IDENTIFIER ('=' expression)? ';';
 

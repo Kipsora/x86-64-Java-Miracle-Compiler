@@ -12,9 +12,7 @@ import com.miracle.astree.statement.expression.constant.MiracleASTreeIntegerCons
 import com.miracle.astree.statement.expression.constant.MiracleASTreeNullConstant;
 import com.miracle.astree.statement.expression.constant.MiracleASTreeStringConstant;
 import com.miracle.exception.MiracleExceptionContainer;
-import com.miracle.intermediate.number.MiracleIRStaticVariable;
-import com.miracle.intermediate.number.MiracleIRVirtualRegister;
-import com.miracle.intermediate.structure.MiracleIRFunction;
+import com.miracle.intermediate.number.MiracleIRDirectRegister;
 import com.miracle.symbol.*;
 
 import java.util.LinkedList;
@@ -45,14 +43,18 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             functionDeclaration.body.forEach(e -> e.accept(this));
         }
         if (functionDeclaration.getScope().getParentSymbolTable() == null) {
-            List<MiracleIRVirtualRegister> parameters = new LinkedList<>();
+            List<MiracleIRDirectRegister> parameters = new LinkedList<>();
             functionDeclaration.parameters.forEach(element ->
-                    parameters.add((MiracleIRVirtualRegister) element.getAddress())
+                    parameters.add((MiracleIRDirectRegister) element.getAddress())
             );
-            functionDeclaration.setAddress(new MiracleIRFunction(
-                    functionDeclaration.identifier,
-                    parameters
-            ));
+            functionDeclaration.getSymbol().setAddress(functionDeclaration.identifier);
+        } else if (functionDeclaration.getMemberFrom() != null) {
+            functionDeclaration.getSymbol().setAddress(
+                    '@' + functionDeclaration.getMemberFrom().identifier
+                            + '.' + functionDeclaration.identifier
+            );
+        } else {
+            throw new RuntimeException("unexpected case");
         }
         currentFunction = null;
     }
@@ -74,9 +76,8 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTree astree) {
-        MiracleSymbolTable symbolTable = astree.getScope();
         astree.declarations.forEach(element -> element.accept(this));
-        MiracleSymbol function = symbolTable.get("main");
+        MiracleSymbol function = astree.getScope().get("main");
         if (function == null || !(function instanceof MiracleASTreeFunctionDeclaration)) {
             exceptionContainer.add("the main function is not found",
                     null);
@@ -95,7 +96,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeVariableDeclaration variableDeclaration) {
-        MiracleSymbolTable symbolTable = variableDeclaration.getScope();
         variableDeclaration.typenode.accept(this);
         MiracleSymbolVariableType baseType = variableDeclaration.typenode.getType();
         boolean flag = true;
@@ -114,18 +114,12 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                 flag = false;
             }
         }
-        if (flag && !variableDeclaration.isMember) {
-            if (!symbolTable.put(variableDeclaration)) {
+        if (flag && variableDeclaration.getMemberFrom() == null) {
+            if (!variableDeclaration.getScope().put(variableDeclaration)) {
                 this.exceptionContainer.add("duplicate declarations of identifier \""
                                 + variableDeclaration.identifier + "\"",
                         variableDeclaration.identifierPosition
                 );
-            } else {
-                if (variableDeclaration.getScope().getParentSymbolTable() == null) {
-                    variableDeclaration.setAddress(new MiracleIRStaticVariable(variableDeclaration));
-                } else {
-                    variableDeclaration.setAddress(new MiracleIRVirtualRegister(variableDeclaration));
-                }
             }
         }
     }
@@ -408,7 +402,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                 break;
             case ASS:
                 if (!binaryExpression.left.isMutable()) {
-                    exceptionContainer.add("the result of left operand is not mutable",
+                    exceptionContainer.add("the rawval of left operand is not mutable",
                             binaryExpression.left.position
                     );
                     flag = false;
@@ -440,7 +434,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                     flag = false;
                 }
                 if (!prefixExpression.expression.isMutable()) {
-                    exceptionContainer.add("the result of operand is not mutable",
+                    exceptionContainer.add("the rawval of operand is not mutable",
                             prefixExpression.expression.position
                     );
                     flag = false;
@@ -485,7 +479,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
             flag = false;
         }
         if (!suffixExpression.expression.isMutable()) {
-            exceptionContainer.add("the result of operand is not mutable",
+            exceptionContainer.add("the rawval of operand is not mutable",
                     suffixExpression.expression.position
             );
             flag = false;

@@ -9,7 +9,6 @@ import com.miracle.intermediate.number.MiracleIRRegister;
 public class MiracleASTreeVariableDeclaration extends MiracleASTreeMemberDeclaration {
     public final MiracleASTreeExpression expression;
     public final MiracleASTreeTypeNode typenode;
-    public final boolean isMember;
 
     private MiracleIRRegister address;
 
@@ -17,12 +16,10 @@ public class MiracleASTreeVariableDeclaration extends MiracleASTreeMemberDeclara
                                             MiracleASTreeTypeNode typenode,
                                             MiracleASTreeExpression expression,
                                             MiracleSourcePosition startPosition,
-                                            MiracleSourcePosition identifierPosition,
-                                            boolean isMember) {
+                                            MiracleSourcePosition identifierPosition) {
         super(identifier, startPosition, identifierPosition);
         this.typenode = typenode;
         this.expression = expression;
-        this.isMember = isMember;
     }
 
     public MiracleIRRegister getAddress() {

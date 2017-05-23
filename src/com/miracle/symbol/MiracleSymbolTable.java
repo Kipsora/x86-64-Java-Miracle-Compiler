@@ -13,31 +13,31 @@ public class MiracleSymbolTable {
     public final static MiracleSymbolPrimitiveType __builtin_int = new MiracleSymbolPrimitiveType(INT);
     public final static MiracleSymbolPrimitiveType __builtin_bool = new MiracleSymbolPrimitiveType(BOOL);
     public final static MiracleSymbolPrimitiveType __builtin_string = new MiracleSymbolPrimitiveType(STRING);
-    public final static MiracleSymbolFunctionType __builtin_strcat = new MiracleSymbolFunctionType(__builtin_string) {{
+    public final static MiracleSymbolFunctionType __builtin_strcat = new MiracleSymbolFunctionType(__builtin_string, null) {{
         addParameter("x", __builtin_string);
         addParameter("y", __builtin_string);
         setAddress("@strcat");
     }};
-    public final static MiracleSymbolFunctionType __builtin_strcmp = new MiracleSymbolFunctionType(__builtin_int) {{
+    public final static MiracleSymbolFunctionType __builtin_strcmp = new MiracleSymbolFunctionType(__builtin_int, null) {{
         addParameter("x", __builtin_string);
         addParameter("y", __builtin_string);
         setAddress("@strcmp");
     }};
-    private final static MiracleSymbolFunctionType __builtin_print = new MiracleSymbolFunctionType(__builtin_void) {{
+    private final static MiracleSymbolFunctionType __builtin_print = new MiracleSymbolFunctionType(__builtin_void, null) {{
         addParameter("x", __builtin_string);
         setAddress("@print");
     }};
-    private final static MiracleSymbolFunctionType __builtin_println = new MiracleSymbolFunctionType(__builtin_void) {{
+    private final static MiracleSymbolFunctionType __builtin_println = new MiracleSymbolFunctionType(__builtin_void, null) {{
         addParameter("x", __builtin_string);
         setAddress("@println");
     }};
-    private final static MiracleSymbolFunctionType __builtin_getString = new MiracleSymbolFunctionType(__builtin_string) {{
+    private final static MiracleSymbolFunctionType __builtin_getString = new MiracleSymbolFunctionType(__builtin_string, null) {{
         setAddress("@getString");
     }};
-    private final static MiracleSymbolFunctionType __builtin_getInt = new MiracleSymbolFunctionType(__builtin_int) {{
+    private final static MiracleSymbolFunctionType __builtin_getInt = new MiracleSymbolFunctionType(__builtin_int, null) {{
         setAddress("@getInt");
     }};
-    private final static MiracleSymbolFunctionType __builtin_toString = new MiracleSymbolFunctionType(__builtin_string) {{
+    private final static MiracleSymbolFunctionType __builtin_toString = new MiracleSymbolFunctionType(__builtin_string, null) {{
         addParameter("x", __builtin_int);
         setAddress("@toString");
     }};
@@ -56,18 +56,20 @@ public class MiracleSymbolTable {
     }};
 
     static {
-        __builtin_string.addMethod("length", new MiracleSymbolFunctionType(__builtin_int));
-        __builtin_string.addMethod("substring", new MiracleSymbolFunctionType(__builtin_string) {{
+        __builtin_string.addMethod("length", new MiracleSymbolFunctionType(__builtin_int, __builtin_string) {{
+            setAddress("@string.length");
+        }});
+        __builtin_string.addMethod("substring", new MiracleSymbolFunctionType(__builtin_string, __builtin_string) {{
             addParameter("x", __builtin_int);
             addParameter("y", __builtin_int);
+            setAddress("@string.substring");
         }});
-        __builtin_string.addMethod("parseInt", new MiracleSymbolFunctionType(__builtin_int));
-        __builtin_string.addMethod("substring", new MiracleSymbolFunctionType(__builtin_string) {{
-            addParameter("x", __builtin_int);
-            addParameter("y", __builtin_int);
+        __builtin_string.addMethod("parseInt", new MiracleSymbolFunctionType(__builtin_int, __builtin_string) {{
+            setAddress("@string.parseInt");
         }});
-        __builtin_string.addMethod("ord", new MiracleSymbolFunctionType(__builtin_int) {{
+        __builtin_string.addMethod("ord", new MiracleSymbolFunctionType(__builtin_int, __builtin_string) {{
             addParameter("x", __builtin_int);
+            setAddress("@string.ord");
         }});
     }
 

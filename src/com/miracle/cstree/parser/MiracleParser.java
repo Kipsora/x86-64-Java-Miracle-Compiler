@@ -43,8 +43,8 @@ public class MiracleParser extends Parser {
             "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3;\u0103\4\2\t\2\4" +
                     "\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t" +
                     "\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\3\2\3\2\3\2\6\2$\n\2" +
-                    "\r\2\16\2%\3\3\3\3\3\3\3\3\3\3\7\3-\n\3\f\3\16\3\60\13\3\3\3\3\3\3\4\3" +
-                    "\4\5\4\66\n\4\3\4\3\4\3\4\3\4\5\4<\n\4\3\4\3\4\3\4\3\4\7\4B\n\4\f\4\16" +
+                    "\r\2\16\2%\3\3\3\3\3\3\3\3\3\3\7\3-\n\3\f\3\16\3\60\13\3\3\3\3\3\3\4\5" +
+                    "\4\65\n\4\3\4\3\4\3\4\3\4\3\4\5\4<\n\4\3\4\3\4\3\4\3\4\7\4B\n\4\f\4\16" +
                     "\4E\13\4\3\4\3\4\3\4\7\4J\n\4\f\4\16\4M\13\4\3\4\3\4\3\5\3\5\3\5\3\5\5" +
                     "\5U\n\5\3\5\3\5\3\6\3\6\7\6[\n\6\f\6\16\6^\13\6\3\6\3\6\3\7\3\7\3\7\3" +
                     "\7\3\7\3\7\3\7\5\7i\n\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\br\n\b\3\t\3\t\3" +
@@ -61,14 +61,14 @@ public class MiracleParser extends Parser {
                     "\n\17\f\17\16\17\u00fb\13\17\3\20\3\20\3\20\3\20\5\20\u0101\n\20\3\20" +
                     "\2\3\34\21\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36\2\13\4\2\24\27\65\65" +
                     "\3\2\32\37\3\2!#\3\2\35\36\3\2$%\3\2&)\3\2*+\3\2\32\33\3\2\61\62\u012a" +
-                    "\2#\3\2\2\2\4\'\3\2\2\2\6\63\3\2\2\2\bP\3\2\2\2\nX\3\2\2\2\fh\3\2\2\2" +
+                    "\2#\3\2\2\2\4\'\3\2\2\2\6\64\3\2\2\2\bP\3\2\2\2\nX\3\2\2\2\fh\3\2\2\2" +
                     "\16j\3\2\2\2\20\u0088\3\2\2\2\22\u0093\3\2\2\2\24\u0095\3\2\2\2\26\u0098" +
                     "\3\2\2\2\30\u009a\3\2\2\2\32\u00a2\3\2\2\2\34\u00bd\3\2\2\2\36\u0100\3" +
                     "\2\2\2 $\5\4\3\2!$\5\6\4\2\"$\5\b\5\2# \3\2\2\2#!\3\2\2\2#\"\3\2\2\2$" +
                     "%\3\2\2\2%#\3\2\2\2%&\3\2\2\2&\3\3\2\2\2\'(\7\3\2\2()\7\65\2\2).\7\4\2" +
                     "\2*-\5\6\4\2+-\5\b\5\2,*\3\2\2\2,+\3\2\2\2-\60\3\2\2\2.,\3\2\2\2./\3\2" +
                     "\2\2/\61\3\2\2\2\60.\3\2\2\2\61\62\7\5\2\2\62\5\3\2\2\2\63\65\5\30\r\2" +
-                    "\64\66\7\65\2\2\65\64\3\2\2\2\65\66\3\2\2\2\66\67\3\2\2\2\67;\7\6\2\2" +
+                    "\64\63\3\2\2\2\64\65\3\2\2\2\65\66\3\2\2\2\66\67\7\65\2\2\67;\7\6\2\2" +
                     "89\5\30\r\29:\7\65\2\2:<\3\2\2\2;8\3\2\2\2;<\3\2\2\2<C\3\2\2\2=>\7\7\2" +
                     "\2>?\5\30\r\2?@\7\65\2\2@B\3\2\2\2A=\3\2\2\2BE\3\2\2\2CA\3\2\2\2CD\3\2" +
                     "\2\2DF\3\2\2\2EC\3\2\2\2FG\7\b\2\2GK\7\4\2\2HJ\5\f\7\2IH\3\2\2\2JM\3\2" +
@@ -129,7 +129,7 @@ public class MiracleParser extends Parser {
                     "\u00fa\3\2\2\2\u00fa\35\3\2\2\2\u00fb\u00f9\3\2\2\2\u00fc\u0101\7\66\2" +
                     "\2\u00fd\u0101\7\67\2\2\u00fe\u0101\t\n\2\2\u00ff\u0101\7\63\2\2\u0100" +
                     "\u00fc\3\2\2\2\u0100\u00fd\3\2\2\2\u0100\u00fe\3\2\2\2\u0100\u00ff\3\2" +
-                    "\2\2\u0101\37\3\2\2\2\36#%,.\65;CKT\\hqvz~\u0088\u0090\u0093\u009f\u00b2" +
+                    "\2\2\u0101\37\3\2\2\2\36#%,.\64;CKT\\hqvz~\u0088\u0090\u0093\u009f\u00b2" +
                     "\u00b7\u00bb\u00bd\u00e3\u00e9\u00f7\u00f9\u0100";
     public static final ATN _ATN =
             new ATNDeserializer().deserialize(_serializedATN.toCharArray());
@@ -321,18 +321,17 @@ public class MiracleParser extends Parser {
         try {
             enterOuterAlt(_localctx, 1);
             {
-                setState(49);
-                typename();
-                setState(51);
+                setState(50);
                 _errHandler.sync(this);
-                _la = _input.LA(1);
-                if (_la == IDENTIFIER) {
-                    {
-                        setState(50);
-                        match(IDENTIFIER);
+                switch (getInterpreter().adaptivePredict(_input, 4, _ctx)) {
+                    case 1: {
+                        setState(49);
+                        ((FunctionDeclarationStatementContext) _localctx).returnType = typename();
                     }
+                    break;
                 }
-
+                setState(52);
+                match(IDENTIFIER);
                 setState(53);
                 match(T__3);
                 setState(57);
@@ -1441,16 +1440,10 @@ public class MiracleParser extends Parser {
     }
 
     public static class FunctionDeclarationStatementContext extends ParserRuleContext {
+        public TypenameContext returnType;
+
         public FunctionDeclarationStatementContext(ParserRuleContext parent, int invokingState) {
             super(parent, invokingState);
-        }
-
-        public List<TypenameContext> typename() {
-            return getRuleContexts(TypenameContext.class);
-        }
-
-        public TypenameContext typename(int i) {
-            return getRuleContext(TypenameContext.class, i);
         }
 
         public List<TerminalNode> IDENTIFIER() {
@@ -1459,6 +1452,14 @@ public class MiracleParser extends Parser {
 
         public TerminalNode IDENTIFIER(int i) {
             return getToken(MiracleParser.IDENTIFIER, i);
+        }
+
+        public List<TypenameContext> typename() {
+            return getRuleContexts(TypenameContext.class);
+        }
+
+        public TypenameContext typename(int i) {
+            return getRuleContext(TypenameContext.class, i);
         }
 
         public List<StatementContext> statement() {

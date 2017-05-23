@@ -1,13 +1,14 @@
-package com.miracle.intermediate.instruction;
+package com.miracle.intermediate.instruction.arithmetic;
 
-import com.miracle.intermediate.number.MiracleIRVirtualRegister;
+import com.miracle.intermediate.instruction.MiracleIRInstruction;
+import com.miracle.intermediate.number.MiracleIRDirectRegister;
 import com.miracle.intermediate.visitor.MiracleIRVisitor;
 
 public class MiracleIRPrefixArithmetic extends MiracleIRInstruction {
-    public final MiracleIRVirtualRegister target;
+    public final MiracleIRDirectRegister target;
     public final Types operator;
 
-    public MiracleIRPrefixArithmetic(MiracleIRVirtualRegister target, Types operator) {
+    public MiracleIRPrefixArithmetic(MiracleIRDirectRegister target, Types operator) {
         this.target = target;
         this.operator = operator;
     }

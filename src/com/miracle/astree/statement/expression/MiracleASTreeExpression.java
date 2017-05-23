@@ -32,12 +32,12 @@ public abstract class MiracleASTreeExpression extends MiracleASTreeStatement {
 
     public abstract String toPrintableString();
 
-    public MiracleIRNumber getResultAddress() {
+    public MiracleIRNumber getResultNumber() {
         assert resultAddress != null;
         return resultAddress;
     }
 
-    public void setResultAddress(MiracleIRNumber address) {
+    public void setResultNumber(MiracleIRNumber address) {
         assert resultAddress != null;
         this.resultAddress = address;
     }

@@ -10,6 +10,7 @@ import com.miracle.symbol.*;
 
 public class MiracleASTreeMemberFetcher extends MiracleASTreeBaseVisitor {
     private final MiracleExceptionContainer exceptionContainer;
+    private MiracleSymbolClassType classType;
 
     public MiracleASTreeMemberFetcher(MiracleExceptionContainer exceptionContainer) {
         this.exceptionContainer = exceptionContainer;
@@ -30,23 +31,21 @@ public class MiracleASTreeMemberFetcher extends MiracleASTreeBaseVisitor {
     @Override
     public void visit(MiracleASTreeClassDeclaration classDeclaration) {
         classDeclaration.functionDeclarations.forEach(element -> {
+            element.setMemberFrom(classDeclaration);
             element.accept(this);
             classDeclaration.getSymbol().addMethod(element.identifier, element.getSymbol());
         });
         classDeclaration.variableDeclarations.forEach(element -> {
+            element.setMemberFrom(classDeclaration);
             element.accept(this);
             classDeclaration.getSymbol().addVariable(element.identifier, element.typenode.getType());
         });
 
         if (classDeclaration.constructorDeclaration != null) {
-            classDeclaration.constructorDeclaration.accept(this);
-            MiracleSymbolVariableType type = classDeclaration.constructorDeclaration.returnType.getType();
-            if (!(type instanceof MiracleSymbolClassType)) {
+            classDeclaration.constructorDeclaration.setMemberFrom(classDeclaration);
+            if (!classDeclaration.identifier.equals(classDeclaration.constructorDeclaration.identifier)) {
                 exceptionContainer.add("invalid constructor declaration of class `" + classDeclaration.identifier + "`",
-                        classDeclaration.constructorDeclaration.returnType.startPosition);
-            } else if (!type.isSameType(classDeclaration.getSymbol())) {
-                exceptionContainer.add("invalid constructor declaration of class `" + classDeclaration.identifier + "`",
-                        classDeclaration.constructorDeclaration.returnType.startPosition);
+                        classDeclaration.constructorDeclaration.identifierPosition);
             }
         }
     }
@@ -69,13 +68,11 @@ public class MiracleASTreeMemberFetcher extends MiracleASTreeBaseVisitor {
             element.typenode.accept(this);
             functionDeclaration.getSymbol().addParameter(element.identifier, element.typenode.getType());
         });
-        if (functionDeclaration.identifier != null) {
-            if (!functionDeclaration.getScope().put(functionDeclaration)) {
-                exceptionContainer.add("duplicate declarations of identifier \""
-                                + functionDeclaration.identifier + "\"",
-                        functionDeclaration.identifierPosition
-                );
-            }
+        if (!functionDeclaration.getScope().put(functionDeclaration)) {
+            exceptionContainer.add("duplicate declarations of identifier \""
+                            + functionDeclaration.identifier + "\"",
+                    functionDeclaration.identifierPosition
+            );
         }
         if (functionDeclaration.returnType.getType() != null) {
             functionDeclaration.getSymbol().setReturnType(functionDeclaration.returnType.getType());

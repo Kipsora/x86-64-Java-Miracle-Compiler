@@ -13,7 +13,9 @@ public class MiracleSymbolArrayType extends MiracleSymbolVariableType {
         super(Category.ARRAY, MiracleOption.POINTER_SIZE);
         this.baseType = baseType;
         this.dimension = dimension;
-        addMethod("size", new MiracleSymbolFunctionType(__builtin_int));
+        addMethod("size", new MiracleSymbolFunctionType(__builtin_int, this) {{
+            setAddress("@array.size");
+        }});
     }
 
     public MiracleSymbolType subscript() {
