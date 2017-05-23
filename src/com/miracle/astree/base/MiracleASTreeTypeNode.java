@@ -29,6 +29,9 @@ public class MiracleASTreeTypeNode extends MiracleASTreeNode {
     }
 
     public void setType(MiracleSymbolVariableType type) {
+        if (this.type != null) {
+            throw new RuntimeException("settled type");
+        }
         this.type = type;
     }
 }
