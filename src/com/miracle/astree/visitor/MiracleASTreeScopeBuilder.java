@@ -165,7 +165,9 @@ public class MiracleASTreeScopeBuilder implements MiracleASTreeVisitor {
     public void visit(MiracleASTreeNew newNode) {
         newNode.setScope(scope);
         newNode.variableType.accept(this);
-        newNode.expressions.forEach(element -> element.accept(this));
+        newNode.expressions.forEach(element -> {
+            if (element != null) element.accept(this);
+        });
     }
 
     @Override
