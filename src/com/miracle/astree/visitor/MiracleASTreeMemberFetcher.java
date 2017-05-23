@@ -65,7 +65,6 @@ public class MiracleASTreeMemberFetcher extends MiracleASTreeBaseVisitor {
     public void visit(MiracleASTreeFunctionDeclaration functionDeclaration) {
         functionDeclaration.returnType.accept(this);
         functionDeclaration.parameters.forEach(element -> {
-            element.typenode.accept(this);
             functionDeclaration.getSymbol().addParameter(element.identifier, element.typenode.getType());
         });
         if (!functionDeclaration.getScope().put(functionDeclaration)) {

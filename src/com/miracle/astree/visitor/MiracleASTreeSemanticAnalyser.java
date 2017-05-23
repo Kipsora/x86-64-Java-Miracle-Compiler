@@ -27,7 +27,6 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
     private MiracleASTreeClassDeclaration currentClass = null;
     private MiracleASTreeFunctionDeclaration currentFunction = null;
     private Stack<MiracleASTreeIteration> loopStack = new Stack<>();
-    private boolean isParameter;
 
     public MiracleASTreeSemanticAnalyser(MiracleExceptionContainer exceptionContainer) {
         this.exceptionContainer = exceptionContainer;
@@ -36,9 +35,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
     @Override
     public void visit(MiracleASTreeFunctionDeclaration functionDeclaration) {
         currentFunction = functionDeclaration;
-        isParameter = true;
         functionDeclaration.parameters.forEach(e -> e.accept(this));
-        isParameter = false;
         if (functionDeclaration.body != null) {
             functionDeclaration.body.forEach(e -> e.accept(this));
         }

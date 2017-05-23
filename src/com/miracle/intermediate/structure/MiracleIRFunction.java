@@ -33,6 +33,7 @@ public class MiracleIRFunction {
         List<String> argName = type.getArgName();
         List<MiracleSymbolVariableType> argType = type.getArgType();
         for (int i = 0, size = argName.size(); i < size; i++) {
+            if (argType.get(i) == null) break;
             this.parameters.add(new MiracleIRDirectRegister(
                     argName.get(i),
                     argType.get(i).getRegisterSize()
