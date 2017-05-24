@@ -74,7 +74,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
     @Override
     public void visit(MiracleASTree astree) {
         astree.declarations.forEach(element -> element.accept(this));
-        MiracleSymbol function = astree.getScope().get("main");
+        MiracleSymbol function = astree.getScope().resolve("main");
         if (function == null || !(function instanceof MiracleASTreeFunctionDeclaration)) {
             exceptionContainer.add("the main function is not found",
                     null);
@@ -237,7 +237,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeVariable variable) {
-        MiracleSymbol type = variable.getScope().get(variable.identifier);
+        MiracleSymbol type = variable.getScope().resolve(variable.identifier);
         if (type == null) {
             exceptionContainer.add("cannot find identifier named \"" + variable.identifier + "\"",
                     variable.position);
@@ -610,7 +610,7 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
 
     @Override
     public void visit(MiracleASTreeTypeNode typeNode) {
-        MiracleSymbol result = typeNode.getScope().get(typeNode.typename);
+        MiracleSymbol result = typeNode.getScope().resolve(typeNode.typename);
         if (result == null) {
             exceptionContainer.add("cannot find identifier \"" + typeNode.typename + "\"",
                     typeNode.startPosition

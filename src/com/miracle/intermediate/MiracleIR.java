@@ -120,7 +120,7 @@ public class MiracleIR extends MiracleIRNode {
             });
 
             miracleEntryFunction.getEntryBasicBlock().tail.prepend(new MiracleIRCall(
-                    ((MiracleASTreeFunctionDeclaration) astree.getScope().get("main")).getSymbol().getAddress(),
+                    ((MiracleASTreeFunctionDeclaration) astree.getScope().resolve("main")).getSymbol().getAddress(),
                     new LinkedList<>(), register, null
             ));
         }
@@ -283,7 +283,7 @@ public class MiracleIR extends MiracleIRNode {
 
         @Override
         public void visit(MiracleASTreeVariable variable) {
-            MiracleSymbol symbol = variable.getScope().get(variable.identifier);
+            MiracleSymbol symbol = variable.getScope().resolve(variable.identifier);
             if (symbol instanceof MiracleASTreeVariableDeclaration) {
                 if (((MiracleASTreeVariableDeclaration) symbol).getMemberFrom() != null) {
                     // if a variable in class has no this before, then I will force to add it
@@ -655,11 +655,10 @@ public class MiracleIR extends MiracleIRNode {
                         new MiracleIRImmediate(1, MiracleOption.INT_SIZE)
                 ));
                 if (type instanceof MiracleSymbolClassType) {
-                    MiracleASTreeClassDeclaration declaration = (MiracleASTreeClassDeclaration) newNode.getScope()
-                            .get(((MiracleSymbolClassType) type).identifier);
-                    if (declaration.constructorDeclaration != null) {
+                    MiracleSymbolFunctionType constructor = type.getMethod("");
+                    if (constructor != null) {
                         curBasicBlock.tail.prepend(new MiracleIRCall(
-                                declaration.constructorDeclaration.getSymbol().getAddress(),
+                                constructor.getAddress(),
                                 Collections.emptyList(),
                                 null, register
                         ));

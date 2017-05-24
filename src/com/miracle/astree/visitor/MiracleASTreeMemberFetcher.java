@@ -43,6 +43,7 @@ public class MiracleASTreeMemberFetcher extends MiracleASTreeBaseVisitor {
 
         if (classDeclaration.constructorDeclaration != null) {
             classDeclaration.constructorDeclaration.setMemberFrom(classDeclaration);
+            classDeclaration.getSymbol().addMethod("", classDeclaration.constructorDeclaration.getSymbol());
             if (!classDeclaration.identifier.equals(classDeclaration.constructorDeclaration.identifier)) {
                 exceptionContainer.add("invalid constructor declaration of class `" + classDeclaration.identifier + "`",
                         classDeclaration.constructorDeclaration.identifierPosition);
@@ -81,7 +82,7 @@ public class MiracleASTreeMemberFetcher extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTreeTypeNode typeNode) {
-        MiracleSymbol result = typeNode.getScope().get(typeNode.typename);
+        MiracleSymbol result = typeNode.getScope().resolve(typeNode.typename);
         if (result == null) {
             exceptionContainer.add("cannot find identifier \"" + typeNode.typename + "\"",
                     typeNode.startPosition);

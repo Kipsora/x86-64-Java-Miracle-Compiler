@@ -1,5 +1,6 @@
 package com.miracle.symbol;
 
+import com.miracle.astree.statement.declaration.MiracleASTreeClassDeclaration;
 import com.miracle.astree.statement.declaration.MiracleASTreeDeclaration;
 
 import java.util.HashMap;
@@ -89,11 +90,11 @@ public class MiracleSymbolTable {
         return true;
     }
 
-    public MiracleSymbol get(String name) {
+    public MiracleSymbol resolve(String name) {
         MiracleSymbol answer = currentSymbolTable.getOrDefault(name, null);
         if (answer != null) return answer;
         if (parentSymbolTable != null) {
-            return parentSymbolTable.get(name);
+            return parentSymbolTable.resolve(name);
         }
         if (builtinType.containsKey(name)) {
             return builtinType.get(name);
@@ -106,5 +107,16 @@ public class MiracleSymbolTable {
 
     public MiracleSymbolTable getParentSymbolTable() {
         return parentSymbolTable;
+    }
+
+    public MiracleASTreeClassDeclaration resolveClass(String name) {
+        MiracleSymbol answer = currentSymbolTable.getOrDefault(name, null);
+        if (answer instanceof MiracleASTreeClassDeclaration) {
+            return (MiracleASTreeClassDeclaration) answer;
+        }
+        if (parentSymbolTable != null) {
+            return parentSymbolTable.resolveClass(name);
+        }
+        return null;
     }
 }
