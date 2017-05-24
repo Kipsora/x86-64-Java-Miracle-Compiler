@@ -1,4 +1,4 @@
-package com.miracle.intermediate.instruction.fork;
+package com.miracle.intermediate.instruction;
 
 import com.miracle.intermediate.number.MiracleIRNumber;
 import com.miracle.intermediate.number.MiracleIRRegister;
@@ -7,7 +7,7 @@ import com.miracle.intermediate.visitor.MiracleIRVisitor;
 
 import java.util.List;
 
-public class MiracleIRCall extends MiracleIRFork {
+public class MiracleIRCall extends MiracleIRInstruction {
     public final MiracleIRFunction function;
     public final List<MiracleIRNumber> parameters;
     public final MiracleIRRegister returnRegister;

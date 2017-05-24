@@ -7,7 +7,9 @@ import com.miracle.cstree.parser.MiracleParser;
 import com.miracle.exception.MiracleCSTreeErrorHandler;
 import com.miracle.exception.MiracleExceptionContainer;
 import com.miracle.intermediate.MiracleIR;
+import com.miracle.intermediate.visitor.MiracleIRDirectAllocator;
 import com.miracle.intermediate.visitor.MiracleIRPrinter;
+import com.miracle.intermediate.visitor.MiracleIRX64Printer;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -16,14 +18,14 @@ import org.apache.commons.cli.*;
 import java.io.*;
 
 public class Miracle {
-    final private boolean printASTree;
-    final private boolean printIR;
-    final private InputStream inputStream;
-    final private PrintStream outputStream;
+    private final boolean printASTree;
+    private final boolean printIR;
+    private final InputStream inputStream;
+    private final PrintStream outputStream;
 
-    final private PrintStream errorStream = System.err;
+    private final PrintStream errorStream = System.err;
 
-    final private MiracleExceptionContainer exceptionContainer = new MiracleExceptionContainer(
+    private final MiracleExceptionContainer exceptionContainer = new MiracleExceptionContainer(
             errorStream
     );
 
@@ -105,14 +107,22 @@ public class Miracle {
             MiracleParser.MiracleContext cstree = getCSTree();
             MiracleASTree astree = getASTree(cstree);
             if (this.printASTree) {
-                astree.accept(new MiracleASTreePrinter(outputStream));
+                MiracleASTreePrinter printer = new MiracleASTreePrinter();
+                astree.accept(printer);
+                outputStream.println(printer.getOutput());
+                return;
             }
             MiracleIR ir = getIR(astree);
             if (this.printIR) {
                 MiracleIRPrinter generator = new MiracleIRPrinter();
                 ir.accept(generator);
                 outputStream.println(generator.getOutput());
+                return;
             }
+            ir.accept(new MiracleIRDirectAllocator());
+            MiracleIRX64Printer printer = new MiracleIRX64Printer();
+            ir.accept(printer);
+            outputStream.println(printer.getOutput());
         } catch (RuntimeException e) {
             e.printStackTrace();
         }

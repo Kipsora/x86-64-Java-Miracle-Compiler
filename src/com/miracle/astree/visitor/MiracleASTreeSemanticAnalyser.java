@@ -112,6 +112,11 @@ public class MiracleASTreeSemanticAnalyser implements MiracleASTreeVisitor {
                         variableDeclaration.expression.position);
                 flag = false;
             }
+            if (variableDeclaration.getMemberFrom() != null) {
+                exceptionContainer.add("cannot initialize member variable here",
+                        variableDeclaration.expression.position);
+                flag = false;
+            }
         }
         if (flag && variableDeclaration.getMemberFrom() == null) {
             if (!variableDeclaration.getScope().put(variableDeclaration)) {

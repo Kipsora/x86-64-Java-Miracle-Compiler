@@ -1,13 +1,13 @@
 package com.miracle.intermediate.visitor;
 
 import com.miracle.intermediate.MiracleIR;
+import com.miracle.intermediate.instruction.MiracleIRCall;
 import com.miracle.intermediate.instruction.MiracleIRCompare;
 import com.miracle.intermediate.instruction.MiracleIRHeapAllocate;
 import com.miracle.intermediate.instruction.MiracleIRMove;
 import com.miracle.intermediate.instruction.arithmetic.MiracleIRBinaryArithmetic;
 import com.miracle.intermediate.instruction.arithmetic.MiracleIRPrefixArithmetic;
 import com.miracle.intermediate.instruction.fork.MiracleIRBranch;
-import com.miracle.intermediate.instruction.fork.MiracleIRCall;
 import com.miracle.intermediate.instruction.fork.MiracleIRJump;
 import com.miracle.intermediate.instruction.fork.MiracleIRReturn;
 import com.miracle.intermediate.structure.MiracleIRBasicBlock;
@@ -38,7 +38,7 @@ public class MiracleIRPrinter implements MiracleIRVisitor {
         builder.append("section .data:").append('\n');
         ir.globalString.forEach((key, value) ->
                 builder.append(value.name).append(':').append('\t')
-                        .append("db").append(' ').append(value.value.length() + 1)
+                        .append("db").append(' ').append(value.value.length() - 1)
                         .append(' ').append(value.value).append(", ").append('0')
                         .append('\n')
         );
@@ -69,7 +69,7 @@ public class MiracleIRPrinter implements MiracleIRVisitor {
         function.parameters.forEach(element -> builder.append(' ').append(element));
         builder.append(' ').append('{').append('\n');
         builder.append("stack frame: {").append('\n');
-        function.buffer.getRegisters().forEach(element ->
+        function.buffer.getRegisters().forEach((element, address) ->
                 builder.append('\t').append(element).append(' ')
                         .append(element.getNumberSize()).append('\n')
         );
@@ -137,8 +137,8 @@ public class MiracleIRPrinter implements MiracleIRVisitor {
     @Override
     public void visit(MiracleIRHeapAllocate allocate) {
         builder.append('\t').append("haloc").append(' ')
-                .append(allocate.register).append(' ')
-                .append(allocate.number).append(' ')
+                .append(allocate.register).append(", ")
+                .append(allocate.number).append(", ")
                 .append(allocate.size).append('\n');
     }
 }

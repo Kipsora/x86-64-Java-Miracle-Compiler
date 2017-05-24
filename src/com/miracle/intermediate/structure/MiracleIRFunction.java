@@ -2,6 +2,7 @@ package com.miracle.intermediate.structure;
 
 import com.miracle.intermediate.MiracleIRRegisterBuffer;
 import com.miracle.intermediate.number.MiracleIRDirectRegister;
+import com.miracle.intermediate.number.MiracleIRVirtualRegister;
 import com.miracle.intermediate.visitor.MiracleIRVisitor;
 import com.miracle.symbol.MiracleSymbolFunctionType;
 import com.miracle.symbol.MiracleSymbolVariableType;
@@ -20,6 +21,7 @@ public class MiracleIRFunction {
     public final MiracleIRRegisterBuffer buffer = new MiracleIRRegisterBuffer();
 
     private MiracleIRBasicBlock entryBasicBlock;
+    private MiracleIRBasicBlock exitBasicBlock;
 
     public MiracleIRFunction(String identifier,
                              MiracleSymbolFunctionType type) {
@@ -34,7 +36,7 @@ public class MiracleIRFunction {
         List<MiracleSymbolVariableType> argType = type.getArgType();
         for (int i = 0, size = argName.size(); i < size; i++) {
             if (argType.get(i) == null) break;
-            this.parameters.add(new MiracleIRDirectRegister(
+            this.parameters.add(new MiracleIRVirtualRegister(
                     argName.get(i),
                     argType.get(i).getRegisterSize()
             ));
@@ -44,7 +46,8 @@ public class MiracleIRFunction {
         } else {
             this.selfRegister = null;
         }
-        this.entryBasicBlock = new MiracleIRBasicBlock("__" + identifier + ".entry");
+        this.entryBasicBlock = new MiracleIRBasicBlock("__" + identifier + ".entry", this, true, false);
+        this.exitBasicBlock = new MiracleIRBasicBlock("__" + identifier + ".exit", this, false, true);
     }
 
     public MiracleIRBasicBlock getEntryBasicBlock() {
@@ -53,5 +56,9 @@ public class MiracleIRFunction {
 
     public void accept(MiracleIRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public MiracleIRBasicBlock getExitBasicBlock() {
+        return exitBasicBlock;
     }
 }

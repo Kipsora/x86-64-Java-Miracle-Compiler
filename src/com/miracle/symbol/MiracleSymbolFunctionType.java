@@ -41,6 +41,9 @@ public class MiracleSymbolFunctionType extends MiracleSymbolType {
     }
 
     public void setReturnType(MiracleSymbolVariableType returnType) {
+        if (this.returnType != null) {
+            throw new RuntimeException("ret type settled");
+        }
         this.returnType = returnType;
     }
 

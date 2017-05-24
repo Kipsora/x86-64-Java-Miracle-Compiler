@@ -43,7 +43,6 @@ public class MiracleASTreeFunctionDeclaration extends MiracleASTreeMemberDeclara
 
     @Override
     public void setMemberFrom(MiracleASTreeClassDeclaration memberFrom) {
-
         super.setMemberFrom(memberFrom);
         this.symbol.setMemberFrom(memberFrom.getSymbol());
     }

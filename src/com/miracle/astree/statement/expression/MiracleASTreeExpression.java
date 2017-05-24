@@ -27,6 +27,9 @@ public abstract class MiracleASTreeExpression extends MiracleASTreeStatement {
     }
 
     public void setResultType(MiracleSymbolType resultType) {
+        if (this.resultType != null) {
+            throw new RuntimeException("return type already settled");
+        }
         this.resultType = resultType;
     }
 

@@ -8,15 +8,9 @@ import com.miracle.astree.statement.declaration.MiracleASTreeVariableDeclaration
 import com.miracle.astree.statement.expression.*;
 import com.miracle.astree.statement.expression.constant.MiracleASTreeStringConstant;
 
-import java.io.PrintStream;
-
 public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
-    private final PrintStream ostream;
+    private StringBuilder builder;
     private int indent;
-
-    public MiracleASTreePrinter(PrintStream ostream) {
-        this.ostream = ostream;
-    }
 
     private boolean isIndent(Object element) {
         return !(element instanceof MiracleASTreeVariableDeclaration) &&
@@ -29,20 +23,21 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
 
     private void println(String message) {
         for (int i = 1; i <= indent; i++) {
-            ostream.print("    ");
+            builder.append("    ");
         }
-        ostream.println(message);
+        builder.append(message).append('\n');
     }
 
     private void print(String message) {
         for (int i = 1; i <= indent; i++) {
-            ostream.print("    ");
+            builder.append("    ");
         }
-        ostream.print(message);
+        builder.append(message).append('\n');
     }
 
     @Override
     public void visit(MiracleASTree astree) {
+        builder = new StringBuilder();
         println("[Miracle Program]");
         indent++;
         astree.declarations.forEach((element) -> element.accept(this));
@@ -51,28 +46,28 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTreeNew newNode) {
-        ostream.print("new " + newNode.variableType.getType().toPrintableString() + " ");
+        builder.append("new ").append(newNode.variableType.getType().toPrintableString()).append(" ");
         newNode.expressions.forEach((element) -> {
             if (element == null) {
-                ostream.print("[]");
+                builder.append("[]");
             } else {
-                ostream.print('[' + element.toPrintableString() + "]");
+                builder.append('[').append(element.toPrintableString()).append("]");
             }
         });
     }
 
     @Override
     public void visit(MiracleASTreeCall call) {
-        ostream.print("call ");
-        ostream.print(call.function.toPrintableString());
-        ostream.print("(");
+        builder.append("call ");
+        builder.append(call.function.toPrintableString());
+        builder.append("(");
         for (int i = 0; i < call.parameters.size(); i++) {
             if (i > 0) {
-                ostream.print(", ");
+                builder.append(", ");
             }
-            ostream.print(call.parameters.get(i).toPrintableString());
+            builder.append(call.parameters.get(i).toPrintableString());
         }
-        ostream.print(')');
+        builder.append(')');
     }
 
     @Override
@@ -83,7 +78,7 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
             if (isIndent(element)) {
                 print("");
                 element.accept(this);
-                ostream.println();
+                builder.append('\n');
             } else {
                 element.accept(this);
             }
@@ -98,15 +93,15 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTreeReturn returnLiteral) {
-        ostream.print("return ");
+        builder.append("return ");
         if (returnLiteral.expression != null) {
-            ostream.print(returnLiteral.expression.toPrintableString());
+            builder.append(returnLiteral.expression.toPrintableString());
         }
     }
 
     @Override
     public void visit(MiracleASTreeStringConstant stringConstant) {
-        ostream.print(stringConstant.getValue());
+        builder.append(stringConstant.getValue());
     }
 
     @Override
@@ -116,22 +111,22 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTreeVariable variable) {
-        ostream.print(variable.identifier);
+        builder.append(variable.identifier);
     }
 
     @Override
     public void visit(MiracleASTreeIteration iteration) {
         if (iteration.initializeExpression != null) {
             print("for init: ");
-            ostream.println(iteration.incrementExpression.toPrintableString());
+            builder.append(iteration.incrementExpression.toPrintableString()).append('\n');
         }
         if (iteration.conditionExpression != null) {
             print("for condition: ");
-            ostream.println(iteration.conditionExpression.toPrintableString());
+            builder.append(iteration.conditionExpression.toPrintableString()).append('\n');
         }
         if (iteration.incrementExpression != null) {
             print("for increment: ");
-            ostream.println(iteration.incrementExpression.toPrintableString());
+            builder.append(iteration.incrementExpression.toPrintableString()).append('\n');
         }
         if (iteration.body != null) {
             indent++;
@@ -141,7 +136,7 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
                 if (isIndent(iteration.body)) {
                     print("");
                     iteration.body.accept(this);
-                    ostream.println();
+                    builder.append('\n');
                 } else {
                     iteration.body.accept(this);
                 }
@@ -158,7 +153,7 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
             if (isIndent(selection.branchTrue)) {
                 print("");
                 selection.branchTrue.accept(this);
-                ostream.println();
+                builder.append('\n');
             } else {
                 selection.branchTrue.accept(this);
             }
@@ -170,7 +165,7 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
             if (isIndent(selection.branchFalse)) {
                 print("");
                 selection.branchFalse.accept(this);
-                ostream.println();
+                builder.append('\n');
             } else {
                 selection.branchFalse.accept(this);
             }
@@ -181,14 +176,14 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
     @Override
     public void visit(MiracleASTreeSubscript subscript) {
         subscript.base.accept(this);
-        ostream.print('[');
+        builder.append('[');
         subscript.coordinate.accept(this);
-        ostream.print(']');
+        builder.append(']');
     }
 
     @Override
     public void visit(MiracleASTreeBinaryExpression binaryExpression) {
-        ostream.print(binaryExpression.toPrintableString());
+        builder.append(binaryExpression.toPrintableString());
     }
 
     @Override
@@ -208,12 +203,12 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
 
     @Override
     public void visit(MiracleASTreePrefixExpression prefixExpression) {
-        ostream.print(prefixExpression.toPrintableString());
+        builder.append(prefixExpression.toPrintableString());
     }
 
     @Override
     public void visit(MiracleASTreeSuffixExpression suffixExpression) {
-        ostream.print(suffixExpression.toPrintableString());
+        builder.append(suffixExpression.toPrintableString());
     }
 
     @Override
@@ -237,7 +232,7 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
                         !(element instanceof MiracleASTreeContinue)) {
                     print("");
                     element.accept(this);
-                    ostream.println();
+                    builder.append('\n');
                 } else {
                     element.accept(this);
                 }
@@ -259,5 +254,9 @@ public class MiracleASTreePrinter extends MiracleASTreeBaseVisitor {
             println("");
         }
         indent--;
+    }
+
+    public String getOutput() {
+        return builder.toString();
     }
 }

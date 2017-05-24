@@ -11,14 +11,22 @@ public class MiracleIRBasicBlock {
     public final String name;
 
     public final Node tail;
+    public final MiracleIRFunction blockFrom;
+    public final boolean isFunctionEntryBlock;
+    public final boolean isFunctionExitBlock;
     private final Node head;
     private boolean isForked;
-
     private List<MiracleIRBasicBlock> prevBasicBlock = new LinkedList<>();
     private List<MiracleIRBasicBlock> succBasicBlock = new LinkedList<>();
 
-    public MiracleIRBasicBlock(String name) {
+    public MiracleIRBasicBlock(String name,
+                               MiracleIRFunction blockFrom,
+                               boolean isFunctionEntryBlock,
+                               boolean isFunctionExitBlock) {
         this.name = name;
+        this.blockFrom = blockFrom;
+        this.isFunctionEntryBlock = isFunctionEntryBlock;
+        this.isFunctionExitBlock = isFunctionExitBlock;
         this.head = new Node(null);
         this.tail = new Node(null);
         this.head.succ = this.tail;

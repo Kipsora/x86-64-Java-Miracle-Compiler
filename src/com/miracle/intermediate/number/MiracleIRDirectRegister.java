@@ -2,7 +2,7 @@ package com.miracle.intermediate.number;
 
 import com.miracle.astree.statement.declaration.MiracleASTreeVariableDeclaration;
 
-public class MiracleIRDirectRegister extends MiracleIRVirtualRegister {
+public abstract class MiracleIRDirectRegister extends MiracleIRRegister {
     public final String name;
     public final int size;
 

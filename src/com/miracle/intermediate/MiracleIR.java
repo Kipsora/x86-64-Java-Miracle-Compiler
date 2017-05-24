@@ -13,22 +13,21 @@ import com.miracle.astree.statement.expression.constant.MiracleASTreeIntegerCons
 import com.miracle.astree.statement.expression.constant.MiracleASTreeNullConstant;
 import com.miracle.astree.statement.expression.constant.MiracleASTreeStringConstant;
 import com.miracle.astree.visitor.MiracleASTreeVisitor;
+import com.miracle.intermediate.instruction.MiracleIRCall;
 import com.miracle.intermediate.instruction.MiracleIRCompare;
 import com.miracle.intermediate.instruction.MiracleIRHeapAllocate;
 import com.miracle.intermediate.instruction.MiracleIRMove;
 import com.miracle.intermediate.instruction.arithmetic.MiracleIRBinaryArithmetic;
 import com.miracle.intermediate.instruction.arithmetic.MiracleIRPrefixArithmetic;
 import com.miracle.intermediate.instruction.fork.MiracleIRBranch;
-import com.miracle.intermediate.instruction.fork.MiracleIRCall;
 import com.miracle.intermediate.instruction.fork.MiracleIRJump;
 import com.miracle.intermediate.instruction.fork.MiracleIRReturn;
 import com.miracle.intermediate.number.*;
 import com.miracle.intermediate.structure.MiracleIRBasicBlock;
 import com.miracle.intermediate.structure.MiracleIRFunction;
 import com.miracle.intermediate.visitor.MiracleIRVisitor;
-import com.miracle.symbol.MiracleSymbol;
-import com.miracle.symbol.MiracleSymbolClassType;
-import com.miracle.symbol.MiracleSymbolFunctionType;
+import com.miracle.symbol.*;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.*;
 
@@ -67,7 +66,6 @@ public class MiracleIR extends MiracleIRNode {
 
         private int countTmpRegister;
         private int countBlock;
-        private int countNewIters = 0;
 
         @Override
         public void visit(MiracleASTreeFunctionDeclaration functionDeclaration) {
@@ -76,6 +74,11 @@ public class MiracleIR extends MiracleIRNode {
             curBasicBlock = curFunction.getEntryBasicBlock();
             functionDeclaration.parameters.forEach(element -> element.accept(this));
             functionDeclaration.body.forEach(element -> element.accept(this));
+            if (!curBasicBlock.isForked()) {
+                curBasicBlock.addSuccBasicBlock(curFunction.getExitBasicBlock());
+                curBasicBlock.setFork(new MiracleIRJump(curFunction.getExitBasicBlock()));
+            }
+            curFunction.getExitBasicBlock().setFork(new MiracleIRReturn());
             curFunction = null;
         }
 
@@ -99,9 +102,7 @@ public class MiracleIR extends MiracleIRNode {
 
         @Override
         public void visit(MiracleASTreeVariableDeclaration variableDeclaration) {
-            if (variableDeclaration.getMemberFrom() != null) {
-                // no action
-            } else {
+            if (variableDeclaration.getMemberFrom() == null) {
                 if (variableDeclaration.getScope().getParentSymbolTable() == null) {
                     MiracleIRStaticVariable register = new MiracleIRStaticVariable(variableDeclaration);
                     globalVariable.put(register.name, register);
@@ -129,9 +130,9 @@ public class MiracleIR extends MiracleIRNode {
         @Override
         public void visit(MiracleASTreeSelection selection) {
             selection.expression.accept(this);
-            MiracleIRBasicBlock passBlock = new MiracleIRBasicBlock("if_pass_" + String.valueOf(countBlock++));
-            MiracleIRBasicBlock failBlock = new MiracleIRBasicBlock("if_fail_" + String.valueOf(countBlock++));
-            MiracleIRBasicBlock bothBlock = new MiracleIRBasicBlock("if_both_" + String.valueOf(countBlock++));
+            MiracleIRBasicBlock passBlock = new MiracleIRBasicBlock("if_pass_" + String.valueOf(countBlock++), curFunction, false, false);
+            MiracleIRBasicBlock failBlock = new MiracleIRBasicBlock("if_fail_" + String.valueOf(countBlock++), curFunction, false, false);
+            MiracleIRBasicBlock bothBlock = new MiracleIRBasicBlock("if_both_" + String.valueOf(countBlock++), curFunction, false, false);
             MiracleIRNumber number = selection.expression.getResultNumber();
             if (number instanceof MiracleIRImmediate) {
                 MiracleIRDirectRegister tmp = curFunction.buffer.require(
@@ -161,9 +162,10 @@ public class MiracleIR extends MiracleIRNode {
                 selection.branchFalse.accept(this);
             }
             if (!curBasicBlock.isForked()) {
-                curBasicBlock.addSuccBasicBlock(failBlock);
+                curBasicBlock.addSuccBasicBlock(bothBlock);
                 curBasicBlock.setFork(new MiracleIRJump(bothBlock));
             }
+            curBasicBlock = bothBlock;
         }
 
         @Override
@@ -171,13 +173,13 @@ public class MiracleIR extends MiracleIRNode {
             if (iteration.initializeExpression != null) {
                 iteration.initializeExpression.accept(this);
             }
-            MiracleIRBasicBlock condBlock = new MiracleIRBasicBlock("iter_cond_" + String.valueOf(countBlock++));
+            MiracleIRBasicBlock condBlock = new MiracleIRBasicBlock("iter_cond_" + String.valueOf(countBlock++), curFunction, false, false);
             curBasicBlock.addSuccBasicBlock(condBlock);
             curBasicBlock.setFork(new MiracleIRJump(condBlock));
 
             curBasicBlock = condBlock;
-            MiracleIRBasicBlock bodyBlock = new MiracleIRBasicBlock("iter_body_" + String.valueOf(countBlock++));
-            MiracleIRBasicBlock exitBlock = new MiracleIRBasicBlock("iter_exit_" + String.valueOf(countBlock++));
+            MiracleIRBasicBlock bodyBlock = new MiracleIRBasicBlock("iter_body_" + String.valueOf(countBlock++), curFunction, false, false);
+            MiracleIRBasicBlock exitBlock = new MiracleIRBasicBlock("iter_exit_" + String.valueOf(countBlock++), curFunction, false, false);
             if (iteration.conditionExpression != null) {
                 iteration.conditionExpression.accept(this);
 
@@ -217,6 +219,8 @@ public class MiracleIR extends MiracleIRNode {
                 curBasicBlock.setFork(new MiracleIRJump(condBlock));
             }
 
+            curBasicBlock = exitBlock;
+
             loopExitBlock = oldExitBlock;
             loopCondBlock = oldBodyBlock;
         }
@@ -245,7 +249,8 @@ public class MiracleIR extends MiracleIRNode {
                 ));
             }
             if (!curBasicBlock.isForked()) {
-                curBasicBlock.setFork(new MiracleIRReturn());
+                curBasicBlock.setFork(new MiracleIRJump(curFunction.getExitBasicBlock()));
+                curBasicBlock.addSuccBasicBlock(curFunction.getExitBasicBlock());
             }
         }
 
@@ -254,7 +259,7 @@ public class MiracleIR extends MiracleIRNode {
             MiracleSymbol symbol = variable.getScope().get(variable.identifier);
             if (symbol instanceof MiracleASTreeVariableDeclaration) {
                 if (((MiracleASTreeVariableDeclaration) symbol).getMemberFrom() != null) {
-                    // if a variable in class has no this, then I will add it to this
+                    // if a variable in class has no this before, then I will force to add it
                     variable.setResultNumber(new MiracleIROffsetRegister(
                             curFunction.selfRegister,
                             new MiracleIRImmediate(
@@ -313,7 +318,33 @@ public class MiracleIR extends MiracleIRNode {
 
         @Override
         public void visit(MiracleASTreeSubscript subscript) {
-            throw new RuntimeException("unsupported method");
+            subscript.base.accept(this);
+            subscript.coordinate.accept(this);
+            int size = ((MiracleSymbolArrayType) subscript.base.getResultType()).subscript().getRegisterSize();
+            MiracleIRNumber tmpCoor = subscript.coordinate.getResultNumber();
+            if (!(tmpCoor instanceof MiracleIRDirectRegister)) {
+                MiracleIRVirtualRegister victim = curFunction.buffer.require(
+                        ".t" + String.valueOf(countTmpRegister++),
+                        subscript.coordinate.getResultType().getRegisterSize()
+                );
+                curBasicBlock.tail.prepend(new MiracleIRMove(victim, tmpCoor));
+                tmpCoor = victim;
+            }
+            MiracleIRNumber tmpBase = subscript.base.getResultNumber();
+            if (!(tmpBase instanceof MiracleIRDirectRegister)) {
+                MiracleIRVirtualRegister victim = curFunction.buffer.require(
+                        ".t" + String.valueOf(countTmpRegister++),
+                        subscript.base.getResultType().getRegisterSize()
+                );
+                curBasicBlock.tail.prepend(new MiracleIRMove(victim, tmpBase));
+                tmpBase = victim;
+            }
+
+            subscript.setResultNumber(new MiracleIROffsetRegister(
+                    (MiracleIRDirectRegister) tmpBase, null,
+                    ImmutablePair.of((MiracleIRDirectRegister) tmpCoor, new MiracleIRImmediate(size, MiracleOption.INT_SIZE)),
+                    size
+            ));
         }
 
         private void addRelation(MiracleASTreeBinaryExpression expression) {
@@ -535,14 +566,18 @@ public class MiracleIR extends MiracleIRNode {
                 default:
                     throw new RuntimeException("unsupported operator");
             }
-            MiracleIRDirectRegister register = curFunction.buffer.require(
-                    ".t" + String.valueOf(countTmpRegister++),
-                    MiracleOption.INT_SIZE
-            );
-            curBasicBlock.tail.prepend(new MiracleIRPrefixArithmetic(
-                    (MiracleIRDirectRegister) prefixExpression.expression.getResultNumber(),
-                    operator
-            ));
+            MiracleIRRegister number = (MiracleIRRegister) prefixExpression.expression.getResultNumber();
+            if (!(number instanceof MiracleIRDirectRegister)) {
+                MiracleIRDirectRegister victim = curFunction.buffer.require(
+                        ".t" + String.valueOf(countTmpRegister++),
+                        prefixExpression.expression.getResultType().getRegisterSize()
+                );
+                curBasicBlock.tail.prepend(new MiracleIRMove(victim, number));
+                curBasicBlock.tail.prepend(new MiracleIRPrefixArithmetic(victim, operator));
+                curBasicBlock.tail.prepend(new MiracleIRMove(number, victim));
+            } else {
+                curBasicBlock.tail.prepend(new MiracleIRPrefixArithmetic((MiracleIRDirectRegister) number, operator));
+            }
             prefixExpression.setResultNumber(prefixExpression.expression.getResultNumber());
         }
 
@@ -581,32 +616,84 @@ public class MiracleIR extends MiracleIRNode {
                     MiracleOption.POINTER_SIZE
             );
             if (newNode.expressions.isEmpty()) {
-                MiracleSymbolClassType type = (MiracleSymbolClassType) newNode.variableType.getType();
+                MiracleSymbolVariableType type = newNode.variableType.getType();
                 curBasicBlock.tail.prepend(new MiracleIRHeapAllocate(
                         register, type.getMemorySize(),
                         new MiracleIRImmediate(1, MiracleOption.INT_SIZE)
                 ));
-                MiracleASTreeClassDeclaration declaration = (MiracleASTreeClassDeclaration) newNode.getScope().get(type.identifier);
-                if (declaration.constructorDeclaration != null) {
-                    curBasicBlock.tail.prepend(new MiracleIRCall(
-                            declaration.constructorDeclaration.getSymbol().getAddress(),
-                            Collections.emptyList(),
-                            null, register
-                    ));
+                if (type instanceof MiracleSymbolClassType) {
+                    MiracleASTreeClassDeclaration declaration = (MiracleASTreeClassDeclaration) newNode.getScope()
+                            .get(((MiracleSymbolClassType) type).identifier);
+                    if (declaration.constructorDeclaration != null) {
+                        curBasicBlock.tail.prepend(new MiracleIRCall(
+                                declaration.constructorDeclaration.getSymbol().getAddress(),
+                                Collections.emptyList(),
+                                null, register
+                        ));
+                    }
                 }
+                newNode.setResultNumber(register);
             } else { // Array Type
-                throw new RuntimeException("uncompleted case");
+                List<MiracleASTreeExpression> nextExprs = new LinkedList<>(newNode.expressions);
+                MiracleASTreeExpression expression = nextExprs.remove(0);
+                if (expression == null) return;
+                expression.accept(this);
+
+                curBasicBlock.tail.prepend(new MiracleIRHeapAllocate(
+                        register, MiracleOption.POINTER_SIZE,
+                        expression.getResultNumber()
+                ));
+
+                MiracleIRDirectRegister iterreg = curFunction.buffer.require("new_init_iter_" + String.valueOf(countTmpRegister++), MiracleOption.INT_SIZE);
+                curBasicBlock.tail.prepend(new MiracleIRBinaryArithmetic(
+                        MiracleIRBinaryArithmetic.Types.XOR,
+                        iterreg, iterreg
+                ));
+                MiracleIRBasicBlock newInitCondBlock = new MiracleIRBasicBlock("new_init_cond_" + String.valueOf(countBlock++), curFunction, false, false);
+                MiracleIRBasicBlock newInitExitBlock = new MiracleIRBasicBlock("new_init_exit_" + String.valueOf(countBlock++), curFunction, false, false);
+                MiracleIRDirectRegister flagreg = curFunction.buffer.require("new_init_flag_" + String.valueOf(countTmpRegister++), MiracleOption.INT_SIZE);
+                curBasicBlock.addSuccBasicBlock(newInitCondBlock);
+                curBasicBlock.setFork(new MiracleIRJump(newInitCondBlock));
+
+                curBasicBlock = newInitCondBlock;
+                curBasicBlock.tail.prepend(new MiracleIRCompare(
+                        MiracleIRCompare.Types.LT, iterreg,
+                        expression.getResultNumber(), flagreg
+                ));
+                MiracleIRBasicBlock newInitBodyBlock = new MiracleIRBasicBlock("new_init_body_" + String.valueOf(countBlock++), curFunction, false, false);
+
+                curBasicBlock.addSuccBasicBlock(newInitBodyBlock);
+                curBasicBlock.addSuccBasicBlock(newInitExitBlock);
+                curBasicBlock.setFork(new MiracleIRBranch(flagreg, newInitBodyBlock, newInitExitBlock));
+
+                curBasicBlock = newInitBodyBlock;
+                MiracleASTreeNew nextNew = new MiracleASTreeNew(newNode.variableType, nextExprs, null);
+                nextNew.accept(this);
+                curBasicBlock.tail.prepend(new MiracleIRMove(
+                        new MiracleIROffsetRegister(register, null,
+                                ImmutablePair.of(iterreg, new MiracleIRImmediate(MiracleOption.POINTER_SIZE, MiracleOption.INT_SIZE)),
+                                MiracleOption.POINTER_SIZE
+                        ),
+                        nextNew.getResultNumber()
+                ));
+                curBasicBlock.addSuccBasicBlock(newInitCondBlock);
+                curBasicBlock.setFork(new MiracleIRJump(newInitCondBlock));
+                curBasicBlock = newInitExitBlock;
             }
         }
 
         @Override
         public void visit(MiracleASTreeStringConstant stringConstant) {
-            MiracleIRStaticString register = new MiracleIRStaticString(
-                    ".str" + String.valueOf(countTmpRegister++),
-                    stringConstant.value
-            );
-            globalString.put(register.name, register);
-            stringConstant.setResultNumber(register);
+            if (globalFunction.containsKey(stringConstant.value)) {
+                stringConstant.setResultNumber(globalString.get(stringConstant.value));
+            } else {
+                MiracleIRStaticString register = new MiracleIRStaticString(
+                        ".str" + String.valueOf(countTmpRegister++),
+                        stringConstant.value
+                );
+                globalString.put(stringConstant.value, register);
+                stringConstant.setResultNumber(register);
+            }
         }
 
         @Override
@@ -638,19 +725,19 @@ public class MiracleIR extends MiracleIRNode {
         @Override
         public void visit(MiracleASTreeField field) {
             field.expression.accept(this);
-            MiracleSymbolFunctionType functionType = field.getResultType().getMethod(field.identifier);
+            MiracleSymbolFunctionType functionType = field.expression.getResultType().getMethod(field.identifier);
             if (functionType != null) {
-                field.setResultType(null);
+                field.setResultNumber(null);
             } else {
-                MiracleSymbolClassType type = (MiracleSymbolClassType) field.expression.getResultType();
+                MiracleSymbolType type = field.expression.getResultType();
                 field.setResultNumber(new MiracleIROffsetRegister(
                         (MiracleIRDirectRegister) field.expression.getResultNumber(),
                         new MiracleIRImmediate(
-                                type.getVariableOffset(field.identifier),
+                                ((MiracleSymbolClassType) type).getVariableOffset(field.identifier),
                                 MiracleOption.INT_SIZE
                         ),
                         null,
-                        type.getVariable(field.identifier).getRegisterSize()
+                        ((MiracleSymbolClassType) type).getVariable(field.identifier).getRegisterSize()
                 ));
             }
         }

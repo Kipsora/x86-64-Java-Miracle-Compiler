@@ -1,28 +1,35 @@
 package com.miracle.intermediate;
 
 import com.miracle.astree.statement.declaration.MiracleASTreeVariableDeclaration;
-import com.miracle.intermediate.number.MiracleIRDirectRegister;
 import com.miracle.intermediate.number.MiracleIRRegister;
+import com.miracle.intermediate.number.MiracleIRVirtualRegister;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MiracleIRRegisterBuffer {
-    private final List<MiracleIRRegister> set = new LinkedList<>();
+    private final Map<MiracleIRRegister, Integer> set = new HashMap<>();
+    private int totalSize;
 
-    public List<MiracleIRRegister> getRegisters() {
+    public Map<MiracleIRRegister, Integer> getRegisters() {
         return set;
     }
 
-    public MiracleIRDirectRegister require(MiracleASTreeVariableDeclaration declaration) {
-        MiracleIRDirectRegister register = new MiracleIRDirectRegister(declaration);
-        set.add(register);
+    public int getTotalSize() {
+        return totalSize;
+    }
+
+    public MiracleIRVirtualRegister require(MiracleASTreeVariableDeclaration declaration) {
+        MiracleIRVirtualRegister register = new MiracleIRVirtualRegister(declaration);
+        set.put(register, totalSize);
+        totalSize += register.getNumberSize();
         return register;
     }
 
-    public MiracleIRDirectRegister require(String name, int size) {
-        MiracleIRDirectRegister register = new MiracleIRDirectRegister(name, size);
-        set.add(register);
+    public MiracleIRVirtualRegister require(String name, int size) {
+        MiracleIRVirtualRegister register = new MiracleIRVirtualRegister(name, size);
+        set.put(register, totalSize);
+        totalSize += register.getNumberSize();
         return register;
     }
 }

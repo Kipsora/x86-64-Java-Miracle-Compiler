@@ -2,7 +2,7 @@ package com.miracle.intermediate.number;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
-public class MiracleIROffsetRegister extends MiracleIRVirtualRegister {
+public class MiracleIROffsetRegister extends MiracleIRRegister { // memory in stack/heap
     public final MiracleIRDirectRegister base;
     public final MiracleIRImmediate offsetA;
     public final ImmutablePair<MiracleIRDirectRegister, MiracleIRImmediate> offsetB;
