@@ -19,7 +19,7 @@ public class MiracleIRPrefixArithmetic extends MiracleIRInstruction {
     }
 
     public enum Types {
-        ADD, SUB, NEG, REV, MINUS;
+        ADD, SUB, REV, MINUS;
 
         @Override
         public String toString() {
@@ -27,10 +27,10 @@ public class MiracleIRPrefixArithmetic extends MiracleIRInstruction {
                 return "inc";
             } else if (this.equals(SUB)) {
                 return "dec";
-            } else if (this.equals(NEG)) {
-                return "neg";
+            } else if (this.equals(REV)) {
+                return "not";
             } else {
-                throw new RuntimeException("unsupported operator");
+                return "neg";
             }
         }
     }

@@ -97,7 +97,32 @@ public class MiracleIR extends MiracleIRNode {
             globalString = new HashMap<>();
             globalVariable = new HashMap<>();
             globalFunction = new HashMap<>();
-            astree.declarations.forEach(element -> element.accept(this));
+            MiracleIRFunction miracleEntryFunction = new MiracleIRFunction(
+                    ".__start",
+                    new MiracleSymbolFunctionType(__builtin_void, null)
+            );
+            globalFunction.put(".__start", miracleEntryFunction);
+            curFunction = miracleEntryFunction;
+            curBasicBlock = miracleEntryFunction.getEntryBasicBlock();
+            astree.declarations.forEach(element -> {
+                if (element instanceof MiracleASTreeVariableDeclaration) {
+                    element.accept(this);
+                }
+            });
+            MiracleIRVirtualRegister register = miracleEntryFunction.buffer.require(".t" + String.valueOf(countTmpRegister++), MiracleOption.INT_SIZE);
+            curBasicBlock = null;
+            curFunction = null;
+
+            astree.declarations.forEach(element -> {
+                if (!(element instanceof MiracleASTreeVariableDeclaration)) {
+                    element.accept(this);
+                }
+            });
+
+            miracleEntryFunction.getEntryBasicBlock().tail.prepend(new MiracleIRCall(
+                    ((MiracleASTreeFunctionDeclaration) astree.getScope().get("main")).getSymbol().getAddress(),
+                    new LinkedList<>(), register, null
+            ));
         }
 
         @Override
@@ -556,14 +581,27 @@ public class MiracleIR extends MiracleIRNode {
                     operator = MiracleIRPrefixArithmetic.Types.REV;
                     break;
                 case NEGATIVE:
-                    prefixExpression.setResultNumber(new MiracleIRImmediate(
-                            -((MiracleIRImmediate) number).value,
-                            number.getNumberSize()
-                    ));
-                    return;
-                case NEGATE:
-                    operator = MiracleIRPrefixArithmetic.Types.NEG;
+                    operator = MiracleIRPrefixArithmetic.Types.MINUS;
+                    if (number instanceof MiracleIRImmediate) {
+                        prefixExpression.setResultNumber(new MiracleIRImmediate(
+                                -((MiracleIRImmediate) number).value,
+                                number.getNumberSize()
+                        ));
+                        return;
+                    }
                     break;
+                case NEGATE:
+                    MiracleIRDirectRegister register = curFunction.buffer.require(
+                            ".t" + String.valueOf(countTmpRegister++),
+                            MiracleOption.INT_SIZE
+                    );
+                    curBasicBlock.tail.prepend(new MiracleIRCompare(
+                            MiracleIRCompare.Types.EQL,
+                            number, new MiracleIRImmediate(0, number.getNumberSize()),
+                            register
+                    ));
+                    prefixExpression.setResultNumber(register);
+                    return;
                 case POSITIVE:
                     prefixExpression.setResultType(prefixExpression.expression.getResultType());
                     return;
@@ -614,12 +652,12 @@ public class MiracleIR extends MiracleIRNode {
 
         @Override
         public void visit(MiracleASTreeNew newNode) {
-            MiracleIRDirectRegister register = curFunction.buffer.require(
-                    ".t" + String.valueOf(countTmpRegister++),
-                    MiracleOption.POINTER_SIZE
-            );
+            MiracleSymbolVariableType type = newNode.variableType.getType();
             if (newNode.expressions.isEmpty()) {
-                MiracleSymbolVariableType type = newNode.variableType.getType();
+                MiracleIRDirectRegister register = curFunction.buffer.require(
+                        ".t" + String.valueOf(countTmpRegister++),
+                        MiracleOption.POINTER_SIZE
+                );
                 curBasicBlock.tail.prepend(new MiracleIRHeapAllocate(
                         register, type.getMemorySize(),
                         new MiracleIRImmediate(1, MiracleOption.INT_SIZE)
@@ -637,6 +675,10 @@ public class MiracleIR extends MiracleIRNode {
                 }
                 newNode.setResultNumber(register);
             } else { // Array Type
+                MiracleIRDirectRegister register = curFunction.buffer.require(
+                        ".t" + String.valueOf(countTmpRegister++),
+                        MiracleOption.POINTER_SIZE
+                );
                 List<MiracleASTreeExpression> nextExprs = new LinkedList<>(newNode.expressions);
                 MiracleASTreeExpression expression = nextExprs.remove(0);
                 if (expression == null) return;
@@ -646,42 +688,46 @@ public class MiracleIR extends MiracleIRNode {
                         register, MiracleOption.POINTER_SIZE,
                         expression.getResultNumber()
                 ));
+                newNode.setResultNumber(register);
 
-                MiracleIRDirectRegister iterreg = curFunction.buffer.require("new_init_iter_" + String.valueOf(countTmpRegister++), MiracleOption.INT_SIZE);
-                curBasicBlock.tail.prepend(new MiracleIRBinaryArithmetic(
-                        MiracleIRBinaryArithmetic.Types.XOR,
-                        iterreg, iterreg
-                ));
-                MiracleIRBasicBlock newInitCondBlock = new MiracleIRBasicBlock("new_init_cond_" + String.valueOf(countBlock++), curFunction, false, false);
-                MiracleIRBasicBlock newInitExitBlock = new MiracleIRBasicBlock("new_init_exit_" + String.valueOf(countBlock++), curFunction, false, false);
-                MiracleIRDirectRegister flagreg = curFunction.buffer.require("new_init_flag_" + String.valueOf(countTmpRegister++), MiracleOption.INT_SIZE);
-                curBasicBlock.addSuccBasicBlock(newInitCondBlock);
-                curBasicBlock.setFork(new MiracleIRJump(newInitCondBlock));
+                if (!nextExprs.isEmpty()) {
+                    MiracleIRDirectRegister iterreg = curFunction.buffer.require("new_init_iter_" + String.valueOf(countTmpRegister++), MiracleOption.INT_SIZE);
+                    curBasicBlock.tail.prepend(new MiracleIRBinaryArithmetic(
+                            MiracleIRBinaryArithmetic.Types.XOR,
+                            iterreg, iterreg
+                    ));
+                    MiracleIRBasicBlock newInitCondBlock = new MiracleIRBasicBlock("new_init_cond_" + String.valueOf(countBlock++), curFunction, false, false);
+                    MiracleIRBasicBlock newInitExitBlock = new MiracleIRBasicBlock("new_init_exit_" + String.valueOf(countBlock++), curFunction, false, false);
+                    MiracleIRDirectRegister flagreg = curFunction.buffer.require("new_init_flag_" + String.valueOf(countTmpRegister++), MiracleOption.INT_SIZE);
+                    curBasicBlock.addSuccBasicBlock(newInitCondBlock);
+                    curBasicBlock.setFork(new MiracleIRJump(newInitCondBlock));
 
-                curBasicBlock = newInitCondBlock;
-                curBasicBlock.tail.prepend(new MiracleIRCompare(
-                        MiracleIRCompare.Types.LT, iterreg,
-                        expression.getResultNumber(), flagreg
-                ));
-                MiracleIRBasicBlock newInitBodyBlock = new MiracleIRBasicBlock("new_init_body_" + String.valueOf(countBlock++), curFunction, false, false);
+                    curBasicBlock = newInitCondBlock;
+                    curBasicBlock.tail.prepend(new MiracleIRCompare(
+                            MiracleIRCompare.Types.LT, iterreg,
+                            expression.getResultNumber(), flagreg
+                    ));
+                    MiracleIRBasicBlock newInitBodyBlock = new MiracleIRBasicBlock("new_init_body_" + String.valueOf(countBlock++), curFunction, false, false);
 
-                curBasicBlock.addSuccBasicBlock(newInitBodyBlock);
-                curBasicBlock.addSuccBasicBlock(newInitExitBlock);
-                curBasicBlock.setFork(new MiracleIRBranch(flagreg, newInitBodyBlock, newInitExitBlock));
+                    curBasicBlock.addSuccBasicBlock(newInitBodyBlock);
+                    curBasicBlock.addSuccBasicBlock(newInitExitBlock);
+                    curBasicBlock.setFork(new MiracleIRBranch(flagreg, newInitBodyBlock, newInitExitBlock));
 
-                curBasicBlock = newInitBodyBlock;
-                MiracleASTreeNew nextNew = new MiracleASTreeNew(newNode.variableType, nextExprs, null);
-                nextNew.accept(this);
-                curBasicBlock.tail.prepend(new MiracleIRMove(
-                        new MiracleIROffsetRegister(register, null,
-                                ImmutablePair.of(iterreg, new MiracleIRImmediate(MiracleOption.POINTER_SIZE, MiracleOption.INT_SIZE)),
-                                MiracleOption.POINTER_SIZE
-                        ),
-                        nextNew.getResultNumber()
-                ));
-                curBasicBlock.addSuccBasicBlock(newInitCondBlock);
-                curBasicBlock.setFork(new MiracleIRJump(newInitCondBlock));
-                curBasicBlock = newInitExitBlock;
+                    curBasicBlock = newInitBodyBlock;
+                    MiracleASTreeNew nextNew = new MiracleASTreeNew(newNode.variableType, nextExprs, null);
+                    nextNew.setScope(newNode.getScope());
+                    nextNew.accept(this);
+                    curBasicBlock.tail.prepend(new MiracleIRMove(
+                            new MiracleIROffsetRegister(register, null,
+                                    ImmutablePair.of(iterreg, new MiracleIRImmediate(MiracleOption.POINTER_SIZE, MiracleOption.INT_SIZE)),
+                                    MiracleOption.POINTER_SIZE
+                            ),
+                            nextNew.getResultNumber()
+                    ));
+                    curBasicBlock.addSuccBasicBlock(newInitCondBlock);
+                    curBasicBlock.setFork(new MiracleIRJump(newInitCondBlock));
+                    curBasicBlock = newInitExitBlock;
+                }
             }
         }
 
