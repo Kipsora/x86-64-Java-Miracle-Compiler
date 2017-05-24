@@ -170,7 +170,7 @@ public class MiracleIR extends MiracleIRNode {
             curBasicBlock.addSuccBasicBlock(passBlock);
             curBasicBlock.addSuccBasicBlock(failBlock);
             curBasicBlock.setFork(new MiracleIRBranch(
-                    (MiracleIRDirectRegister) number,
+                    (MiracleIRRegister) number,
                     passBlock, failBlock
             ));
             curBasicBlock = passBlock;
@@ -234,7 +234,9 @@ public class MiracleIR extends MiracleIRNode {
             loopExitBlock = exitBlock;
 
             curBasicBlock = bodyBlock;
-            iteration.body.accept(this);
+            if (iteration.body != null) {
+                iteration.body.accept(this);
+            }
 
             if (iteration.incrementExpression != null) {
                 iteration.incrementExpression.accept(this);
@@ -608,17 +610,7 @@ public class MiracleIR extends MiracleIRNode {
                 default:
                     throw new RuntimeException("unsupported operator");
             }
-            if (!(number instanceof MiracleIRDirectRegister)) {
-                MiracleIRDirectRegister victim = curFunction.buffer.require(
-                        ".t" + String.valueOf(countTmpRegister++),
-                        prefixExpression.expression.getResultType().getRegisterSize()
-                );
-                curBasicBlock.tail.prepend(new MiracleIRMove(victim, number));
-                curBasicBlock.tail.prepend(new MiracleIRPrefixArithmetic(victim, operator));
-                curBasicBlock.tail.prepend(new MiracleIRMove((MiracleIRRegister) number, victim));
-            } else {
-                curBasicBlock.tail.prepend(new MiracleIRPrefixArithmetic((MiracleIRDirectRegister) number, operator));
-            }
+            curBasicBlock.tail.prepend(new MiracleIRPrefixArithmetic((MiracleIRRegister) number, operator));
             prefixExpression.setResultNumber(prefixExpression.expression.getResultNumber());
         }
 
@@ -644,7 +636,7 @@ public class MiracleIR extends MiracleIRNode {
                     register, suffixExpression.expression.getResultNumber()
             ));
             curBasicBlock.tail.prepend(new MiracleIRPrefixArithmetic(
-                    (MiracleIRDirectRegister) suffixExpression.expression.getResultNumber(),
+                    (MiracleIRRegister) suffixExpression.expression.getResultNumber(),
                     operator
             ));
             suffixExpression.setResultNumber(register);
@@ -779,8 +771,17 @@ public class MiracleIR extends MiracleIRNode {
                 field.setResultNumber(null);
             } else {
                 MiracleSymbolType type = field.expression.getResultType();
+                MiracleIRNumber number = field.expression.getResultNumber();
+                if (number instanceof MiracleIROffsetRegister) {
+                    MiracleIRVirtualRegister register = curFunction.buffer.require(
+                            ".t" + String.valueOf(countTmpRegister++),
+                            number.getNumberSize()
+                    );
+                    curBasicBlock.tail.prepend(new MiracleIRMove(register, number));
+                    number = register;
+                }
                 field.setResultNumber(new MiracleIROffsetRegister(
-                        (MiracleIRDirectRegister) field.expression.getResultNumber(),
+                        (MiracleIRDirectRegister) number,
                         new MiracleIRImmediate(
                                 ((MiracleSymbolClassType) type).getVariableOffset(field.identifier),
                                 MiracleOption.INT_SIZE
