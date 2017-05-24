@@ -691,8 +691,10 @@ public class MiracleIR extends MiracleIRNode {
                     MiracleIRBasicBlock newInitCondBlock = new MiracleIRBasicBlock("new_init_cond_" + String.valueOf(countBlock++), curFunction, false, false);
                     MiracleIRBasicBlock newInitExitBlock = new MiracleIRBasicBlock("new_init_exit_" + String.valueOf(countBlock++), curFunction, false, false);
                     MiracleIRDirectRegister flagreg = curFunction.buffer.require("new_init_flag_" + String.valueOf(countTmpRegister++), MiracleOption.INT_SIZE);
-                    curBasicBlock.addSuccBasicBlock(newInitCondBlock);
-                    curBasicBlock.setFork(new MiracleIRJump(newInitCondBlock));
+                    if (!curBasicBlock.isForked()) {
+                        curBasicBlock.addSuccBasicBlock(newInitCondBlock);
+                        curBasicBlock.setFork(new MiracleIRJump(newInitCondBlock));
+                    }
 
                     curBasicBlock = newInitCondBlock;
                     curBasicBlock.tail.prepend(new MiracleIRCompare(
