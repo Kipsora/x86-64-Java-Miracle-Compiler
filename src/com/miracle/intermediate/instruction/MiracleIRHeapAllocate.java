@@ -2,10 +2,11 @@ package com.miracle.intermediate.instruction;
 
 import com.miracle.intermediate.number.MiracleIRDirectRegister;
 import com.miracle.intermediate.number.MiracleIRNumber;
+import com.miracle.intermediate.number.MiracleIRRegister;
 import com.miracle.intermediate.visitor.MiracleIRVisitor;
 
 public class MiracleIRHeapAllocate extends MiracleIRInstruction {
-    public final MiracleIRDirectRegister register;
+    public final MiracleIRRegister register;
     public final int size;
     public final MiracleIRNumber number;
 

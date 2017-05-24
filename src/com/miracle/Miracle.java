@@ -113,6 +113,7 @@ public class Miracle {
                 return;
             }
             MiracleIR ir = getIR(astree);
+            //ir.accept(new MiracleIRDeadCodeEliminator());
             if (this.printIR) {
                 MiracleIRPrinter generator = new MiracleIRPrinter();
                 ir.accept(generator);

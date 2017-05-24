@@ -19,6 +19,11 @@ public class MiracleIRRegisterBuffer {
         return totalSize;
     }
 
+    public void enroll(MiracleIRRegister register) {
+        set.put(register, totalSize);
+        totalSize += register.getNumberSize();
+    }
+
     public MiracleIRVirtualRegister require(MiracleASTreeVariableDeclaration declaration) {
         MiracleIRVirtualRegister register = new MiracleIRVirtualRegister(declaration);
         set.put(register, totalSize);

@@ -18,7 +18,7 @@ public class MiracleIRFunction {
     public final MiracleIRDirectRegister retRegister;
     public final MiracleIRDirectRegister selfRegister;
 
-    public final MiracleIRRegisterBuffer buffer = new MiracleIRRegisterBuffer();
+    private MiracleIRRegisterBuffer buffer;
 
     private MiracleIRBasicBlock entryBasicBlock;
     private MiracleIRBasicBlock exitBasicBlock;
@@ -26,6 +26,7 @@ public class MiracleIRFunction {
     public MiracleIRFunction(String identifier,
                              MiracleSymbolFunctionType type) {
         this.identifier = identifier;
+        this.buffer = new MiracleIRRegisterBuffer();
         if (type.getReturnType() != null && !type.getReturnType().isSameType(__builtin_void)) {
             this.retRegister = buffer.require(".retval", type.getReturnType().getRegisterSize());
         } else {
@@ -60,5 +61,13 @@ public class MiracleIRFunction {
 
     public MiracleIRBasicBlock getExitBasicBlock() {
         return exitBasicBlock;
+    }
+
+    public MiracleIRRegisterBuffer getBuffer() {
+        return buffer;
+    }
+
+    public void setBuffer(MiracleIRRegisterBuffer buffer) {
+        this.buffer = buffer;
     }
 }

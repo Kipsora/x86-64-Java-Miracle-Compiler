@@ -1,19 +1,19 @@
 package com.miracle.intermediate.instruction;
 
-import com.miracle.intermediate.number.MiracleIRDirectRegister;
 import com.miracle.intermediate.number.MiracleIRNumber;
+import com.miracle.intermediate.number.MiracleIRRegister;
 import com.miracle.intermediate.visitor.MiracleIRVisitor;
 
 public class MiracleIRCompare extends MiracleIRInstruction {
     public final MiracleIRNumber sourceA;
     public final MiracleIRNumber sourceB;
-    public final MiracleIRDirectRegister target;
+    public final MiracleIRRegister target;
     public final Types operator;
 
     public MiracleIRCompare(Types operator,
                             MiracleIRNumber sourceA,
                             MiracleIRNumber sourceB,
-                            MiracleIRDirectRegister target) {
+                            MiracleIRRegister target) {
         this.sourceA = sourceA;
         this.sourceB = sourceB;
         this.target = target;

@@ -4,8 +4,8 @@ import com.miracle.intermediate.instruction.MiracleIRInstruction;
 import com.miracle.intermediate.instruction.fork.MiracleIRFork;
 import com.miracle.intermediate.visitor.MiracleIRVisitor;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MiracleIRBasicBlock {
     public final String name;
@@ -16,8 +16,8 @@ public class MiracleIRBasicBlock {
     public final boolean isFunctionExitBlock;
     private final Node head;
     private boolean isForked;
-    private List<MiracleIRBasicBlock> prevBasicBlock = new LinkedList<>();
-    private List<MiracleIRBasicBlock> succBasicBlock = new LinkedList<>();
+    private Set<MiracleIRBasicBlock> prevBasicBlock = new HashSet<>();
+    private Set<MiracleIRBasicBlock> succBasicBlock = new HashSet<>();
 
     public MiracleIRBasicBlock(String name,
                                MiracleIRFunction blockFrom,
@@ -37,11 +37,11 @@ public class MiracleIRBasicBlock {
         return isForked;
     }
 
-    public List<MiracleIRBasicBlock> getPrevBasicBlock() {
+    public Set<MiracleIRBasicBlock> getPrevBasicBlock() {
         return prevBasicBlock;
     }
 
-    public List<MiracleIRBasicBlock> getSuccBasicBlock() {
+    public Set<MiracleIRBasicBlock> getSuccBasicBlock() {
         return succBasicBlock;
     }
 
@@ -69,6 +69,11 @@ public class MiracleIRBasicBlock {
 
     public void accept(MiracleIRVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public void clearSuccBlock() {
+        succBasicBlock.forEach(element -> element.prevBasicBlock.remove(this));
+        succBasicBlock.clear();
     }
 
     public class Node {
@@ -102,6 +107,11 @@ public class MiracleIRBasicBlock {
             node.prev = this.prev;
             if (prev != null) prev.succ = node;
             this.prev = node;
+        }
+
+        public void remove() {
+            this.prev.succ = this.succ;
+            this.succ.prev = this.prev;
         }
     }
 }

@@ -69,7 +69,7 @@ public class MiracleIRX64Printer implements MiracleIRVisitor {
             builder.append('\t').append("mov").append(' ').append(RBP)
                     .append(", ").append(RSP).append('\n');
             builder.append('\t').append("sub").append(' ').append(RSP).append(", ")
-                    .append(block.blockFrom.buffer.getTotalSize())
+                    .append(block.blockFrom.getBuffer().getTotalSize())
                     .append('\n');
         }
         if (block.isFunctionExitBlock) {
