@@ -544,6 +544,7 @@ public class MiracleIR extends MiracleIRNode {
         public void visit(MiracleASTreePrefixExpression prefixExpression) {
             prefixExpression.expression.accept(this);
             MiracleIRPrefixArithmetic.Types operator;
+            MiracleIRNumber number = prefixExpression.expression.getResultNumber();
             switch (prefixExpression.operator) {
                 case INC:
                     operator = MiracleIRPrefixArithmetic.Types.ADD;
@@ -555,8 +556,11 @@ public class MiracleIR extends MiracleIRNode {
                     operator = MiracleIRPrefixArithmetic.Types.REV;
                     break;
                 case NEGATIVE:
-                    operator = MiracleIRPrefixArithmetic.Types.MINUS;
-                    break;
+                    prefixExpression.setResultNumber(new MiracleIRImmediate(
+                            -((MiracleIRImmediate) number).value,
+                            number.getNumberSize()
+                    ));
+                    return;
                 case NEGATE:
                     operator = MiracleIRPrefixArithmetic.Types.NEG;
                     break;
@@ -566,7 +570,6 @@ public class MiracleIR extends MiracleIRNode {
                 default:
                     throw new RuntimeException("unsupported operator");
             }
-            MiracleIRRegister number = (MiracleIRRegister) prefixExpression.expression.getResultNumber();
             if (!(number instanceof MiracleIRDirectRegister)) {
                 MiracleIRDirectRegister victim = curFunction.buffer.require(
                         ".t" + String.valueOf(countTmpRegister++),
@@ -574,7 +577,7 @@ public class MiracleIR extends MiracleIRNode {
                 );
                 curBasicBlock.tail.prepend(new MiracleIRMove(victim, number));
                 curBasicBlock.tail.prepend(new MiracleIRPrefixArithmetic(victim, operator));
-                curBasicBlock.tail.prepend(new MiracleIRMove(number, victim));
+                curBasicBlock.tail.prepend(new MiracleIRMove((MiracleIRRegister) number, victim));
             } else {
                 curBasicBlock.tail.prepend(new MiracleIRPrefixArithmetic((MiracleIRDirectRegister) number, operator));
             }
