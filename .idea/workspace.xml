@@ -7,87 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1a1af29a-b77a-4b8c-9654-4271264bd490" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/base/MiracleASTreeNode.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/base/MiracleASTreeTypeNode.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeBlock.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeBreak.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeContinue.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeIteration.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeReturn.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeSelection.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeStatement.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeClassDeclaration.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeDeclaration.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeFunctionDeclaration.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeMemberDeclaration.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeVariableDeclaration.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeBinaryExpression.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeCall.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeExpression.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeField.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeNew.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreePrefixExpression.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeSubscript.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeSuffixExpression.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeThis.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeVariable.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/constant/MiracleASTreeBooleanConstant.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/constant/MiracleASTreeConstant.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/constant/MiracleASTreeIntegerConstant.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/constant/MiracleASTreeNullConstant.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/constant/MiracleASTreeStringConstant.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeBaseVisitor.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeClassFetcher.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeMemberFetcher.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreePrinter.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeScopeBuilder.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeVisitor.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/exception/MiracleCSTreeErrorHandler.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/exception/MiracleExceptionContainer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIR.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIRNode.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIRRegisterBuffer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRCall.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRCompare.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRHeapAllocate.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRInstruction.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRMove.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/MiracleIRBinaryArithmetic.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/MiracleIRPrefixArithmetic.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRBranch.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRFork.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRJump.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRReturn.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRDirectRegister.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRImmediate.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRNumber.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIROffsetRegister.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRPhysicalRegister.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRRegister.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRStaticString.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRStaticVariable.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRVirtualRegister.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/structure/MiracleIRBasicBlock.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/structure/MiracleIRFunction.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRDeadCodeEliminator.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRDirectAllocator.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRPrinter.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRVisitor.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRX64Printer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbol.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolArrayType.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolBaseType.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolClassType.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolFunctionType.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolNullType.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolPrimitiveType.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolTable.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolType.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolVariableType.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/Miracle.java" afterPath="$PROJECT_DIR$/src/com/miracle/Miracle.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -115,8 +35,8 @@
       <file leaf-file-name="X64Printer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2478">
-              <caret line="27" column="31" lean-forward="false" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
+            <state relative-caret-position="347">
+              <caret line="144" column="28" lean-forward="true" selection-start-line="144" selection-start-column="28" selection-end-line="144" selection-end-column="28" />
               <folding>
                 <element signature="e#950#951#0" expanded="true" />
                 <element signature="e#991#992#0" expanded="true" />
@@ -1518,7 +1438,7 @@
       <workItem from="1495614512659" duration="24813000" />
       <workItem from="1495643051486" duration="8748000" />
       <workItem from="1495655441042" duration="5000" />
-      <workItem from="1495699051175" duration="300000" />
+      <workItem from="1495699051175" duration="398000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit.">
       <created>1494578117985</created>
@@ -1821,11 +1741,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495622594302</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="Code renamed.">
+      <created>1495699383725</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1495699383725</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="354568000" />
+    <option name="totallyTimeSpent" value="354666000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1943,7 +1870,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Bugs fixed for antlr parser." />
     <MESSAGE value="Code optimized." />
     <MESSAGE value="Bugs fixed for return literal validator." />
     <MESSAGE value="IR interface added &amp; bugs fixed for semantic analyser." />
@@ -1968,7 +1894,8 @@
     <MESSAGE value="Bug fixed for prefix expression." />
     <MESSAGE value="Implicit bugs fixed." />
     <MESSAGE value="Lower level IR started." />
-    <option name="LAST_COMMIT_MESSAGE" value="Lower level IR started." />
+    <MESSAGE value="Code renamed." />
+    <option name="LAST_COMMIT_MESSAGE" value="Code renamed." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -2431,8 +2358,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2478">
-          <caret line="27" column="31" lean-forward="false" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
+        <state relative-caret-position="347">
+          <caret line="144" column="28" lean-forward="true" selection-start-line="144" selection-start-column="28" selection-end-line="144" selection-end-column="28" />
           <folding>
             <element signature="e#950#951#0" expanded="true" />
             <element signature="e#991#992#0" expanded="true" />
