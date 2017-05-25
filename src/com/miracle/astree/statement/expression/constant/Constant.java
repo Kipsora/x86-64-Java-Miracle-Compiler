@@ -1,10 +1,10 @@
 package com.miracle.astree.statement.expression.constant;
 
 import com.miracle.astree.statement.expression.Expression;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 public abstract class Constant extends Expression {
-    public Constant(MiracleSourcePosition startPosition) {
+    public Constant(SourcePosition startPosition) {
         super(startPosition);
     }
 

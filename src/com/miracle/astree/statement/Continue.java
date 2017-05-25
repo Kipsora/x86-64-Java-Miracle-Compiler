@@ -1,12 +1,12 @@
 package com.miracle.astree.statement;
 
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 public class Continue extends Statement {
     private Iteration iteration;
 
-    public Continue(MiracleSourcePosition startPosition) {
+    public Continue(SourcePosition startPosition) {
         super(startPosition);
     }
 

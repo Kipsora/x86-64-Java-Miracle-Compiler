@@ -1,7 +1,7 @@
 package com.miracle.astree.statement.expression;
 
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +12,7 @@ public class Call extends Expression {
 
     public Call(Expression function,
                 List<Expression> parameters,
-                MiracleSourcePosition startPosition) {
+                SourcePosition startPosition) {
         super(startPosition);
         this.function = function;
         this.parameters = Collections.unmodifiableList(parameters);

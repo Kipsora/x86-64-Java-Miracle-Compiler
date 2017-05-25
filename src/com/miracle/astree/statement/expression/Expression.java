@@ -1,7 +1,7 @@
 package com.miracle.astree.statement.expression;
 
 import com.miracle.astree.statement.Statement;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 import com.miracle.intermediate.number.Number;
 import com.miracle.symbol.SymbolType;
 
@@ -10,7 +10,7 @@ public abstract class Expression extends Statement {
     private boolean isMutable;
     private Number resultAddress;
 
-    public Expression(MiracleSourcePosition startPosition) {
+    public Expression(SourcePosition startPosition) {
         super(startPosition);
     }
 

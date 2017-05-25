@@ -3,7 +3,7 @@ package com.miracle.astree.statement.declaration;
 import com.miracle.astree.base.TypeNode;
 import com.miracle.astree.statement.Statement;
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 import com.miracle.symbol.SymbolFunctionType;
 
 import java.util.Collections;
@@ -19,8 +19,8 @@ public class FunctionDeclaration extends MemberDeclaration {
                                TypeNode returnType,
                                List<VariableDeclaration> parameters,
                                List<Statement> body,
-                               MiracleSourcePosition startPosition,
-                               MiracleSourcePosition identifierPosition) {
+                               SourcePosition startPosition,
+                               SourcePosition identifierPosition) {
         super(identifier, startPosition, identifierPosition);
         this.returnType = returnType;
         this.parameters = Collections.unmodifiableList(parameters);

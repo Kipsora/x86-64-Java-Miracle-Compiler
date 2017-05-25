@@ -1,13 +1,13 @@
 package com.miracle.astree.statement.declaration;
 
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 public abstract class MemberDeclaration extends Declaration {
     protected ClassDeclaration memberFrom;
 
     public MemberDeclaration(String identifier,
-                             MiracleSourcePosition startPosition,
-                             MiracleSourcePosition identifierPosition) {
+                             SourcePosition startPosition,
+                             SourcePosition identifierPosition) {
         super(identifier, startPosition, identifierPosition);
     }
 

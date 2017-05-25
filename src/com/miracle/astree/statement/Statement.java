@@ -1,12 +1,12 @@
 package com.miracle.astree.statement;
 
 import com.miracle.astree.base.Node;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 public abstract class Statement extends Node {
-    public final MiracleSourcePosition position;
+    public final SourcePosition position;
 
-    public Statement(MiracleSourcePosition position) {
+    public Statement(SourcePosition position) {
         this.position = position;
     }
 }

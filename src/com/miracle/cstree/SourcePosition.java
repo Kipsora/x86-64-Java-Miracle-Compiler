@@ -3,24 +3,24 @@ package com.miracle.cstree;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 
-public class MiracleSourcePosition {
+public class SourcePosition {
     public final int row;
     public final int columnStart;
     public final int columnEnd;
 
-    public MiracleSourcePosition(Token ctx) {
+    public SourcePosition(Token ctx) {
         this.row = ctx.getLine();
         this.columnStart = ctx.getCharPositionInLine();
         this.columnEnd = this.columnStart + ctx.getText().length();
     }
 
-    public MiracleSourcePosition(ParserRuleContext ctx) {
+    public SourcePosition(ParserRuleContext ctx) {
         this.row = ctx.getStart().getLine();
         this.columnStart = ctx.getStart().getCharPositionInLine();
         this.columnEnd = this.columnStart + ctx.getText().length();
     }
 
-    public MiracleSourcePosition(int row, int columnStart, int columnEnd) {
+    public SourcePosition(int row, int columnStart, int columnEnd) {
         this.row = row;
         this.columnStart = columnStart;
         this.columnEnd = columnEnd;

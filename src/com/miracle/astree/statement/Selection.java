@@ -2,7 +2,7 @@ package com.miracle.astree.statement;
 
 import com.miracle.astree.statement.expression.Expression;
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 public class Selection extends Statement {
     public final Expression expression;
@@ -12,7 +12,7 @@ public class Selection extends Statement {
     public Selection(Expression expression,
                      Statement branchTrue,
                      Statement branchFalse,
-                     MiracleSourcePosition startPosition) {
+                     SourcePosition startPosition) {
         super(startPosition);
         this.expression = expression;
         this.branchTrue = branchTrue;

@@ -1,13 +1,13 @@
 package com.miracle.astree.statement.expression.constant;
 
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 public class BooleanConstant extends Constant {
     public final String value;
 
     public BooleanConstant(String value,
-                           MiracleSourcePosition startPosition) {
+                           SourcePosition startPosition) {
         super(startPosition);
         this.value = value;
     }

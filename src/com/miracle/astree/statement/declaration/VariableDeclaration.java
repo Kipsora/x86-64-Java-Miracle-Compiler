@@ -3,7 +3,7 @@ package com.miracle.astree.statement.declaration;
 import com.miracle.astree.base.TypeNode;
 import com.miracle.astree.statement.expression.Expression;
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 import com.miracle.intermediate.number.Register;
 
 public class VariableDeclaration extends MemberDeclaration {
@@ -15,8 +15,8 @@ public class VariableDeclaration extends MemberDeclaration {
     public VariableDeclaration(String identifier,
                                TypeNode typenode,
                                Expression expression,
-                               MiracleSourcePosition startPosition,
-                               MiracleSourcePosition identifierPosition) {
+                               SourcePosition startPosition,
+                               SourcePosition identifierPosition) {
         super(identifier, startPosition, identifierPosition);
         this.typenode = typenode;
         this.expression = expression;

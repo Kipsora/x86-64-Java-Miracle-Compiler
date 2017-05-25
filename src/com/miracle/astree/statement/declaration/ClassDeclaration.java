@@ -1,7 +1,7 @@
 package com.miracle.astree.statement.declaration;
 
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 import com.miracle.symbol.SymbolClassType;
 
 import java.util.Collections;
@@ -21,8 +21,8 @@ public class ClassDeclaration extends Declaration {
                             List<VariableDeclaration> variableDeclarations,
                             List<FunctionDeclaration> functionDeclarations,
                             FunctionDeclaration constructorDeclaration,
-                            MiracleSourcePosition startPosition,
-                            MiracleSourcePosition identifierPosition) {
+                            SourcePosition startPosition,
+                            SourcePosition identifierPosition) {
         super(identifier, startPosition, identifierPosition);
         this.constructorDeclaration = constructorDeclaration;
         if (variableDeclarations != null) {

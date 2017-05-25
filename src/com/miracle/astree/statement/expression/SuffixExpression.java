@@ -1,17 +1,17 @@
 package com.miracle.astree.statement.expression;
 
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 public class SuffixExpression extends Expression {
     public final OPERATOR operator;
     public final Expression expression;
-    public final MiracleSourcePosition operatorPosition;
+    public final SourcePosition operatorPosition;
 
     public SuffixExpression(Expression expression,
                             OPERATOR operator,
-                            MiracleSourcePosition startPosition,
-                            MiracleSourcePosition operatorPosition) {
+                            SourcePosition startPosition,
+                            SourcePosition operatorPosition) {
         super(startPosition);
         this.operatorPosition = operatorPosition;
         this.operator = operator;

@@ -1,6 +1,6 @@
 package com.miracle.exception;
 
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.io.BufferedReader;
@@ -13,7 +13,7 @@ import java.util.List;
 public class ExceptionContainer {
     private final PrintStream ostream;
     private BufferedReader source;
-    private List<ImmutablePair<MiracleSourcePosition, String>> container = new LinkedList<>();
+    private List<ImmutablePair<SourcePosition, String>> container = new LinkedList<>();
 
     public ExceptionContainer(PrintStream ostream) {
         this.ostream = ostream;
@@ -27,15 +27,15 @@ public class ExceptionContainer {
         this.source = new BufferedReader(new StringReader(source));
     }
 
-    public void add(String message, MiracleSourcePosition position) {
+    public void add(String message, SourcePosition position) {
         container.add(ImmutablePair.of(position, message));
     }
 
     public void judge() throws IOException {
         if (!container.isEmpty()) {
             container.sort((x, y) -> {
-                MiracleSourcePosition xPosition = x.getLeft();
-                MiracleSourcePosition yPosition = y.getLeft();
+                SourcePosition xPosition = x.getLeft();
+                SourcePosition yPosition = y.getLeft();
                 if (xPosition == null) return -1;
                 if (yPosition == null) return 1;
                 if (xPosition.row < yPosition.row) return -1;
@@ -47,8 +47,8 @@ public class ExceptionContainer {
 
             String line = null;
             for (int i = 0, j = 0, containerSize = container.size(); i < containerSize; i++) {
-                ImmutablePair<MiracleSourcePosition, String> element = container.get(i);
-                MiracleSourcePosition left = element.getLeft();
+                ImmutablePair<SourcePosition, String> element = container.get(i);
+                SourcePosition left = element.getLeft();
                 if (left != null) {
                     while (j < element.getLeft().row) {
                         line = source.readLine();

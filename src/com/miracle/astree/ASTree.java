@@ -13,7 +13,7 @@ import com.miracle.astree.statement.expression.constant.IntegerConstant;
 import com.miracle.astree.statement.expression.constant.NullConstant;
 import com.miracle.astree.statement.expression.constant.StringConstant;
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 import com.miracle.cstree.parser.MiracleBaseListener;
 import com.miracle.cstree.parser.MiracleParser;
 import com.miracle.exception.ExceptionContainer;
@@ -83,7 +83,7 @@ public class ASTree extends Node {
                 if (element.returnType == null) {
                     if (constructorDeclaration != null) {
                         exceptionContainer.add("multiple declarations of constructors in class `" + ctx.IDENTIFIER().getText() + " `are found",
-                                new MiracleSourcePosition(element.typename(0)));
+                                new SourcePosition(element.typename(0)));
                     } else {
                         constructorDeclaration = (FunctionDeclaration) property.get(element);
                     }
@@ -97,8 +97,8 @@ public class ASTree extends Node {
                     variableDeclarations,
                     functionDeclarations,
                     constructorDeclaration,
-                    new MiracleSourcePosition(ctx),
-                    new MiracleSourcePosition(ctx.IDENTIFIER().getSymbol())
+                    new SourcePosition(ctx),
+                    new SourcePosition(ctx.IDENTIFIER().getSymbol())
             ));
         }
 
@@ -120,8 +120,8 @@ public class ASTree extends Node {
                         ctx.IDENTIFIER(i).getText(),
                         (TypeNode) property.get(ctx.typename(i)),
                         null,
-                        new MiracleSourcePosition(ctx.typename(i)),
-                        new MiracleSourcePosition(ctx.IDENTIFIER(i).getSymbol())
+                        new SourcePosition(ctx.typename(i)),
+                        new SourcePosition(ctx.IDENTIFIER(i).getSymbol())
                 ));
             }
             if (ctx.returnType == null) {
@@ -130,7 +130,7 @@ public class ASTree extends Node {
                         null,
                         parameters,
                         body,
-                        new MiracleSourcePosition(ctx),
+                        new SourcePosition(ctx),
                         null
                 ));
             } else {
@@ -139,8 +139,8 @@ public class ASTree extends Node {
                         (TypeNode) property.get(ctx.typename(0)),
                         parameters,
                         body,
-                        new MiracleSourcePosition(ctx),
-                        new MiracleSourcePosition(ctx.IDENTIFIER(0).getSymbol())
+                        new SourcePosition(ctx),
+                        new SourcePosition(ctx.IDENTIFIER(0).getSymbol())
                 ));
             }
         }
@@ -153,16 +153,16 @@ public class ASTree extends Node {
                         identifier.getText(),
                         (TypeNode) property.get(ctx.typename()),
                         (Expression) property.get(ctx.expression()),
-                        new MiracleSourcePosition(ctx),
-                        new MiracleSourcePosition(identifier.getSymbol())
+                        new SourcePosition(ctx),
+                        new SourcePosition(identifier.getSymbol())
                 ));
             } else {
                 property.put(ctx, new VariableDeclaration(
                         identifier.getText(),
                         (TypeNode) property.get(ctx.typename()),
                         null,
-                        new MiracleSourcePosition(ctx),
-                        new MiracleSourcePosition(identifier.getSymbol())
+                        new SourcePosition(ctx),
+                        new SourcePosition(identifier.getSymbol())
                 ));
             }
         }
@@ -172,7 +172,7 @@ public class ASTree extends Node {
             property.put(ctx, new TypeNode(
                     ctx.basetype().getText(),
                     (ctx.getChildCount() - 1) >> 1,
-                    new MiracleSourcePosition(ctx.basetype())
+                    new SourcePosition(ctx.basetype())
             ));
         }
 
@@ -190,7 +190,7 @@ public class ASTree extends Node {
 
             property.put(ctx, new Block(
                     statements,
-                    new MiracleSourcePosition(ctx)
+                    new SourcePosition(ctx)
             ));
         }
 
@@ -222,7 +222,7 @@ public class ASTree extends Node {
                     (Expression) property.get(ctx.expression()),
                     trueStatement,
                     falseStatement,
-                    new MiracleSourcePosition(ctx)
+                    new SourcePosition(ctx)
             ));
         }
 
@@ -254,7 +254,7 @@ public class ASTree extends Node {
                     node[1],
                     node[2],
                     statement,
-                    new MiracleSourcePosition(ctx)
+                    new SourcePosition(ctx)
             ));
         }
 
@@ -264,25 +264,25 @@ public class ASTree extends Node {
                     (Expression) property.get(ctx.expression()),
                     null,
                     (Statement) property.get(ctx.statement()),
-                    new MiracleSourcePosition(ctx)
+                    new SourcePosition(ctx)
             ));
         }
 
         @Override
         public void exitBreakStatement(MiracleParser.BreakStatementContext ctx) {
-            property.put(ctx, new Break(new MiracleSourcePosition(ctx)));
+            property.put(ctx, new Break(new SourcePosition(ctx)));
         }
 
         @Override
         public void exitContinueStatement(MiracleParser.ContinueStatementContext ctx) {
-            property.put(ctx, new Continue(new MiracleSourcePosition(ctx)));
+            property.put(ctx, new Continue(new SourcePosition(ctx)));
         }
 
         @Override
         public void exitReturnStatement(MiracleParser.ReturnStatementContext ctx) {
             property.put(ctx, new Return(ctx.expression() == null ? null :
                     (Expression) property.get(ctx.expression()),
-                    new MiracleSourcePosition(ctx)
+                    new SourcePosition(ctx)
             ));
         }
 
@@ -300,7 +300,7 @@ public class ASTree extends Node {
         public void exitVariableExpression(MiracleParser.VariableExpressionContext ctx) {
             property.put(ctx, new Variable(
                     ctx.IDENTIFIER().getText(),
-                    new MiracleSourcePosition(ctx)
+                    new SourcePosition(ctx)
             ));
         }
 
@@ -318,7 +318,7 @@ public class ASTree extends Node {
             property.put(ctx, new Call(
                     (Expression) property.get(ctx.expression(0)),
                     parameters,
-                    new MiracleSourcePosition(ctx)
+                    new SourcePosition(ctx)
             ));
         }
 
@@ -327,7 +327,7 @@ public class ASTree extends Node {
             property.put(ctx, new Subscript(
                     (Expression) property.get(ctx.expression(0)),
                     (Expression) property.get(ctx.expression(1)),
-                    new MiracleSourcePosition(ctx)
+                    new SourcePosition(ctx)
             ));
         }
 
@@ -399,8 +399,8 @@ public class ASTree extends Node {
                     (Expression) property.get(ctx.expression(0)),
                     operator,
                     (Expression) property.get(ctx.expression(1)),
-                    new MiracleSourcePosition(ctx),
-                    new MiracleSourcePosition(ctx.operator)
+                    new SourcePosition(ctx),
+                    new SourcePosition(ctx.operator)
             ));
         }
 
@@ -432,8 +432,8 @@ public class ASTree extends Node {
             property.put(ctx, new PrefixExpression(
                     operator,
                     (Expression) property.get(ctx.expression()),
-                    new MiracleSourcePosition(ctx),
-                    new MiracleSourcePosition(ctx.operator)
+                    new SourcePosition(ctx),
+                    new SourcePosition(ctx.operator)
             ));
         }
 
@@ -453,8 +453,8 @@ public class ASTree extends Node {
             property.put(ctx, new SuffixExpression(
                     (Expression) property.get(ctx.expression()),
                     operator,
-                    new MiracleSourcePosition(ctx),
-                    new MiracleSourcePosition(ctx.operator)
+                    new SourcePosition(ctx),
+                    new SourcePosition(ctx.operator)
             ));
         }
 
@@ -473,21 +473,21 @@ public class ASTree extends Node {
             property.put(ctx, new New(
                     (TypeNode) property.get(ctx.typename()),
                     expressions,
-                    new MiracleSourcePosition(ctx)
+                    new SourcePosition(ctx)
             ));
         }
 
         @Override
         public void exitIntegerConstant(MiracleParser.IntegerConstantContext ctx) {
             property.put(ctx, new IntegerConstant(ctx.INTEGER().getText(),
-                    new MiracleSourcePosition(ctx)));
+                    new SourcePosition(ctx)));
         }
 
         @Override
         public void exitBoolConstant(MiracleParser.BoolConstantContext ctx) {
             property.put(ctx, new BooleanConstant(
                     ctx.getText(),
-                    new MiracleSourcePosition(ctx)
+                    new SourcePosition(ctx)
             ));
         }
 
@@ -495,13 +495,13 @@ public class ASTree extends Node {
         public void exitStringConstant(MiracleParser.StringConstantContext ctx) {
             property.put(ctx, new StringConstant(
                     ctx.getText(),
-                    new MiracleSourcePosition(ctx)
+                    new SourcePosition(ctx)
             ));
         }
 
         @Override
         public void exitNullConstant(MiracleParser.NullConstantContext ctx) {
-            property.put(ctx, new NullConstant(new MiracleSourcePosition(ctx)));
+            property.put(ctx, new NullConstant(new SourcePosition(ctx)));
         }
 
         @Override
@@ -511,7 +511,7 @@ public class ASTree extends Node {
 
         @Override
         public void exitThisExpression(MiracleParser.ThisExpressionContext ctx) {
-            property.put(ctx, new This(new MiracleSourcePosition(ctx)));
+            property.put(ctx, new This(new SourcePosition(ctx)));
         }
 
         @Override
@@ -519,9 +519,9 @@ public class ASTree extends Node {
             property.put(ctx, new Field(
                     (Expression) property.get(ctx.expression()),
                     ctx.IDENTIFIER().getText(),
-                    new MiracleSourcePosition(ctx),
-                    new MiracleSourcePosition(ctx.operator),
-                    new MiracleSourcePosition(ctx.IDENTIFIER().getSymbol())
+                    new SourcePosition(ctx),
+                    new SourcePosition(ctx.operator),
+                    new SourcePosition(ctx.IDENTIFIER().getSymbol())
             ));
         }
     }

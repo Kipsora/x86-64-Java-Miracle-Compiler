@@ -1,17 +1,17 @@
 package com.miracle.astree.statement.expression;
 
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 public class PrefixExpression extends Expression {
     public final OPERATOR operator;
-    public final MiracleSourcePosition operatorPosition;
+    public final SourcePosition operatorPosition;
     public final Expression expression;
 
     public PrefixExpression(OPERATOR operator,
                             Expression expression,
-                            MiracleSourcePosition startPosition,
-                            MiracleSourcePosition operatorPosition) {
+                            SourcePosition startPosition,
+                            SourcePosition operatorPosition) {
         super(startPosition);
         this.operator = operator;
         this.expression = expression;

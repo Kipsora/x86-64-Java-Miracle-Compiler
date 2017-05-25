@@ -2,7 +2,7 @@ package com.miracle.astree.statement.expression;
 
 import com.miracle.astree.base.TypeNode;
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +13,7 @@ public class New extends Expression {
 
     public New(TypeNode variableType,
                List<Expression> expressions,
-               MiracleSourcePosition startPosition) {
+               SourcePosition startPosition) {
         super(startPosition);
         this.variableType = variableType;
         this.expressions = Collections.unmodifiableList(expressions);

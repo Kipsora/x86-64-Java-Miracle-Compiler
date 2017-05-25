@@ -3,14 +3,14 @@ package com.miracle.astree.statement;
 import com.miracle.astree.statement.declaration.FunctionDeclaration;
 import com.miracle.astree.statement.expression.Expression;
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 public class Return extends Statement {
     public final Expression expression;
     private FunctionDeclaration function;
 
     public Return(Expression expression,
-                  MiracleSourcePosition startPosition) {
+                  SourcePosition startPosition) {
         super(startPosition);
         this.expression = expression;
     }

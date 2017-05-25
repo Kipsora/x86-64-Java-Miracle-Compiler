@@ -1,19 +1,19 @@
 package com.miracle.astree.statement.expression;
 
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 public class Field extends Expression {
     public final Expression expression;
-    public final MiracleSourcePosition identifierPosition;
-    public final MiracleSourcePosition operatorPosition;
+    public final SourcePosition identifierPosition;
+    public final SourcePosition operatorPosition;
     public final String identifier;
 
     public Field(Expression expression,
                  String identifier,
-                 MiracleSourcePosition startPosition,
-                 MiracleSourcePosition operatorPosition,
-                 MiracleSourcePosition identifierPosition) {
+                 SourcePosition startPosition,
+                 SourcePosition operatorPosition,
+                 SourcePosition identifierPosition) {
         super(startPosition);
         this.expression = expression;
         this.identifier = identifier;

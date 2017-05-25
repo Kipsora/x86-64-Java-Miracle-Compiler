@@ -1,12 +1,12 @@
 package com.miracle.astree.statement;
 
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 public class Break extends Statement {
     private Iteration iteration;
 
-    public Break(MiracleSourcePosition startPosition) {
+    public Break(SourcePosition startPosition) {
         super(startPosition);
     }
 

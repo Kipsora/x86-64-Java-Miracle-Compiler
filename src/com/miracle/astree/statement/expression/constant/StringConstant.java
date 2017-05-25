@@ -1,12 +1,12 @@
 package com.miracle.astree.statement.expression.constant;
 
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 public class StringConstant extends Constant {
     public final String value;
 
-    public StringConstant(String value, MiracleSourcePosition startPosition) {
+    public StringConstant(String value, SourcePosition startPosition) {
         super(startPosition);
         this.value = value;
     }

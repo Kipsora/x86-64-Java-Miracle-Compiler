@@ -1,19 +1,19 @@
 package com.miracle.astree.statement.expression;
 
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 public class BinaryExpression extends Expression {
     public final Expression left;
     public final Expression right;
     public final OPERATOR operator;
-    public final MiracleSourcePosition operatorPosition;
+    public final SourcePosition operatorPosition;
 
     public BinaryExpression(Expression left,
                             OPERATOR operator,
                             Expression right,
-                            MiracleSourcePosition startPosition,
-                            MiracleSourcePosition operatorPosition) {
+                            SourcePosition startPosition,
+                            SourcePosition operatorPosition) {
         super(startPosition);
         this.operatorPosition = operatorPosition;
         this.left = left;

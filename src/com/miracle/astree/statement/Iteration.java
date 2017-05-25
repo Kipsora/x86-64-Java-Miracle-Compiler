@@ -2,7 +2,7 @@ package com.miracle.astree.statement;
 
 import com.miracle.astree.statement.expression.Expression;
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 public class Iteration extends Statement {
     public final Expression initializeExpression;
@@ -14,7 +14,7 @@ public class Iteration extends Statement {
                      Expression conditionExpression,
                      Expression incrementExpression,
                      Statement body,
-                     MiracleSourcePosition startPosition) {
+                     SourcePosition startPosition) {
         super(startPosition);
         this.initializeExpression = initializeExpression;
         this.conditionExpression = conditionExpression;

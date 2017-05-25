@@ -1,18 +1,18 @@
 package com.miracle.astree.base;
 
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 import com.miracle.symbol.SymbolVariableType;
 
 public class TypeNode extends Node {
     public final String typename;
     public final int dimension;
-    public final MiracleSourcePosition startPosition;
+    public final SourcePosition startPosition;
     private SymbolVariableType type;
 
     public TypeNode(String typename,
                     int dimension,
-                    MiracleSourcePosition startPosition) {
+                    SourcePosition startPosition) {
         this.typename = typename;
         this.dimension = dimension;
         this.startPosition = startPosition;

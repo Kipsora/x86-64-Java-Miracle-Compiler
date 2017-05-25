@@ -1,10 +1,10 @@
 package com.miracle.astree.statement.expression.constant;
 
 import com.miracle.astree.visitor.Visitor;
-import com.miracle.cstree.MiracleSourcePosition;
+import com.miracle.cstree.SourcePosition;
 
 public class NullConstant extends Constant {
-    public NullConstant(MiracleSourcePosition startPosition) {
+    public NullConstant(SourcePosition startPosition) {
         super(startPosition);
     }
 
