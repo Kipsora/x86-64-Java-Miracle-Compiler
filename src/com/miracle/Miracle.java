@@ -1,15 +1,16 @@
 package com.miracle;
 
-import com.miracle.astree.MiracleASTree;
-import com.miracle.astree.visitor.*;
+import com.miracle.astree.ASTree;
+import com.miracle.astree.visitor.ClassFetcher;
+import com.miracle.astree.visitor.MemberFetcher;
+import com.miracle.astree.visitor.ScopeBuilder;
+import com.miracle.astree.visitor.SemanticAnalyser;
 import com.miracle.cstree.parser.MiracleLexer;
 import com.miracle.cstree.parser.MiracleParser;
-import com.miracle.exception.MiracleCSTreeErrorHandler;
-import com.miracle.exception.MiracleExceptionContainer;
-import com.miracle.intermediate.MiracleIR;
-import com.miracle.intermediate.visitor.MiracleIRDirectAllocator;
-import com.miracle.intermediate.visitor.MiracleIRPrinter;
-import com.miracle.intermediate.visitor.MiracleIRX64Printer;
+import com.miracle.exception.CSTreeErrorHandler;
+import com.miracle.exception.ExceptionContainer;
+import com.miracle.intermediate.Root;
+import com.miracle.intermediate.visitor.*;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -25,7 +26,7 @@ public class Miracle {
 
     private final PrintStream errorStream = System.err;
 
-    private final MiracleExceptionContainer exceptionContainer = new MiracleExceptionContainer(
+    private final ExceptionContainer exceptionContainer = new ExceptionContainer(
             errorStream
     );
 
@@ -54,7 +55,7 @@ public class Miracle {
             inputStream = line.hasOption("input") ? new FileInputStream(line.getOptionValue("input")) : null;
             outputStream = line.hasOption("output") ? new FileOutputStream(line.getOptionValue("output")) : null;
         } catch (FileNotFoundException | ParseException exception) {
-            throw MiracleExceptionContainer.getRuntimeException(exception.getMessage());
+            throw ExceptionContainer.getRuntimeException(exception.getMessage());
         }
 
         this.printASTree = printASTree;
@@ -75,29 +76,29 @@ public class Miracle {
                     new MiracleLexer(istream)
             ));
             parser.removeErrorListeners();
-            parser.addErrorListener(new MiracleCSTreeErrorHandler(exceptionContainer));
+            parser.addErrorListener(new CSTreeErrorHandler(exceptionContainer));
             MiracleParser.MiracleContext cstree = parser.miracle();
             exceptionContainer.judge();
             return cstree;
         } catch (IOException e) {
-            throw MiracleExceptionContainer.getRuntimeException(e.getMessage());
+            throw ExceptionContainer.getRuntimeException(e.getMessage());
         }
     }
 
-    private MiracleASTree getASTree(MiracleParser.MiracleContext cstree) throws IOException {
-        MiracleASTree.Builder builder = new MiracleASTree.Builder(exceptionContainer);
+    private ASTree getASTree(MiracleParser.MiracleContext cstree) throws IOException {
+        ASTree.Builder builder = new ASTree.Builder(exceptionContainer);
         new ParseTreeWalker().walk(builder, cstree);
-        MiracleASTree astree = builder.build();
-        astree.accept(new MiracleASTreeScopeBuilder());
-        astree.accept(new MiracleASTreeClassFetcher(exceptionContainer));
-        astree.accept(new MiracleASTreeMemberFetcher(exceptionContainer));
-        astree.accept(new MiracleASTreeSemanticAnalyser(exceptionContainer));
+        ASTree astree = builder.build();
+        astree.accept(new ScopeBuilder());
+        astree.accept(new ClassFetcher(exceptionContainer));
+        astree.accept(new MemberFetcher(exceptionContainer));
+        astree.accept(new SemanticAnalyser(exceptionContainer));
         exceptionContainer.judge();
         return astree;
     }
 
-    private MiracleIR getIR(MiracleASTree astree) {
-        MiracleIR.Builder builder = new MiracleIR.Builder();
+    private Root getIR(ASTree astree) {
+        Root.Builder builder = new Root.Builder();
         astree.accept(builder);
         return builder.build();
     }
@@ -105,23 +106,26 @@ public class Miracle {
     private void run() throws IOException {
         try {
             MiracleParser.MiracleContext cstree = getCSTree();
-            MiracleASTree astree = getASTree(cstree);
+            ASTree astree = getASTree(cstree);
             if (this.printASTree) {
-                MiracleASTreePrinter printer = new MiracleASTreePrinter();
+                com.miracle.astree.visitor.Printer printer = new com.miracle.astree.visitor.Printer();
                 astree.accept(printer);
                 outputStream.println(printer.getOutput());
                 return;
             }
-            MiracleIR ir = getIR(astree);
-            //ir.accept(new MiracleIRDeadCodeEliminator());
+            Root ir = getIR(astree);
+            ir.accept(new LLTransformer());
             if (this.printIR) {
-                MiracleIRPrinter generator = new MiracleIRPrinter();
+                ir.accept(new RegisterCollector());
+                Printer generator = new Printer();
                 ir.accept(generator);
                 outputStream.println(generator.getOutput());
                 return;
             }
-            ir.accept(new MiracleIRDirectAllocator());
-            MiracleIRX64Printer printer = new MiracleIRX64Printer();
+            DirectAllocator allocator = new DirectAllocator();
+            ir.accept(allocator);
+            ir.accept(new RegisterCollector());
+            X64Printer printer = new X64Printer();
             ir.accept(printer);
             outputStream.println(printer.getOutput());
         } catch (RuntimeException e) {

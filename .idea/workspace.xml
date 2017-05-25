@@ -6,21 +6,88 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a1af29a-b77a-4b8c-9654-4271264bd490" name="Default" comment="Implicit bugs fixed.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRDeadCodeEliminator.java" />
+    <list default="true" id="1a1af29a-b77a-4b8c-9654-4271264bd490" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/base/MiracleASTreeNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/base/MiracleASTreeTypeNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeBlock.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeBreak.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeContinue.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeIteration.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeReturn.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeSelection.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeStatement.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeClassDeclaration.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeDeclaration.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeFunctionDeclaration.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeMemberDeclaration.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeVariableDeclaration.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeBinaryExpression.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeCall.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeExpression.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeField.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeNew.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreePrefixExpression.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeSubscript.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeSuffixExpression.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeThis.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeVariable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/constant/MiracleASTreeBooleanConstant.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/constant/MiracleASTreeConstant.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/constant/MiracleASTreeIntegerConstant.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/constant/MiracleASTreeNullConstant.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/constant/MiracleASTreeStringConstant.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeBaseVisitor.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeClassFetcher.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeMemberFetcher.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreePrinter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeScopeBuilder.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeVisitor.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/exception/MiracleCSTreeErrorHandler.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/exception/MiracleExceptionContainer.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIR.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIRNode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIRRegisterBuffer.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRCall.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRCompare.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRHeapAllocate.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRInstruction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRMove.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/MiracleIRBinaryArithmetic.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/MiracleIRPrefixArithmetic.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRBranch.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRFork.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRJump.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRReturn.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRDirectRegister.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRImmediate.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRNumber.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIROffsetRegister.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRPhysicalRegister.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRRegister.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRStaticString.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRStaticVariable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRVirtualRegister.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/structure/MiracleIRBasicBlock.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/structure/MiracleIRFunction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRDeadCodeEliminator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRDirectAllocator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRPrinter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRVisitor.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRX64Printer.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbol.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolArrayType.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolBaseType.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolClassType.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolFunctionType.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolNullType.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolPrimitiveType.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolType.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolVariableType.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/Miracle.java" afterPath="$PROJECT_DIR$/src/com/miracle/Miracle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIR.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIR.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIRRegisterBuffer.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIRRegisterBuffer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRCompare.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRCompare.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRHeapAllocate.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRHeapAllocate.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRBranch.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRBranch.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/structure/MiracleIRBasicBlock.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/structure/MiracleIRBasicBlock.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/structure/MiracleIRFunction.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/structure/MiracleIRFunction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRDirectAllocator.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRDirectAllocator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRPrinter.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRPrinter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRX64Printer.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRX64Printer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolFunctionType.java" afterPath="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolFunctionType.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,106 +111,16 @@
     <favorites_list name="x86-64-Miralce-Java-Compiler" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MiracleIR.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIR.java">
+    <leaf>
+      <file leaf-file-name="X64Printer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2547">
-              <caret line="407" column="73" lean-forward="false" selection-start-line="407" selection-start-column="73" selection-end-line="407" selection-end-column="73" />
+            <state relative-caret-position="-2478">
+              <caret line="27" column="31" lean-forward="false" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <marker date="1495620175906" expanded="true" signature="36373:37203" ph="{...}" />
+                <element signature="e#950#951#0" expanded="true" />
+                <element signature="e#991#992#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MiracleIRRegisterBuffer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIRRegisterBuffer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="13" column="7" lean-forward="true" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MiracleIRMove.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRMove.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Miracle.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/Miracle.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="113" column="23" lean-forward="true" selection-start-line="113" selection-start-column="23" selection-end-line="113" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MiracleIRBinaryArithmetic.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/MiracleIRBinaryArithmetic.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MiracleIRPrefixArithmetic.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/MiracleIRPrefixArithmetic.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="11" column="11" lean-forward="false" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MiracleIRDirectAllocator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRDirectAllocator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="15" column="43" lean-forward="true" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MiracleIRDirectRegister.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRDirectRegister.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="4" column="31" lean-forward="true" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MiracleIRHeapAllocate.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRHeapAllocate.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="7" column="18" lean-forward="false" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MiracleIRCall.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRCall.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="10" column="44" lean-forward="true" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -162,29 +139,10 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>FunctionDeclaration</find>
-      <find>ReturnLiteral</find>
-      <find>curFunction</find>
-      <find>curFunction =</find>
-      <find>*</find>
-      <find>subscript(</find>
-      <find>variable</find>
-      <find>setRE</find>
-      <find>setResultnumber</find>
-      <find>subscript</find>
-      <find>newe</find>
-      <find>newNode</find>
-      <find>astree.</find>
-      <find>__start</find>
-      <find>Compare</find>
-      <find>Relation</find>
-      <find>body</find>
       <find>NEG</find>
-      <find>instanceof</find>
       <find>setFork</find>
       <find>resolveClass</find>
       <find>.buffer</find>
-      <find>call</find>
       <find>curbasicBlock</find>
       <find>curBasicBlock</find>
       <find>isFork</find>
@@ -192,6 +150,25 @@
       <find>MiracleIRFunction</find>
       <find>MiracleASTreeFunctionDeclaration</find>
       <find>returnLiteral</find>
+      <find>selection</find>
+      <find>relation</find>
+      <find>compare</find>
+      <find>expression</find>
+      <find>.getResultNumber</find>
+      <find>enroll</find>
+      <find>stack</find>
+      <find>setAdd</find>
+      <find>push</find>
+      <find>leave</find>
+      <find>.enroll</find>
+      <find>mov</find>
+      <find>move</find>
+      <find>Function</find>
+      <find>call</find>
+      <find>instanceof</find>
+      <find>get1</find>
+      <find>rbp</find>
+      <find>get16</find>
     </findStrings>
     <replaceStrings>
       <replace>T</replace>
@@ -220,17 +197,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRFork.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MIracleIRLogic.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRLogic.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRRet.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRReturn.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRJump.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/MiracleIRSuffixArithmetic.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIRStack.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRImmediate.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRVisitor.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRNumber.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRCall.java" />
         <option value="$PROJECT_DIR$/antlr/Miracle.g4" />
         <option value="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeScopeBuilder.java" />
@@ -240,37 +206,48 @@
         <option value="$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/astree/base/MiracleASTreeTypeNode.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeExpression.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRCall.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/MiraclePrinter.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/MiracleVisitable.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/astree/base/MiracleASTreeNode.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreePrinter.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRVirtualRegister.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRDirectRegister.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRStaticString.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRStaticVariable.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIROffsetRegister.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRPhysicalRegister.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeFunctionDeclaration.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIRTest.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/MiracleIRPrefixArithmetic.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolTable.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeMemberFetcher.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRX64Printer.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/structure/MiracleIRFunction.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolFunctionType.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/structure/MiracleIRBasicBlock.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRPrinter.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRDirectAllocator.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRBranch.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIR.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRDeadCodeEliminator.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRConstantFolder.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/Miracle.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRCompare.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRHeapAllocate.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRSpecialRegister.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRJNZero.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRVisitor.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolTable.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRPhysicalRegister.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIRRegisterBuffer.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRInstruction.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRCompare.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRMove.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRHeapAllocate.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRReturn.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRJump.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRBranch.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/MiracleIRBinaryArithmetic.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/MiracleIRPrefixArithmetic.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRCall.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRDeadCodeEliminator.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRPrinter.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRLLTransformer.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRRegisterCollector.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/Miracle.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIROffsetRegister.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/structure/MiracleIRFunction.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIR.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRDirectAllocator.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRVirtualRegister.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRX64Printer.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java" />
       </list>
     </option>
   </component>
@@ -281,10 +258,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="64" />
-    <option name="y" value="-11" />
-    <option name="width" value="1537" />
-    <option name="height" value="912" />
+    <option name="x" value="65" />
+    <option name="y" value="29" />
+    <option name="width" value="1535" />
+    <option name="height" value="876" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -540,6 +517,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -602,6 +582,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="symbol" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="miracle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="intermediate" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -629,6 +631,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="visitor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="miracle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="intermediate" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="structure" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -754,15 +782,164 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="miracle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exception" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="miracle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="astree" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="miracle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="astree" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="visitor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="miracle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="astree" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="statement" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="miracle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="astree" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="statement" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="declaration" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="miracle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="astree" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="antlr" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1338,7 +1515,10 @@
       <workItem from="1495523723476" duration="32497000" />
       <workItem from="1495558656746" duration="1345000" />
       <workItem from="1495587288454" duration="10382000" />
-      <workItem from="1495614512659" duration="7101000" />
+      <workItem from="1495614512659" duration="24813000" />
+      <workItem from="1495643051486" duration="8748000" />
+      <workItem from="1495655441042" duration="5000" />
+      <workItem from="1495699051175" duration="300000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit.">
       <created>1494578117985</created>
@@ -1634,11 +1814,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495615082580</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Lower level IR started.">
+      <created>1495622594302</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1495622594302</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="327803000" />
+    <option name="totallyTimeSpent" value="354568000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1650,7 +1837,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="64" y="-11" width="1537" height="912" extended-state="6" />
+    <frame x="65" y="29" width="1535" height="876" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1660,7 +1847,7 @@
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7287918" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.728" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3611825" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1668,23 +1855,23 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41131106" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3277635" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3277635" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21722364" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.216" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2572196" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3277635" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26796508" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24983211" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3277635" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="164" y="89" width="1337" height="712" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3277635" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -1756,7 +1943,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Bugs fixed for minor parts." />
     <MESSAGE value="Bugs fixed for antlr parser." />
     <MESSAGE value="Code optimized." />
     <MESSAGE value="Bugs fixed for return literal validator." />
@@ -1781,7 +1967,8 @@
     <MESSAGE value="IR completed, waiting for register allocating." />
     <MESSAGE value="Bug fixed for prefix expression." />
     <MESSAGE value="Implicit bugs fixed." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implicit bugs fixed." />
+    <MESSAGE value="Lower level IR started." />
+    <option name="LAST_COMMIT_MESSAGE" value="Lower level IR started." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1790,25 +1977,25 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java</url>
+          <url>file://$PROJECT_DIR$/src/com/miracle/astree/visitor/SemanticAnalyser.java</url>
           <line>614</line>
           <properties />
           <option name="timeStamp" value="128" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java</url>
+          <url>file://$PROJECT_DIR$/src/com/miracle/astree/visitor/SemanticAnalyser.java</url>
           <line>283</line>
           <properties />
           <option name="timeStamp" value="129" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java</url>
+          <url>file://$PROJECT_DIR$/src/com/miracle/astree/visitor/SemanticAnalyser.java</url>
           <line>280</line>
           <properties />
           <option name="timeStamp" value="130" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="185" />
+      <option name="time" value="193" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1817,76 +2004,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeExpression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="30" column="67" lean-forward="false" selection-start-line="30" selection-start-column="67" selection-end-line="30" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/statement/expression/MiracleASTreeNew.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding>
-            <element signature="e#895#896#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/statement/MiracleASTreeSelection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding>
-            <element signature="e#982#983#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="14" column="17" lean-forward="false" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/MiracleVisitable.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/MiraclePrinter.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRVirtualRegister.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="7" lean-forward="false" selection-start-line="4" selection-start-column="7" selection-end-line="4" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRStaticVariable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="68" lean-forward="false" selection-start-line="4" selection-start-column="68" selection-end-line="4" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRStaticString.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="66" lean-forward="false" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIRNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="22" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="uml://JAVA/com.miracle.intermediate">
       <provider selected="true" editor-type-id="UmlEditorProvider">
         <state>
@@ -1940,7 +2057,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeSemanticAnalyser.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/visitor/SemanticAnalyser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="109">
           <caret line="108" column="47" lean-forward="false" selection-start-line="108" selection-start-column="47" selection-end-line="108" selection-end-column="47" />
@@ -1948,89 +2065,57 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRImmediate.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/Immediate.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-91">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRNumber.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/Number.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="6" column="28" lean-forward="false" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIROffsetRegister.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="4" column="88" lean-forward="false" selection-start-line="4" selection-start-column="88" selection-end-line="4" selection-end-column="88" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRPhysicalRegister.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="37" column="20" lean-forward="false" selection-start-line="37" selection-start-column="20" selection-end-line="37" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2137#2138#0" expanded="true" />
-            <element signature="e#2164#2165#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRRegister.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/Register.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="50">
           <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeFunctionDeclaration.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/FunctionDeclaration.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="809">
           <caret line="44" column="73" lean-forward="false" selection-start-line="44" selection-start-column="73" selection-end-line="44" selection-end-column="73" />
-          <folding>
-            <element signature="e#1615#1616#0" expanded="true" />
-            <element signature="e#1650#1651#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIRTest.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreePrinter.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/visitor/Printer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="134">
           <caret line="130" column="26" lean-forward="false" selection-start-line="130" selection-start-column="22" selection-end-line="130" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/base/MiracleASTreeNode.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/base/Node.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
           <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/MiracleASTreeClassDeclaration.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/statement/declaration/ClassDeclaration.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="314">
           <caret line="45" column="26" lean-forward="false" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolClassType.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/SymbolClassType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="8" column="58" lean-forward="true" selection-start-line="8" selection-start-column="58" selection-end-line="8" selection-end-column="58" />
@@ -2038,7 +2123,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolBaseType.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/SymbolBaseType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="50">
           <caret line="2" column="68" lean-forward="false" selection-start-line="2" selection-start-column="68" selection-end-line="2" selection-end-column="68" />
@@ -2046,7 +2131,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolVariableType.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/SymbolVariableType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="50">
           <caret line="2" column="63" lean-forward="false" selection-start-line="2" selection-start-column="63" selection-end-line="2" selection-end-column="63" />
@@ -2054,15 +2139,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeMemberFetcher.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MemberFetcher.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="339">
           <caret line="45" column="106" lean-forward="false" selection-start-line="45" selection-start-column="106" selection-end-line="45" selection-end-column="106" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolType.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/SymbolType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
           <caret line="23" column="22" lean-forward="false" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
@@ -2070,174 +2154,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/MiracleASTree.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/ASTree.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="164">
           <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-          <folding>
-            <element signature="e#1733#1734#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/visitor/MiracleASTreeScopeBuilder.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/visitor/ScopeBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="44" column="45" lean-forward="true" selection-start-line="44" selection-start-column="45" selection-end-line="44" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="59" column="55" lean-forward="false" selection-start-line="59" selection-start-column="55" selection-end-line="59" selection-end-column="55" />
-          <folding>
-            <element signature="e#4023#4024#0" expanded="true" />
-            <element signature="e#4081#4082#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/MiracleSymbolFunctionType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="80" column="63" lean-forward="false" selection-start-line="80" selection-start-column="63" selection-end-line="80" selection-end-column="63" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/structure/MiracleIRFunction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="25" column="24" lean-forward="false" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/rt.jar!/java/util/function/BiConsumer.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="11" column="9" lean-forward="false" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRPrinter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="20" column="51" lean-forward="false" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRX64Printer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="71" column="55" lean-forward="false" selection-start-line="71" selection-start-column="55" selection-end-line="71" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/structure/MiracleIRBasicBlock.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/structure/BasicBlock.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRBranch.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="12" column="18" lean-forward="true" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRConstantFolder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" column="65" lean-forward="true" selection-start-line="2" selection-start-column="65" selection-end-line="5" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRDeadCodeEliminator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="91" column="32" lean-forward="false" selection-start-line="91" selection-start-column="32" selection-end-line="91" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4741#4742#0" expanded="true" />
-            <element signature="e#4798#4799#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRCompare.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRConstantFolder.java" />
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/DirectRegister.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
-          <caret line="7" column="21" lean-forward="true" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
-          <folding />
+          <caret line="4" column="31" lean-forward="false" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRCall.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRSpecialRegister.java" />
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/MiracleIRJNZero.java" />
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/Visitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="10" column="44" lean-forward="true" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRHeapAllocate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="7" column="18" lean-forward="false" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/MiracleIRMove.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/MiracleIRBinaryArithmetic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/MiracleIRPrefixArithmetic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="11" column="11" lean-forward="false" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRDirectAllocator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="15" column="43" lean-forward="true" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRDirectRegister.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="31" lean-forward="true" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
-          <folding />
+        <state relative-caret-position="514">
+          <caret line="38" column="47" lean-forward="false" selection-start-line="38" selection-start-column="47" selection-end-line="38" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -2259,7 +2210,7 @@
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="452.5" y="139.0" />
+          <settings layout="Hierarchic Group" zoom="1.0" x="453.0" y="139.0" />
           <SelectedNodes />
           <Categories />
           <SCOPE>All</SCOPE>
@@ -2267,30 +2218,225 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIRRegisterBuffer.java">
+    <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/rt.jar!/java/util/function/BiConsumer.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="13" column="7" lean-forward="true" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
+        <state relative-caret-position="164">
+          <caret line="11" column="9" lean-forward="false" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/PhysicalRegister.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="61" column="44" lean-forward="false" selection-start-line="61" selection-start-column="44" selection-end-line="61" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/SymbolFunctionType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="45" column="9" lean-forward="false" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#844#845#0" expanded="false" />
+            <element signature="e#885#886#0" expanded="false" />
+            <element signature="e#934#935#0" expanded="false" />
+            <element signature="e#967#968#0" expanded="false" />
+            <element signature="e#1031#1032#0" expanded="false" />
+            <element signature="e#1075#1076#0" expanded="false" />
+            <element signature="e#1124#1125#0" expanded="false" />
+            <element signature="e#1157#1158#0" expanded="false" />
+            <element signature="e#1438#1439#0" expanded="false" />
+            <element signature="e#1473#1474#0" expanded="false" />
+            <element signature="e#1937#1938#0" expanded="false" />
+            <element signature="e#1967#1968#0" expanded="false" />
+            <element signature="e#2285#2286#0" expanded="false" />
+            <element signature="e#2315#2316#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/RegisterBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="29" column="31" lean-forward="false" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/SymbolTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="24" column="24" lean-forward="true" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/MiracleIR.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Compare.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2547">
-          <caret line="407" column="73" lean-forward="false" selection-start-line="407" selection-start-column="73" selection-end-line="407" selection-end-column="73" />
+        <state relative-caret-position="175">
+          <caret line="11" column="11" lean-forward="false" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Move.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="25" column="74" lean-forward="false" selection-start-line="25" selection-start-column="74" selection-end-line="25" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/HeapAllocate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="29" column="74" lean-forward="false" selection-start-line="29" selection-start-column="74" selection-end-line="29" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/Return.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1495620175906" expanded="true" signature="36373:37203" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/Jump.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/Fork.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="4" column="22" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/Branch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="34" column="45" lean-forward="false" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/BinaryArithmetic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="409">
+          <caret line="40" column="8" lean-forward="false" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="22" />
+          <folding>
+            <element signature="e#1214#1215#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/UnaryArithmetic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="28" column="8" lean-forward="false" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/DeadCodeEliminator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="61" column="100" lean-forward="false" selection-start-line="61" selection-start-column="100" selection-end-line="61" selection-end-column="100" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/Printer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="18" column="59" lean-forward="true" selection-start-line="18" selection-start-column="59" selection-end-line="18" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LLTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/Miracle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="113" column="23" lean-forward="true" selection-start-line="113" selection-start-column="23" selection-end-line="113" selection-end-column="23" />
+        <state relative-caret-position="400">
+          <caret line="127" column="40" lean-forward="false" selection-start-line="127" selection-start-column="40" selection-end-line="127" selection-end-column="40" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/RegisterCollector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="14" column="57" lean-forward="true" selection-start-line="14" selection-start-column="57" selection-end-line="14" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Instruction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="7" column="66" lean-forward="true" selection-start-line="7" selection-start-column="66" selection-end-line="8" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Call.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="48" column="49" lean-forward="false" selection-start-line="48" selection-start-column="49" selection-end-line="48" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/OffsetRegister.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="10" column="58" lean-forward="false" selection-start-line="10" selection-start-column="58" selection-end-line="10" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/VirtualRegister.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="28" column="34" lean-forward="true" selection-start-line="28" selection-start-column="34" selection-end-line="28" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/DirectAllocator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="653">
+          <caret line="32" column="51" lean-forward="true" selection-start-line="32" selection-start-column="51" selection-end-line="32" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/structure/Function.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="92" column="57" lean-forward="true" selection-start-line="92" selection-start-column="57" selection-end-line="92" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/Root.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="782" column="66" lean-forward="false" selection-start-line="782" selection-start-column="66" selection-end-line="782" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2478">
+          <caret line="27" column="31" lean-forward="false" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
+          <folding>
+            <element signature="e#950#951#0" expanded="true" />
+            <element signature="e#991#992#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
