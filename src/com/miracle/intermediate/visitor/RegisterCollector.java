@@ -22,7 +22,7 @@ public class RegisterCollector extends BaseIRVisitor {
     @Override
     public void visit(Function function) {
         curFunction = function;
-        function.parameters.forEach(element -> {
+        function.getParameters().forEach(element -> {
             if (element instanceof StackRegister) {
                 curFunction.buffer.enroll((StackRegister) element);
             }

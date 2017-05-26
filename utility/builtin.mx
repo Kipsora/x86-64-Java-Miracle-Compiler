@@ -1,0 +1,61 @@
+@println:
+	lea edi, [edi+4]
+	call puts
+	ret
+@toString:
+    cmp edi, 0
+    jge __positive@toString
+    neg edi
+	mov ebx, edi
+	mov edi, 14
+	call malloc
+	lea edi, [eax+13]
+	mov eax, ebx
+	mov ebx, 10
+	mov byte [edi+1], 0
+	xor ecx, ecx
+__loop_negative@toString:
+	dec edi
+	inc ecx
+	xor edx, edx
+	idiv ebx
+	add edx, 48
+	mov byte [edi], dl
+	cmp eax, 0
+	jnz __loop_negative@toString
+	dec edi
+	mov byte [edi], 45
+	lea eax, [edi-4]
+	mov dword [eax], ecx
+	ret
+__positive@toString:
+	mov ebx, edi
+	mov edi, 14
+	call malloc
+	lea edi, [eax+13]
+	mov eax, ebx
+	mov ebx, 10
+	mov byte [edi+1], 0
+	xor ecx, ecx
+__loop_positive@toString:
+	dec edi
+	inc ecx
+	xor edx, edx
+	idiv ebx
+	add edx, 48
+	mov byte [edi], dl
+	cmp eax, 0
+	jnz __loop_positive@toString
+	lea eax, [edi-4]
+	mov dword [eax], ecx
+	ret
+@getInt:
+    push rbp
+    mov rbp, rsp
+    mov esi, int$buf
+    mov edi, int$fmt
+    xor eax, eax
+    call scanf
+    mov eax, [rel int$buf]
+    leave
+    ret

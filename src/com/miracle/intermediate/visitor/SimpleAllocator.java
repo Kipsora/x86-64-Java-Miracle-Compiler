@@ -45,10 +45,10 @@ public class SimpleAllocator extends BaseIRVisitor {
         busyPhysicalRegisters = new HashMap<>();
         quickAccessToIndirect = new HashMap<>();
         moveOnRelease = new HashSet<>();
-        function.parameters.forEach(this::realize);
-        for (int i = 0; i < function.parameters.size(); i++) {
-            if (function.parameters.get(i) instanceof VirtualRegister) {
-                function.parameters.set(i, mapToStack.get(function.parameters.get(i)));
+        function.getParameters().forEach(this::realize);
+        for (int i = 0; i < function.getParameters().size(); i++) {
+            if (function.getParameters().get(i) instanceof VirtualRegister) {
+                function.getParameters().set(i, mapToStack.get(function.getParameters().get(i)));
             }
         }
         function.getEntryBasicBlock().accept(this);

@@ -73,7 +73,10 @@ public class Root extends Node {
             curFunction = functionDeclaration.getSymbol().getAddress();
             globalFunction.put(functionDeclaration.identifier, curFunction);
             curBasicBlock = curFunction.getEntryBasicBlock();
-            functionDeclaration.parameters.forEach(element -> element.accept(this));
+            functionDeclaration.parameters.forEach(element -> {
+                element.accept(this);
+                curFunction.addParameter(element.getAddress());
+            });
             functionDeclaration.body.forEach(element -> element.accept(this));
 
             curBasicBlock.addSuccBasicBlock(curFunction.getExitBasicBlock());

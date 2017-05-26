@@ -18,12 +18,12 @@ import static com.miracle.symbol.SymbolTable.__builtin_void;
 
 public class Function {
     public final String identifier;
-    public final List<Register> parameters;
     public final RegisterBuffer buffer;
     private DirectRegister returnRegister;
     private DirectRegister selfRegister;
     private BasicBlock entryBasicBlock;
     private BasicBlock exitBasicBlock;
+    public final List<Register> parameters;
 
     public Function(String identifier,
                     SymbolFunctionType type) {
@@ -33,21 +33,12 @@ public class Function {
         } else {
             this.returnRegister = null;
         }
-        this.parameters = new LinkedList<>();
-        List<String> argName = type.getArgName();
-        List<SymbolVariableType> argType = type.getArgType();
-        for (int i = 0, size = argName.size(); i < size; i++) {
-            if (argType.get(i) == null) break;
-            this.parameters.add(new VirtualRegister(
-                    argName.get(i),
-                    argType.get(i).getRegisterSize()
-            ));
-        }
         if (type.getMemberFrom() != null) {
             this.selfRegister = new VirtualRegister("this", type.getMemberFrom().getRegisterSize());
         } else {
             this.selfRegister = null;
         }
+        this.parameters = new LinkedList<>();
         this.entryBasicBlock = new BasicBlock("__" + identifier + ".entry", this, true, false);
         this.exitBasicBlock = new BasicBlock("__" + identifier + ".exit", this, false, true);
         this.buffer = new RegisterBuffer();
@@ -89,5 +80,13 @@ public class Function {
         for (int i = 0, size = map.size(); i < size; i++) {
             parameters.set(i, map.get(parameters.get(i)));
         }
+    }
+
+    public List<Register> getParameters() {
+        return parameters;
+    }
+
+    public void addParameter(Register parameter) {
+        this.parameters.add(parameter);
     }
 }

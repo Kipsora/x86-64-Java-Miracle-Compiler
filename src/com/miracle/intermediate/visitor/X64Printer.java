@@ -145,7 +145,7 @@ public class X64Printer implements IRVisitor {
             size -= CallingConvention.size();
             for (int i = 0; i < size; i++) {
                 builder.append('\t').append("pop").append(' ')
-                        .append(curFunction.parameters.get(i)).append('\n');
+                        .append(curFunction.getParameters().get(i)).append('\n');
             }
         }
         if (block.isFunctionExitBlock) {
