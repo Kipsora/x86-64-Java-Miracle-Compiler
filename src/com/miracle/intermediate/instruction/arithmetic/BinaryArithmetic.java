@@ -3,14 +3,16 @@ package com.miracle.intermediate.instruction.arithmetic;
 import com.miracle.intermediate.instruction.Instruction;
 import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.number.Register;
-import com.miracle.intermediate.visitor.Visitor;
+import com.miracle.intermediate.visitor.IRVisitor;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class BinaryArithmetic extends Instruction {
+    public final Types operator;
     private Register target;
     private Number source;
-    public final Types operator;
 
     public BinaryArithmetic(Types operator,
                             Register target,
@@ -21,15 +23,37 @@ public class BinaryArithmetic extends Instruction {
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public void accept(IRVisitor IRVisitor) {
+        IRVisitor.visit(this);
     }
 
     @Override
-    public void map(Map<Register, Register> map) {
-        target = map.get(target);
+    public void rename(Map map) {
+        target = (Register) map.getOrDefault(target, target);
         if (source instanceof Register) {
-            source = map.get(source);
+            source = (Number) map.getOrDefault(source, source);
+        }
+    }
+
+    @Override
+    public Set<Register> getUsedRegisters() {
+        return new HashSet<Register>() {{
+            add(target);
+            if (source instanceof Register) {
+                add((Register) source);
+            }
+        }};
+    }
+
+    @Override
+    public Set<String> getDeprecatedRegisters() {
+        if (operator.equals(Types.MOD) || operator.equals(Types.DIV)) {
+            return new HashSet<String>() {{
+                add("RAX");
+                add("RDX");
+            }};
+        } else {
+            return new HashSet<>();
         }
     }
 

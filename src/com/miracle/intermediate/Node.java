@@ -1,7 +1,7 @@
 package com.miracle.intermediate;
 
-import com.miracle.intermediate.visitor.Visitor;
+import com.miracle.intermediate.visitor.IRVisitor;
 
 public abstract class Node {
-    public abstract void accept(Visitor visitor);
+    public abstract void accept(IRVisitor IRVisitor);
 }

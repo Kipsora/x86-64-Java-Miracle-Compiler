@@ -1,6 +1,6 @@
 package com.miracle.astree.statement.expression;
 
-import com.miracle.astree.visitor.Visitor;
+import com.miracle.astree.visitor.ASTreeVisitor;
 import com.miracle.cstree.SourcePosition;
 
 public class BinaryExpression extends Expression {
@@ -22,8 +22,8 @@ public class BinaryExpression extends Expression {
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public void accept(ASTreeVisitor ASTreeVisitor) {
+        ASTreeVisitor.visit(this);
     }
 
     @Override

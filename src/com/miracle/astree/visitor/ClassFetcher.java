@@ -5,7 +5,7 @@ import com.miracle.astree.statement.declaration.ClassDeclaration;
 import com.miracle.exception.ExceptionContainer;
 import com.miracle.symbol.SymbolTable;
 
-public class ClassFetcher extends BaseVisitor {
+public class ClassFetcher extends BaseASTreeVisitor {
     private final ExceptionContainer exceptionContainer;
     private SymbolTable symbolTable;
 

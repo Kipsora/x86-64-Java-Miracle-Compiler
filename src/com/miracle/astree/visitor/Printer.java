@@ -8,7 +8,7 @@ import com.miracle.astree.statement.declaration.VariableDeclaration;
 import com.miracle.astree.statement.expression.*;
 import com.miracle.astree.statement.expression.constant.StringConstant;
 
-public class Printer extends BaseVisitor {
+public class Printer extends BaseASTreeVisitor {
     private StringBuilder builder;
     private int indent;
 
@@ -32,7 +32,7 @@ public class Printer extends BaseVisitor {
         for (int i = 1; i <= indent; i++) {
             builder.append("    ");
         }
-        builder.append(message).append('\n');
+        builder.append(message);
     }
 
     @Override
@@ -57,15 +57,15 @@ public class Printer extends BaseVisitor {
     }
 
     @Override
-    public void visit(Call call) {
-        builder.append("call ");
-        builder.append(call.function.toPrintableString());
+    public void visit(CallExpression callExpression) {
+        builder.append("callExpression ");
+        builder.append(callExpression.function.toPrintableString());
         builder.append("(");
-        for (int i = 0; i < call.parameters.size(); i++) {
+        for (int i = 0; i < callExpression.parameters.size(); i++) {
             if (i > 0) {
                 builder.append(", ");
             }
-            builder.append(call.parameters.get(i).toPrintableString());
+            builder.append(callExpression.parameters.get(i).toPrintableString());
         }
         builder.append(')');
     }
@@ -92,7 +92,7 @@ public class Printer extends BaseVisitor {
     }
 
     @Override
-    public void visit(Return returnLiteral) {
+    public void visit(ReturnStatement returnLiteral) {
         builder.append("return ");
         if (returnLiteral.expression != null) {
             builder.append(returnLiteral.expression.toPrintableString());

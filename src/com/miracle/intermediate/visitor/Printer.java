@@ -7,16 +7,17 @@ import com.miracle.intermediate.instruction.HeapAllocate;
 import com.miracle.intermediate.instruction.Move;
 import com.miracle.intermediate.instruction.arithmetic.BinaryArithmetic;
 import com.miracle.intermediate.instruction.arithmetic.UnaryArithmetic;
-import com.miracle.intermediate.instruction.fork.Branch;
+import com.miracle.intermediate.instruction.fork.BinaryBranch;
 import com.miracle.intermediate.instruction.fork.Jump;
 import com.miracle.intermediate.instruction.fork.Return;
+import com.miracle.intermediate.instruction.fork.UnaryBranch;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Printer implements Visitor {
+public class Printer implements IRVisitor {
     private StringBuilder builder;
     private Set<BasicBlock> blockProcessed;
 
@@ -68,12 +69,6 @@ public class Printer implements Visitor {
         builder.append("func ").append(function.identifier);
         function.parameters.forEach(element -> builder.append(' ').append(element));
         builder.append(' ').append('{').append('\n');
-        builder.append("stack frame: {").append('\n');
-        function.getBuffer().getRegisters().forEach((element, address) ->
-                builder.append('\t').append(element).append(' ').append('\n')
-        );
-
-        builder.append("}").append('\n');
         function.getEntryBasicBlock().accept(this);
         builder.append('}').append('\n');
     }
@@ -106,10 +101,10 @@ public class Printer implements Visitor {
     }
 
     @Override
-    public void visit(Branch branch) {
-        builder.append('\t').append("jnz").append(' ').append(branch.getExpression())
-                .append(", ").append(branch.branchTrue.name)
-                .append(", ").append(branch.branchFalse.name)
+    public void visit(UnaryBranch unaryBranch) {
+        builder.append('\t').append("jnz").append(' ').append(unaryBranch.getExpression())
+                .append(", ").append(unaryBranch.branchTrue.name)
+                .append(", ").append(unaryBranch.branchFalse.name)
                 .append('\n');
     }
 
@@ -139,5 +134,15 @@ public class Printer implements Visitor {
                 .append(allocate.getRegister()).append(", ")
                 .append(allocate.getNumber()).append(", ")
                 .append(allocate.size).append('\n');
+    }
+
+    @Override
+    public void visit(BinaryBranch binaryBranch) {
+        builder.append('\t').append(binaryBranch.operator)
+                .append(' ').append(binaryBranch.getExpressionA())
+                .append(' ').append(binaryBranch.getExpressionB())
+                .append(", ").append(binaryBranch.branchTrue.name)
+                .append(", ").append(binaryBranch.branchFalse.name)
+                .append('\n');
     }
 }

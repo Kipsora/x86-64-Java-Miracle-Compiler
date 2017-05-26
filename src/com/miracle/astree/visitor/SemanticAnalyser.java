@@ -21,7 +21,7 @@ import java.util.Stack;
 
 import static com.miracle.symbol.SymbolTable.*;
 
-public class SemanticAnalyser implements Visitor {
+public class SemanticAnalyser implements ASTreeVisitor {
     private final ExceptionContainer exceptionContainer;
 
     private ClassDeclaration currentClass = null;
@@ -193,7 +193,7 @@ public class SemanticAnalyser implements Visitor {
     }
 
     @Override
-    public void visit(Return returnLiteral) {
+    public void visit(ReturnStatement returnLiteral) {
         if (currentFunction == null) {
             exceptionContainer.add("return literal must be in function statment",
                     returnLiteral.position);
@@ -259,22 +259,22 @@ public class SemanticAnalyser implements Visitor {
     }
 
     @Override
-    public void visit(Call call) {
-        call.function.accept(this);
-        if (!(call.function.getResultType() instanceof SymbolFunctionType)) {
+    public void visit(CallExpression callExpression) {
+        callExpression.function.accept(this);
+        if (!(callExpression.function.getResultType() instanceof SymbolFunctionType)) {
             exceptionContainer.add("expression is not a function, thus not callable",
-                    call.function.position);
+                    callExpression.function.position);
         } else {
-            SymbolFunctionType type = (SymbolFunctionType) call.function.getResultType();
+            SymbolFunctionType type = (SymbolFunctionType) callExpression.function.getResultType();
             if (type != null) {
                 List<SymbolVariableType> argType = type.getArgType();
-                if (call.parameters.size() != argType.size()) {
-                    exceptionContainer.add("function needs " + String.valueOf(argType.size()) + " parameter(s), but found " + String.valueOf(call.parameters.size()) + " parameter(s)",
-                            call.position
+                if (callExpression.parameters.size() != argType.size()) {
+                    exceptionContainer.add("function needs " + String.valueOf(argType.size()) + " parameter(s), but found " + String.valueOf(callExpression.parameters.size()) + " parameter(s)",
+                            callExpression.position
                     );
                 } else {
                     for (int i = 0, size = argType.size(); i < size; i++) {
-                        Expression node = call.parameters.get(i);
+                        Expression node = callExpression.parameters.get(i);
                         node.accept(this);
                         SymbolType exprType = node.getResultType();
                         if (argType.get(i) == null) {
@@ -285,7 +285,7 @@ public class SemanticAnalyser implements Visitor {
                                     node.position);
                         }
                     }
-                    call.setResultType(type.getReturnType());
+                    callExpression.setResultType(type.getReturnType());
                 }
             }
         }

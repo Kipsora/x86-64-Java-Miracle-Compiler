@@ -1,12 +1,12 @@
 package com.miracle.astree.base;
 
-import com.miracle.astree.visitor.Visitor;
+import com.miracle.astree.visitor.ASTreeVisitor;
 import com.miracle.symbol.SymbolTable;
 
 public abstract class Node {
     private SymbolTable scope;
 
-    public abstract void accept(Visitor visitor);
+    public abstract void accept(ASTreeVisitor ASTreeVisitor);
 
     public SymbolTable getScope() {
         assert scope != null;

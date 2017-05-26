@@ -2,7 +2,7 @@ package com.miracle.astree.statement.declaration;
 
 import com.miracle.astree.base.TypeNode;
 import com.miracle.astree.statement.expression.Expression;
-import com.miracle.astree.visitor.Visitor;
+import com.miracle.astree.visitor.ASTreeVisitor;
 import com.miracle.cstree.SourcePosition;
 import com.miracle.intermediate.number.Register;
 
@@ -31,7 +31,7 @@ public class VariableDeclaration extends MemberDeclaration {
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public void accept(ASTreeVisitor ASTreeVisitor) {
+        ASTreeVisitor.visit(this);
     }
 }

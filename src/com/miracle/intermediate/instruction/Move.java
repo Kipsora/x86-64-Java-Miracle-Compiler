@@ -2,9 +2,12 @@ package com.miracle.intermediate.instruction;
 
 import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.number.Register;
-import com.miracle.intermediate.visitor.Visitor;
+import com.miracle.intermediate.visitor.IRVisitor;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Move extends Instruction {
     private Register target;
@@ -16,14 +19,31 @@ public class Move extends Instruction {
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public void accept(IRVisitor IRVisitor) {
+        IRVisitor.visit(this);
     }
 
     @Override
-    public void map(Map<Register, Register> map) {
-        target = map.get(target);
-        if (source instanceof Register) source = map.get(source);
+    public void rename(Map map) {
+        target = (Register) map.getOrDefault(target, target);
+        if (source instanceof Register) {
+            source = (Number) map.getOrDefault(source, source);
+        }
+    }
+
+    @Override
+    public Set<Register> getUsedRegisters() {
+        return new HashSet<Register>() {{
+            add(target);
+            if (source instanceof Register) {
+                add((Register) source);
+            }
+        }};
+    }
+
+    @Override
+    public Set<String> getDeprecatedRegisters() {
+        return Collections.emptySet();
     }
 
     public Register getTarget() {

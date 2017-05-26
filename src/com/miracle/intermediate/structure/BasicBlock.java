@@ -2,7 +2,7 @@ package com.miracle.intermediate.structure;
 
 import com.miracle.intermediate.instruction.Instruction;
 import com.miracle.intermediate.instruction.fork.Fork;
-import com.miracle.intermediate.visitor.Visitor;
+import com.miracle.intermediate.visitor.IRVisitor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -67,8 +67,8 @@ public class BasicBlock {
         return head.succ;
     }
 
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public void accept(IRVisitor IRVisitor) {
+        IRVisitor.visit(this);
     }
 
     public void clearSuccBlock() {

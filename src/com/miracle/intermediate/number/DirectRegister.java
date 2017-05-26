@@ -4,16 +4,15 @@ import com.miracle.astree.statement.declaration.VariableDeclaration;
 
 public abstract class DirectRegister extends Register {
     public final String name;
-    public final int size;
 
     public DirectRegister(String name, int size) {
+        super(size);
         this.name = name;
-        this.size = size;
     }
 
     public DirectRegister(VariableDeclaration declaration) {
+        super(declaration.typenode.getType().getRegisterSize());
         this.name = declaration.identifier;
-        this.size = declaration.typenode.getType().getRegisterSize();
     }
 
     @Override

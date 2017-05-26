@@ -2,13 +2,15 @@ package com.miracle.intermediate.instruction.arithmetic;
 
 import com.miracle.intermediate.instruction.Instruction;
 import com.miracle.intermediate.number.Register;
-import com.miracle.intermediate.visitor.Visitor;
+import com.miracle.intermediate.visitor.IRVisitor;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 public class UnaryArithmetic extends Instruction {
-    private Register target;
     public final Types operator;
+    private Register target;
 
     public UnaryArithmetic(Register target, Types operator) {
         this.target = target;
@@ -16,13 +18,23 @@ public class UnaryArithmetic extends Instruction {
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public void accept(IRVisitor IRVisitor) {
+        IRVisitor.visit(this);
     }
 
     @Override
-    public void map(Map<Register, Register> map) {
-        target = map.get(target);
+    public void rename(Map map) {
+        target = (Register) map.getOrDefault(target, target);
+    }
+
+    @Override
+    public Set<Register> getUsedRegisters() {
+        return Collections.singleton(target);
+    }
+
+    @Override
+    public Set<String> getDeprecatedRegisters() {
+        return Collections.emptySet();
     }
 
     public Register getTarget() {

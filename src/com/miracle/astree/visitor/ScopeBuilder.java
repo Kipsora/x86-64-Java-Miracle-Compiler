@@ -13,7 +13,7 @@ import com.miracle.astree.statement.expression.constant.NullConstant;
 import com.miracle.astree.statement.expression.constant.StringConstant;
 import com.miracle.symbol.SymbolTable;
 
-public class ScopeBuilder implements Visitor {
+public class ScopeBuilder implements ASTreeVisitor {
     private SymbolTable scope;
 
     @Override
@@ -121,7 +121,7 @@ public class ScopeBuilder implements Visitor {
     }
 
     @Override
-    public void visit(Return returnLiteral) {
+    public void visit(ReturnStatement returnLiteral) {
         returnLiteral.setScope(scope);
         if (returnLiteral.expression != null) {
             returnLiteral.expression.accept(this);
@@ -134,10 +134,10 @@ public class ScopeBuilder implements Visitor {
     }
 
     @Override
-    public void visit(Call call) {
-        call.setScope(scope);
-        call.function.accept(this);
-        call.parameters.forEach(element -> element.accept(this));
+    public void visit(CallExpression callExpression) {
+        callExpression.setScope(scope);
+        callExpression.function.accept(this);
+        callExpression.parameters.forEach(element -> element.accept(this));
     }
 
     @Override

@@ -12,7 +12,7 @@ import com.miracle.astree.statement.expression.constant.IntegerConstant;
 import com.miracle.astree.statement.expression.constant.NullConstant;
 import com.miracle.astree.statement.expression.constant.StringConstant;
 
-public interface Visitor {
+public interface ASTreeVisitor {
     void visit(FunctionDeclaration functionDeclaration);
 
     void visit(ClassDeclaration classDeclaration);
@@ -31,11 +31,11 @@ public interface Visitor {
 
     void visit(Continue continueLiteral);
 
-    void visit(Return returnLiteral);
+    void visit(ReturnStatement returnLiteral);
 
     void visit(Variable variable);
 
-    void visit(Call call);
+    void visit(CallExpression callExpression);
 
     void visit(Subscript subscript);
 

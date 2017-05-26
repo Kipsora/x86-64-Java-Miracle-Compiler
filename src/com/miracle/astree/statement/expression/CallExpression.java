@@ -1,26 +1,26 @@
 package com.miracle.astree.statement.expression;
 
-import com.miracle.astree.visitor.Visitor;
+import com.miracle.astree.visitor.ASTreeVisitor;
 import com.miracle.cstree.SourcePosition;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Call extends Expression {
+public class CallExpression extends Expression {
     public final Expression function;
     public final List<Expression> parameters;
 
-    public Call(Expression function,
-                List<Expression> parameters,
-                SourcePosition startPosition) {
+    public CallExpression(Expression function,
+                          List<Expression> parameters,
+                          SourcePosition startPosition) {
         super(startPosition);
         this.function = function;
         this.parameters = Collections.unmodifiableList(parameters);
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public void accept(ASTreeVisitor ASTreeVisitor) {
+        ASTreeVisitor.visit(this);
     }
 
     @Override

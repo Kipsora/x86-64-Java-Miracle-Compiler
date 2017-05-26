@@ -12,20 +12,22 @@ import com.miracle.astree.statement.expression.constant.BooleanConstant;
 import com.miracle.astree.statement.expression.constant.IntegerConstant;
 import com.miracle.astree.statement.expression.constant.NullConstant;
 import com.miracle.astree.statement.expression.constant.StringConstant;
+import com.miracle.astree.visitor.ASTreeVisitor;
 import com.miracle.intermediate.instruction.Call;
 import com.miracle.intermediate.instruction.Compare;
 import com.miracle.intermediate.instruction.HeapAllocate;
 import com.miracle.intermediate.instruction.Move;
 import com.miracle.intermediate.instruction.arithmetic.BinaryArithmetic;
 import com.miracle.intermediate.instruction.arithmetic.UnaryArithmetic;
-import com.miracle.intermediate.instruction.fork.Branch;
+import com.miracle.intermediate.instruction.fork.BinaryBranch;
 import com.miracle.intermediate.instruction.fork.Jump;
 import com.miracle.intermediate.instruction.fork.Return;
+import com.miracle.intermediate.instruction.fork.UnaryBranch;
 import com.miracle.intermediate.number.*;
 import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
-import com.miracle.intermediate.visitor.Visitor;
+import com.miracle.intermediate.visitor.IRVisitor;
 import com.miracle.symbol.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
@@ -47,11 +49,11 @@ public class Root extends Node {
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public void accept(IRVisitor IRVisitor) {
+        IRVisitor.visit(this);
     }
 
-    public static class Builder implements com.miracle.astree.visitor.Visitor {
+    public static class Builder implements ASTreeVisitor {
         private Map<String, StaticVariable> globalVariable;
         private Map<String, StaticString> globalString;
         private Map<String, Function> globalFunction;
@@ -99,13 +101,14 @@ public class Root extends Node {
             globalString = new HashMap<>();
             globalVariable = new HashMap<>();
             globalFunction = new HashMap<>();
-            Function miracleEntryFunction = new Function(
+
+            Function entryFunction = new Function(
                     "__start",
                     new SymbolFunctionType(__builtin_void, null)
             );
-            globalFunction.put("__start", miracleEntryFunction);
-            curFunction = miracleEntryFunction;
-            curBasicBlock = miracleEntryFunction.getEntryBasicBlock();
+            globalFunction.put("__start", entryFunction);
+            curFunction = entryFunction;
+            curBasicBlock = entryFunction.getEntryBasicBlock();
             astree.declarations.forEach(element -> {
                 if (element instanceof VariableDeclaration) {
                     element.accept(this);
@@ -113,6 +116,10 @@ public class Root extends Node {
             });
             VirtualRegister register =
                     new VirtualRegister(".t" + String.valueOf(countTmpRegister++), MiracleOption.INT_SIZE);
+            entryFunction.getEntryBasicBlock().tail.prepend(new Call(
+                    ((FunctionDeclaration) astree.getScope().resolve("main")).getSymbol().getAddress(),
+                    new LinkedList<>(), register, null
+            ));
 
             curBasicBlock.addSuccBasicBlock(curFunction.getExitBasicBlock());
             if (!curBasicBlock.isForked()) {
@@ -122,19 +129,14 @@ public class Root extends Node {
             }
             curFunction.getExitBasicBlock().setFork(new Return());
 
+            curBasicBlock = null;
+            curFunction = null;
+
             astree.declarations.forEach(element -> {
                 if (!(element instanceof VariableDeclaration)) {
                     element.accept(this);
                 }
             });
-
-            curBasicBlock = null;
-            curFunction = null;
-
-            miracleEntryFunction.getEntryBasicBlock().tail.prepend(new Call(
-                    ((FunctionDeclaration) astree.getScope().resolve("main")).getSymbol().getAddress(),
-                    new LinkedList<>(), register, null
-            ));
         }
 
         @Override
@@ -166,16 +168,51 @@ public class Root extends Node {
 
         @Override
         public void visit(Selection selection) {
-            selection.expression.accept(this);
             BasicBlock passBlock = new BasicBlock("if_pass_" + String.valueOf(countBlock++), curFunction, false, false);
             BasicBlock failBlock = new BasicBlock("if_fail_" + String.valueOf(countBlock++), curFunction, false, false);
             BasicBlock bothBlock = new BasicBlock("if_both_" + String.valueOf(countBlock++), curFunction, false, false);
+
+            if (selection.expression instanceof BinaryExpression) {
+                ((BinaryExpression) selection.expression).left.accept(this);
+                ((BinaryExpression) selection.expression).right.accept(this);
+                if (((BinaryExpression) selection.expression).left.getResultType().isSameType(__builtin_string)) {
+                    VirtualRegister register = new VirtualRegister(
+                            ".t" + String.valueOf(countTmpRegister++),
+                            MiracleOption.BOOL_SIZE
+                    );
+                    curBasicBlock.tail.prepend(new Call(
+                            __builtin_strcmp.getAddress(),
+                            Arrays.asList(
+                                    ((BinaryExpression) selection.expression).left.getResultNumber(),
+                                    ((BinaryExpression) selection.expression).right.getResultNumber()
+                            ),
+                            register,
+                            null
+                    ));
+                    curBasicBlock.setFork(new BinaryBranch(
+                            register,
+                            ((BinaryExpression) selection.expression).operator,
+                            new Immediate(0, ((BinaryExpression) selection.expression).left.getResultNumber().getNumberSize()),
+                            passBlock, failBlock
+                    ));
+                } else {
+                    curBasicBlock.setFork(new BinaryBranch(
+                            ((BinaryExpression) selection.expression).left.getResultNumber(),
+                            ((BinaryExpression) selection.expression).operator,
+                            ((BinaryExpression) selection.expression).right.getResultNumber(),
+                            passBlock, failBlock
+                    ));
+                }
+            } else {
+                selection.expression.accept(this);
+                curBasicBlock.setFork(new UnaryBranch(
+                        selection.expression.getResultNumber(),
+                        passBlock, failBlock
+                ));
+            }
+
             curBasicBlock.addSuccBasicBlock(passBlock);
             curBasicBlock.addSuccBasicBlock(failBlock);
-            curBasicBlock.setFork(new Branch(
-                    selection.expression.getResultNumber(),
-                    passBlock, failBlock
-            ));
             curBasicBlock = passBlock;
             if (selection.branchTrue != null) {
                 selection.branchTrue.accept(this);
@@ -225,7 +262,7 @@ public class Root extends Node {
 
                 curBasicBlock.addSuccBasicBlock(bodyBlock);
                 curBasicBlock.addSuccBasicBlock(exitBlock);
-                curBasicBlock.setFork(new Branch(
+                curBasicBlock.setFork(new UnaryBranch(
                         iteration.conditionExpression.getResultNumber(),
                         bodyBlock, exitBlock
                 ));
@@ -281,7 +318,7 @@ public class Root extends Node {
         }
 
         @Override
-        public void visit(com.miracle.astree.statement.Return returnLiteral) {
+        public void visit(ReturnStatement returnLiteral) {
             if (returnLiteral.expression != null) {
                 returnLiteral.expression.accept(this);
                 curBasicBlock.tail.prepend(new Move(
@@ -305,10 +342,7 @@ public class Root extends Node {
                     // if a variable in class has no this before, then I will force to add it
                     variable.setResultNumber(new OffsetRegister(
                             curFunction.getSelfRegister(),
-                            new Immediate(
-                                    curClass.getVariableOffset(variable.identifier),
-                                    MiracleOption.INT_SIZE
-                            ),
+                            curClass.getVariableOffset(variable.identifier),
                             null,
                             curClass.getVariable(variable.identifier).getRegisterSize()
                     ));
@@ -329,17 +363,17 @@ public class Root extends Node {
         }
 
         @Override
-        public void visit(com.miracle.astree.statement.expression.Call call) {
-            call.function.accept(this);
-            SymbolFunctionType type = (SymbolFunctionType) call.function.getResultType();
+        public void visit(CallExpression callExpression) {
+            callExpression.function.accept(this);
+            SymbolFunctionType type = (SymbolFunctionType) callExpression.function.getResultType();
             List<Number> parameters = new LinkedList<>();
-            call.parameters.forEach(element -> {
+            callExpression.parameters.forEach(element -> {
                 element.accept(this);
                 parameters.add(element.getResultNumber());
             });
             Register selfRegister = null;
-            if (call.function instanceof Field) {
-                selfRegister = (Register) ((Field) call.function).expression.getResultNumber();
+            if (callExpression.function instanceof Field) {
+                selfRegister = (Register) ((Field) callExpression.function).expression.getResultNumber();
             }
             if (type.getReturnType().isSameType(__builtin_void)) {
                 curBasicBlock.tail.prepend(new Call(
@@ -355,7 +389,7 @@ public class Root extends Node {
                         type.getAddress(), parameters,
                         register, selfRegister
                 ));
-                call.setResultNumber(register);
+                callExpression.setResultNumber(register);
             }
         }
 
@@ -385,7 +419,7 @@ public class Root extends Node {
 
             subscript.setResultNumber(new OffsetRegister(
                     (DirectRegister) tmpBase, null,
-                    ImmutablePair.of((DirectRegister) tmpCoor, new Immediate(size, MiracleOption.INT_SIZE)),
+                    ImmutablePair.of((DirectRegister) tmpCoor, size),
                     size
             ));
         }
@@ -414,9 +448,9 @@ public class Root extends Node {
                 default:
                     throw new RuntimeException("unsupported operator");
             }
-            DirectRegister register = new VirtualRegister(
+            VirtualRegister register = new VirtualRegister(
                     ".t" + String.valueOf(countTmpRegister++),
-                    MiracleOption.INT_SIZE
+                    MiracleOption.BOOL_SIZE
             );
             if (expression.left.getResultType().isSameType(__builtin_string)) {
                 curBasicBlock.tail.prepend(new Call(
@@ -484,38 +518,16 @@ public class Root extends Node {
                 default:
                     throw new RuntimeException("unsupported operator");
             }
-            DirectRegister register = new VirtualRegister(
+            VirtualRegister register = new VirtualRegister(
                     ".t" + String.valueOf(countTmpRegister++),
                     MiracleOption.INT_SIZE
             );
             curBasicBlock.tail.prepend(new Move(
                     register, expression.left.getResultNumber()
             ));
-            if (operator.equals(BinaryArithmetic.Types.MOD)) {
-                DirectRegister subtrahend = new VirtualRegister(
-                        ".t" + String.valueOf(countTmpRegister++),
-                        MiracleOption.INT_SIZE
-                );
-                curBasicBlock.tail.prepend(new Move(
-                        subtrahend, expression.left.getResultNumber()
-                ));
-                curBasicBlock.tail.prepend(new BinaryArithmetic(
-                        BinaryArithmetic.Types.DIV,
-                        subtrahend, expression.right.getResultNumber()
-                ));
-                curBasicBlock.tail.prepend(new BinaryArithmetic(
-                        BinaryArithmetic.Types.MUL,
-                        subtrahend, expression.right.getResultNumber()
-                ));
-                curBasicBlock.tail.prepend(new BinaryArithmetic(
-                        BinaryArithmetic.Types.SUB,
-                        register, subtrahend
-                ));
-            } else {
-                curBasicBlock.tail.prepend(new BinaryArithmetic(
-                        operator, register, expression.right.getResultNumber()
-                ));
-            }
+            curBasicBlock.tail.prepend(new BinaryArithmetic(
+                    operator, register, expression.right.getResultNumber()
+            ));
             expression.setResultNumber(register);
         }
 
@@ -527,7 +539,7 @@ public class Root extends Node {
         }
 
         private void addStringConcat(BinaryExpression expression) {
-            DirectRegister register = new VirtualRegister(
+            VirtualRegister register = new VirtualRegister(
                     ".t" + String.valueOf(countTmpRegister++),
                     MiracleOption.INT_SIZE
             );
@@ -609,7 +621,7 @@ public class Root extends Node {
                     }
                     break;
                 case NEGATE:
-                    DirectRegister register = new VirtualRegister(
+                    VirtualRegister register = new VirtualRegister(
                             ".t" + String.valueOf(countTmpRegister++),
                             MiracleOption.INT_SIZE
                     );
@@ -644,7 +656,7 @@ public class Root extends Node {
                 default:
                     throw new RuntimeException("unsupported operator");
             }
-            DirectRegister register = new VirtualRegister(
+            VirtualRegister register = new VirtualRegister(
                     ".t" + String.valueOf(countTmpRegister++),
                     MiracleOption.INT_SIZE
             );
@@ -662,7 +674,7 @@ public class Root extends Node {
         public void visit(New newNode) {
             SymbolVariableType type = newNode.variableType.getType();
             if (newNode.expressions.isEmpty()) {
-                DirectRegister register = new VirtualRegister(
+                VirtualRegister register = new VirtualRegister(
                         ".t" + String.valueOf(countTmpRegister++),
                         MiracleOption.POINTER_SIZE
                 );
@@ -682,7 +694,7 @@ public class Root extends Node {
                 }
                 newNode.setResultNumber(register);
             } else { // Array Type
-                DirectRegister register = new VirtualRegister(
+                VirtualRegister register = new VirtualRegister(
                         ".t" + String.valueOf(countTmpRegister++),
                         MiracleOption.POINTER_SIZE
                 );
@@ -698,14 +710,14 @@ public class Root extends Node {
                 newNode.setResultNumber(register);
 
                 if (!nextExprs.isEmpty()) {
-                    DirectRegister iterreg = new VirtualRegister("new_init_iter_" + String.valueOf(countTmpRegister++), MiracleOption.INT_SIZE);
+                    VirtualRegister iterreg = new VirtualRegister("new_init_iter_" + String.valueOf(countTmpRegister++), MiracleOption.INT_SIZE);
                     curBasicBlock.tail.prepend(new BinaryArithmetic(
                             BinaryArithmetic.Types.XOR,
                             iterreg, iterreg
                     ));
                     BasicBlock newInitCondBlock = new BasicBlock("new_init_cond_" + String.valueOf(countBlock++), curFunction, false, false);
                     BasicBlock newInitExitBlock = new BasicBlock("new_init_exit_" + String.valueOf(countBlock++), curFunction, false, false);
-                    DirectRegister flagreg = new VirtualRegister("new_init_flag_" + String.valueOf(countTmpRegister++), MiracleOption.INT_SIZE);
+                    VirtualRegister flagreg = new VirtualRegister("new_init_flag_" + String.valueOf(countTmpRegister++), MiracleOption.INT_SIZE);
 
                     curBasicBlock.addSuccBasicBlock(newInitCondBlock);
                     if (!curBasicBlock.isForked()) {
@@ -723,7 +735,7 @@ public class Root extends Node {
 
                     curBasicBlock.addSuccBasicBlock(newInitBodyBlock);
                     curBasicBlock.addSuccBasicBlock(newInitExitBlock);
-                    curBasicBlock.setFork(new Branch(flagreg, newInitBodyBlock, newInitExitBlock));
+                    curBasicBlock.setFork(new UnaryBranch(flagreg, newInitBodyBlock, newInitExitBlock));
 
                     curBasicBlock = newInitBodyBlock;
                     New nextNew = new New(newNode.variableType, nextExprs, null);
@@ -731,7 +743,7 @@ public class Root extends Node {
                     nextNew.accept(this);
                     curBasicBlock.tail.prepend(new Move(
                             new OffsetRegister(register, null,
-                                    ImmutablePair.of(iterreg, new Immediate(MiracleOption.POINTER_SIZE, MiracleOption.INT_SIZE)),
+                                    ImmutablePair.of(iterreg, MiracleOption.POINTER_SIZE),
                                     MiracleOption.POINTER_SIZE
                             ),
                             nextNew.getResultNumber()
@@ -749,7 +761,7 @@ public class Root extends Node {
                 stringConstant.setResultNumber(globalString.get(stringConstant.value));
             } else {
                 StaticString register = new StaticString(
-                        ".str" + String.valueOf(countTmpRegister++),
+                        "global$str" + String.valueOf(countTmpRegister++),
                         stringConstant.value
                 );
                 globalString.put(stringConstant.value, register);
@@ -792,7 +804,7 @@ public class Root extends Node {
             } else {
                 SymbolType type = field.expression.getResultType();
                 Number number = field.expression.getResultNumber();
-                if (number instanceof OffsetRegister) {
+                if (number instanceof IndirectRegister) {
                     VirtualRegister register = new VirtualRegister(
                             ".t" + String.valueOf(countTmpRegister++),
                             number.getNumberSize()
@@ -802,10 +814,7 @@ public class Root extends Node {
                 }
                 field.setResultNumber(new OffsetRegister(
                         (DirectRegister) number,
-                        new Immediate(
-                                ((SymbolClassType) type).getVariableOffset(field.identifier),
-                                MiracleOption.INT_SIZE
-                        ),
+                        ((SymbolClassType) type).getVariableOffset(field.identifier),
                         null,
                         ((SymbolClassType) type).getVariable(field.identifier).getRegisterSize()
                 ));

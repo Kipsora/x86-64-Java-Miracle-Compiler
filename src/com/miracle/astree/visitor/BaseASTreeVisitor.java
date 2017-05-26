@@ -12,7 +12,7 @@ import com.miracle.astree.statement.expression.constant.IntegerConstant;
 import com.miracle.astree.statement.expression.constant.NullConstant;
 import com.miracle.astree.statement.expression.constant.StringConstant;
 
-public class BaseVisitor implements Visitor {
+public class BaseASTreeVisitor implements ASTreeVisitor {
     @Override
     public void visit(FunctionDeclaration functionDeclaration) {
 
@@ -59,7 +59,7 @@ public class BaseVisitor implements Visitor {
     }
 
     @Override
-    public void visit(Return returnLiteral) {
+    public void visit(ReturnStatement returnLiteral) {
 
     }
 
@@ -69,7 +69,7 @@ public class BaseVisitor implements Visitor {
     }
 
     @Override
-    public void visit(Call call) {
+    public void visit(CallExpression callExpression) {
 
     }
 

@@ -1,26 +1,30 @@
 package com.miracle.intermediate;
 
-import com.miracle.intermediate.number.DirectRegister;
+import com.miracle.intermediate.number.PhysicalRegister;
+import com.miracle.intermediate.number.StackRegister;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 public class RegisterBuffer {
-    private final Map<DirectRegister, Integer> set = new HashMap<>();
-    private int totalSize;
+    private final Set<PhysicalRegister> physical = new HashSet<>();
+    private final Set<StackRegister> stack = new HashSet<>();
     private int spillSize;
 
-    public Map<DirectRegister, Integer> getRegisters() {
-        return set;
+    public Set<PhysicalRegister> getPhysicalRegisters() {
+        return physical;
     }
 
-    public int getTotalSize() {
-        return totalSize;
+    public RegisterBuffer enroll(PhysicalRegister register) {
+        physical.add(register);
+        return this;
     }
 
-    public void enroll(DirectRegister register) {
-        set.put(register, totalSize);
-        totalSize += register.getNumberSize();
+    public void enroll(StackRegister register) {
+        if (stack.contains(register)) return;
+        stack.add(register);
+        spillSize += register.size;
+        register.setOffset(spillSize);
     }
 
     public int getSpillSize() {

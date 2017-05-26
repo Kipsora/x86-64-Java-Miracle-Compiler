@@ -2,7 +2,6 @@ package com.miracle.symbol;
 
 import com.miracle.astree.statement.declaration.ClassDeclaration;
 import com.miracle.astree.statement.declaration.Declaration;
-import com.miracle.intermediate.RegisterBuffer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,57 +19,36 @@ public class SymbolTable {
         addParameter("x", __builtin_string);
         addParameter("y", __builtin_string);
         setAddress("@strcat");
-        getAddress().setBuffer(new RegisterBuffer() {{
-            enroll(EAX);
-            enroll(EDI);
-            enroll(ESI);
-        }});
+        getAddress().buffer.enroll(EAX).enroll(EDI).enroll(ESI);
     }};
     public final static SymbolFunctionType __builtin_strcmp = new SymbolFunctionType(__builtin_int, null) {{
         addParameter("x", __builtin_string);
         addParameter("y", __builtin_string);
         setAddress("@strcmp");
-        getAddress().setBuffer(new RegisterBuffer() {{
-            enroll(EAX);
-            enroll(EDI);
-            enroll(ESI);
-        }});
+        getAddress().buffer.enroll(EAX).enroll(EDI).enroll(ESI);
     }};
     private final static SymbolFunctionType __builtin_print = new SymbolFunctionType(__builtin_void, null) {{
         addParameter("x", __builtin_string);
         setAddress("@print");
-        getAddress().setBuffer(new RegisterBuffer() {{
-            enroll(EAX);
-            enroll(EDI);
-        }});
+        getAddress().buffer.enroll(EAX).enroll(EDI);
     }};
     private final static SymbolFunctionType __builtin_println = new SymbolFunctionType(__builtin_void, null) {{
         addParameter("x", __builtin_string);
         setAddress("@println");
-        getAddress().setBuffer(new RegisterBuffer() {{
-            enroll(EAX);
-            enroll(EDI);
-        }});
+        getAddress().buffer.enroll(EDI);
     }};
     private final static SymbolFunctionType __builtin_getString = new SymbolFunctionType(__builtin_string, null) {{
         setAddress("@getString");
-        getAddress().setBuffer(new RegisterBuffer() {{
-            enroll(EAX);
-        }});
+        getAddress().buffer.enroll(EAX);
     }};
     private final static SymbolFunctionType __builtin_getInt = new SymbolFunctionType(__builtin_int, null) {{
         setAddress("@getInt");
-        getAddress().setBuffer(new RegisterBuffer() {{
-            enroll(EAX);
-        }});
+        getAddress().buffer.enroll(EAX).enroll(ESI).enroll(EDI);
     }};
     private final static SymbolFunctionType __builtin_toString = new SymbolFunctionType(__builtin_string, null) {{
         addParameter("x", __builtin_int);
         setAddress("@toString");
-        getAddress().setBuffer(new RegisterBuffer() {{
-            enroll(EAX);
-            enroll(EDI);
-        }});
+        getAddress().buffer.enroll(EAX).enroll(EDI).enroll(EBX).enroll(ECX).enroll(EDX);
     }};
     private final static Map<String, SymbolFunctionType> builtinMethod = new HashMap<String, SymbolFunctionType>() {{
         put("print", __builtin_print);
@@ -89,37 +67,22 @@ public class SymbolTable {
     static {
         __builtin_string.addMethod("length", new SymbolFunctionType(__builtin_int, __builtin_string) {{
             setAddress("@string.length");
-            getAddress().setBuffer(new RegisterBuffer() {{
-                enroll(EAX);
-                enroll(EDI);
-            }});
+            getAddress().buffer.enroll(EAX).enroll(EDI);
         }});
         __builtin_string.addMethod("substring", new SymbolFunctionType(__builtin_string, __builtin_string) {{
             addParameter("x", __builtin_int);
             addParameter("y", __builtin_int);
             setAddress("@string.substring");
-            getAddress().setBuffer(new RegisterBuffer() {{
-                enroll(EAX);
-                enroll(EDI);
-                enroll(ESI);
-                enroll(EDX);
-            }});
+            getAddress().buffer.enroll(EAX).enroll(EDI).enroll(ESI).enroll(EDX);
         }});
         __builtin_string.addMethod("parseInt", new SymbolFunctionType(__builtin_int, __builtin_string) {{
             setAddress("@string.parseInt");
-            getAddress().setBuffer(new RegisterBuffer() {{
-                enroll(EAX);
-                enroll(EDI);
-            }});
+            getAddress().buffer.enroll(EAX).enroll(EDI);
         }});
         __builtin_string.addMethod("ord", new SymbolFunctionType(__builtin_int, __builtin_string) {{
             addParameter("x", __builtin_int);
             setAddress("@string.ord");
-            getAddress().setBuffer(new RegisterBuffer() {{
-                enroll(EAX);
-                enroll(EDI);
-                enroll(ESI);
-            }});
+            getAddress().buffer.enroll(EAX).enroll(EDI).enroll(ESI);
         }});
     }
 

@@ -114,18 +114,16 @@ public class Miracle {
                 return;
             }
             Root ir = getIR(astree);
-            ir.accept(new LLTransformer());
             if (this.printIR) {
-                ir.accept(new RegisterCollector());
                 Printer generator = new Printer();
                 ir.accept(generator);
                 outputStream.println(generator.getOutput());
                 return;
             }
-            DirectAllocator allocator = new DirectAllocator();
-            ir.accept(allocator);
+            ir.accept(new LLTransformer());
+            ir.accept(new SimpleAllocator());
             ir.accept(new RegisterCollector());
-            X64Printer printer = new X64Printer();
+            X64Printer printer = new X64Printer("./utility/builtin.mx");
             ir.accept(printer);
             outputStream.println(printer.getOutput());
         } catch (RuntimeException e) {

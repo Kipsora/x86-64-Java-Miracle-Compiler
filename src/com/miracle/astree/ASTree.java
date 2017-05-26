@@ -12,7 +12,7 @@ import com.miracle.astree.statement.expression.constant.BooleanConstant;
 import com.miracle.astree.statement.expression.constant.IntegerConstant;
 import com.miracle.astree.statement.expression.constant.NullConstant;
 import com.miracle.astree.statement.expression.constant.StringConstant;
-import com.miracle.astree.visitor.Visitor;
+import com.miracle.astree.visitor.ASTreeVisitor;
 import com.miracle.cstree.SourcePosition;
 import com.miracle.cstree.parser.MiracleBaseListener;
 import com.miracle.cstree.parser.MiracleParser;
@@ -33,8 +33,8 @@ public class ASTree extends Node {
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public void accept(ASTreeVisitor ASTreeVisitor) {
+        ASTreeVisitor.visit(this);
     }
 
     public static class Builder extends MiracleBaseListener {
@@ -280,7 +280,7 @@ public class ASTree extends Node {
 
         @Override
         public void exitReturnStatement(MiracleParser.ReturnStatementContext ctx) {
-            property.put(ctx, new Return(ctx.expression() == null ? null :
+            property.put(ctx, new ReturnStatement(ctx.expression() == null ? null :
                     (Expression) property.get(ctx.expression()),
                     new SourcePosition(ctx)
             ));
@@ -315,7 +315,7 @@ public class ASTree extends Node {
             for (int i = 1, size = ctx.expression().size(); i < size; i++) {
                 parameters.add((Expression) property.get(ctx.expression(i)));
             }
-            property.put(ctx, new Call(
+            property.put(ctx, new CallExpression(
                     (Expression) property.get(ctx.expression(0)),
                     parameters,
                     new SourcePosition(ctx)

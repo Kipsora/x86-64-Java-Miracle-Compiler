@@ -1,6 +1,6 @@
 package com.miracle.astree.statement.declaration;
 
-import com.miracle.astree.visitor.Visitor;
+import com.miracle.astree.visitor.ASTreeVisitor;
 import com.miracle.cstree.SourcePosition;
 import com.miracle.symbol.SymbolClassType;
 
@@ -51,8 +51,8 @@ public class ClassDeclaration extends Declaration {
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public void accept(ASTreeVisitor ASTreeVisitor) {
+        ASTreeVisitor.visit(this);
     }
 
     public SymbolClassType getSymbol() {

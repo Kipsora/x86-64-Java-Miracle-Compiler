@@ -1,6 +1,6 @@
 package com.miracle.astree.statement.expression.constant;
 
-import com.miracle.astree.visitor.Visitor;
+import com.miracle.astree.visitor.ASTreeVisitor;
 import com.miracle.cstree.SourcePosition;
 
 public class StringConstant extends Constant {
@@ -17,7 +17,7 @@ public class StringConstant extends Constant {
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public void accept(ASTreeVisitor ASTreeVisitor) {
+        ASTreeVisitor.visit(this);
     }
 }

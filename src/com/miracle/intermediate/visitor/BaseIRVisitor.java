@@ -7,16 +7,17 @@ import com.miracle.intermediate.instruction.HeapAllocate;
 import com.miracle.intermediate.instruction.Move;
 import com.miracle.intermediate.instruction.arithmetic.BinaryArithmetic;
 import com.miracle.intermediate.instruction.arithmetic.UnaryArithmetic;
-import com.miracle.intermediate.instruction.fork.Branch;
+import com.miracle.intermediate.instruction.fork.BinaryBranch;
 import com.miracle.intermediate.instruction.fork.Jump;
 import com.miracle.intermediate.instruction.fork.Return;
+import com.miracle.intermediate.instruction.fork.UnaryBranch;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
 
-public class DirectAllocator implements Visitor {
+public class BaseIRVisitor implements IRVisitor {
     @Override
     public void visit(Root ir) {
-        ir.globalFunction.forEach((key, value) -> value.accept(this));
+
     }
 
     @Override
@@ -31,7 +32,7 @@ public class DirectAllocator implements Visitor {
 
     @Override
     public void visit(Function function) {
-        function.getEntryBasicBlock().accept(this);
+
     }
 
     @Override
@@ -45,12 +46,12 @@ public class DirectAllocator implements Visitor {
     }
 
     @Override
-    public void visit(UnaryArithmetic prefixArithmetic) {
+    public void visit(UnaryArithmetic unaryArithmetic) {
 
     }
 
     @Override
-    public void visit(Branch branch) {
+    public void visit(UnaryBranch unaryBranch) {
 
     }
 
@@ -71,6 +72,11 @@ public class DirectAllocator implements Visitor {
 
     @Override
     public void visit(HeapAllocate allocate) {
+
+    }
+
+    @Override
+    public void visit(BinaryBranch binaryBranch) {
 
     }
 }

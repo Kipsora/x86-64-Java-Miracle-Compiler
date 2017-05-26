@@ -2,15 +2,18 @@ package com.miracle.intermediate.instruction;
 
 import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.number.Register;
-import com.miracle.intermediate.visitor.Visitor;
+import com.miracle.intermediate.visitor.IRVisitor;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Compare extends Instruction {
+    public final Types operator;
     private Number sourceA;
     private Number sourceB;
     private Register target;
-    public final Types operator;
 
     public Compare(Types operator,
                    Number sourceA,
@@ -23,15 +26,29 @@ public class Compare extends Instruction {
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public void accept(IRVisitor IRVisitor) {
+        IRVisitor.visit(this);
     }
 
     @Override
-    public void map(Map<Register, Register> map) {
-        if (sourceA instanceof Register) sourceA = map.get(sourceA);
-        if (sourceB instanceof Register) sourceB = map.get(sourceB);
-        target = map.get(target);
+    public void rename(Map map) {
+        if (sourceA instanceof Register) sourceA = (Number) map.getOrDefault(sourceA, sourceA);
+        if (sourceB instanceof Register) sourceB = (Number) map.getOrDefault(sourceB, sourceB);
+        target = (Register) map.getOrDefault(target, target);
+    }
+
+    @Override
+    public Set<Register> getUsedRegisters() {
+        return new HashSet<Register>() {{
+            add(target);
+            if (sourceA instanceof Register) add((Register) sourceA);
+            if (sourceB instanceof Register) add((Register) sourceB);
+        }};
+    }
+
+    @Override
+    public Set<String> getDeprecatedRegisters() {
+        return Collections.emptySet();
     }
 
     public Number getSourceA() {

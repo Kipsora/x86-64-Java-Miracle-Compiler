@@ -8,7 +8,7 @@ import com.miracle.astree.statement.declaration.VariableDeclaration;
 import com.miracle.exception.ExceptionContainer;
 import com.miracle.symbol.*;
 
-public class MemberFetcher extends BaseVisitor {
+public class MemberFetcher extends BaseASTreeVisitor {
     private final ExceptionContainer exceptionContainer;
     private SymbolClassType classType;
 

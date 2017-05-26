@@ -2,7 +2,7 @@ package com.miracle.astree.statement.declaration;
 
 import com.miracle.astree.base.TypeNode;
 import com.miracle.astree.statement.Statement;
-import com.miracle.astree.visitor.Visitor;
+import com.miracle.astree.visitor.ASTreeVisitor;
 import com.miracle.cstree.SourcePosition;
 import com.miracle.symbol.SymbolFunctionType;
 
@@ -33,8 +33,8 @@ public class FunctionDeclaration extends MemberDeclaration {
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public void accept(ASTreeVisitor ASTreeVisitor) {
+        ASTreeVisitor.visit(this);
     }
 
     public SymbolFunctionType getSymbol() {

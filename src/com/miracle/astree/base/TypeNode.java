@@ -1,6 +1,6 @@
 package com.miracle.astree.base;
 
-import com.miracle.astree.visitor.Visitor;
+import com.miracle.astree.visitor.ASTreeVisitor;
 import com.miracle.cstree.SourcePosition;
 import com.miracle.symbol.SymbolVariableType;
 
@@ -19,8 +19,8 @@ public class TypeNode extends Node {
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
+    public void accept(ASTreeVisitor ASTreeVisitor) {
+        ASTreeVisitor.visit(this);
     }
 
     public SymbolVariableType getType() {
