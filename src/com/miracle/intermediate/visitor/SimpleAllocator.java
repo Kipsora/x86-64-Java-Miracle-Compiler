@@ -7,6 +7,7 @@ import com.miracle.intermediate.instruction.HeapAllocate;
 import com.miracle.intermediate.instruction.Move;
 import com.miracle.intermediate.instruction.arithmetic.BinaryArithmetic;
 import com.miracle.intermediate.instruction.arithmetic.UnaryArithmetic;
+import com.miracle.intermediate.instruction.fork.BinaryBranch;
 import com.miracle.intermediate.instruction.fork.Jump;
 import com.miracle.intermediate.instruction.fork.Return;
 import com.miracle.intermediate.instruction.fork.UnaryBranch;
@@ -19,7 +20,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class SimpleAllocator extends BaseIRVisitor {
+public class SimpleAllocator implements IRVisitor {
     private Set<BasicBlock> blockProcessed;
     private BasicBlock.Node curInstruction;
     private Function curFunction;
@@ -28,7 +29,6 @@ public class SimpleAllocator extends BaseIRVisitor {
     private Set<IndirectRegister> moveOnRelease;
     private Map<IndirectRegister, PhysicalRegister> quickAccessToIndirect;
     private Map<PhysicalRegister, IndirectRegister> busyPhysicalRegisters;
-    private int spillSize;
 
     @Override
     public void visit(Root ir) {
@@ -40,7 +40,6 @@ public class SimpleAllocator extends BaseIRVisitor {
     public void visit(Function function) {
         curFunction = function;
         mapToStack = new HashMap<>();
-        spillSize = 0;
         freePhysicalRegisters = new HashSet<>(PhysicalRegister.GeneralPurposeRegister);
         busyPhysicalRegisters = new HashMap<>();
         quickAccessToIndirect = new HashMap<>();
@@ -221,5 +220,23 @@ public class SimpleAllocator extends BaseIRVisitor {
     @Override
     public void visit(HeapAllocate allocate) {
 
+    }
+
+    @Override
+    public void visit(BinaryBranch binaryBranch) {
+        if (binaryBranch.getExpressionA() instanceof IndirectRegister
+                && binaryBranch.getExpressionB() instanceof IndirectRegister) {
+            if (freePhysicalRegisters.isEmpty()) {
+                release(busyPhysicalRegisters.entrySet().iterator().next().getKey());
+            }
+            use(
+                    PhysicalRegister.getBy16BITName(
+                            freePhysicalRegisters.iterator().next(),
+                            binaryBranch.getExpressionA().getNumberSize()
+                    ),
+                    (IndirectRegister) binaryBranch.getExpressionA(),
+                    true, true
+            );
+        }
     }
 }

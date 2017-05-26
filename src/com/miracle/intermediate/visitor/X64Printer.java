@@ -22,8 +22,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static com.miracle.MiracleOption.CallingConvention;
-import static com.miracle.intermediate.number.PhysicalRegister.RBP;
-import static com.miracle.intermediate.number.PhysicalRegister.RSP;
+import static com.miracle.intermediate.number.PhysicalRegister.*;
 
 public class X64Printer implements IRVisitor {
     private StringBuilder builder;
@@ -159,7 +158,8 @@ public class X64Printer implements IRVisitor {
 
     @Override
     public void visit(Call call) {
-        call.function.buffer.getPhysicalRegisters().forEach(element -> {
+        List<PhysicalRegister> saveRegister = new LinkedList<>(call.function.buffer.getPhysicalRegisters());
+        saveRegister.forEach(element -> {
             if (element.isCallerSave) {
                 builder.append('\t').append("push").append(' ').append(element.getELF64Name()).append('\n');
             }
@@ -190,7 +190,8 @@ public class X64Printer implements IRVisitor {
                     .append(call.getReturnRegister()).append(", ")
                     .append(call.function.getReturnRegister()).append('\n');
         }
-        call.function.buffer.getPhysicalRegisters().forEach(element -> {
+        Collections.reverse(saveRegister);
+        saveRegister.forEach(element -> {
             if (element.isCallerSave) {
                 builder.append('\t').append("pop").append(' ').append(element.getELF64Name()).append('\n');
             }
@@ -232,7 +233,27 @@ public class X64Printer implements IRVisitor {
 
     @Override
     public void visit(HeapAllocate allocate) {
-        throw new RuntimeException("unsupported method");
+        builder.append('\t').append("push").append(' ').append(RAX).append('\n');
+        builder.append('\t').append("push").append(' ').append(RCX).append('\n');
+        builder.append('\t').append("push").append(' ').append(RDX).append('\n');
+        builder.append('\t').append("push").append(' ').append(RSI).append('\n');
+        builder.append('\t').append("push").append(' ').append(R8).append('\n');
+        builder.append('\t').append("push").append(' ').append(R9).append('\n');
+        builder.append('\t').append("push").append(' ').append(R10).append('\n');
+        builder.append('\t').append("push").append(' ').append(R11).append('\n');
+        builder.append('\t').append("mov").append(' ').append(EDI).append(", ")
+                .append(allocate.getNumber()).append('\n');
+        builder.append('\t').append("call").append(' ').append("malloc");
+        builder.append('\t').append("mov").append(' ').append(EAX)
+                .append(allocate.getRegister()).append('\n');
+        builder.append('\t').append("pop").append(' ').append(RAX).append('\n');
+        builder.append('\t').append("pop").append(' ').append(RCX).append('\n');
+        builder.append('\t').append("pop").append(' ').append(RSI).append('\n');
+        builder.append('\t').append("pop").append(' ').append(RDX).append('\n');
+        builder.append('\t').append("pop").append(' ').append(R8).append('\n');
+        builder.append('\t').append("pop").append(' ').append(R9).append('\n');
+        builder.append('\t').append("pop").append(' ').append(R10).append('\n');
+        builder.append('\t').append("pop").append(' ').append(R11).append('\n');
     }
 
     @Override

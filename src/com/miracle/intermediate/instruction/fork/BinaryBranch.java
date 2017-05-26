@@ -30,6 +30,18 @@ public class BinaryBranch extends Fork {
         this.branchFalse = branchFalse;
     }
 
+    public BinaryBranch(Number expressionA,
+                        Types operator,
+                        Number expressionB,
+                        BasicBlock branchTrue,
+                        BasicBlock branchFalse) {
+        this.expressionA = expressionA;
+        this.operator = operator;
+        this.expressionB = expressionB;
+        this.branchTrue = branchTrue;
+        this.branchFalse = branchFalse;
+    }
+
     public static Types fromASTreeTypes(BinaryExpression.OPERATOR operator) {
         switch (operator) {
             case LEQ:

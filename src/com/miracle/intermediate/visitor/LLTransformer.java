@@ -114,6 +114,38 @@ public class LLTransformer implements IRVisitor {
                     ));
                 }
             } else if (it.instruction instanceof BinaryBranch) {
+                if ((((BinaryBranch) it.instruction).getExpressionA() instanceof IndirectRegister &&
+                        ((BinaryBranch) it.instruction).getExpressionB() instanceof IndirectRegister)) {
+                    VirtualRegister register = new VirtualRegister(
+                            ".aux" + String.valueOf(countTmpVars++),
+                            ((IndirectRegister) ((BinaryBranch) it.instruction).getExpressionA()).size
+                    );
+                    it.prepend(new Move(register, ((BinaryBranch) it.instruction).getExpressionA()));
+                    it.remove();
+                    it.getPrev().append(new BinaryBranch(
+                            register,
+                            ((BinaryBranch) it.instruction).operator,
+                            ((BinaryBranch) it.instruction).getExpressionB(),
+                            ((BinaryBranch) it.instruction).branchTrue,
+                            ((BinaryBranch) it.instruction).branchFalse
+                    ));
+                }
+                if ((((BinaryBranch) it.instruction).getExpressionA() instanceof Immediate &&
+                        ((BinaryBranch) it.instruction).getExpressionB() instanceof Immediate)) {
+                    VirtualRegister register = new VirtualRegister(
+                            ".aux" + String.valueOf(countTmpVars++),
+                            ((IndirectRegister) ((BinaryBranch) it.instruction).getExpressionA()).size
+                    );
+                    it.prepend(new Move(register, ((BinaryBranch) it.instruction).getExpressionA()));
+                    it.remove();
+                    it.getPrev().append(new BinaryBranch(
+                            register,
+                            ((BinaryBranch) it.instruction).operator,
+                            ((BinaryBranch) it.instruction).getExpressionB(),
+                            ((BinaryBranch) it.instruction).branchTrue,
+                            ((BinaryBranch) it.instruction).branchFalse
+                    ));
+                }
                 it.append(new Jump(((BinaryBranch) it.instruction).branchFalse));
             }
         }
