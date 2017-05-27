@@ -120,7 +120,7 @@ public class SimpleAllocator implements IRVisitor {
             curFunction.parameters.forEach(this::mapToStack);
             List<Register> parameters = curFunction.getReverseParameters();
             for (int i = 0, size = parameters.size(); i < size && i < MiracleOption.CallingConvention.size(); i++) {
-                allocate(parameters.get(i), MiracleOption.CallingConvention.get(i), false, false);
+                allocate(accessToMemStack.get(parameters.get(i)), MiracleOption.CallingConvention.get(i), false, false);
             }
         }
 
