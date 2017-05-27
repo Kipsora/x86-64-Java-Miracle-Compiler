@@ -1,6 +1,7 @@
 package com.miracle.intermediate.instruction;
 
 import com.miracle.intermediate.number.Number;
+import com.miracle.intermediate.number.OffsetRegister;
 import com.miracle.intermediate.number.Register;
 import com.miracle.intermediate.visitor.IRVisitor;
 
@@ -24,26 +25,31 @@ public class Move extends Instruction {
     }
 
     @Override
-    public void rename(Map map) {
-        target = (Register) map.getOrDefault(target, target);
+    public void rename(Map<Register, Register> map) {
+        target = map.getOrDefault(target, target);
+        if (target instanceof OffsetRegister) {
+            ((OffsetRegister) target).map(map);
+        }
         if (source instanceof Register) {
-            source = (Number) map.getOrDefault(source, source);
+            source = map.getOrDefault(source, (Register) source);
+            if (source instanceof OffsetRegister) {
+                ((OffsetRegister) source).map(map);
+            }
         }
     }
 
     @Override
-    public Set<Register> getUsedRegisters() {
-        return new HashSet<Register>() {{
-            add(target);
-            if (source instanceof Register) {
-                add((Register) source);
-            }
-        }};
+    public Set<Register> getUseRegisters() {
+        Set<Register> set = new HashSet<>();
+        addToSet(source, set);
+        return set;
     }
 
     @Override
-    public Set<String> getDeprecatedRegisters() {
-        return Collections.emptySet();
+    public Set<Register> getDefRegisters() {
+        Set<Register> set = new HashSet<>();
+        addToSet(target, set);
+        return set;
     }
 
     public Register getTarget() {

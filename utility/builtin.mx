@@ -7,7 +7,7 @@
     jge __positive@toString
     neg edi
 	mov ebx, edi
-	mov edi, 14
+	mov edi, 15
 	call malloc
 	lea edi, [eax+13]
 	mov eax, ebx
@@ -25,12 +25,13 @@ __loop_negative@toString:
 	jnz __loop_negative@toString
 	dec edi
 	mov byte [edi], 45
+	inc ecx
 	lea eax, [edi-4]
 	mov dword [eax], ecx
 	ret
 __positive@toString:
 	mov ebx, edi
-	mov edi, 14
+	mov edi, 15
 	call malloc
 	lea edi, [eax+13]
 	mov eax, ebx
@@ -46,6 +47,7 @@ __loop_positive@toString:
 	mov byte [edi], dl
 	cmp eax, 0
 	jnz __loop_positive@toString
+	inc ecx
 	lea eax, [edi-4]
 	mov dword [eax], ecx
 	ret
@@ -59,3 +61,10 @@ __loop_positive@toString:
     mov eax, [rel int$buf]
     leave
     ret
+@print:
+    lea rsi, [rdi+4]
+    mov edx, dword [rdi]
+    dec edx
+    mov rdi, 0
+    mov rax, 1
+    syscall

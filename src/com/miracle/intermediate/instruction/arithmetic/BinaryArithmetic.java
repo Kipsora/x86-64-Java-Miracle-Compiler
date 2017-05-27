@@ -2,9 +2,12 @@ package com.miracle.intermediate.instruction.arithmetic;
 
 import com.miracle.intermediate.instruction.Instruction;
 import com.miracle.intermediate.number.Number;
+import com.miracle.intermediate.number.OffsetRegister;
 import com.miracle.intermediate.number.Register;
+import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.visitor.IRVisitor;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -28,33 +31,32 @@ public class BinaryArithmetic extends Instruction {
     }
 
     @Override
-    public void rename(Map map) {
-        target = (Register) map.getOrDefault(target, target);
+    public void rename(Map<Register, Register> map) {
+        target = map.getOrDefault(target, target);
+        if (target instanceof OffsetRegister) {
+            ((OffsetRegister) target).map(map);
+        }
         if (source instanceof Register) {
-            source = (Number) map.getOrDefault(source, source);
-        }
-    }
-
-    @Override
-    public Set<Register> getUsedRegisters() {
-        return new HashSet<Register>() {{
-            add(target);
-            if (source instanceof Register) {
-                add((Register) source);
+            source = map.getOrDefault(source, (Register) source);
+            if (source instanceof OffsetRegister) {
+                ((OffsetRegister) source).map(map);
             }
-        }};
+        }
     }
 
     @Override
-    public Set<String> getDeprecatedRegisters() {
-        if (operator.equals(Types.MOD) || operator.equals(Types.DIV)) {
-            return new HashSet<String>() {{
-                add("RAX");
-                add("RDX");
-            }};
-        } else {
-            return new HashSet<>();
-        }
+    public Set<Register> getUseRegisters() {
+        Set<Register> set = new HashSet<>();
+        addToSet(source, set);
+        addToSet(target, set);
+        return set;
+    }
+
+    @Override
+    public Set<Register> getDefRegisters() {
+        Set<Register> set = new HashSet<>();
+        addToSet(target, set);
+        return set;
     }
 
     public Number getSource() {
@@ -63,6 +65,10 @@ public class BinaryArithmetic extends Instruction {
 
     public Register getTarget() {
         return target;
+    }
+
+    public void setSource(VirtualRegister source) {
+        this.source = source;
     }
 
     public enum Types {

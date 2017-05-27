@@ -9,7 +9,6 @@ public class StackRegister extends IndirectRegister {
 
     public StackRegister(int size) {
         super(size);
-        this.offset = offset;
     }
 
     public void setOffset(int offset) {

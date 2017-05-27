@@ -1,6 +1,7 @@
 package com.miracle.intermediate.instruction;
 
 import com.miracle.intermediate.number.Number;
+import com.miracle.intermediate.number.OffsetRegister;
 import com.miracle.intermediate.number.Register;
 import com.miracle.intermediate.structure.Function;
 import com.miracle.intermediate.visitor.IRVisitor;
@@ -35,37 +36,42 @@ public class Call extends Instruction {
     }
 
     @Override
-    public void rename(Map map) {
+    public void rename(Map<Register, Register> map) {
         for (int i = 0, size = parameters.size(); i < size; i++) {
-            if (parameters.get(i) instanceof Register) {
-                Register register = (Register) parameters.get(i);
-                parameters.set(i, (Number) map.getOrDefault(register, register));
+            Number arg = parameters.get(i);
+            if (arg instanceof Register) {
+                parameters.set(i, map.getOrDefault(arg, (Register) arg));
+                if (arg instanceof OffsetRegister) {
+                    ((OffsetRegister) arg).map(map);
+                }
             }
         }
         if (returnRegister != null) {
-            returnRegister = (Register) map.getOrDefault(returnRegister, returnRegister);
+            returnRegister = map.getOrDefault(returnRegister, returnRegister);
+            if (returnRegister instanceof OffsetRegister) {
+                ((OffsetRegister) returnRegister).map(map);
+            }
         }
         if (selfRegister != null) {
-            selfRegister = (Register) map.getOrDefault(selfRegister, selfRegister);
+            selfRegister = map.getOrDefault(selfRegister, selfRegister);
+            if (selfRegister instanceof OffsetRegister) {
+                ((OffsetRegister) selfRegister).map(map);
+            }
         }
     }
 
     @Override
-    public Set<Register> getUsedRegisters() {
+    public Set<Register> getUseRegisters() {
         Set<Register> registers = new HashSet<>();
-        if (selfRegister != null) registers.add(selfRegister);
-        if (returnRegister != null) registers.add(returnRegister);
-        parameters.forEach(element -> {
-            if (element instanceof Register) {
-                registers.add((Register) element);
-            }
-        });
+        addToSet(selfRegister, registers);
+        addToSet(returnRegister, registers);
+        parameters.forEach(element -> addToSet(element, registers));
         return registers;
     }
 
     @Override
-    public Set<String> getDeprecatedRegisters() {
-        return Collections.emptySet();
+    public Set<Register> getDefRegisters() {
+        return Collections.singleton(returnRegister);
     }
 
     public Register getReturnRegister() {

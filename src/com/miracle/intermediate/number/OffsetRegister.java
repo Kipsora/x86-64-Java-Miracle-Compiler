@@ -1,22 +1,49 @@
 package com.miracle.intermediate.number;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-
 import java.util.Formatter;
+import java.util.Map;
 
 public class OffsetRegister extends IndirectRegister { // memory in stack/heap
-    public final DirectRegister base;
-    public final Integer offsetA;
-    public final ImmutablePair<DirectRegister, Integer> offsetB;
+    private Register base;
+    private Integer offsetA;
+    private Register offsetB;
+    private Integer multiplier;
 
     public OffsetRegister(DirectRegister base,
                           Integer offsetA,
-                          ImmutablePair<DirectRegister, Integer> offsetB,
+                          DirectRegister offsetB,
+                          Integer multiplier,
                           int size) {
         super(size);
         this.base = base;
         this.offsetA = offsetA;
         this.offsetB = offsetB;
+        this.multiplier = multiplier;
+    }
+
+    public Register getRawBase() {
+        return base;
+    }
+
+    public Register getRawOffsetB() {
+        return offsetB;
+    }
+
+    public DirectRegister getBase() {
+        return (DirectRegister) base;
+    }
+
+    public Integer getOffsetA() {
+        return offsetA;
+    }
+
+    public DirectRegister getOffsetB() {
+        return (DirectRegister) offsetB;
+    }
+
+    public void map(Map<Register, Register> map) {
+        base = map.getOrDefault(base, base);
+        offsetB = map.getOrDefault(offsetB, offsetB);
     }
 
     @Override
@@ -24,8 +51,8 @@ public class OffsetRegister extends IndirectRegister { // memory in stack/heap
         StringBuilder builder = new StringBuilder();
         builder.append(getSizeDescriptor()).append(" [").append(base);
         if (offsetB != null) {
-            builder.append('+').append(offsetB.getLeft()).append('*')
-                    .append(offsetB.getRight());
+            builder.append('+').append(offsetB).append('*')
+                    .append(multiplier);
         }
         if (offsetA != null && offsetA != 0) {
             builder.append(new Formatter().format("%+d", offsetA));

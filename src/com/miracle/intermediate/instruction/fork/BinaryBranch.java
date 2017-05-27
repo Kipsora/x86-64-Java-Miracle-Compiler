@@ -2,7 +2,9 @@ package com.miracle.intermediate.instruction.fork;
 
 import com.miracle.astree.statement.expression.BinaryExpression;
 import com.miracle.intermediate.number.Number;
+import com.miracle.intermediate.number.OffsetRegister;
 import com.miracle.intermediate.number.Register;
+import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.visitor.IRVisitor;
 
@@ -67,29 +69,31 @@ public class BinaryBranch extends Fork {
     }
 
     @Override
-    public void rename(Map map) {
+    public void rename(Map<Register, Register> map) {
         if (expressionB instanceof Register) {
-            expressionB = (Number) map.getOrDefault(expressionB, expressionB);
+            expressionB = map.getOrDefault(expressionB, (Register) expressionB);
+            if (expressionB instanceof OffsetRegister) {
+                ((OffsetRegister) expressionB).map(map);
+            }
         }
         if (expressionA instanceof Register) {
-            expressionA = (Number) map.getOrDefault(expressionA, expressionA);
+            expressionA = map.getOrDefault(expressionA, (Register) expressionA);
+            if (expressionA instanceof OffsetRegister) {
+                ((OffsetRegister) expressionA).map(map);
+            }
         }
     }
 
     @Override
-    public Set<Register> getUsedRegisters() {
-        return new HashSet<Register>() {{
-            if (expressionB instanceof Register) {
-                add((Register) expressionB);
-            }
-            if (expressionA instanceof Register) {
-                add((Register) expressionA);
-            }
-        }};
+    public Set<Register> getUseRegisters() {
+        Set<Register> set = new HashSet<>();
+        addToSet(expressionB, set);
+        addToSet(expressionA, set);
+        return set;
     }
 
     @Override
-    public Set<String> getDeprecatedRegisters() {
+    public Set<Register> getDefRegisters() {
         return Collections.emptySet();
     }
 
@@ -97,8 +101,16 @@ public class BinaryBranch extends Fork {
         return expressionA;
     }
 
+    public void setExpressionA(VirtualRegister expressionA) {
+        this.expressionA = expressionA;
+    }
+
     public Number getExpressionB() {
         return expressionB;
+    }
+
+    public void setExpressionB(Number expressionB) {
+        this.expressionB = expressionB;
     }
 
     public enum Types {

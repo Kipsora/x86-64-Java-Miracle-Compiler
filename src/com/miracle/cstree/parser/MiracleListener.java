@@ -1,4 +1,5 @@
 package com.miracle.cstree.parser;// Generated from Miracle.g4 by ANTLR 4.6
+
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**

@@ -1,6 +1,7 @@
 package com.miracle.intermediate.instruction;
 
 import com.miracle.intermediate.number.Number;
+import com.miracle.intermediate.number.OffsetRegister;
 import com.miracle.intermediate.number.Register;
 import com.miracle.intermediate.visitor.IRVisitor;
 
@@ -10,16 +11,24 @@ import java.util.Map;
 import java.util.Set;
 
 public class HeapAllocate extends Instruction {
-    public final int size;
-    private Register register;
+    private int size;
+    private Register target;
     private Number number;
 
-    public HeapAllocate(Register register,
+    public HeapAllocate(Register target,
                         int size,
                         Number number) {
-        this.register = register;
+        this.target = target;
         this.size = size;
         this.number = number;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
     @Override
@@ -28,31 +37,46 @@ public class HeapAllocate extends Instruction {
     }
 
     @Override
-    public void rename(Map map) {
-        register = (Register) map.getOrDefault(register, register);
-        if (number instanceof Register) number = (Number) map.getOrDefault(number, number);
-    }
-
-    @Override
-    public Set<Register> getUsedRegisters() {
-        return new HashSet<Register>() {{
-            add(register);
-            if (number instanceof Register) {
-                add((Register) number);
+    public void rename(Map<Register, Register> map) {
+        target = map.getOrDefault(target, target);
+        if (target instanceof OffsetRegister) {
+            ((OffsetRegister) target).map(map);
+        }
+        if (number instanceof Register) {
+            number = map.getOrDefault(number, (Register) number);
+            if (number instanceof OffsetRegister) {
+                ((OffsetRegister) number).map(map);
             }
-        }};
+        }
     }
 
     @Override
-    public Set<String> getDeprecatedRegisters() {
-        return Collections.emptySet();
+    public Set<Register> getUseRegisters() {
+        Set<Register> set = new HashSet<>();
+        addToSet(number, set);
+        return set;
     }
 
-    public Register getRegister() {
-        return register;
+    @Override
+    public Set<Register> getDefRegisters() {
+        Set<Register> set = new HashSet<>();
+        addToSet(target, set);
+        return set;
+    }
+
+    public Register getTarget() {
+        return target;
+    }
+
+    public void setTarget(Register target) {
+        this.target = target;
     }
 
     public Number getNumber() {
         return number;
+    }
+
+    public void setNumber(Number number) {
+        this.number = number;
     }
 }

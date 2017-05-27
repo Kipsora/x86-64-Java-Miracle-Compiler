@@ -110,7 +110,7 @@ public class Printer implements IRVisitor {
 
     @Override
     public void visit(Return irReturn) {
-        builder.append('\t').append("ret").append('\n');
+        builder.append('\t').append("ret").append(' ').append(irReturn.getValue()).append('\n');
     }
 
     @Override
@@ -130,10 +130,10 @@ public class Printer implements IRVisitor {
 
     @Override
     public void visit(HeapAllocate allocate) {
-        builder.append('\t').append("haloc").append(' ')
-                .append(allocate.getRegister()).append(", ")
+        builder.append('\t').append("hac").append(' ')
+                .append(allocate.getTarget()).append(", ")
                 .append(allocate.getNumber()).append(", ")
-                .append(allocate.size).append('\n');
+                .append(allocate.getSize()).append('\n');
     }
 
     @Override

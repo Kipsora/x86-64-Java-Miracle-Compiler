@@ -1,11 +1,13 @@
 package com.miracle.intermediate.instruction.fork;
 
 import com.miracle.intermediate.number.Number;
+import com.miracle.intermediate.number.OffsetRegister;
 import com.miracle.intermediate.number.Register;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.visitor.IRVisitor;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,30 +28,34 @@ public class UnaryBranch extends Fork {
         return expression;
     }
 
+    public void setExpression(Number expression) {
+        this.expression = expression;
+    }
+
     @Override
     public void accept(IRVisitor IRVisitor) {
         IRVisitor.visit(this);
     }
 
     @Override
-    public void rename(Map map) {
+    public void rename(Map<Register, Register> map) {
         if (expression instanceof Register) {
-            expression = (Number) map.getOrDefault(expression, expression);
+            expression = map.getOrDefault(expression, (Register) expression);
+            if (expression instanceof OffsetRegister) {
+                ((OffsetRegister) expression).map(map);
+            }
         }
     }
 
     @Override
-    public Set<Register> getUsedRegisters() {
-        if (expression instanceof Register) {
-            return Collections.singleton((Register) expression);
-        } else {
-            return Collections.emptySet();
-        }
+    public Set<Register> getUseRegisters() {
+        Set<Register> set = new HashSet<>();
+        addToSet(expression, set);
+        return set;
     }
 
     @Override
-    public Set<String> getDeprecatedRegisters() {
+    public Set<Register> getDefRegisters() {
         return Collections.emptySet();
     }
-
 }

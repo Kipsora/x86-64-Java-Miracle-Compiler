@@ -1,7 +1,9 @@
 package com.miracle.intermediate.instruction;
 
 import com.miracle.intermediate.number.Number;
+import com.miracle.intermediate.number.OffsetRegister;
 import com.miracle.intermediate.number.Register;
+import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.visitor.IRVisitor;
 
 import java.util.Collections;
@@ -31,32 +33,54 @@ public class Compare extends Instruction {
     }
 
     @Override
-    public void rename(Map map) {
-        if (sourceA instanceof Register) sourceA = (Number) map.getOrDefault(sourceA, sourceA);
-        if (sourceB instanceof Register) sourceB = (Number) map.getOrDefault(sourceB, sourceB);
-        target = (Register) map.getOrDefault(target, target);
+    public void rename(Map<Register, Register> map) {
+        if (sourceA instanceof Register) {
+            sourceA = map.getOrDefault(sourceA, (Register) sourceA);
+            if (sourceA instanceof OffsetRegister) {
+                ((OffsetRegister) sourceA).map(map);
+            }
+        }
+        if (sourceB instanceof Register) {
+            sourceB = map.getOrDefault(sourceB, (Register) sourceB);
+            if (sourceB instanceof OffsetRegister) {
+                ((OffsetRegister) sourceB).map(map);
+            }
+        }
+        target = map.getOrDefault(target, target);
+        if (target instanceof OffsetRegister) {
+            ((OffsetRegister) target).map(map);
+        }
     }
 
     @Override
-    public Set<Register> getUsedRegisters() {
-        return new HashSet<Register>() {{
-            add(target);
-            if (sourceA instanceof Register) add((Register) sourceA);
-            if (sourceB instanceof Register) add((Register) sourceB);
-        }};
+    public Set<Register> getUseRegisters() {
+        Set<Register> set = new HashSet<>();
+        addToSet(sourceA, set);
+        addToSet(sourceB, set);
+        return set;
     }
 
     @Override
-    public Set<String> getDeprecatedRegisters() {
-        return Collections.emptySet();
+    public Set<Register> getDefRegisters() {
+        Set<Register> set = new HashSet<>();
+        addToSet(target, set);
+        return set;
     }
 
     public Number getSourceA() {
         return sourceA;
     }
 
+    public void setSourceA(VirtualRegister sourceA) {
+        this.sourceA = sourceA;
+    }
+
     public Number getSourceB() {
         return sourceB;
+    }
+
+    public void setSourceB(Number sourceB) {
+        this.sourceB = sourceB;
     }
 
     public Register getTarget() {

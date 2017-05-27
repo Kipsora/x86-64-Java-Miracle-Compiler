@@ -7,15 +7,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class RegisterBuffer {
-    private final Set<PhysicalRegister> physical = new HashSet<>();
+    private final Set<String> physical = new HashSet<>();
     private final Set<StackRegister> stack = new HashSet<>();
     private int spillSize;
 
-    public Set<PhysicalRegister> getPhysicalRegisters() {
+    public Set<String> getPhysicalRegisters() {
         return physical;
     }
 
-    public RegisterBuffer enroll(PhysicalRegister register) {
+    public RegisterBuffer enroll(String register) {
         physical.add(register);
         return this;
     }

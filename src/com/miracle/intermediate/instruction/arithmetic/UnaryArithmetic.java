@@ -1,10 +1,12 @@
 package com.miracle.intermediate.instruction.arithmetic;
 
 import com.miracle.intermediate.instruction.Instruction;
+import com.miracle.intermediate.number.OffsetRegister;
 import com.miracle.intermediate.number.Register;
 import com.miracle.intermediate.visitor.IRVisitor;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,18 +25,25 @@ public class UnaryArithmetic extends Instruction {
     }
 
     @Override
-    public void rename(Map map) {
-        target = (Register) map.getOrDefault(target, target);
+    public void rename(Map<Register, Register> map) {
+        target = map.getOrDefault(target, target);
+        if (target instanceof OffsetRegister) {
+            ((OffsetRegister) target).map(map);
+        }
     }
 
     @Override
-    public Set<Register> getUsedRegisters() {
-        return Collections.singleton(target);
+    public Set<Register> getUseRegisters() {
+        Set<Register> set = new HashSet<>();
+        addToSet(target, set);
+        return set;
     }
 
     @Override
-    public Set<String> getDeprecatedRegisters() {
-        return Collections.emptySet();
+    public Set<Register> getDefRegisters() {
+        Set<Register> set = new HashSet<>();
+        addToSet(target, set);
+        return set;
     }
 
     public Register getTarget() {

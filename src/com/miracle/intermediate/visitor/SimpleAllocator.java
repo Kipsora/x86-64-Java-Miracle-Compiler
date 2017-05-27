@@ -1,5 +1,6 @@
 package com.miracle.intermediate.visitor;
 
+import com.miracle.MiracleOption;
 import com.miracle.intermediate.Root;
 import com.miracle.intermediate.instruction.Call;
 import com.miracle.intermediate.instruction.Compare;
@@ -7,28 +8,26 @@ import com.miracle.intermediate.instruction.HeapAllocate;
 import com.miracle.intermediate.instruction.Move;
 import com.miracle.intermediate.instruction.arithmetic.BinaryArithmetic;
 import com.miracle.intermediate.instruction.arithmetic.UnaryArithmetic;
-import com.miracle.intermediate.instruction.fork.BinaryBranch;
-import com.miracle.intermediate.instruction.fork.Jump;
-import com.miracle.intermediate.instruction.fork.Return;
-import com.miracle.intermediate.instruction.fork.UnaryBranch;
+import com.miracle.intermediate.instruction.fork.*;
 import com.miracle.intermediate.number.*;
+import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SimpleAllocator implements IRVisitor {
-    private Set<BasicBlock> blockProcessed;
+    private Set<String> freePhysicalRegisters;
+
+    private Map<Register, Register> accessToMemStack;
+    private Map<Register, Register> accessToRegister;
+    private Map<Register, Register> currentRenameMap;
+    private Map<String, ImmutablePair<Register, Boolean>> occupiedRegister;
+
     private BasicBlock.Node curInstruction;
     private Function curFunction;
-    private Set<String> freePhysicalRegisters;
-    private Map<VirtualRegister, StackRegister> mapToStack;
-    private Set<IndirectRegister> moveOnRelease;
-    private Map<IndirectRegister, PhysicalRegister> quickAccessToIndirect;
-    private Map<PhysicalRegister, IndirectRegister> busyPhysicalRegisters;
+    private Set<BasicBlock> blockProcessed;
 
     @Override
     public void visit(Root ir) {
@@ -37,55 +36,74 @@ public class SimpleAllocator implements IRVisitor {
     }
 
     @Override
+    public void visit(BinaryArithmetic binaryArithmetic) {
+        if (binaryArithmetic.operator.equals(BinaryArithmetic.Types.DIV) ||
+                binaryArithmetic.operator.equals(BinaryArithmetic.Types.MOD)) {
+            release("RDX");
+            release("RAX");
+        } else {
+            allocate(binaryArithmetic.getSource(), null, true, false);
+        }
+    }
+
+    @Override
+    public void visit(Move move) {
+        if (move.getTarget() instanceof IndirectRegister &&
+                move.getSource() instanceof IndirectRegister) {
+            allocate(move.getTarget(), null, false, true);
+        }
+    }
+
+    @Override
     public void visit(Function function) {
         curFunction = function;
-        mapToStack = new HashMap<>();
-        freePhysicalRegisters = new HashSet<>(PhysicalRegister.GeneralPurposeRegister);
-        busyPhysicalRegisters = new HashMap<>();
-        quickAccessToIndirect = new HashMap<>();
-        moveOnRelease = new HashSet<>();
-        function.getParameters().forEach(this::realize);
-        for (int i = 0; i < function.getParameters().size(); i++) {
-            if (function.getParameters().get(i) instanceof VirtualRegister) {
-                function.getParameters().set(i, mapToStack.get(function.getParameters().get(i)));
-            }
-        }
+        accessToMemStack = new HashMap<>();
         function.getEntryBasicBlock().accept(this);
+        accessToMemStack = null;
         curFunction = null;
     }
 
-    private void release(PhysicalRegister physicalRegister) {
-        IndirectRegister indirectRegister = busyPhysicalRegisters.get(physicalRegister);
-        if (moveOnRelease.contains(indirectRegister)) {
-            curInstruction.prepend(new Move(indirectRegister, physicalRegister));
-            moveOnRelease.remove(indirectRegister);
+    private void mapToStack(Register register) {
+        if (register instanceof VirtualRegister) {
+            if (accessToMemStack.containsKey(register)) return;
+            accessToMemStack.put(register, new StackRegister(register.size));
         }
-        busyPhysicalRegisters.remove(physicalRegister);
-        quickAccessToIndirect.remove(indirectRegister);
-        freePhysicalRegisters.add(physicalRegister.indexName);
     }
 
-    private void use(PhysicalRegister physicalRegister,
-                     IndirectRegister indirectRegister,
-                     boolean moveOnUse,
-                     boolean moveOnRelease) {
-        if (moveOnUse) {
-            curInstruction.prepend(new Move(physicalRegister, indirectRegister));
+    private void allocate(Number source, String target, boolean moveOnAlloc, boolean moveOnRelease) {
+        if (source instanceof VirtualRegister) {
+            throw new RuntimeException("unexpected case");
         }
-        if (moveOnRelease) {
-            this.moveOnRelease.add(indirectRegister);
+        if (target == null && !(source instanceof IndirectRegister)) return;
+        if (source instanceof PhysicalRegister && ((PhysicalRegister) source).indexName.equals(target)) return;
+        if (freePhysicalRegisters.isEmpty() || (target != null && !freePhysicalRegisters.contains(target))) {
+            if (target == null) {
+                target = occupiedRegister.entrySet().iterator().next().getKey();
+            }
+            release(target);
+            freePhysicalRegisters.add(target);
+            occupiedRegister.remove(target);
         }
-        busyPhysicalRegisters.put(physicalRegister, indirectRegister);
-        quickAccessToIndirect.put(indirectRegister, physicalRegister);
-        freePhysicalRegisters.remove(physicalRegister.indexName);
+        if (target == null) {
+            target = freePhysicalRegisters.iterator().next();
+        }
+        freePhysicalRegisters.remove(target);
+        if (source instanceof Register) {
+            occupiedRegister.put(target, ImmutablePair.of((Register) source, moveOnRelease));
+            accessToRegister.put((Register) source, PhysicalRegister.getBy16BITName(target, ((Register) source).size));
+            currentRenameMap.put((Register) source, PhysicalRegister.getBy16BITName(target, ((Register) source).size));
+            if (moveOnAlloc) {
+                curInstruction.prepend(new Move(PhysicalRegister.getBy16BITName(target, ((Register) source).size), source));
+            }
+        } else {
+            occupiedRegister.put(target, null);
+        }
     }
 
-    private void realize(Register register) {
-        if (!(register instanceof VirtualRegister)) return;
-        StackRegister newRegister = mapToStack.getOrDefault(register, null);
-        if (newRegister == null) {
-            newRegister = new StackRegister(register.size);
-            mapToStack.put((VirtualRegister) register, newRegister);
+    private void reAllocOffsetRegister(Register register) {
+        if (register instanceof OffsetRegister) {
+            allocate(((OffsetRegister) register).getRawBase(), null, true, false);
+            allocate(((OffsetRegister) register).getRawOffsetB(), null, true, false);
         }
     }
 
@@ -93,150 +111,112 @@ public class SimpleAllocator implements IRVisitor {
     public void visit(BasicBlock block) {
         if (blockProcessed.contains(block)) return;
         blockProcessed.add(block);
-        for (BasicBlock.Node it = block.getHead(); it != block.tail; it = it.getSucc()) {
-            curInstruction = it;
-            it.instruction.getUsedRegisters().forEach(this::realize);
-            it.instruction.rename(mapToStack);             // realize all virtual register
-            it.instruction.rename(quickAccessToIndirect);
-            it.instruction.accept(this);
-            it.instruction.rename(quickAccessToIndirect);
-            curInstruction = null;
-        }
-        block.getSuccBasicBlock().forEach(element -> element.accept(this));
-    }
+        freePhysicalRegisters = new HashSet<>(PhysicalRegister.GeneralPurposeRegister);
 
-    @Override
-    public void visit(BinaryArithmetic binaryArithmetic) {
-        switch (binaryArithmetic.operator) {
-            case MUL:
-            case ADD:
-            case OR:
-            case SHL:
-            case SHR:
-            case AND:
-            case SUB:
-            case XOR:
-                if (binaryArithmetic.getSource() instanceof IndirectRegister
-                        && binaryArithmetic.getTarget() instanceof IndirectRegister) {
-                    if (freePhysicalRegisters.isEmpty()) {
-                        release(busyPhysicalRegisters.entrySet().iterator().next().getKey());
-                    }
-                    use(
-                            PhysicalRegister.getBy16BITName(
-                                    freePhysicalRegisters.iterator().next(),
-                                    binaryArithmetic.getTarget().size
-                            ),
-                            (IndirectRegister) binaryArithmetic.getTarget(),
-                            true, true
-                    );
-                }
-                break;
-            case MOD:
-            case DIV:
-                if (!(binaryArithmetic.getSource() instanceof PhysicalRegister) ||
-                        !((PhysicalRegister) binaryArithmetic.getSource()).indexName.equals("RAX")) {
-                    if (!freePhysicalRegisters.contains("RAX")) {
-                        PhysicalRegister.getAllBy16BITName("RAX").forEach(element -> {
-                            if (busyPhysicalRegisters.containsKey(element)) {
-                                release(element);
-                            }
-                        });
-                    }
-                    if (!freePhysicalRegisters.contains("RDX")) {
-                        PhysicalRegister.getAllBy16BITName("RDX").forEach(element -> {
-                            if (busyPhysicalRegisters.containsKey(element)) {
-                                release(element);
-                            }
-                        });
-                    }
-                }
-                break;
-            default:
-                throw new RuntimeException("unsupported operator");
-        }
-    }
+        accessToRegister = new HashMap<>();
+        occupiedRegister = new HashMap<>();
 
-    @Override
-    public void visit(Move move) {
-        if (move.getSource() instanceof IndirectRegister &&
-                move.getTarget() instanceof IndirectRegister) {
-            if (freePhysicalRegisters.isEmpty()) {
-                release(busyPhysicalRegisters.entrySet().iterator().next().getKey());
+        if (block.isFunctionEntryBlock) {
+            curFunction.parameters.forEach(this::mapToStack);
+            List<Register> parameters = curFunction.getReverseParameters();
+            for (int i = 0, size = parameters.size(); i < size && i < MiracleOption.CallingConvention.size(); i++) {
+                allocate(parameters.get(i), MiracleOption.CallingConvention.get(i), false, false);
             }
-            use(
-                    PhysicalRegister.getBy16BITName(
-                            freePhysicalRegisters.iterator().next(),
-                            move.getTarget().size
-                    ),
-                    (IndirectRegister) move.getTarget(),
-                    false, true
-            );
         }
+
+        for (curInstruction = block.getHead(); curInstruction != block.tail; curInstruction = curInstruction.getSucc()) {
+            currentRenameMap = new HashMap<>();
+            curInstruction.instruction.getUseRegisters().forEach(this::mapToStack);
+            curInstruction.instruction.getDefRegisters().forEach(this::mapToStack);
+            curInstruction.instruction.rename(accessToMemStack);
+            curInstruction.instruction.rename(accessToRegister);
+            curInstruction.instruction.getUseRegisters().forEach(this::reAllocOffsetRegister);
+            curInstruction.instruction.getDefRegisters().forEach(this::reAllocOffsetRegister);
+            curInstruction.instruction.rename(currentRenameMap);
+            curInstruction.instruction.accept(this);
+            curInstruction.instruction.rename(currentRenameMap);
+            if (curInstruction.instruction instanceof Fork) {
+                occupiedRegister.forEach((key, value) -> force_release(key));
+                break;
+            }
+        }
+        block.getSuccBasicBlock().forEach(this::visit);
     }
 
     @Override
     public void visit(Call call) {
-
+        release("RAX");
+        List<Number> parameters = call.getReverseParameters();
+        for (int i = 0, size = parameters.size(); i < size && i < MiracleOption.CallingConvention.size(); i++) {
+            release(MiracleOption.CallingConvention.get(i));
+        }
     }
 
     @Override
-    public void visit(UnaryArithmetic unaryArithmetic) {
+    public void visit(UnaryArithmetic prefixArithmetic) {
+    }
 
+    private void release(String target) {
+        ImmutablePair<Register, Boolean> source = occupiedRegister.get(target);
+        if (source == null) return;
+        if (source.getRight()) {
+            curInstruction.prepend(new Move(
+                    source.getLeft(),
+                    PhysicalRegister.getBy16BITName(target, source.getLeft().size)
+            ));
+        }
+        accessToRegister.remove(source.getLeft());
+    }
+
+    private void force_release(String target) {
+        ImmutablePair<Register, Boolean> source = occupiedRegister.get(target);
+        if (source == null) return;
+        curInstruction.prepend(new Move(
+                source.getLeft(),
+                PhysicalRegister.getBy16BITName(target, source.getLeft().size)
+        ));
+        accessToRegister.remove(source.getLeft());
     }
 
     @Override
     public void visit(UnaryBranch unaryBranch) {
-
     }
 
     @Override
     public void visit(Return irReturn) {
-
+        if (irReturn.getValue() != null) {
+            release("RAX");
+        }
     }
 
     @Override
     public void visit(Jump jump) {
-
+        //jump.getUseRegisters().forEach(element -> allocate(element, null));
     }
 
     @Override
     public void visit(Compare compare) {
-        if (compare.getSourceA() instanceof IndirectRegister
-                && compare.getSourceB() instanceof IndirectRegister) {
-            if (freePhysicalRegisters.isEmpty()) {
-                release(busyPhysicalRegisters.entrySet().iterator().next().getKey());
-            }
-            use(
-                    PhysicalRegister.getBy16BITName(
-                            freePhysicalRegisters.iterator().next(),
-                            compare.getTarget().size
-                    ),
-                    (IndirectRegister) compare.getTarget(),
-                    true, true
-            );
+        if (compare.getSourceA() instanceof IndirectRegister &&
+                compare.getSourceB() instanceof IndirectRegister) {
+            allocate(compare.getSourceA(), null, true, false);
         }
     }
 
     @Override
     public void visit(HeapAllocate allocate) {
-
+        release("RAX");
+        release("RCX");
+        release("RDX");
+        release("RDI");
+        release("RSI");
+        release("R8");
+        release("R9");
+        release("R10");
+        release("R11");
     }
 
     @Override
     public void visit(BinaryBranch binaryBranch) {
-        if (binaryBranch.getExpressionA() instanceof IndirectRegister
-                && binaryBranch.getExpressionB() instanceof IndirectRegister) {
-            if (freePhysicalRegisters.isEmpty()) {
-                release(busyPhysicalRegisters.entrySet().iterator().next().getKey());
-            }
-            use(
-                    PhysicalRegister.getBy16BITName(
-                            freePhysicalRegisters.iterator().next(),
-                            binaryBranch.getExpressionA().getNumberSize()
-                    ),
-                    (IndirectRegister) binaryBranch.getExpressionA(),
-                    true, true
-            );
-        }
+
     }
 }

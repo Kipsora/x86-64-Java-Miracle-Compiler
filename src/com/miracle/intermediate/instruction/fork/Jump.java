@@ -21,17 +21,17 @@ public class Jump extends Fork {
     }
 
     @Override
-    public void rename(Map map) {
+    public void rename(Map<Register, Register> map) {
 
     }
 
     @Override
-    public Set<Register> getUsedRegisters() {
+    public Set<Register> getUseRegisters() {
         return Collections.emptySet();
     }
 
     @Override
-    public Set<String> getDeprecatedRegisters() {
+    public Set<Register> getDefRegisters() {
         return Collections.emptySet();
     }
 }
