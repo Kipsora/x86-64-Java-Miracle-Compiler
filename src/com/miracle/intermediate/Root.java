@@ -564,6 +564,7 @@ public class Root extends Node {
                     expression.right.getResultNumber()
             ));
             recycle(expression.right.getResultNumber());
+            expression.setResultNumber(expression.left.getResultNumber());
         }
 
         private void addStringConcat(BinaryExpression expression) {
