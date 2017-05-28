@@ -21,6 +21,7 @@ __loop_negative@toString:
 	jnz __loop_negative@toString
 	dec rdi
 	mov byte [rdi], 45
+	inc ecx
 	lea eax, [rdi-4]
 	mov dword [rax], ecx
 	ret

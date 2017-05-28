@@ -8,16 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1a1af29a-b77a-4b8c-9654-4271264bd490" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Call.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Call.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Compare.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Compare.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/HeapAllocate.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/HeapAllocate.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Move.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Move.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/BinaryArithmetic.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/BinaryArithmetic.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/UnaryArithmetic.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/UnaryArithmetic.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/BinaryBranch.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/BinaryBranch.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/Return.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/Return.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/UnaryBranch.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/UnaryBranch.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/number/OffsetRegister.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/number/OffsetRegister.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utility/builtin.mx" afterPath="$PROJECT_DIR$/utility/builtin.mx" />
     </list>
@@ -136,8 +126,8 @@
       <file leaf-file-name="X64Printer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="134" column="60" lean-forward="false" selection-start-line="134" selection-start-column="60" selection-end-line="134" selection-end-column="60" />
+            <state relative-caret-position="402">
+              <caret line="80" column="50" lean-forward="false" selection-start-line="80" selection-start-column="50" selection-end-line="80" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -190,7 +180,6 @@
       <find>HeapAll</find>
       <find>NewInit</find>
       <find>new Linked</find>
-      <find>extern</find>
       <find>length</find>
       <find>exter</find>
       <find>variableDeclaration</find>
@@ -199,6 +188,7 @@
       <find>Root ir</find>
       <find>BinaryBranch</find>
       <find>BinaryArith</find>
+      <find>extern</find>
     </findStrings>
     <replaceStrings>
       <replace>T</replace>
@@ -1460,14 +1450,7 @@
       <workItem from="1495860867765" duration="1300000" />
       <workItem from="1495872558615" duration="4671000" />
       <workItem from="1495881338658" duration="30558000" />
-      <workItem from="1495936248896" duration="36962000" />
-    </task>
-    <task id="LOCAL-00011" summary="Bugs fixed for return literal validator.">
-      <created>1494850306735</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1494850306735</updated>
+      <workItem from="1495936248896" duration="37486000" />
     </task>
     <task id="LOCAL-00012" summary="IR interface added &amp; bugs fixed for semantic analyser.">
       <created>1494893945244</created>
@@ -1805,11 +1788,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495980812588</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="Bugs fixed for builtin functions.">
+      <created>1495982667491</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1495982667491</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="497787000" />
+    <option name="totallyTimeSpent" value="498311000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1822,6 +1812,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1537" height="912" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1844,7 +1835,7 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42159384" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2159383" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2159383" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24110141" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -2509,8 +2500,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="134" column="60" lean-forward="false" selection-start-line="134" selection-start-column="60" selection-end-line="134" selection-end-column="60" />
+        <state relative-caret-position="402">
+          <caret line="80" column="50" lean-forward="false" selection-start-line="80" selection-start-column="50" selection-end-line="80" selection-end-column="50" />
           <folding />
         </state>
       </provider>
