@@ -211,7 +211,13 @@ public class Root extends Node {
             BasicBlock failBlock = new BasicBlock("if_fail_" + String.valueOf(countBlock++), curFunction, false, false);
             BasicBlock bothBlock = new BasicBlock("if_both_" + String.valueOf(countBlock++), curFunction, false, false);
 
-            if (selection.expression instanceof BinaryExpression) {
+            if (selection.expression instanceof BinaryExpression &&
+                    (((BinaryExpression) selection.expression).operator.equals(BinaryExpression.OPERATOR.LT)
+                            || ((BinaryExpression) selection.expression).operator.equals(BinaryExpression.OPERATOR.RT)
+                            || ((BinaryExpression) selection.expression).operator.equals(BinaryExpression.OPERATOR.LEQ)
+                            || ((BinaryExpression) selection.expression).operator.equals(BinaryExpression.OPERATOR.REQ)
+                            || ((BinaryExpression) selection.expression).operator.equals(BinaryExpression.OPERATOR.EQL)
+                            || ((BinaryExpression) selection.expression).operator.equals(BinaryExpression.OPERATOR.NEQ))) {
                 ((BinaryExpression) selection.expression).left.accept(this);
                 ((BinaryExpression) selection.expression).right.accept(this);
                 if (((BinaryExpression) selection.expression).left.getResultType().isSameType(__builtin_string)) {
@@ -535,7 +541,7 @@ public class Root extends Node {
                 default:
                     throw new RuntimeException("unsupported operator");
             }
-            VirtualRegister register = newVirtualRegister(MiracleOption.INT_SIZE);
+            VirtualRegister register = newVirtualRegister(expression.left.getResultNumber().getNumberSize());
             curBasicBlock.tail.prepend(new Move(
                     register, expression.left.getResultNumber()
             ));

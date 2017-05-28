@@ -26,6 +26,9 @@ public class SimpleAllocator implements IRVisitor {
     private BasicBlock.Node node;
     private Function curFunction;
 
+    private int get16Multiplier(int totalSize) {
+        return (totalSize + 15) / 16 * 16;
+    }
 
     @Override
     public void visit(Root ir) {
@@ -48,6 +51,7 @@ public class SimpleAllocator implements IRVisitor {
             register = PhysicalRegister.getBy16BITName("RAX", binaryArithmetic.getTarget().getNumberSize());
             node.prepend(new Move(register, binaryArithmetic.getTarget()));
             localRenameMap.put(binaryArithmetic.getTarget(), register);
+            node.append(new Move(binaryArithmetic.getTarget(), register));
         } else if (binaryArithmetic.operator.equals(BinaryArithmetic.Types.SHL) ||
                 binaryArithmetic.operator.equals(BinaryArithmetic.Types.SHR)) {
             throw new RuntimeException("uncompleted case");
@@ -79,11 +83,28 @@ public class SimpleAllocator implements IRVisitor {
     public void visit(Function function) {
         globalRenameMap = new HashMap<>();
         curFunction = function;
-        function.parameters.forEach(element -> {
-            if (!globalRenameMap.containsKey(element)) {
-                globalRenameMap.put(element, new StackRegister(element.size));
+        int size = 0;
+        List<Register> parameters = function.parameters;
+        for (int i = MiracleOption.CallingConvention.size(), length = parameters.size(); i < length; i++) {
+            Register register = parameters.get(i);
+            size += register.size;
+        }
+        int oldSize = get16Multiplier(size);
+        size = 0;
+        for (int i = 0, length = parameters.size(); i < length; i++) {
+            Register register = parameters.get(i);
+            if (globalRenameMap.containsKey(register)) {
+                throw new RuntimeException("unexpected parameter");
             }
-        });
+            if (i < MiracleOption.CallingConvention.size()) {
+                globalRenameMap.put(register, new StackRegister(register.size));
+            } else {
+                size += register.size;
+                StackRegister stackRegister = new StackRegister(register.size);
+                stackRegister.setOffset(-(oldSize - size + 16));
+                globalRenameMap.put(register, stackRegister);
+            }
+        }
         function.map(globalRenameMap);
         function.getEntryBasicBlock().accept(this);
     }
@@ -230,7 +251,7 @@ public class SimpleAllocator implements IRVisitor {
         if (binaryBranch.getExpressionA() instanceof IndirectRegister &&
                 binaryBranch.getExpressionB() instanceof IndirectRegister) {
             register = PhysicalRegister.getBy16BITName("RAX", binaryBranch.getExpressionA().getNumberSize());
-            node.append(new Move(register, binaryBranch.getExpressionA()));
+            node.prepend(new Move(register, binaryBranch.getExpressionA()));
             localRenameMap.put(binaryBranch.getExpressionA(), register);
         }
     }

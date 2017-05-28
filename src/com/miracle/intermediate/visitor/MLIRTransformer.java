@@ -32,6 +32,7 @@ public class MLIRTransformer implements IRVisitor {
 
     @Override
     public void visit(BinaryArithmetic binaryArithmetic) {
+
     }
 
     @Override

@@ -54,7 +54,7 @@ public class LLIRTransformer implements IRVisitor {
     @Override
     public void visit(Function function) {
         curFunction = function;
-        function.parameters.forEach(this::enroll);
+        //function.parameters.forEach(this::enroll);
         curFunction.getEntryBasicBlock().accept(this);
         int size = curFunction.getReturns().size();
         curFunction.getReturns().forEach(element -> {

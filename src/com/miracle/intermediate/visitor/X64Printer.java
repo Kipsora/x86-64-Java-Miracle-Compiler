@@ -12,8 +12,7 @@ import com.miracle.intermediate.instruction.fork.Jump;
 import com.miracle.intermediate.instruction.fork.Return;
 import com.miracle.intermediate.instruction.fork.UnaryBranch;
 import com.miracle.intermediate.number.Number;
-import com.miracle.intermediate.number.PhysicalRegister;
-import com.miracle.intermediate.number.Register;
+import com.miracle.intermediate.number.OffsetRegister;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
 import org.apache.commons.io.FileUtils;
@@ -180,13 +179,6 @@ public class X64Printer implements IRVisitor {
                         .append(get16Multiplier(block.blockFrom.buffer.getSpillSize()))
                         .append('\n');
             }
-
-            List<Register> parameters = curFunction.getReverseParameters();
-            int size = parameters.size() - CallingConvention.size();
-            for (int i = 0; i < size; i++) {
-                builder.append('\t').append("pop").append(' ')
-                        .append(curFunction.getParameters().get(i)).append('\n');
-            }
         }
         if (block.isFunctionExitBlock && block.blockFrom.buffer.getSpillSize() > 0) {
             builder.append('\t').append("leave").append('\n');
@@ -205,18 +197,28 @@ public class X64Printer implements IRVisitor {
          * The last 6 parameters must follow calling conventions -> TODO: in Register Allocator
          */
         List<Number> parameters = call.parameters;
+        int spillSize = 0;
         for (int i = CallingConvention.size(), size = parameters.size(); i < size; i++) {
-            if (parameters.get(i) instanceof PhysicalRegister) {
-                builder.append('\t').append("push").append(' ')
-                        .append(((PhysicalRegister) parameters.get(i)).getELF64Name())
-                        .append('\n');
-            } else {
-                builder.append('\t').append("push").append(' ')
-                        .append(parameters.get(i)).append('\n');
-            }
+            spillSize += parameters.get(i).getNumberSize();
+        }
+        int fitSize = get16Multiplier(spillSize);
+        builder.append('\t').append("sub").append(' ').append(RSP)
+                .append(", ").append(fitSize).append('\n');
+        spillSize = 0;
+        for (int i = CallingConvention.size(), size = parameters.size(); i < size; i++) {
+            spillSize += parameters.get(i).getNumberSize();
+            builder.append('\t').append("mov").append(' ')
+                    .append(new OffsetRegister(
+                            RSP, fitSize - spillSize,
+                            null, null,
+                            parameters.get(i).getNumberSize()
+                    ))
+                    .append(", ").append(parameters.get(i)).append('\n');
         }
         builder.append('\t').append("call").append(' ')
                 .append(call.function.identifier).append('\n');
+        builder.append('\t').append("add").append(' ').append(RSP)
+                .append(", ").append(fitSize).append('\n');
     }
 
     @Override

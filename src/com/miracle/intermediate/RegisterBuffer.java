@@ -1,6 +1,5 @@
 package com.miracle.intermediate;
 
-import com.miracle.intermediate.number.PhysicalRegister;
 import com.miracle.intermediate.number.StackRegister;
 
 import java.util.HashSet;
@@ -21,7 +20,7 @@ public class RegisterBuffer {
     }
 
     public void enroll(StackRegister register) {
-        if (stack.contains(register)) return;
+        if (register.isOffsetSettled()) return;
         stack.add(register);
         spillSize += register.size;
         register.setOffset(spillSize);
