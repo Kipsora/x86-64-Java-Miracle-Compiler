@@ -187,7 +187,7 @@ public class SimpleAllocator implements IRVisitor {
 
     @Override
     public void visit(Return irReturn) {
-        if (irReturn.getValue() instanceof IndirectRegister) {
+        if (irReturn.getValue() != null) {
             PhysicalRegister register = PhysicalRegister.getBy16BITName("RAX", irReturn.getValue().getNumberSize());
             node.prepend(new Move(register, irReturn.getValue()));
             localRenameMap.put(irReturn.getValue(), register);
