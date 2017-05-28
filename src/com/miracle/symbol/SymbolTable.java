@@ -1,6 +1,5 @@
 package com.miracle.symbol;
 
-import com.miracle.astree.statement.declaration.ClassDeclaration;
 import com.miracle.astree.statement.declaration.Declaration;
 import com.miracle.astree.statement.declaration.VariableDeclaration;
 
@@ -19,7 +18,7 @@ public class SymbolTable {
         addParameter("x", __builtin_string);
         addParameter("y", __builtin_string);
         setAddress("@strcat");
-        getAddress().buffer.enroll("RAX").enroll("RDI").enroll("RSI");
+        getAddress().buffer.enroll("RAX").enroll("RDI").enroll("RSI").enroll("RCX").enroll("RDX");
     }};
     public final static SymbolFunctionType __builtin_strcmp = new SymbolFunctionType(__builtin_int, null) {{
         addParameter("x", __builtin_string);
@@ -128,21 +127,11 @@ public class SymbolTable {
                 return tmp;
             }
         }
-        return (VariableDeclaration) answer;
+        return answer == null ? null : (VariableDeclaration) answer;
     }
 
     public SymbolTable getParentSymbolTable() {
         return parentSymbolTable;
     }
 
-    public ClassDeclaration resolveClass(String name) {
-        Symbol answer = currentSymbolTable.getOrDefault(name, null);
-        if (answer instanceof ClassDeclaration) {
-            return (ClassDeclaration) answer;
-        }
-        if (parentSymbolTable != null) {
-            return parentSymbolTable.resolveClass(name);
-        }
-        return null;
-    }
 }

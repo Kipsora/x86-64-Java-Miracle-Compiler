@@ -1,5 +1,5 @@
 @println:
-	lea edi, [edi+4]
+	lea rdi, [rdi+4]
 	call puts
 	ret
 @toString:
@@ -9,53 +9,53 @@
 	mov ebx, edi
 	mov edi, 15
 	call malloc
-	lea edi, [eax+13]
+	lea rdi, [rax+14]
 	mov eax, ebx
 	mov ebx, 10
-	mov byte [edi+1], 0
+	mov byte [rdi+1], 0
 	xor ecx, ecx
 __loop_negative@toString:
-	dec edi
+	dec rdi
 	inc ecx
 	xor edx, edx
 	idiv ebx
 	add edx, 48
-	mov byte [edi], dl
+	mov byte [rdi], dl
 	cmp eax, 0
 	jnz __loop_negative@toString
-	dec edi
-	mov byte [edi], 45
+	dec rdi
+	mov byte [rdi], 45
 	inc ecx
-	lea eax, [edi-4]
-	mov dword [eax], ecx
+	lea eax, [rdi-4]
+	mov dword [rax], ecx
 	ret
 __positive@toString:
 	mov ebx, edi
 	mov edi, 15
 	call malloc
-	lea edi, [eax+13]
+	lea rdi, [rax+14]
 	mov eax, ebx
 	mov ebx, 10
-	mov byte [edi+1], 0
+	mov byte [rdi+1], 0
 	xor ecx, ecx
 __loop_positive@toString:
-	dec edi
+	dec rdi
 	inc ecx
 	xor edx, edx
 	idiv ebx
 	add edx, 48
-	mov byte [edi], dl
+	mov byte [rdi], dl
 	cmp eax, 0
 	jnz __loop_positive@toString
 	inc ecx
-	lea eax, [edi-4]
-	mov dword [eax], ecx
+	lea eax, [rdi-4]
+	mov dword [rax], ecx
 	ret
 @getInt:
     push rbp
     mov rbp, rsp
-    mov esi, int$buf
-    mov edi, int$fmt
+    mov rsi, int$buf
+    mov rdi, int$fmt
     xor eax, eax
     call scanf
     mov eax, [rel int$buf]
@@ -64,11 +64,117 @@ __loop_positive@toString:
 @print:
     lea rsi, [rdi+4]
     mov edx, dword [rdi]
-    dec edx
     mov rdi, 0
     mov rax, 1
     syscall
     ret
+@strcat:
+    push rbp
+    mov rbp, rsp
+    push rdi
+    push rsi
+    mov edi, dword [rdi]
+    add edi, dword [rsi]
+    add edi, 3
+    call malloc
+    pop rsi
+    pop rdi
+    
+    mov ebx, dword [rdi]
+    mov dword [rax], ebx
+    xor rcx, rcx
+__loop_1@strcat:
+    cmp ecx, ebx
+    jge __loop_2_init@strcat
+    mov dl, byte [rdi+rcx+4]
+    mov byte [rax+rcx+4], dl
+    inc ecx
+    jmp __loop_1@strcat
+__loop_2_init@strcat:
+    mov ebx, dword [rsi]
+    add dword [rax], ebx
+    xor rdi, rdi
+__loop_2@strcat:
+    cmp edi, ebx
+    jge __loop2_exit@strcat
+    mov dl, byte [rsi+rdi+4]
+    mov byte [rax+rcx+4], dl
+    inc ecx
+    inc edi
+    jmp __loop_2@strcat
+__loop2_exit@strcat:
+    inc dword [rax]
+    leave
+    ret
 @array.size:
     mov eax, dword [rdi]
+    ret
+@string.length:
+    mov eax, dword [rdi]
+    ret
+@string.ord:
+    xor rax, rax
+    mov al, byte [rdi+rsi+4]
+    ret
+@string.parseInt:
+    mov ebx, dword [rdi]
+    xor eax, eax
+    xor ecx, ecx
+__loop@string.parseInt:
+    cmp ebx, 0
+    je __loop_exit@string.parseInt
+    imul eax, 10
+    mov cl, byte [rdi+4]
+    sub ecx, 48
+    add eax, ecx
+    inc edi
+    dec ebx
+    jmp __loop@string.parseInt
+__loop_exit@string.parseInt:
+    ret
+@string.substring:
+    push rdi
+    push rsi
+    push rdx
+    mov edi, edx
+    sub edi, esi
+    add edi, 6
+    call malloc
+    pop rdx
+    pop rsi
+    pop rdi
+    sub edx, esi
+    inc edx
+    mov dword [rax], edx
+    xor rsi, rsi
+    add rdi, 4
+__loop@string.substring:
+    cmp edx, 0
+    je __loop_exit@string.substring
+    mov cl, byte [rdi]
+    mov byte [rax+rsi+4], cl
+    inc esi
+    inc rdi
+    dec edx
+    jmp __loop@string.substring
+__loop_exit@string.substring:
+    ret
+@getString:
+    mov edi, 256
+    call malloc
+    lea rsi, [rax+4]
+    mov rdi, str$fmt
+    xor rax, rax
+    push rsi
+    call scanf
+    pop rsi
+    xor rax, rax
+__loop@getString:
+    cmp byte [rsi+rax], 0
+    je __loop_exit@getString
+    inc eax
+    jmp __loop@getString
+__loop_exit@getString:
+    mov dword [rsi-4], eax
+    lea rax, [rsi-4]
     ret

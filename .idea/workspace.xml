@@ -8,7 +8,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1a1af29a-b77a-4b8c-9654-4271264bd490" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/MiracleOption.java" afterPath="$PROJECT_DIR$/src/com/miracle/MiracleOption.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/Root.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/Root.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/symbol/SymbolTable.java" afterPath="$PROJECT_DIR$/src/com/miracle/symbol/SymbolTable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utility/builtin.mx" afterPath="$PROJECT_DIR$/utility/builtin.mx" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,117 +42,42 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Root.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Root.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/Root.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="25">
-              <caret line="751" column="41" lean-forward="true" selection-start-line="751" selection-start-column="41" selection-end-line="751" selection-end-column="41" />
+            <state relative-caret-position="118">
+              <caret line="711" column="38" lean-forward="false" selection-start-line="711" selection-start-column="38" selection-end-line="711" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Move.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Move.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="28" column="20" lean-forward="false" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BinaryBranch.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/BinaryBranch.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LLIRTransformer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LLIRTransformer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
-              <caret line="127" column="0" lean-forward="true" selection-start-line="127" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MLIRTransformer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MLIRTransformer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="72" column="29" lean-forward="false" selection-start-line="72" selection-start-column="29" selection-end-line="72" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BasicBlock.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/structure/BasicBlock.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-              <folding>
-                <element signature="e#2007#2008#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SimpleAllocator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/SimpleAllocator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6050">
-              <caret line="253" column="25" lean-forward="false" selection-start-line="253" selection-start-column="25" selection-end-line="253" selection-end-column="25" />
-              <folding>
-                <element signature="e#1238#1239#0" expanded="true" />
-                <element signature="e#1287#1288#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StackRegister.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/StackRegister.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="21" column="30" lean-forward="false" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
-              <folding>
-                <element signature="e#513#514#0" expanded="true" />
-                <element signature="e#550#551#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RegisterBuffer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/RegisterBuffer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="22" column="12" lean-forward="false" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="X64Printer.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="X64Printer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="503">
-              <caret line="220" column="59" lean-forward="false" selection-start-line="220" selection-start-column="59" selection-end-line="220" selection-end-column="59" />
-              <folding>
-                <element signature="e#7342#7343#0" expanded="true" />
-                <element signature="e#7391#7392#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="573">
+              <caret line="98" column="16" lean-forward="false" selection-start-line="98" selection-start-column="16" selection-end-line="98" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SymbolTable.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/SymbolTable.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="55" column="46" lean-forward="false" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MiracleOption.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/miracle/MiracleOption.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="9" column="50" lean-forward="false" selection-start-line="9" selection-start-column="50" selection-end-line="9" selection-end-column="50" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -167,11 +96,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Binary</find>
-      <find>set</find>
-      <find>call</find>
-      <find>RAX</find>
-      <find>new_init_body</find>
       <find>pop</find>
       <find>JMP</find>
       <find>Return</find>
@@ -197,6 +121,11 @@
       <find>MUL</find>
       <find>BinaryBran</find>
       <find>HeapAll</find>
+      <find>NewInit</find>
+      <find>new Linked</find>
+      <find>extern</find>
+      <find>length</find>
+      <find>exter</find>
     </findStrings>
     <replaceStrings>
       <replace>T</replace>
@@ -237,7 +166,6 @@
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/Visitor.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/DirectAllocator.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/DirectRegisterAllocator.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/MiracleOption.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/Substitutable.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/IndirectRegister.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/Register.java" />
@@ -256,7 +184,6 @@
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LivenessAnalysis.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/Number.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/Printer.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/symbol/SymbolTable.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/OffsetRegister.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/UnaryArithmetic.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/Jump.java" />
@@ -272,13 +199,15 @@
         <option value="$PROJECT_DIR$/src/com/miracle/symbol/SymbolArrayType.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/BinaryBranch.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LLIRTransformer.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/StackRegister.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/RegisterBuffer.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Move.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/SimpleAllocator.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MLIRTransformer.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/Root.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/symbol/SymbolTable.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/MiracleOption.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java" />
       </list>
     </option>
   </component>
@@ -1320,14 +1249,7 @@
       <workItem from="1495860867765" duration="1300000" />
       <workItem from="1495872558615" duration="4671000" />
       <workItem from="1495881338658" duration="30558000" />
-      <workItem from="1495936248896" duration="22957000" />
-    </task>
-    <task id="LOCAL-00006" summary="Bugs fixed for minor parts.">
-      <created>1494820815012</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1494820815012</updated>
+      <workItem from="1495936248896" duration="31839000" />
     </task>
     <task id="LOCAL-00007" summary="Bugs fixed for minor parts.">
       <created>1494821088040</created>
@@ -1665,11 +1587,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495958351601</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Bugs fixed for recurrent news.">
+      <created>1495959382894</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1495959382894</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="483782000" />
+    <option name="totallyTimeSpent" value="492664000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1753,7 +1682,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Bulletin files added." />
     <MESSAGE value="More swift code added &amp; symbol table changed." />
     <MESSAGE value="G4 modified &amp; Bugs fixed." />
     <MESSAGE value="Bugs fixed for functions calling." />
@@ -1778,7 +1706,8 @@
     <MESSAGE value="Bugs fixed for heap memory allocation." />
     <MESSAGE value="Array.size added." />
     <MESSAGE value="Bugs for func call fixed." />
-    <option name="LAST_COMMIT_MESSAGE" value="Bugs for func call fixed." />
+    <MESSAGE value="Bugs fixed for recurrent news." />
+    <option name="LAST_COMMIT_MESSAGE" value="Bugs fixed for recurrent news." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1812,7 +1741,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java</url>
-          <line>217</line>
+          <line>221</line>
           <properties />
           <option name="timeStamp" value="278" />
         </line-breakpoint>
@@ -1983,14 +1912,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/MiracleOption.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/Printer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -2060,14 +1981,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="101">
           <caret line="22" column="5" lean-forward="false" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/ASTree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3000">
-          <caret line="151" column="0" lean-forward="false" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2211,18 +2124,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Call.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="82" column="56" lean-forward="false" selection-start-line="82" selection-start-column="56" selection-end-line="82" selection-end-column="56" />
-          <folding>
-            <element signature="e#1076#1077#0" expanded="true" />
-            <element signature="e#1113#1114#0" expanded="true" />
-            <element signature="e#2672#2673#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/structure/Function.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-10">
@@ -2235,14 +2136,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="79" column="30" lean-forward="false" selection-start-line="79" selection-start-column="30" selection-end-line="79" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/SymbolTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1075">
-          <caret line="24" column="21" lean-forward="true" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -2261,17 +2154,6 @@
           <caret line="11" column="11" lean-forward="false" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="503">
-          <caret line="220" column="59" lean-forward="false" selection-start-line="220" selection-start-column="59" selection-end-line="220" selection-end-column="59" />
-          <folding>
-            <element signature="e#7342#7343#0" expanded="true" />
-            <element signature="e#7391#7392#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2334,14 +2216,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MLIRTransformer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="72" column="29" lean-forward="false" selection-start-line="72" selection-start-column="29" selection-end-line="72" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LLIRTransformer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="373">
@@ -2352,10 +2226,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MLIRTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="153" column="49" lean-forward="true" selection-start-line="153" selection-start-column="49" selection-end-line="153" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Call.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="16" column="12" lean-forward="true" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/ASTree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="151" column="0" lean-forward="false" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/Root.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="751" column="41" lean-forward="true" selection-start-line="751" selection-start-column="41" selection-end-line="751" selection-end-column="41" />
+        <state relative-caret-position="118">
+          <caret line="711" column="38" lean-forward="false" selection-start-line="711" selection-start-column="38" selection-end-line="711" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/MiracleOption.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="9" column="50" lean-forward="false" selection-start-line="9" selection-start-column="50" selection-end-line="9" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/symbol/SymbolTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="55" column="46" lean-forward="false" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="573">
+          <caret line="98" column="16" lean-forward="false" selection-start-line="98" selection-start-column="16" selection-end-line="98" selection-end-column="16" />
           <folding />
         </state>
       </provider>

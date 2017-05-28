@@ -224,10 +224,10 @@ public class Root extends Node {
                     VirtualRegister register = newVirtualRegister(MiracleOption.BOOL_SIZE);
                     curBasicBlock.tail.prepend(new Call(
                             __builtin_strcmp.getAddress(),
-                            Arrays.asList(
-                                    ((BinaryExpression) selection.expression).left.getResultNumber(),
-                                    ((BinaryExpression) selection.expression).right.getResultNumber()
-                            ),
+                            new LinkedList<Number>() {{
+                                add(((BinaryExpression) selection.expression).left.getResultNumber());
+                                add(((BinaryExpression) selection.expression).right.getResultNumber());
+                            }},
                             register,
                             null
                     ));
@@ -375,7 +375,7 @@ public class Root extends Node {
             Symbol symbol = variable.getScope().resolve(variable.identifier);
             if (symbol instanceof VariableDeclaration) {
                 if (((VariableDeclaration) symbol).getMemberFrom() != null) {
-                    // if a variable in class has no this before, then I will force to add it
+                    // if a variable in class has no `this' before, then I will force to add it
                     variable.setResultNumber(new OffsetRegister(
                             curFunction.getSelfRegister(),
                             curClass.getVariableOffset(variable.identifier),
@@ -476,10 +476,10 @@ public class Root extends Node {
             if (expression.left.getResultType().isSameType(__builtin_string)) {
                 curBasicBlock.tail.prepend(new Call(
                         __builtin_strcmp.getAddress(),
-                        Arrays.asList(
-                                expression.left.getResultNumber(),
-                                expression.right.getResultNumber()
-                        ),
+                        new LinkedList<Number>() {{
+                            add(expression.left.getResultNumber());
+                            add(expression.right.getResultNumber());
+                        }},
                         register,
                         null
                 ));
@@ -565,10 +565,10 @@ public class Root extends Node {
             VirtualRegister register = newVirtualRegister(MiracleOption.INT_SIZE);
             curBasicBlock.tail.prepend(new Call(
                     __builtin_strcat.getAddress(),
-                    Arrays.asList(
-                            expression.left.getResultNumber(),
-                            expression.right.getResultNumber()
-                    ),
+                    new LinkedList<Number>() {{
+                        add(expression.left.getResultNumber());
+                        add(expression.right.getResultNumber());
+                    }},
                     register, null
             ));
             recycle(expression.left.getResultNumber());
@@ -701,7 +701,7 @@ public class Root extends Node {
                     if (constructor != null) {
                         curBasicBlock.tail.prepend(new Call(
                                 constructor.getAddress(),
-                                Collections.emptyList(),
+                                new LinkedList<>(),
                                 null, register
                         ));
                     }

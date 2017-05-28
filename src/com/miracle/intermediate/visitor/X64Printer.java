@@ -72,6 +72,7 @@ public class X64Printer implements IRVisitor {
         builder.append('\n').append("default rel").append('\n');
         builder.append('\n').append("extern").append(' ').append("puts");
         builder.append('\n').append("extern").append(' ').append("malloc");
+        builder.append('\n').append("extern").append(' ').append("strcat");
         builder.append('\n').append("extern").append(' ').append("scanf").append('\n');
         builder.append('\n').append("global").append(' ').append("main").append('\n');
         builder.append('\n').append("section .bss").append('\n');
@@ -86,13 +87,16 @@ public class X64Printer implements IRVisitor {
             builder.append(value.name).append(':').append('\t')
                     .append("db").append(' ');
             List<Byte> bytes = divideStringIntoByte(value.value);
-            printNumberWith256Base(bytes.size() + 1, 4);
+            printNumberWith256Base(bytes.size(), 4);
             bytes.forEach(element -> builder.append(element).append(", "));
             builder.append('0').append('\n');
         });
         builder.append("int$fmt").append(':').append('\t')
                 .append("db").append(' ').append("25H").append(", ")
                 .append("64H").append(", ").append("00H").append('\n');
+        builder.append("str$fmt").append(':').append('\t')
+                .append("db").append(' ').append("25H")
+                .append(", ").append("73H").append(", ").append("00H");
         builder.append('\n').append("section .text").append('\n');
         ir.globalFunction.forEach((key, value) -> {
             value.accept(this);
