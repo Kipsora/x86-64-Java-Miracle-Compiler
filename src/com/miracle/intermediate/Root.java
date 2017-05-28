@@ -485,8 +485,11 @@ public class Root extends Node {
                         register,
                         null
                 ));
-                curBasicBlock.tail.prepend(new Compare(operator, register,
-                        new Immediate(0, MiracleOption.INT_SIZE), register
+                curBasicBlock.tail.prepend(new Compare(
+                        operator,
+                        new Immediate(0, MiracleOption.INT_SIZE),
+                        register,
+                        register
                 ));
             } else {
                 curBasicBlock.tail.prepend(new Compare(

@@ -114,9 +114,9 @@ public class Compare extends Instruction {
 
         Types getReverse() {
             if (this.equals(EQL)) {
-                return NEQ;
-            } else if (this.equals(NEQ)) {
                 return EQL;
+            } else if (this.equals(NEQ)) {
+                return NEQ;
             } else if (this.equals(LT)) {
                 return REQ;
             } else if (this.equals(RT)) {

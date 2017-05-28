@@ -130,11 +130,11 @@ public class BinaryBranch extends Fork {
             } else if (this.equals(NEQ)) {
                 return "jne";
             } else if (this.equals(LT)) {
-                return "jb";
+                return "jl";
             } else if (this.equals(RT)) {
                 return "jg";
             } else if (this.equals(LEQ)) {
-                return "jbe";
+                return "jle";
             } else {
                 return "jge";
             }
@@ -142,9 +142,9 @@ public class BinaryBranch extends Fork {
 
         Types getReverse() {
             if (this.equals(EQL)) {
-                return NEQ;
-            } else if (this.equals(NEQ)) {
                 return EQL;
+            } else if (this.equals(NEQ)) {
+                return NEQ;
             } else if (this.equals(LT)) {
                 return REQ;
             } else if (this.equals(RT)) {

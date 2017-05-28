@@ -78,7 +78,7 @@ __loop_positive@toString:
     push rsi
     mov edi, dword [rdi]
     add edi, dword [rsi]
-    add edi, 3
+    add edi, 5
     call malloc
     pop rsi
     pop rdi
@@ -125,8 +125,13 @@ __loop2_exit@strcat:
 __loop@string.parseInt:
     cmp ebx, 0
     je __loop_exit@string.parseInt
-    imul eax, 10
     mov cl, byte [rdi+4]
+    cmp cl, 48
+    jl __loop_exit@string.parseInt
+    cmp cl, 57
+    jg __loop_exit@string.parseInt
+    
+    imul eax, 10
     sub ecx, 48
     add eax, ecx
     inc edi
@@ -180,4 +185,31 @@ __loop@getString:
 __loop_exit@getString:
     mov dword [rsi-4], eax
     lea rax, [rsi-4]
+    ret
+@strcmp: ; cmp(rdi, rsi)
+    add rsi, 4
+    add rdi, 4
+__loop@strcmp:
+    mov cl, byte [rsi]
+    cmp cl, byte [rdi]
+    jg __loop_pass_exit@strcmp
+    jl __loop_fail_exit@strcmp
+    cmp cl, 0
+    je __loop_wait@strcmp
+    cmp byte [rdi], 0
+    je __loop_fail_exit@strcmp
+    inc rsi
+    inc rdi
+    jmp __loop@strcmp
+__loop_wait@strcmp:
+    cmp byte [rdi], 0
+    je __loop_draw_exit@strcmp
+__loop_pass_exit@strcmp:
+    mov al, -1
+    ret
+__loop_fail_exit@strcmp:
+    mov al, 1
+    ret
+__loop_draw_exit@strcmp:
+    xor al, al
     ret
