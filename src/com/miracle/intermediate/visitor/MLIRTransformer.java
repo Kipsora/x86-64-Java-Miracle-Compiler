@@ -41,6 +41,10 @@ public class MLIRTransformer implements IRVisitor {
 
     @Override
     public void visit(Function function) {
+        if (function.getSelfRegister() != null) {
+            function.parameters.add(0, function.getSelfRegister());
+            function.setSelfRegister(null);
+        }
         function.getEntryBasicBlock().accept(this);
     }
 
@@ -55,7 +59,7 @@ public class MLIRTransformer implements IRVisitor {
                 if (((HeapAllocate) it.instruction).getNumber() instanceof Immediate) {
                     number = new Immediate(
                             ((HeapAllocate) it.instruction).getSize() *
-                                    ((Immediate) ((HeapAllocate) it.instruction).getNumber()).value,
+                                    ((Immediate) ((HeapAllocate) it.instruction).getNumber()).value + 4,
                             ((HeapAllocate) it.instruction).getNumber().getNumberSize()
                     );
                 } else {
@@ -71,6 +75,13 @@ public class MLIRTransformer implements IRVisitor {
                             BinaryArithmetic.Types.MUL, (Register) number,
                             new Immediate(
                                     ((HeapAllocate) it.instruction).getSize(),
+                                    ((HeapAllocate) it.instruction).getNumber().getNumberSize()
+                            )
+                    ));
+                    it.prepend(new BinaryArithmetic(
+                            BinaryArithmetic.Types.ADD, (Register) number,
+                            new Immediate(
+                                    4,
                                     ((HeapAllocate) it.instruction).getNumber().getNumberSize()
                             )
                     ));
@@ -136,6 +147,11 @@ public class MLIRTransformer implements IRVisitor {
                     );
                     it.prepend(new Move(register, ((BinaryArithmetic) it.instruction).getSource()));
                     ((BinaryArithmetic) it.instruction).setSource(register);
+                }
+            } else if (it.instruction instanceof Call) {
+                if (((Call) it.instruction).getSelfRegister() != null) {
+                    ((Call) it.instruction).parameters.add(0, ((Call) it.instruction).getSelfRegister());
+                    ((Call) it.instruction).setSelfRegister(null);
                 }
             }
         }

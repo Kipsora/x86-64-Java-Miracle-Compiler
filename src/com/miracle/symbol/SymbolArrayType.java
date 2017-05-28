@@ -15,6 +15,7 @@ public class SymbolArrayType extends SymbolVariableType {
         this.dimension = dimension;
         addMethod("size", new SymbolFunctionType(__builtin_int, this) {{
             setAddress("@array.size");
+            getAddress().buffer.enroll("RAX");
         }});
     }
 

@@ -68,3 +68,7 @@ __loop_positive@toString:
     mov rdi, 0
     mov rax, 1
     syscall
+    ret
+@array.size:
+    mov eax, dword [rdi]
+    ret

@@ -79,4 +79,8 @@ public class Call extends Instruction {
     public Register getSelfRegister() {
         return selfRegister;
     }
+
+    public void setSelfRegister(Register selfRegister) {
+        this.selfRegister = selfRegister;
+    }
 }

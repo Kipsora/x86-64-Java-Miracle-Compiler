@@ -67,6 +67,10 @@ public class Function {
         return selfRegister;
     }
 
+    public void setSelfRegister(DirectRegister selfRegister) {
+        this.selfRegister = selfRegister;
+    }
+
     public void map(Map<Number, Register> map) {
         if (selfRegister != null) {
             selfRegister = (DirectRegister) map.get(selfRegister);

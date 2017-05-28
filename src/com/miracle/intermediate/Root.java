@@ -434,7 +434,7 @@ public class Root extends Node {
             }
 
             subscript.setResultNumber(new OffsetRegister(
-                    (DirectRegister) tmpBase, null,
+                    (DirectRegister) tmpBase, 4,
                     (DirectRegister) tmpCoor, size,
                     size
             ));
@@ -713,6 +713,10 @@ public class Root extends Node {
 
                 curBasicBlock.tail.prepend(new HeapAllocate(
                         register, MiracleOption.POINTER_SIZE,
+                        expression.getResultNumber()
+                ));
+                curBasicBlock.tail.prepend(new Move(
+                        new OffsetRegister(register, 0, null, null, MiracleOption.INT_SIZE),
                         expression.getResultNumber()
                 ));
                 newNode.setResultNumber(register);
