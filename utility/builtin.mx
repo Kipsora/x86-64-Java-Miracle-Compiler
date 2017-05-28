@@ -64,7 +64,7 @@ __loop_positive@toString:
 @print:
     lea rsi, [rdi+4]
     mov edx, dword [rdi]
-    mov rdi, 0
+    mov rdi, 1
     mov rax, 1
     syscall
     ret
