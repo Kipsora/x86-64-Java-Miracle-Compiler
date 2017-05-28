@@ -1,5 +1,6 @@
 package com.miracle.intermediate.visitor;
 
+import com.miracle.MiracleOption;
 import com.miracle.intermediate.Root;
 import com.miracle.intermediate.instruction.Call;
 import com.miracle.intermediate.instruction.Compare;
@@ -11,8 +12,9 @@ import com.miracle.intermediate.instruction.fork.BinaryBranch;
 import com.miracle.intermediate.instruction.fork.Jump;
 import com.miracle.intermediate.instruction.fork.Return;
 import com.miracle.intermediate.instruction.fork.UnaryBranch;
+import com.miracle.intermediate.number.Immediate;
+import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.number.PhysicalRegister;
-import com.miracle.intermediate.number.Register;
 import com.miracle.intermediate.number.StackRegister;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
@@ -23,8 +25,9 @@ import java.util.Set;
 public class LLIRTransformer implements IRVisitor {
     private Set<BasicBlock> blockProcessed;
     private Function curFunction;
+    private BasicBlock.Node node;
 
-    private void enroll(Register register) {
+    private void enroll(Number register) {
         if (register instanceof PhysicalRegister) {
             curFunction.buffer.enroll(((PhysicalRegister) register).indexName);
         } else if (register instanceof StackRegister) {
@@ -56,15 +59,6 @@ public class LLIRTransformer implements IRVisitor {
         int size = curFunction.getReturns().size();
         curFunction.getReturns().forEach(element -> {
             element.append(new Jump(function.getExitBasicBlock()));
-            if (((Return) element.instruction).getValue() != null) {
-                element.append(new Move(
-                        PhysicalRegister.getBy16BITName(
-                                "RAX",
-                                ((Return) element.instruction).getValue().getNumberSize()
-                        ),
-                        ((Return) element.instruction).getValue()
-                ));
-            }
             element.remove();
         });
         curFunction = null;
@@ -74,8 +68,21 @@ public class LLIRTransformer implements IRVisitor {
     public void visit(BasicBlock block) {
         if (blockProcessed.contains(block)) return;
         blockProcessed.add(block);
-        for (BasicBlock.Node it = block.getHead(); it != block.tail; it = it.getSucc()) {
-            it.instruction.getDefRegisters().forEach(this::enroll);
+
+        if (block.isFunctionEntryBlock) {
+            for (int i = 0; i < curFunction.parameters.size() && i < MiracleOption.CallingConvention.size(); i++) {
+                if (!(curFunction.parameters.get(i) instanceof PhysicalRegister) ||
+                        !((PhysicalRegister) curFunction.parameters.get(i)).indexName.equals(MiracleOption.CallingConvention.get(i))) {
+                    block.getHead().prepend(new Move(
+                            curFunction.parameters.get(i),
+                            PhysicalRegister.getBy16BITName(MiracleOption.CallingConvention.get(i), curFunction.parameters.get(i).size)
+                    ));
+                }
+            }
+        }
+
+        for (node = block.getHead(); node != block.tail; node = node.getSucc()) {
+            node.instruction.getDefNumbers().forEach(this::enroll);
         }
         block.getSuccBasicBlock().forEach(this::visit);
     }
@@ -96,7 +103,12 @@ public class LLIRTransformer implements IRVisitor {
 
     @Override
     public void visit(Return irReturn) {
-
+        if (irReturn.getValue() instanceof Immediate) {
+            node.prepend(new Move(
+                    PhysicalRegister.getBy16BITName("RAX", irReturn.getValue().getNumberSize()),
+                    irReturn.getValue()
+            ));
+        }
     }
 
     @Override

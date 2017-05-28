@@ -2,11 +2,11 @@ package com.miracle.symbol;
 
 import com.miracle.astree.statement.declaration.ClassDeclaration;
 import com.miracle.astree.statement.declaration.Declaration;
+import com.miracle.astree.statement.declaration.VariableDeclaration;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.miracle.intermediate.number.PhysicalRegister.*;
 import static com.miracle.symbol.SymbolPrimitiveType.Types.*;
 
 public class SymbolTable {
@@ -115,6 +115,20 @@ public class SymbolTable {
             return builtinMethod.get(name);
         }
         return null;
+    }
+
+    public VariableDeclaration resolveVariable(String name) {
+        Symbol answer = currentSymbolTable.getOrDefault(name, null);
+        if (answer != null && answer instanceof VariableDeclaration && ((VariableDeclaration) answer).getAddress() != null) {
+            return (VariableDeclaration) answer;
+        }
+        if (parentSymbolTable != null) {
+            VariableDeclaration tmp = parentSymbolTable.resolveVariable(name);
+            if (tmp.getAddress() != null) {
+                return tmp;
+            }
+        }
+        return (VariableDeclaration) answer;
     }
 
     public SymbolTable getParentSymbolTable() {

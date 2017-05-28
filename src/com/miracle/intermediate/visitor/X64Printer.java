@@ -104,24 +104,39 @@ public class X64Printer implements IRVisitor {
     @Override
     public void visit(BinaryArithmetic binaryArithmetic) {
         if (binaryArithmetic.operator.equals(BinaryArithmetic.Types.DIV)) {
-            builder.append('\t').append("mov")
-                    .append(' ').append(getBy16BITName("RAX", binaryArithmetic.getTarget().getNumberSize()))
-                    .append(", ").append(binaryArithmetic.getTarget()).append('\n');
+            /*
+             *  Div Instruction:  DIV RAX, src (src != RDX, RAX, imm) RAX /= src
+             *    - src cannot be immediate number   -> processed in MLIRTransformer
+             *    - src cannot be RDX and RAX        -> TODO: in Register Allocator
+             *    - tar must be RAX                  -> TODO: in Register Allocator
+             *  cdq
+             *  idiv src
+             */
             builder.append('\t').append("cdq").append('\n');
             builder.append('\t').append("idiv").append(' ').append(binaryArithmetic.getSource()).append('\n');
-            builder.append('\t').append("mov").append(' ').append(binaryArithmetic.getTarget())
-                    .append(", ").append(getBy16BITName("RAX", binaryArithmetic.getTarget().size))
-                    .append('\n');
         } else if (binaryArithmetic.operator.equals(BinaryArithmetic.Types.MOD)) {
-            builder.append('\t').append("mov")
-                    .append(' ').append(getBy16BITName("RAX", binaryArithmetic.getTarget().getNumberSize()))
-                    .append(", ").append(binaryArithmetic.getTarget()).append('\n');
+            /*
+             *  Div Instruction:  MOD RAX, src RAX /= src
+             *    - src cannot be immediate number   -> processed in MLIRTransformer
+             *    - src cannot be RDX and RAX        -> TODO: in Register Allocator
+             *    - tar must be RAX                  -> TODO: in Register Allocator
+             *  cdq
+             *  idiv src
+             *  mov RAX, RDX
+             */
             builder.append('\t').append("cdq").append('\n');
             builder.append('\t').append("idiv").append(' ').append(binaryArithmetic.getSource()).append('\n');
-            builder.append('\t').append("mov").append(' ').append(binaryArithmetic.getTarget())
-                    .append(", ").append(getBy16BITName("RDX", binaryArithmetic.getTarget().size))
-                    .append('\n');
+            builder.append('\t').append("mov")
+                    .append(' ').append(getBy16BITName("RDX", binaryArithmetic.getTarget().size))
+                    .append(", ").append(getBy16BITName("RAX", binaryArithmetic.getTarget().size)).append('\n');
         } else {
+            /*
+             *  Other Arithmetic Instruction:  OP tar, src (tar != src) tar OP= src
+             *    - tar and src cannot be both indirect registers   -> TODO: in Register Allocator
+             *  EXCEPTION:
+             *     >>, <<: target must be physical registers        -> TODO: in Register Allocator
+             *     *: source cannot be indirect registers           -> TODO: in Register Allocator
+             */
             builder.append('\t').append(binaryArithmetic.operator)
                     .append(' ').append(binaryArithmetic.getTarget())
                     .append(", ").append(binaryArithmetic.getSource())
@@ -131,6 +146,10 @@ public class X64Printer implements IRVisitor {
 
     @Override
     public void visit(Move move) {
+        /*
+         *  Move Instruction:
+         *  tar and src cannot be both indirect registers       -> TODO: in Register Allocator
+         */
         builder.append('\t').append("mov").append(' ').append(move.getTarget())
                 .append(", ").append(move.getSource()).append('\n');
     }
@@ -153,10 +172,10 @@ public class X64Printer implements IRVisitor {
         blockProcessed.add(block);
         builder.append(block.name).append(':').append('\n');
         if (block.isFunctionEntryBlock) {
-            builder.append('\t').append("push").append(' ').append(RBP.getELF64Name()).append('\n');
-            builder.append('\t').append("mov").append(' ').append(RBP).append(", ")
-                    .append(RSP).append('\n');
             if (block.blockFrom.buffer.getSpillSize() > 0) {
+                builder.append('\t').append("push").append(' ').append(RBP.getELF64Name()).append('\n');
+                builder.append('\t').append("mov").append(' ').append(RBP).append(", ")
+                        .append(RSP).append('\n');
                 builder.append('\t').append("sub").append(' ').append(RSP).append(", ")
                         .append(get16Multiplier(block.blockFrom.buffer.getSpillSize()))
                         .append('\n');
@@ -169,7 +188,7 @@ public class X64Printer implements IRVisitor {
                         .append(curFunction.getParameters().get(i)).append('\n');
             }
         }
-        if (block.isFunctionExitBlock) {
+        if (block.isFunctionExitBlock && block.blockFrom.buffer.getSpillSize() > 0) {
             builder.append('\t').append("leave").append('\n');
         }
         for (BasicBlock.Node it = block.getHead(); it != block.tail; it = it.getSucc()) {
@@ -180,12 +199,12 @@ public class X64Printer implements IRVisitor {
 
     @Override
     public void visit(Call call) {
+        /*
+         * CALL instruction:
+         * returnRegister must be null or RAX                    -> TODO: in Register Allocator
+         * The last 6 parameters must follow calling conventions -> TODO: in Register Allocator
+         */
         List<Number> parameters = call.getReverseParameters();
-        for (int i = 0, size = parameters.size(); i < size && i < CallingConvention.size(); i++) {
-            builder.append('\t').append("mov")
-                    .append(' ').append(getBy16BITName(CallingConvention.get(i), parameters.get(i).getNumberSize()))
-                    .append(", ").append(parameters.get(i)).append('\n');
-        }
         for (int i = CallingConvention.size(), size = parameters.size(); i < size; i++) {
             if (parameters.get(i) instanceof PhysicalRegister) {
                 builder.append('\t').append("push").append(' ')
@@ -198,21 +217,24 @@ public class X64Printer implements IRVisitor {
         }
         builder.append('\t').append("call").append(' ')
                 .append(call.function.identifier).append('\n');
-        if (call.getReturnRegister() != null) {
-            builder.append('\t').append("mov")
-                    .append(" ").append(call.getReturnRegister())
-                    .append(", ").append(getBy16BITName("RAX", call.getReturnRegister().size)).append('\n');
-        }
     }
 
     @Override
     public void visit(UnaryArithmetic prefixArithmetic) {
+        /*
+         *  UnaryArithmetic Instruction:
+         *  NO LIMITS
+         */
         builder.append('\t').append(prefixArithmetic.operator).append(' ')
                 .append(prefixArithmetic.getTarget()).append('\n');
     }
 
     @Override
     public void visit(UnaryBranch unaryBranch) {
+        /*
+         * UnaryBranch Instruction:
+         *   expression cannot be immediate number -> processed in MLIRTransformer
+         */
         builder.append('\t').append("cmp").append(' ').append(unaryBranch.getExpression())
                 .append(", ").append(0).append('\n');
         builder.append('\t').append("jnz").append(' ')
@@ -221,6 +243,11 @@ public class X64Printer implements IRVisitor {
 
     @Override
     public void visit(Return irReturn) {
+        /*
+         * Return Instruction:
+         *   - value must either be null or RAX    -> imm: processed in LLIRTransformer
+         *                                         -> reg not RAX: TODO: in Register Allocator
+         */
         builder.append('\t').append("ret").append('\n');
     }
 
@@ -232,6 +259,11 @@ public class X64Printer implements IRVisitor {
 
     @Override
     public void visit(Compare compare) {
+        /*
+         * Compare Instruction:
+         *   - srcA, srcB cannot be both immediate number   -> processed in MLIRTransformer
+         *   - srcA, srcB cannot be both indirect registers -> TODO: in Register Allocator
+         */
         builder.append('\t').append("cmp").append(' ').append(compare.getSourceA())
                 .append(", ").append(compare.getSourceB()).append('\n');
         builder.append('\t').append(compare.operator).append(' ')
@@ -240,16 +272,22 @@ public class X64Printer implements IRVisitor {
 
     @Override
     public void visit(HeapAllocate allocate) {
-        builder.append('\t').append("mov").append(' ').append(EDI).append(", ")
-                .append(allocate.getNumber()).append('\n');
+        /*
+         *  HeapAllocate Instruction:
+         *    - number must be RDI      -> TODO: in Register Allocator
+         *    - register must be RAX    -> TODO: in Register Allocator
+         *    - size must be one        -> processed in MLIRTransformer
+         */
         builder.append('\t').append("call").append(' ').append("malloc").append('\n');
-        builder.append('\t').append("mov").append(' ').append(allocate.getTarget())
-                .append(", ").append(getBy16BITName("RAX", allocate.getTarget().size))
-                .append('\n');
     }
 
     @Override
     public void visit(BinaryBranch binaryBranch) {
+        /*
+         * BinaryBranch expression:
+         *   - expA and expB cannot be both immediate number   -> processed in MLIRTransformer
+         *   - expA and expB cannot be both indirect registers -> TODO: in Register Allocator
+         */
         builder.append('\t').append("cmp")
                 .append(' ').append(binaryBranch.getExpressionA())
                 .append(", ").append(binaryBranch.getExpressionB())

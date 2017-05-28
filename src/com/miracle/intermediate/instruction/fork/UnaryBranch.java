@@ -38,24 +38,22 @@ public class UnaryBranch extends Fork {
     }
 
     @Override
-    public void rename(Map<Register, Register> map) {
-        if (expression instanceof Register) {
-            expression = map.getOrDefault(expression, (Register) expression);
-            if (expression instanceof OffsetRegister) {
-                ((OffsetRegister) expression).map(map);
-            }
+    public void rename(Map<Number, Register> map) {
+        if (map.containsKey(expression)) expression = map.get(expression);
+        if (expression instanceof OffsetRegister) {
+            ((OffsetRegister) expression).map(map);
         }
     }
 
     @Override
-    public Set<Register> getUseRegisters() {
-        Set<Register> set = new HashSet<>();
+    public Set<Number> getUseNumbers() {
+        Set<Number> set = new HashSet<>();
         addToSet(expression, set);
         return set;
     }
 
     @Override
-    public Set<Register> getDefRegisters() {
+    public Set<Number> getDefNumbers() {
         return Collections.emptySet();
     }
 }

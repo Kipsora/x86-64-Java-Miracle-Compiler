@@ -377,6 +377,7 @@ public class Root extends Node {
                             curClass.getVariable(variable.identifier).getRegisterSize()
                     ));
                 } else {
+                    symbol = variable.getScope().resolveVariable(variable.identifier);
                     variable.setResultNumber(((VariableDeclaration) symbol).getAddress());
                 }
             } else if (symbol instanceof FunctionDeclaration) {

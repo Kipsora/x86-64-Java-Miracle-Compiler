@@ -7,7 +7,6 @@ import com.miracle.intermediate.number.Register;
 import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.visitor.IRVisitor;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -31,30 +30,28 @@ public class BinaryArithmetic extends Instruction {
     }
 
     @Override
-    public void rename(Map<Register, Register> map) {
+    public void rename(Map<Number, Register> map) {
         target = map.getOrDefault(target, target);
         if (target instanceof OffsetRegister) {
             ((OffsetRegister) target).map(map);
         }
-        if (source instanceof Register) {
-            source = map.getOrDefault(source, (Register) source);
-            if (source instanceof OffsetRegister) {
-                ((OffsetRegister) source).map(map);
-            }
+        if (map.containsKey(source)) source = map.get(source);
+        if (source instanceof OffsetRegister) {
+            ((OffsetRegister) source).map(map);
         }
     }
 
     @Override
-    public Set<Register> getUseRegisters() {
-        Set<Register> set = new HashSet<>();
+    public Set<Number> getUseNumbers() {
+        Set<Number> set = new HashSet<>();
         addToSet(source, set);
         addToSet(target, set);
         return set;
     }
 
     @Override
-    public Set<Register> getDefRegisters() {
-        Set<Register> set = new HashSet<>();
+    public Set<Number> getDefNumbers() {
+        Set<Number> set = new HashSet<>();
         addToSet(target, set);
         return set;
     }
@@ -63,12 +60,12 @@ public class BinaryArithmetic extends Instruction {
         return source;
     }
 
-    public Register getTarget() {
-        return target;
-    }
-
     public void setSource(VirtualRegister source) {
         this.source = source;
+    }
+
+    public Register getTarget() {
+        return target;
     }
 
     public enum Types {

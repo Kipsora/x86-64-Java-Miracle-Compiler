@@ -69,31 +69,27 @@ public class BinaryBranch extends Fork {
     }
 
     @Override
-    public void rename(Map<Register, Register> map) {
-        if (expressionB instanceof Register) {
-            expressionB = map.getOrDefault(expressionB, (Register) expressionB);
-            if (expressionB instanceof OffsetRegister) {
-                ((OffsetRegister) expressionB).map(map);
-            }
+    public void rename(Map<Number, Register> map) {
+        if (map.containsKey(expressionB)) expressionB = map.get(expressionB);
+        if (expressionB instanceof OffsetRegister) {
+            ((OffsetRegister) expressionB).map(map);
         }
-        if (expressionA instanceof Register) {
-            expressionA = map.getOrDefault(expressionA, (Register) expressionA);
-            if (expressionA instanceof OffsetRegister) {
-                ((OffsetRegister) expressionA).map(map);
-            }
+        if (map.containsKey(expressionA)) expressionA = map.get(expressionA);
+        if (expressionA instanceof OffsetRegister) {
+            ((OffsetRegister) expressionA).map(map);
         }
     }
 
     @Override
-    public Set<Register> getUseRegisters() {
-        Set<Register> set = new HashSet<>();
+    public Set<Number> getUseNumbers() {
+        Set<Number> set = new HashSet<>();
         addToSet(expressionB, set);
         addToSet(expressionA, set);
         return set;
     }
 
     @Override
-    public Set<Register> getDefRegisters() {
+    public Set<Number> getDefNumbers() {
         return Collections.emptySet();
     }
 

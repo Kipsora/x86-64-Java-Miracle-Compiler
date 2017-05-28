@@ -2,6 +2,7 @@ package com.miracle.intermediate.structure;
 
 import com.miracle.intermediate.RegisterBuffer;
 import com.miracle.intermediate.number.DirectRegister;
+import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.number.Register;
 import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.visitor.IRVisitor;
@@ -66,7 +67,7 @@ public class Function {
         return selfRegister;
     }
 
-    public void map(Map<Register, Register> map) {
+    public void map(Map<Number, Register> map) {
         if (selfRegister != null) {
             selfRegister = (DirectRegister) map.get(selfRegister);
         }

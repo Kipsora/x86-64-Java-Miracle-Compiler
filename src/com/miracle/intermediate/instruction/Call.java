@@ -36,14 +36,12 @@ public class Call extends Instruction {
     }
 
     @Override
-    public void rename(Map<Register, Register> map) {
+    public void rename(Map<Number, Register> map) {
         for (int i = 0, size = parameters.size(); i < size; i++) {
             Number arg = parameters.get(i);
-            if (arg instanceof Register) {
-                parameters.set(i, map.getOrDefault(arg, (Register) arg));
-                if (arg instanceof OffsetRegister) {
-                    ((OffsetRegister) arg).map(map);
-                }
+            if (map.containsKey(arg)) parameters.set(i, map.get(arg));
+            if (arg instanceof OffsetRegister) {
+                ((OffsetRegister) arg).map(map);
             }
         }
         if (returnRegister != null) {
@@ -61,8 +59,8 @@ public class Call extends Instruction {
     }
 
     @Override
-    public Set<Register> getUseRegisters() {
-        Set<Register> registers = new HashSet<>();
+    public Set<Number> getUseNumbers() {
+        Set<Number> registers = new HashSet<>();
         addToSet(selfRegister, registers);
         addToSet(returnRegister, registers);
         parameters.forEach(element -> addToSet(element, registers));
@@ -70,7 +68,7 @@ public class Call extends Instruction {
     }
 
     @Override
-    public Set<Register> getDefRegisters() {
+    public Set<Number> getDefNumbers() {
         return Collections.singleton(returnRegister);
     }
 

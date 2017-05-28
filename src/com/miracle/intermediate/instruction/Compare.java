@@ -3,10 +3,8 @@ package com.miracle.intermediate.instruction;
 import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.number.OffsetRegister;
 import com.miracle.intermediate.number.Register;
-import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.visitor.IRVisitor;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -33,18 +31,14 @@ public class Compare extends Instruction {
     }
 
     @Override
-    public void rename(Map<Register, Register> map) {
-        if (sourceA instanceof Register) {
-            sourceA = map.getOrDefault(sourceA, (Register) sourceA);
-            if (sourceA instanceof OffsetRegister) {
-                ((OffsetRegister) sourceA).map(map);
-            }
+    public void rename(Map<Number, Register> map) {
+        if (map.containsKey(sourceA)) sourceA = map.get(sourceA);
+        if (sourceA instanceof OffsetRegister) {
+            ((OffsetRegister) sourceA).map(map);
         }
-        if (sourceB instanceof Register) {
-            sourceB = map.getOrDefault(sourceB, (Register) sourceB);
-            if (sourceB instanceof OffsetRegister) {
-                ((OffsetRegister) sourceB).map(map);
-            }
+        if (map.containsKey(sourceB)) sourceB = map.get(sourceB);
+        if (sourceB instanceof OffsetRegister) {
+            ((OffsetRegister) sourceB).map(map);
         }
         target = map.getOrDefault(target, target);
         if (target instanceof OffsetRegister) {
@@ -53,16 +47,16 @@ public class Compare extends Instruction {
     }
 
     @Override
-    public Set<Register> getUseRegisters() {
-        Set<Register> set = new HashSet<>();
+    public Set<Number> getUseNumbers() {
+        Set<Number> set = new HashSet<>();
         addToSet(sourceA, set);
         addToSet(sourceB, set);
         return set;
     }
 
     @Override
-    public Set<Register> getDefRegisters() {
-        Set<Register> set = new HashSet<>();
+    public Set<Number> getDefNumbers() {
+        Set<Number> set = new HashSet<>();
         addToSet(target, set);
         return set;
     }
@@ -71,7 +65,7 @@ public class Compare extends Instruction {
         return sourceA;
     }
 
-    public void setSourceA(VirtualRegister sourceA) {
+    public void setSourceA(Number sourceA) {
         this.sourceA = sourceA;
     }
 
