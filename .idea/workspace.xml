@@ -8,7 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1a1af29a-b77a-4b8c-9654-4271264bd490" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utility/builtin.mx" afterPath="$PROJECT_DIR$/utility/builtin.mx" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -49,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SimpleAllocator.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SimpleAllocator.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/SimpleAllocator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="183" column="28" lean-forward="false" selection-start-line="183" selection-start-column="28" selection-end-line="183" selection-end-column="28" />
+            <state relative-caret-position="278">
+              <caret line="59" column="43" lean-forward="true" selection-start-line="59" selection-start-column="43" selection-end-line="59" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -99,11 +98,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="X64Printer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="X64Printer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="446">
-              <caret line="99" column="52" lean-forward="false" selection-start-line="99" selection-start-column="52" selection-end-line="99" selection-end-column="52" />
+            <state relative-caret-position="321">
+              <caret line="94" column="36" lean-forward="true" selection-start-line="94" selection-start-column="36" selection-end-line="94" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -765,7 +764,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Miracle with MiddleIR">
+  <component name="RunManager" selected="Application.Miracle">
     <configuration default="false" name="Miracle" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -1334,14 +1333,7 @@
       <workItem from="1495860867765" duration="1300000" />
       <workItem from="1495872558615" duration="4671000" />
       <workItem from="1495881338658" duration="30558000" />
-      <workItem from="1495936248896" duration="34716000" />
-    </task>
-    <task id="LOCAL-00009" summary="Bugs fixed for antlr parser.">
-      <created>1494831923465</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1494831923465</updated>
+      <workItem from="1495936248896" duration="35110000" />
     </task>
     <task id="LOCAL-00010" summary="Code optimized.">
       <created>1494849398822</created>
@@ -1679,11 +1671,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495978198527</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Bugs fixed for builtin functions.">
+      <created>1495980433213</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1495980433213</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="495541000" />
+    <option name="totallyTimeSpent" value="495935000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1767,7 +1766,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Bugs fixed for functions calling." />
     <MESSAGE value="Tiny bugs fixed." />
     <MESSAGE value="IR added." />
     <MESSAGE value="ASTree modified to write IR flexibly." />
@@ -1792,7 +1790,8 @@
     <MESSAGE value="Bugs fixed for recurrent news." />
     <MESSAGE value="Builtin function added." />
     <MESSAGE value="Bugs fixed for pointer." />
-    <option name="LAST_COMMIT_MESSAGE" value="Bugs fixed for pointer." />
+    <MESSAGE value="Bugs fixed for builtin functions." />
+    <option name="LAST_COMMIT_MESSAGE" value="Bugs fixed for builtin functions." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -2337,14 +2336,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/SimpleAllocator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="183" column="28" lean-forward="false" selection-start-line="183" selection-start-column="28" selection-end-line="183" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/DirectRegister.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="350">
@@ -2363,8 +2354,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="99" column="52" lean-forward="false" selection-start-line="99" selection-start-column="52" selection-end-line="99" selection-end-column="52" />
+        <state relative-caret-position="321">
+          <caret line="94" column="36" lean-forward="true" selection-start-line="94" selection-start-column="36" selection-end-line="94" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/SimpleAllocator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="59" column="43" lean-forward="true" selection-start-line="59" selection-start-column="43" selection-end-line="59" selection-end-column="43" />
           <folding />
         </state>
       </provider>

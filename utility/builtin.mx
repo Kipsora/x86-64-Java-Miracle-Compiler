@@ -105,7 +105,6 @@ __loop_2@strcat:
     inc edi
     jmp __loop_2@strcat
 __loop2_exit@strcat:
-    inc dword [rax]
     leave
     ret
 @array.size:
