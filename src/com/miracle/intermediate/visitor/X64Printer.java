@@ -204,7 +204,7 @@ public class X64Printer implements IRVisitor {
          * returnRegister must be null or RAX                    -> TODO: in Register Allocator
          * The last 6 parameters must follow calling conventions -> TODO: in Register Allocator
          */
-        List<Number> parameters = call.getReverseParameters();
+        List<Number> parameters = call.parameters;
         for (int i = CallingConvention.size(), size = parameters.size(); i < size; i++) {
             if (parameters.get(i) instanceof PhysicalRegister) {
                 builder.append('\t').append("push").append(' ')

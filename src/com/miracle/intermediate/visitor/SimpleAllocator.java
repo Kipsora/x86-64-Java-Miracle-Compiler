@@ -165,9 +165,9 @@ public class SimpleAllocator implements IRVisitor {
             node.append(new Move(call.getReturnRegister(), register));
             localRenameMap.put(call.getReturnRegister(), register);
         }
-        List<Number> parameters = call.getReverseParameters();
+        List<Number> parameters = call.parameters;
         for (int i = 0; i < parameters.size() && i < MiracleOption.CallingConvention.size(); i++) {
-            if (i < MiracleOption.CallingConvention.size() && parameters.get(i) instanceof IndirectRegister) {
+            if (i < MiracleOption.CallingConvention.size()) {
                 register = PhysicalRegister.getBy16BITName(
                         MiracleOption.CallingConvention.get(i),
                         parameters.get(i).getNumberSize()
