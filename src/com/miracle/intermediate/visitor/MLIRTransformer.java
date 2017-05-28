@@ -63,11 +63,11 @@ public class MLIRTransformer implements IRVisitor {
                             ".aux" + String.valueOf(countTmpVars++),
                             ((HeapAllocate) it.instruction).getNumber().getNumberSize()
                     );
-                    it.getSucc().prepend(new Move(
+                    it.prepend(new Move(
                             (Register) number,
                             ((HeapAllocate) it.instruction).getNumber()
                     ));
-                    it.getSucc().prepend(new BinaryArithmetic(
+                    it.prepend(new BinaryArithmetic(
                             BinaryArithmetic.Types.MUL, (Register) number,
                             new Immediate(
                                     ((HeapAllocate) it.instruction).getSize(),

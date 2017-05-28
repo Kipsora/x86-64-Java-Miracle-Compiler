@@ -245,8 +245,7 @@ public class X64Printer implements IRVisitor {
     public void visit(Return irReturn) {
         /*
          * Return Instruction:
-         *   - value must either be null or RAX    -> imm: processed in LLIRTransformer
-         *                                         -> reg not RAX: TODO: in Register Allocator
+         *   - value must be null                       -> processed in LLIRTransformer
          */
         builder.append('\t').append("ret").append('\n');
     }

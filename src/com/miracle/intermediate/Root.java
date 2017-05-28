@@ -726,10 +726,8 @@ public class Root extends Node {
                     BasicBlock newInitCondBlock = new BasicBlock("new_init_cond_" + String.valueOf(countBlock++), curFunction, false, false);
                     BasicBlock newInitExitBlock = new BasicBlock("new_init_exit_" + String.valueOf(countBlock++), curFunction, false, false);
 
-                    if (!curBasicBlock.isForked()) {
-                        curBasicBlock.setFork(new Jump(newInitCondBlock));
-                        curBasicBlock.addSuccBasicBlock(newInitCondBlock);
-                    }
+                    curBasicBlock.setFork(new Jump(newInitCondBlock));
+                    curBasicBlock.addSuccBasicBlock(newInitCondBlock);
 
                     curBasicBlock = newInitCondBlock;
                     BasicBlock newInitBodyBlock = new BasicBlock("new_init_body_" + String.valueOf(countBlock++), curFunction, false, false);
@@ -749,6 +747,7 @@ public class Root extends Node {
                             ),
                             nextNew.getResultNumber()
                     ));
+                    curBasicBlock.tail.prepend(new UnaryArithmetic(iterreg, UnaryArithmetic.Types.ADD));
                     curBasicBlock.addSuccBasicBlock(newInitCondBlock);
                     curBasicBlock.setFork(new Jump(newInitCondBlock));
                     curBasicBlock = newInitExitBlock;

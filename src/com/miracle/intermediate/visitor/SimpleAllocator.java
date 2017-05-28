@@ -57,6 +57,9 @@ public class SimpleAllocator implements IRVisitor {
                 register = PhysicalRegister.getBy16BITName("RAX", binaryArithmetic.getSource().getNumberSize());
                 node.prepend(new Move(register, binaryArithmetic.getSource()));
                 localRenameMap.put(binaryArithmetic.getSource(), register);
+                if (binaryArithmetic.getSource() == binaryArithmetic.getTarget()) {
+                    node.append(new Move(binaryArithmetic.getTarget(), register));
+                }
             }
         }
     }
