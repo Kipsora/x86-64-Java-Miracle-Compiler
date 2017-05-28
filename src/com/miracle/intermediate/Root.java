@@ -776,7 +776,7 @@ public class Root extends Node {
                 ));
                 newNode.setResultNumber(register);
 
-                if (!nextExprs.isEmpty()) {
+                if (!nextExprs.isEmpty() || !(newNode.variableType.getType() instanceof SymbolPrimitiveType)) {
                     VirtualRegister iterreg = newVirtualRegister("new_init_iter_", MiracleOption.INT_SIZE);
                     curBasicBlock.tail.prepend(new BinaryArithmetic(
                             BinaryArithmetic.Types.XOR,
