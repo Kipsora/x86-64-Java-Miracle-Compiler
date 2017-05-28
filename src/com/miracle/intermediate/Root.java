@@ -705,7 +705,10 @@ public class Root extends Node {
                 VirtualRegister register = newVirtualRegister(MiracleOption.POINTER_SIZE);
                 List<Expression> nextExprs = new LinkedList<>(newNode.expressions);
                 Expression expression = nextExprs.remove(0);
-                if (expression == null) return;
+                if (expression == null) {
+                    newNode.setResultNumber(new Immediate(0, MiracleOption.POINTER_SIZE));
+                    return;
+                }
                 expression.accept(this);
 
                 curBasicBlock.tail.prepend(new HeapAllocate(
