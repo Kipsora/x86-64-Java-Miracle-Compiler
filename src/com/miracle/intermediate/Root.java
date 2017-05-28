@@ -751,7 +751,7 @@ public class Root extends Node {
                     nextNew.setScope(newNode.getScope());
                     nextNew.accept(this);
                     curBasicBlock.tail.prepend(new Move(
-                            new OffsetRegister(register, null,
+                            new OffsetRegister(register, 4,
                                     iterreg, MiracleOption.POINTER_SIZE,
                                     MiracleOption.POINTER_SIZE
                             ),
