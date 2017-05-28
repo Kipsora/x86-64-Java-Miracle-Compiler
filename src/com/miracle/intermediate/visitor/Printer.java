@@ -124,7 +124,7 @@ public class Printer implements IRVisitor {
         builder.append('\t').append("cmp").append(' ')
                 .append(compare.getSourceA()).append(", ")
                 .append(compare.getSourceB()).append('\n');
-        builder.append('\t').append(compare.operator).append(' ')
+        builder.append('\t').append(compare.getOperator()).append(' ')
                 .append(compare.getTarget()).append('\n');
     }
 
@@ -138,7 +138,7 @@ public class Printer implements IRVisitor {
 
     @Override
     public void visit(BinaryBranch binaryBranch) {
-        builder.append('\t').append(binaryBranch.operator)
+        builder.append('\t').append(binaryBranch.getOperator())
                 .append(' ').append(binaryBranch.getExpressionA())
                 .append(' ').append(binaryBranch.getExpressionB())
                 .append(", ").append(binaryBranch.branchTrue.name)

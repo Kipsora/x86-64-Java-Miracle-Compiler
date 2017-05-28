@@ -14,9 +14,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class BinaryBranch extends Fork {
-    public final Types operator;
     public final BasicBlock branchTrue;
     public final BasicBlock branchFalse;
+    private Types operator;
     private Number expressionA;
     private Number expressionB;
 
@@ -61,6 +61,17 @@ public class BinaryBranch extends Fork {
             default:
                 throw new RuntimeException("unsupported operator");
         }
+    }
+
+    public Types getOperator() {
+        return operator;
+    }
+
+    public void swapExpressions() {
+        Number t = expressionA;
+        expressionA = expressionB;
+        expressionB = t;
+        operator = operator.getReverse();
     }
 
     @Override
@@ -126,6 +137,22 @@ public class BinaryBranch extends Fork {
                 return "jbe";
             } else {
                 return "jge";
+            }
+        }
+
+        Types getReverse() {
+            if (this.equals(EQL)) {
+                return NEQ;
+            } else if (this.equals(NEQ)) {
+                return EQL;
+            } else if (this.equals(LT)) {
+                return REQ;
+            } else if (this.equals(RT)) {
+                return LEQ;
+            } else if (this.equals(LEQ)) {
+                return RT;
+            } else {
+                return LT;
             }
         }
     }

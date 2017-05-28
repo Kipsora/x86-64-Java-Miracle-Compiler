@@ -271,7 +271,7 @@ public class X64Printer implements IRVisitor {
          */
         builder.append('\t').append("cmp").append(' ').append(compare.getSourceA())
                 .append(", ").append(compare.getSourceB()).append('\n');
-        builder.append('\t').append(compare.operator).append(' ')
+        builder.append('\t').append(compare.getOperator()).append(' ')
                 .append(compare.getTarget()).append('\n');
     }
 
@@ -297,7 +297,7 @@ public class X64Printer implements IRVisitor {
                 .append(' ').append(binaryBranch.getExpressionA())
                 .append(", ").append(binaryBranch.getExpressionB())
                 .append('\n');
-        builder.append('\t').append(binaryBranch.operator)
+        builder.append('\t').append(binaryBranch.getOperator())
                 .append(' ').append(binaryBranch.branchTrue.name).append('\n');
     }
 }

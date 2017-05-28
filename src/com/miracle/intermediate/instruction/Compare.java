@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Compare extends Instruction {
-    public final Types operator;
+    private Types operator;
     private Number sourceA;
     private Number sourceB;
     private Register target;
@@ -23,6 +23,17 @@ public class Compare extends Instruction {
         this.sourceB = sourceB;
         this.target = target;
         this.operator = operator;
+    }
+
+    public void swapSources() {
+        Number t = sourceA;
+        sourceA = sourceB;
+        sourceB = t;
+        operator = operator.getReverse();
+    }
+
+    public Types getOperator() {
+        return operator;
     }
 
     @Override
@@ -98,6 +109,22 @@ public class Compare extends Instruction {
                 return "setle";
             } else {
                 return "setge";
+            }
+        }
+
+        Types getReverse() {
+            if (this.equals(EQL)) {
+                return NEQ;
+            } else if (this.equals(NEQ)) {
+                return EQL;
+            } else if (this.equals(LT)) {
+                return REQ;
+            } else if (this.equals(RT)) {
+                return LEQ;
+            } else if (this.equals(LEQ)) {
+                return RT;
+            } else {
+                return LT;
             }
         }
     }

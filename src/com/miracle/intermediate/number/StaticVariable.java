@@ -7,7 +7,7 @@ public class StaticVariable extends IndirectRegister {
 
     public StaticVariable(VariableDeclaration declaration) {
         super(declaration.typenode.getType().getRegisterSize());
-        this.name = declaration.identifier;
+        this.name = "var$" + declaration.identifier;
     }
 
     @Override

@@ -118,6 +118,9 @@ public class MLIRTransformer implements IRVisitor {
                     it.prepend(new Move(register, ((BinaryBranch) it.instruction).getExpressionA()));
                     ((BinaryBranch) it.instruction).setExpressionA(register);
                 }
+                if (((BinaryBranch) it.instruction).getExpressionA() instanceof Immediate) {
+                    ((BinaryBranch) it.instruction).swapExpressions();
+                }
                 it.append(new Jump(((BinaryBranch) it.instruction).branchFalse));
             } else if (it.instruction instanceof Compare) {
                 if ((((Compare) it.instruction).getSourceA() instanceof IndirectRegister &&
@@ -137,6 +140,9 @@ public class MLIRTransformer implements IRVisitor {
                     );
                     it.prepend(new Move(register, ((Compare) it.instruction).getSourceA()));
                     ((Compare) it.instruction).setSourceA(register);
+                }
+                if ((((Compare) it.instruction).getSourceA() instanceof Immediate)) {
+                    ((Compare) it.instruction).swapSources();
                 }
             } else if (it.instruction instanceof BinaryArithmetic) {
                 if ((((BinaryArithmetic) it.instruction).operator.equals(BinaryArithmetic.Types.DIV) ||
