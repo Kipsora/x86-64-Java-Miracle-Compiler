@@ -643,7 +643,7 @@ public class Root extends Node {
                     }
                     break;
                 case NEGATE:
-                    VirtualRegister register = newVirtualRegister(MiracleOption.INT_SIZE);
+                    VirtualRegister register = newVirtualRegister(number.getNumberSize());
                     curBasicBlock.tail.prepend(new Compare(
                             Compare.Types.EQL,
                             number, new Immediate(0, number.getNumberSize()),
