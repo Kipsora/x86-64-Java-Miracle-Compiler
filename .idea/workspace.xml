@@ -8,7 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1a1af29a-b77a-4b8c-9654-4271264bd490" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/Root.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/Root.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/SimpleAllocator.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/SimpleAllocator.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,7 +38,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Root.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Root.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/Root.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="111">
@@ -48,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SimpleAllocator.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SimpleAllocator.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/SimpleAllocator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="99">
-              <caret line="78" column="9" lean-forward="false" selection-start-line="78" selection-start-column="9" selection-end-line="78" selection-end-column="9" />
+            <state relative-caret-position="236">
+              <caret line="60" column="13" lean-forward="true" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -255,7 +255,6 @@
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/StackRegister.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/RegisterBuffer.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Move.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/SimpleAllocator.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/symbol/SymbolTable.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/StaticVariable.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/DirectRegister.java" />
@@ -268,6 +267,7 @@
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/OffsetRegister.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/Root.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/SimpleAllocator.java" />
       </list>
     </option>
   </component>
@@ -878,7 +878,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Miracle with HighIR">
+  <component name="RunManager" selected="Application.Miracle">
     <configuration default="false" name="Miracle" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -1447,14 +1447,7 @@
       <workItem from="1495860867765" duration="1300000" />
       <workItem from="1495872558615" duration="4671000" />
       <workItem from="1495881338658" duration="30558000" />
-      <workItem from="1495936248896" duration="39487000" />
-    </task>
-    <task id="LOCAL-00014" summary="Temporary files removed &amp; bugs fixed for NullPointerException.">
-      <created>1494894860449</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1494894860449</updated>
+      <workItem from="1495936248896" duration="40000000" />
     </task>
     <task id="LOCAL-00015" summary="User-friendly compliation error added.">
       <created>1494898837007</created>
@@ -1792,11 +1785,18 @@
       <option name="project" value="LOCAL" />
       <updated>1495983475185</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="Bugs fixed for short-circuit evaluation.">
+      <created>1495985209706</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1495985209706</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="500312000" />
+    <option name="totallyTimeSpent" value="500825000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1880,7 +1880,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="IR added." />
     <MESSAGE value="ASTree modified to write IR flexibly." />
     <MESSAGE value="IR updated." />
     <MESSAGE value="Bugs fixed for interleaved array." />
@@ -1905,7 +1904,8 @@
     <MESSAGE value="Bugs fixed for pointer." />
     <MESSAGE value="Bugs fixed for builtin functions." />
     <MESSAGE value="Bugs fixed for type system." />
-    <option name="LAST_COMMIT_MESSAGE" value="Bugs fixed for type system." />
+    <MESSAGE value="Bugs fixed for short-circuit evaluation." />
+    <option name="LAST_COMMIT_MESSAGE" value="Bugs fixed for short-circuit evaluation." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1945,7 +1945,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/SimpleAllocator.java</url>
-          <line>177</line>
+          <line>181</line>
           <properties />
           <option name="timeStamp" value="300" />
         </line-breakpoint>
@@ -2465,14 +2465,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/SimpleAllocator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="99">
-          <caret line="78" column="9" lean-forward="false" selection-start-line="78" selection-start-column="9" selection-end-line="78" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/Miracle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1097">
@@ -2501,6 +2493,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="111">
           <caret line="594" column="60" lean-forward="false" selection-start-line="594" selection-start-column="60" selection-end-line="594" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/SimpleAllocator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="60" column="13" lean-forward="true" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
           <folding />
         </state>
       </provider>

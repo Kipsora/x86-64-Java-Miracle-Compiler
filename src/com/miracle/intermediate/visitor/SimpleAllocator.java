@@ -54,7 +54,11 @@ public class SimpleAllocator implements IRVisitor {
             node.append(new Move(binaryArithmetic.getTarget(), register));
         } else if (binaryArithmetic.operator.equals(BinaryArithmetic.Types.SHL) ||
                 binaryArithmetic.operator.equals(BinaryArithmetic.Types.SHR)) {
-            throw new RuntimeException("uncompleted case");
+            if (binaryArithmetic.getSource() instanceof Register) {
+                register = PhysicalRegister.getBy16BITName("RCX", 1);
+                node.prepend(new Move(register, binaryArithmetic.getSource()));
+                localRenameMap.put(binaryArithmetic.getSource(), register);
+            }
         } else {
             if (binaryArithmetic.getSource() instanceof IndirectRegister &&
                     binaryArithmetic.getTarget() instanceof IndirectRegister) {
