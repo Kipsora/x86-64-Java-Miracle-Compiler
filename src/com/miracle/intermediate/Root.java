@@ -405,6 +405,8 @@ public class Root extends Node {
             Register selfRegister = null;
             if (callExpression.function instanceof Field) {
                 selfRegister = (Register) ((Field) callExpression.function).expression.getResultNumber();
+            } else if (type.getMemberFrom() != null) {
+                selfRegister = curFunction.getSelfRegister();
             }
             if (type.getReturnType().isSameType(__builtin_void)) {
                 curBasicBlock.tail.prepend(new Call(
