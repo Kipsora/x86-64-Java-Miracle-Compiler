@@ -27,11 +27,11 @@ public class Move extends Instruction {
     public void rename(Map<Number, Register> map) {
         target = map.getOrDefault(target, target);
         if (target instanceof OffsetRegister) {
-            ((OffsetRegister) target).map(map);
+            ((OffsetRegister) target).rename(map);
         }
         if (map.containsKey(source)) source = map.get(source);
         if (source instanceof OffsetRegister) {
-            ((OffsetRegister) source).map(map);
+            ((OffsetRegister) source).rename(map);
         }
     }
 

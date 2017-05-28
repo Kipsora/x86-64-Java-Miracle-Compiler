@@ -28,7 +28,7 @@ public class UnaryArithmetic extends Instruction {
     public void rename(Map<Number, Register> map) {
         target = map.getOrDefault(target, target);
         if (target instanceof OffsetRegister) {
-            ((OffsetRegister) target).map(map);
+            ((OffsetRegister) target).rename(map);
         }
     }
 

@@ -41,19 +41,19 @@ public class Call extends Instruction {
             Number arg = parameters.get(i);
             if (map.containsKey(arg)) parameters.set(i, map.get(arg));
             if (arg instanceof OffsetRegister) {
-                ((OffsetRegister) arg).map(map);
+                ((OffsetRegister) arg).rename(map);
             }
         }
         if (returnRegister != null) {
             returnRegister = map.getOrDefault(returnRegister, returnRegister);
             if (returnRegister instanceof OffsetRegister) {
-                ((OffsetRegister) returnRegister).map(map);
+                ((OffsetRegister) returnRegister).rename(map);
             }
         }
         if (selfRegister != null) {
             selfRegister = map.getOrDefault(selfRegister, selfRegister);
             if (selfRegister instanceof OffsetRegister) {
-                ((OffsetRegister) selfRegister).map(map);
+                ((OffsetRegister) selfRegister).rename(map);
             }
         }
     }

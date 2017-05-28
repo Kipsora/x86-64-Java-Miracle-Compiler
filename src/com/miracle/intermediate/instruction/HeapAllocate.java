@@ -39,11 +39,11 @@ public class HeapAllocate extends Instruction {
     public void rename(Map<Number, Register> map) {
         target = map.getOrDefault(target, target);
         if (target instanceof OffsetRegister) {
-            ((OffsetRegister) target).map(map);
+            ((OffsetRegister) target).rename(map);
         }
         if (map.containsKey(number)) number = map.get(number);
         if (number instanceof OffsetRegister) {
-            ((OffsetRegister) number).map(map);
+            ((OffsetRegister) number).rename(map);
         }
     }
 

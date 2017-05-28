@@ -83,11 +83,11 @@ public class BinaryBranch extends Fork {
     public void rename(Map<Number, Register> map) {
         if (map.containsKey(expressionB)) expressionB = map.get(expressionB);
         if (expressionB instanceof OffsetRegister) {
-            ((OffsetRegister) expressionB).map(map);
+            ((OffsetRegister) expressionB).rename(map);
         }
         if (map.containsKey(expressionA)) expressionA = map.get(expressionA);
         if (expressionA instanceof OffsetRegister) {
-            ((OffsetRegister) expressionA).map(map);
+            ((OffsetRegister) expressionA).rename(map);
         }
     }
 

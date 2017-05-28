@@ -131,8 +131,8 @@ public class X64Printer implements IRVisitor {
             builder.append('\t').append("cdq").append('\n');
             builder.append('\t').append("idiv").append(' ').append(binaryArithmetic.getSource()).append('\n');
             builder.append('\t').append("mov")
-                    .append(' ').append(getBy16BITName("RDX", binaryArithmetic.getTarget().size))
-                    .append(", ").append(getBy16BITName("RAX", binaryArithmetic.getTarget().size)).append('\n');
+                    .append(' ').append(getBy16BITName("RAX", binaryArithmetic.getTarget().size))
+                    .append(", ").append(getBy16BITName("RDX", binaryArithmetic.getTarget().size)).append('\n');
         } else {
             /*
              *  Other Arithmetic Instruction:  OP tar, src (tar != src) tar OP= src

@@ -134,6 +134,7 @@ __loop@string.parseInt:
 __loop_exit@string.parseInt:
     ret
 @string.substring:
+    add rdi, rsi
     push rdi
     push rsi
     push rdx

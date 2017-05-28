@@ -41,7 +41,7 @@ public class UnaryBranch extends Fork {
     public void rename(Map<Number, Register> map) {
         if (map.containsKey(expression)) expression = map.get(expression);
         if (expression instanceof OffsetRegister) {
-            ((OffsetRegister) expression).map(map);
+            ((OffsetRegister) expression).rename(map);
         }
     }
 

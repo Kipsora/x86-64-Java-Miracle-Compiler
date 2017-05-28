@@ -45,15 +45,15 @@ public class Compare extends Instruction {
     public void rename(Map<Number, Register> map) {
         if (map.containsKey(sourceA)) sourceA = map.get(sourceA);
         if (sourceA instanceof OffsetRegister) {
-            ((OffsetRegister) sourceA).map(map);
+            ((OffsetRegister) sourceA).rename(map);
         }
         if (map.containsKey(sourceB)) sourceB = map.get(sourceB);
         if (sourceB instanceof OffsetRegister) {
-            ((OffsetRegister) sourceB).map(map);
+            ((OffsetRegister) sourceB).rename(map);
         }
         target = map.getOrDefault(target, target);
         if (target instanceof OffsetRegister) {
-            ((OffsetRegister) target).map(map);
+            ((OffsetRegister) target).rename(map);
         }
     }
 
