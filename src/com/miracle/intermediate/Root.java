@@ -449,6 +449,8 @@ public class Root extends Node {
         }
 
         private void addRelation(BinaryExpression expression) {
+            expression.left.accept(this);
+            expression.right.accept(this);
             Compare.Types operator;
             switch (expression.operator) {
                 case REQ:
@@ -500,14 +502,10 @@ public class Root extends Node {
         }
 
         private void addArithmetic(BinaryExpression expression) {
+            expression.left.accept(this);
+            expression.right.accept(this);
             BinaryArithmetic.Types operator;
             switch (expression.operator) {
-                case DISJ:
-                    operator = BinaryArithmetic.Types.OR;
-                    break;
-                case CONJ:
-                    operator = BinaryArithmetic.Types.AND;
-                    break;
                 case XOR:
                     operator = BinaryArithmetic.Types.XOR;
                     break;
@@ -554,6 +552,8 @@ public class Root extends Node {
         }
 
         private void addAssignment(BinaryExpression expression) {
+            expression.left.accept(this);
+            expression.right.accept(this);
             curBasicBlock.tail.prepend(new Move(
                     (Register) expression.left.getResultNumber(),
                     expression.right.getResultNumber()
@@ -562,6 +562,8 @@ public class Root extends Node {
         }
 
         private void addStringConcat(BinaryExpression expression) {
+            expression.left.accept(this);
+            expression.right.accept(this);
             VirtualRegister register = newVirtualRegister(MiracleOption.INT_SIZE);
             curBasicBlock.tail.prepend(new Call(
                     __builtin_strcat.getAddress(),
@@ -576,10 +578,50 @@ public class Root extends Node {
             expression.setResultNumber(register);
         }
 
+        private void addLogicalExpression(BinaryExpression expression) {
+            expression.left.accept(this);
+            BasicBlock block_true = new BasicBlock("ss_block_true_" + String.valueOf(countBlock++), curFunction, false, false);
+            BasicBlock block_fake = new BasicBlock("ss_block_fake_" + String.valueOf(countBlock++), curFunction, false, false);
+            BasicBlock block_both = new BasicBlock("ss_block_fake_" + String.valueOf(countBlock++), curFunction, false, false);
+            if (!curBasicBlock.isForked()) {
+                curBasicBlock.addSuccBasicBlock(block_fake);
+                curBasicBlock.addSuccBasicBlock(block_true);
+                curBasicBlock.setFork(new UnaryBranch(expression.left.getResultNumber(), block_true, block_fake));
+            }
+            VirtualRegister register = newVirtualRegister(expression.left.getResultNumber().getNumberSize());
+            if (expression.operator.equals(BinaryExpression.OPERATOR.DISJ)) {
+                curBasicBlock = block_true;
+                curBasicBlock.tail.prepend(new Move(register, new Immediate(1, expression.left.getResultNumber().getNumberSize())));
+                curBasicBlock.setFork(new Jump(block_both));
+                curBasicBlock.addSuccBasicBlock(block_both);
+
+                curBasicBlock = block_fake;
+                expression.right.accept(this);
+                curBasicBlock.tail.prepend(new Move(register, expression.right.getResultNumber()));
+                if (!curBasicBlock.isForked()) {
+                    curBasicBlock.setFork(new Jump(block_both));
+                    curBasicBlock.addSuccBasicBlock(block_both);
+                }
+            } else {
+                curBasicBlock = block_true;
+                expression.right.accept(this);
+                curBasicBlock.tail.prepend(new Move(register, expression.right.getResultNumber()));
+                if (!curBasicBlock.isForked()) {
+                    curBasicBlock.setFork(new Jump(block_both));
+                    curBasicBlock.addSuccBasicBlock(block_both);
+                }
+
+                curBasicBlock = block_fake;
+                curBasicBlock.tail.prepend(new Move(register, new Immediate(0, expression.left.getResultNumber().getNumberSize())));
+                curBasicBlock.setFork(new Jump(block_both));
+                curBasicBlock.addSuccBasicBlock(block_both);
+            }
+            curBasicBlock = block_both;
+            expression.setResultNumber(register);
+        }
+
         @Override
         public void visit(BinaryExpression binaryExpression) {
-            binaryExpression.left.accept(this);
-            binaryExpression.right.accept(this);
             switch (binaryExpression.operator) {
                 case EQL:
                 case NEQ:
@@ -589,8 +631,6 @@ public class Root extends Node {
                 case REQ:
                     addRelation(binaryExpression);
                     break;
-                case DISJ:
-                case CONJ:
                 case XOR:
                 case AND:
                 case SHR:
@@ -611,6 +651,10 @@ public class Root extends Node {
                     break;
                 case ASS:
                     addAssignment(binaryExpression);
+                    break;
+                case DISJ:
+                case CONJ:
+                    addLogicalExpression(binaryExpression);
                     break;
                 default:
                     throw new RuntimeException("unsupported operator");
