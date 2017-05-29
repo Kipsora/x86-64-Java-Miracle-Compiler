@@ -74,15 +74,6 @@ public class LLIRTransformer implements IRVisitor {
                 }
             }
         }
-        if (block.isFunctionExitBlock && curFunction.getReturnRegister() != null) {
-            if (!(curFunction.getReturnRegister() instanceof PhysicalRegister) ||
-                    !((PhysicalRegister) curFunction.getReturnRegister()).indexName.equals("RAX")) {
-                block.getHead().prepend(new Move(
-                        PhysicalRegister.getBy16BITName("RAX", curFunction.getReturnRegister().size),
-                        curFunction.getReturnRegister()
-                ));
-            }
-        }
 
         for (node = block.getHead(); node != block.tail; node = node.getSucc()) {
             node.instruction.getUseNumbers().forEach(this::enroll);

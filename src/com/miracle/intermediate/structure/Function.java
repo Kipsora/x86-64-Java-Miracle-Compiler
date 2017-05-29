@@ -23,7 +23,6 @@ public class Function {
     private BasicBlock exitBasicBlock;
 
     private Set<BasicBlock.Node> returns;
-    private Register returnRegister;
 
     public Function(String identifier,
                     SymbolFunctionType type) {
@@ -32,9 +31,6 @@ public class Function {
             this.selfRegister = new VirtualRegister("this", type.getMemberFrom().getRegisterSize());
         } else {
             this.selfRegister = null;
-        }
-        if (type.getReturnType() != null && !type.getReturnType().isSameType(__builtin_void)) {
-            returnRegister = new VirtualRegister("retval", type.getReturnType().getRegisterSize());
         }
         this.parameters = new LinkedList<>();
         this.entryBasicBlock = new BasicBlock("__" + identifier + ".entry", this, true, false);
@@ -72,9 +68,6 @@ public class Function {
     }
 
     public void map(Map<Number, Register> map) {
-        if (returnRegister != null) {
-            returnRegister = map.getOrDefault(returnRegister, returnRegister);
-        }
         if (selfRegister != null) {
             selfRegister = (DirectRegister) map.getOrDefault(selfRegister, selfRegister);
         }
@@ -89,9 +82,5 @@ public class Function {
 
     public void addParameter(Register parameter) {
         this.parameters.add(parameter);
-    }
-
-    public Register getReturnRegister() {
-        return returnRegister;
     }
 }

@@ -47,6 +47,15 @@ public class MLIRTransformer implements IRVisitor {
             function.parameters.add(0, function.getSelfRegister());
             function.setSelfRegister(null);
         }
+        int size = function.getReturns().size();
+        function.getReturns().forEach(element -> {
+            element.append(new Jump(function.getExitBasicBlock()));
+            element.append(new Move(
+                    PhysicalRegister.getBy16BITName("RAX", ((Return) element.instruction).getValue().getNumberSize()),
+                    ((Return) element.instruction).getValue()
+            ));
+            element.remove();
+        });
         function.getEntryBasicBlock().accept(this);
     }
 

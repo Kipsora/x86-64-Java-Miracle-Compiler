@@ -11,6 +11,7 @@ import com.miracle.intermediate.instruction.fork.BinaryBranch;
 import com.miracle.intermediate.instruction.fork.Jump;
 import com.miracle.intermediate.instruction.fork.Return;
 import com.miracle.intermediate.instruction.fork.UnaryBranch;
+import com.miracle.intermediate.number.PhysicalRegister;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
 
@@ -19,6 +20,7 @@ import java.util.Set;
 
 public class HLIRTransformer implements IRVisitor {
     private Set<BasicBlock> blockProcessed;
+    private Function curFunction;
 
     @Override
     public void visit(Root ir) {
@@ -38,16 +40,9 @@ public class HLIRTransformer implements IRVisitor {
 
     @Override
     public void visit(Function function) {
-        int size = function.getReturns().size();
-        function.getReturns().forEach(element -> {
-            element.append(new Jump(function.getExitBasicBlock()));
-            element.append(new Move(
-                    function.getReturnRegister(),
-                    ((Return) element.instruction).getValue()
-            ));
-            element.remove();
-        });
+        curFunction = function;
         function.getEntryBasicBlock().accept(this);
+        curFunction = null;
     }
 
     @Override
@@ -62,6 +57,7 @@ public class HLIRTransformer implements IRVisitor {
                     block.addSuccBasicBlock(((Jump) it.instruction).block);
                 } else if (it.instruction instanceof Return) {
                     flag = true;
+                    block.addSuccBasicBlock(curFunction.getExitBasicBlock());
                 } else if (it.instruction instanceof UnaryBranch) {
                     flag = true;
                     block.addSuccBasicBlock(((UnaryBranch) it.instruction).branchTrue);

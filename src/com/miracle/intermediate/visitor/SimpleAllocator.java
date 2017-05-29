@@ -109,10 +109,6 @@ public class SimpleAllocator implements IRVisitor {
                 globalRenameMap.put(register, stackRegister);
             }
         }
-        if (function.getReturnRegister() != null) {
-            StackRegister stackRegister = new StackRegister(function.getReturnRegister().size);
-            globalRenameMap.put(function.getReturnRegister(), stackRegister);
-        }
         function.map(globalRenameMap);
         function.getEntryBasicBlock().accept(this);
     }

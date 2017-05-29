@@ -66,7 +66,7 @@ public class Printer implements IRVisitor {
 
     @Override
     public void visit(Function function) {
-        builder.append("func ").append(function.identifier).append(' ').append("ret: ").append(function.getReturnRegister());
+        builder.append("func ").append(function.identifier);
         function.getParameters().forEach(element -> builder.append(' ').append(element));
         builder.append(' ').append('{').append('\n');
         function.getEntryBasicBlock().accept(this);
