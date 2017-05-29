@@ -7,11 +7,8 @@ import com.miracle.intermediate.instruction.Compare;
 import com.miracle.intermediate.instruction.HeapAllocate;
 import com.miracle.intermediate.instruction.Move;
 import com.miracle.intermediate.instruction.arithmetic.BinaryArithmetic;
-import com.miracle.intermediate.instruction.arithmetic.UnaryArithmetic;
 import com.miracle.intermediate.instruction.fork.BinaryBranch;
-import com.miracle.intermediate.instruction.fork.Jump;
 import com.miracle.intermediate.instruction.fork.Return;
-import com.miracle.intermediate.instruction.fork.UnaryBranch;
 import com.miracle.intermediate.number.*;
 import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.structure.BasicBlock;
@@ -19,7 +16,7 @@ import com.miracle.intermediate.structure.Function;
 
 import java.util.*;
 
-public class SimpleAllocator implements IRVisitor {
+public class SimpleAllocator extends BaseIRVisitor {
     private Set<BasicBlock> blockProcessed;
     private Map<Number, Register> globalRenameMap;
     private Map<Number, Register> localRenameMap;
@@ -55,10 +52,14 @@ public class SimpleAllocator implements IRVisitor {
         } else if (binaryArithmetic.operator.equals(BinaryArithmetic.Types.SHL) ||
                 binaryArithmetic.operator.equals(BinaryArithmetic.Types.SHR)) {
             if (binaryArithmetic.getSource() instanceof Register) {
-                register = PhysicalRegister.getBy16BITName("RCX", 1);
+                register = PhysicalRegister.getBy16BITName("RCX", binaryArithmetic.getSource().getNumberSize());
                 node.prepend(new Move(register, binaryArithmetic.getSource()));
-                localRenameMap.put(binaryArithmetic.getSource(), register);
+                localRenameMap.put(binaryArithmetic.getSource(), PhysicalRegister.getBy16BITName("RCX", 1));
             }
+            register = PhysicalRegister.getBy16BITName("RAX", binaryArithmetic.getTarget().getNumberSize());
+            node.prepend(new Move(register, binaryArithmetic.getTarget()));
+            localRenameMap.put(binaryArithmetic.getTarget(), register);
+            node.append(new Move(binaryArithmetic.getTarget(), register));
         } else {
             if (binaryArithmetic.getSource() instanceof IndirectRegister &&
                     binaryArithmetic.getTarget() instanceof IndirectRegister) {
@@ -109,7 +110,7 @@ public class SimpleAllocator implements IRVisitor {
                 globalRenameMap.put(register, stackRegister);
             }
         }
-        function.map(globalRenameMap);
+        function.set(globalRenameMap);
         function.getEntryBasicBlock().accept(this);
     }
 
@@ -156,7 +157,7 @@ public class SimpleAllocator implements IRVisitor {
             }
         });
         for (node = block.getHead(); node != block.tail; node = node.getSucc()) {
-            node.instruction.rename(globalRenameMap);
+            node.instruction.set(globalRenameMap);
         }
         /*
          * Due to all of them are actually on stack,
@@ -166,7 +167,7 @@ public class SimpleAllocator implements IRVisitor {
         for (node = block.getHead(); node != block.tail; node = node.getSucc()) {
             localRenameMap = new HashMap<>();
             node.instruction.accept(this);
-            node.instruction.rename(localRenameMap);
+            node.instruction.set(localRenameMap);
         }
         for (node = block.getHead(); node != block.tail; node = node.getSucc()) {
             localRenameMap = new HashMap<>();
@@ -176,7 +177,7 @@ public class SimpleAllocator implements IRVisitor {
             node.instruction.getDefNumbers().stream()
                     .filter(element -> element instanceof OffsetRegister)
                     .forEach(this::reAllocateOffsetRegister);
-            node.instruction.rename(localRenameMap);
+            node.instruction.set(localRenameMap);
         }
         localRenameMap = null;
         block.getSuccBasicBlock().forEach(this::visit);
@@ -185,10 +186,10 @@ public class SimpleAllocator implements IRVisitor {
     @Override
     public void visit(Call call) {
         PhysicalRegister register;
-        if (call.getReturnRegister() != null) {
-            register = PhysicalRegister.getBy16BITName("RAX", call.getReturnRegister().size);
-            node.append(new Move(call.getReturnRegister(), register));
-            localRenameMap.put(call.getReturnRegister(), register);
+        if (call.getTarget() != null) {
+            register = PhysicalRegister.getBy16BITName("RAX", call.getTarget().size);
+            node.append(new Move(call.getTarget(), register));
+            localRenameMap.put(call.getTarget(), register);
         }
         List<Number> parameters = call.parameters;
         for (int i = 0; i < parameters.size() && i < MiracleOption.CallingConvention.size(); i++) {
@@ -204,27 +205,12 @@ public class SimpleAllocator implements IRVisitor {
     }
 
     @Override
-    public void visit(UnaryArithmetic prefixArithmetic) {
-
-    }
-
-    @Override
-    public void visit(UnaryBranch unaryBranch) {
-
-    }
-
-    @Override
     public void visit(Return irReturn) {
         if (irReturn.getValue() != null) {
             PhysicalRegister register = PhysicalRegister.getBy16BITName("RAX", irReturn.getValue().getNumberSize());
             node.prepend(new Move(register, irReturn.getValue()));
             localRenameMap.put(irReturn.getValue(), register);
         }
-    }
-
-    @Override
-    public void visit(Jump jump) {
-
     }
 
     @Override

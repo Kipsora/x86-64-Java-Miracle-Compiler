@@ -1,23 +1,52 @@
 package com.miracle.intermediate.structure;
 
 import com.miracle.intermediate.instruction.Instruction;
+import com.miracle.intermediate.instruction.PhiInstruction;
 import com.miracle.intermediate.instruction.fork.Fork;
+import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.visitor.IRVisitor;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class BasicBlock {
     public final String name;
+    public final Function blockFrom;
 
     public final Node tail;
-    public final Function blockFrom;
+    private final Node head;
+
     private boolean isFunctionEntryBlock;
     private boolean isFunctionExitBlock;
-    private final Node head;
+
     private boolean isForked;
+
     private Set<BasicBlock> prevBasicBlock = new HashSet<>();
     private Set<BasicBlock> succBasicBlock = new HashSet<>();
+
+    public final Set<BasicBlock> dfSet;
+    public final Map<VirtualRegister, PhiInstruction> phis;
+    public final Set<BasicBlock> DTChildren;
+    private BasicBlock idom;
+    private int dfsOrder;
+
+    public void setDfsOrder(int dfsOrder) {
+        this.dfsOrder = dfsOrder;
+    }
+
+    public int getDfsOrder() {
+        return dfsOrder;
+    }
+
+    public BasicBlock getIdom() {
+        return idom;
+    }
+
+    public void setIdom(BasicBlock idom) {
+        this.idom = idom;
+    }
 
     public boolean isFunctionEntryBlock() {
         return isFunctionEntryBlock;
@@ -47,6 +76,9 @@ public class BasicBlock {
         this.tail = new Node(null, this);
         this.head.succ = this.tail;
         this.tail.prev = this.head;
+        this.dfSet = new HashSet<>();
+        this.phis = new HashMap<>();
+        this.DTChildren = new HashSet<>();
     }
 
     public boolean isForked() {
@@ -85,6 +117,10 @@ public class BasicBlock {
 
     public void accept(IRVisitor IRVisitor) {
         IRVisitor.visit(this);
+    }
+
+    public void addToDFSet(BasicBlock block) {
+        dfSet.add(block);
     }
 
     public class Node {

@@ -3,6 +3,7 @@ package com.miracle.intermediate.instruction.fork;
 import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.number.OffsetRegister;
 import com.miracle.intermediate.number.Register;
+import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.visitor.IRVisitor;
 
 import java.util.Collections;
@@ -31,9 +32,18 @@ public class Return extends Fork {
     }
 
     @Override
-    public void rename(Map<Number, Register> map) {
+    public void set(Map<Number, Register> map) {
         if (map.containsKey(value)) value = map.get(value);
         if (value instanceof OffsetRegister) {
+            ((OffsetRegister) value).set(map);
+        }
+    }
+
+    @Override
+    public void rename(Map<VirtualRegister, VirtualRegister> map) {
+        if (value instanceof VirtualRegister) {
+            value = map.get(value);
+        } else if (value instanceof OffsetRegister) {
             ((OffsetRegister) value).rename(map);
         }
     }

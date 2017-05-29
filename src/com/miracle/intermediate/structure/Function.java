@@ -23,6 +23,8 @@ public class Function {
     private BasicBlock exitBasicBlock;
 
     private Set<BasicBlock.Node> returns;
+    private List<BasicBlock> postOrder;
+    private Set<BasicBlock> visitedBlock;
 
     public Function(String identifier,
                     SymbolFunctionType type) {
@@ -67,7 +69,7 @@ public class Function {
         this.selfRegister = selfRegister;
     }
 
-    public void map(Map<Number, Register> map) {
+    public void set(Map<Number, Register> map) {
         if (selfRegister != null) {
             selfRegister = (DirectRegister) map.getOrDefault(selfRegister, selfRegister);
         }
@@ -82,5 +84,29 @@ public class Function {
 
     public void addParameter(Register parameter) {
         this.parameters.add(parameter);
+    }
+
+    private void dfsPostOrder(BasicBlock node) {
+        if (visitedBlock.contains(node)) return;
+        visitedBlock.add(node);
+        node.getSuccBasicBlock().forEach(this::dfsPostOrder);
+        postOrder.add(node);
+    }
+
+    public List<BasicBlock> getPostOrder() {
+        postOrder = new LinkedList<>();
+        visitedBlock = new HashSet<>();
+        dfsPostOrder(entryBasicBlock);
+        for (int i = 0, size = postOrder.size(); i < size; i++) {
+            postOrder.get(i).setDfsOrder(i);
+        }
+        return postOrder;
+    }
+
+    public void rename(Map<VirtualRegister, VirtualRegister> map) {
+        selfRegister = map.get((VirtualRegister) selfRegister);
+        for (int i = 0, size = parameters.size(); i < size; i++) {
+            parameters.set(i, map.get((VirtualRegister) parameters.get(i)));
+        }
     }
 }

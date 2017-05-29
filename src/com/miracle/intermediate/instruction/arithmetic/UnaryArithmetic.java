@@ -4,6 +4,7 @@ import com.miracle.intermediate.instruction.Instruction;
 import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.number.OffsetRegister;
 import com.miracle.intermediate.number.Register;
+import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.visitor.IRVisitor;
 
 import java.util.HashSet;
@@ -25,9 +26,18 @@ public class UnaryArithmetic extends Instruction {
     }
 
     @Override
-    public void rename(Map<Number, Register> map) {
+    public void set(Map<Number, Register> map) {
         target = map.getOrDefault(target, target);
         if (target instanceof OffsetRegister) {
+            ((OffsetRegister) target).set(map);
+        }
+    }
+
+    @Override
+    public void rename(Map<VirtualRegister, VirtualRegister> map) {
+        if (target instanceof VirtualRegister) {
+            target = map.get(target);
+        } else if (target instanceof OffsetRegister) {
             ((OffsetRegister) target).rename(map);
         }
     }

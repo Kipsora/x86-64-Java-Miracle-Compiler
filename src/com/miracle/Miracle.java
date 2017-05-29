@@ -1,10 +1,7 @@
 package com.miracle;
 
 import com.miracle.astree.ASTree;
-import com.miracle.astree.visitor.ClassFetcher;
-import com.miracle.astree.visitor.MemberFetcher;
-import com.miracle.astree.visitor.ScopeBuilder;
-import com.miracle.astree.visitor.SemanticAnalyser;
+import com.miracle.astree.visitor.*;
 import com.miracle.cstree.parser.MiracleLexer;
 import com.miracle.cstree.parser.MiracleParser;
 import com.miracle.exception.CSTreeErrorHandler;
@@ -23,6 +20,7 @@ public class Miracle {
     private final boolean isPrintLLevelIR;
     private final boolean isPrintMLevelIR;
     private final boolean isPrintHLevelIR;
+    private final boolean isSSADisabled;
 
     private final InputStream inputStream;
     private final PrintStream outputStream;
@@ -37,11 +35,13 @@ public class Miracle {
         boolean isPrintHLevelIR;
         boolean isPrintMLevelIR;
         boolean isPrintLLevelIR;
+        boolean isSSADisabled;
         FileInputStream inputStream;
         FileOutputStream outputStream;
         try {
             Options options = new Options();
             options.addOption("h", "help", false, "show this help information");
+            options.addOption(null, "no-ssa", false, "disable single static assignment");
             options.addOption(null, "show-astree", false, "show abstract syntax tree");
             options.addOption(null, "show-high-ir", false,
                     "show high level intermediate representation code");
@@ -62,6 +62,7 @@ public class Miracle {
             isPrintHLevelIR = line.hasOption("show-high-ir");
             isPrintMLevelIR = line.hasOption("show-middle-ir");
             isPrintLLevelIR = line.hasOption("show-low-ir");
+            isSSADisabled = line.hasOption("no-ssa");
             inputStream = line.hasOption("input") ? new FileInputStream(line.getOptionValue("input")) : null;
             outputStream = line.hasOption("output") ? new FileOutputStream(line.getOptionValue("output")) : null;
         } catch (FileNotFoundException | ParseException exception) {
@@ -72,6 +73,7 @@ public class Miracle {
         this.isPrintLLevelIR = isPrintLLevelIR;
         this.isPrintMLevelIR = isPrintMLevelIR;
         this.isPrintHLevelIR = isPrintHLevelIR;
+        this.isSSADisabled = isSSADisabled;
         this.inputStream = inputStream == null ? System.in : inputStream;
         this.outputStream = outputStream == null ? System.out : new PrintStream(outputStream);
     }
@@ -115,17 +117,16 @@ public class Miracle {
         return builder.build();
     }
 
-    private void printIR(Root ir) {
-        Printer generator = new Printer();
-        ir.accept(generator);
-        outputStream.println(generator.getOutput());
+    private void printIR(Root ir, IRPrinter visitor) throws IOException {
+        ir.accept(visitor);
+        outputStream.println(visitor.getOutput());
         System.exit(0);
     }
 
     private void printASTree(ASTree astree) {
-        com.miracle.astree.visitor.Printer printer = new com.miracle.astree.visitor.Printer();
-        astree.accept(printer);
-        outputStream.println(printer.getOutput());
+        ASTreePrinter ASTreePrinter = new ASTreePrinter();
+        astree.accept(ASTreePrinter);
+        outputStream.println(ASTreePrinter.getOutput());
         System.exit(0);
     }
 
@@ -136,16 +137,14 @@ public class Miracle {
             if (this.isPrintASTree) printASTree(astree);
             Root ir = getIR(astree);
             ir.accept(new HLIRTransformer());
-            if (this.isPrintHLevelIR) printIR(ir);
-            //ir.accept(new LivenessAnalyser());
+            if (!isSSADisabled) ir.accept(new SSAConstructor());
+            if (this.isPrintHLevelIR) printIR(ir, new LMHIRPrinter());
             ir.accept(new MLIRTransformer());
-            if (this.isPrintMLevelIR) printIR(ir);
+            if (this.isPrintMLevelIR) printIR(ir, new LMHIRPrinter());
             ir.accept(new SimpleAllocator());
             ir.accept(new LLIRTransformer());
-            if (this.isPrintLLevelIR) printIR(ir);
-            X64Printer printer = new X64Printer("./utility/builtin.mx");
-            ir.accept(printer);
-            outputStream.println(printer.getOutput());
+            if (this.isPrintLLevelIR) printIR(ir, new LMHIRPrinter());
+            printIR(ir, new X64Printer("./utility/builtin.mx"));
         } catch (RuntimeException e) {
             e.printStackTrace();
         }

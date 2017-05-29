@@ -41,9 +41,14 @@ public class OffsetRegister extends IndirectRegister { // memory in stack/heap
         return (DirectRegister) offsetB;
     }
 
-    public void rename(Map<Number, Register> map) {
+    public void set(Map<Number, Register> map) {
         base = map.getOrDefault(base, base);
         offsetB = map.getOrDefault(offsetB, offsetB);
+    }
+
+    public void rename(Map<VirtualRegister, VirtualRegister> map) {
+        base = map.get(base);
+        offsetB = map.get(offsetB);
     }
 
     @Override

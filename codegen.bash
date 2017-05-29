@@ -7,6 +7,6 @@
 
 set -e
 cd "$(dirname "$0")"
-export CCHK="java -cp ./utility/*:./bin com.miracle.Miracle"
+export CCHK="java -cp ./utility/*:./bin com.miracle.Miracle --no-ssa"
 #cat > program.txt   # save everything in stdin to program.txt
 $CCHK

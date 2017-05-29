@@ -68,21 +68,11 @@ public class Root extends Node {
         private int countTmpRegister;
         private int countBlock;
 
-        private void recycle(Number register) {
-            /*if (register instanceof VirtualRegister) {
-                tmpVirtualRegister.get(((VirtualRegister) register).size).push((VirtualRegister) register);
-            }*/
-        }
-
         private VirtualRegister newVirtualRegister(int size) {
-            if (tmpVirtualRegister.get(size).empty()) {
-                return new VirtualRegister(
-                        ".t" + String.valueOf(countTmpRegister++),
-                        size
-                );
-            } else {
-                return tmpVirtualRegister.get(size).pop();
-            }
+            return new VirtualRegister(
+                    ".t" + String.valueOf(countTmpRegister++),
+                    size
+            );
         }
 
         private VirtualRegister newVirtualRegister(String name, int size) {
@@ -230,8 +220,6 @@ public class Root extends Node {
                             new Immediate(0, ((BinaryExpression) selection.expression).left.getResultNumber().getNumberSize()),
                             passBlock, failBlock
                     ));
-                    recycle(((BinaryExpression) selection.expression).left.getResultNumber());
-                    recycle(((BinaryExpression) selection.expression).right.getResultNumber());
                 } else {
                     curBasicBlock.setFork(new BinaryBranch(
                             ((BinaryExpression) selection.expression).left.getResultNumber(),
@@ -239,8 +227,6 @@ public class Root extends Node {
                             ((BinaryExpression) selection.expression).right.getResultNumber(),
                             passBlock, failBlock
                     ));
-                    recycle(((BinaryExpression) selection.expression).left.getResultNumber());
-                    recycle(((BinaryExpression) selection.expression).right.getResultNumber());
                 }
             } else {
                 selection.expression.accept(this);
@@ -248,7 +234,6 @@ public class Root extends Node {
                         selection.expression.getResultNumber(),
                         passBlock, failBlock
                 ));
-                recycle(selection.expression.getResultNumber());
             }
 
             curBasicBlock = passBlock;
@@ -427,8 +412,6 @@ public class Root extends Node {
                     (DirectRegister) tmpCoor, size,
                     size
             ));
-            if (tmpBase instanceof VirtualRegister) recycle(tmpBase);
-            if (tmpCoor instanceof VirtualRegister) recycle(tmpCoor);
         }
 
         private void addRelation(BinaryExpression expression) {
@@ -482,8 +465,6 @@ public class Root extends Node {
                         register
                 ));
             }
-            recycle(expression.left.getResultNumber());
-            recycle(expression.right.getResultNumber());
             expression.setResultNumber(register);
         }
 
@@ -532,8 +513,6 @@ public class Root extends Node {
             curBasicBlock.tail.prepend(new BinaryArithmetic(
                     operator, register, expression.right.getResultNumber()
             ));
-            recycle(expression.left.getResultNumber());
-            recycle(expression.right.getResultNumber());
             expression.setResultNumber(register);
         }
 
@@ -544,7 +523,6 @@ public class Root extends Node {
                     (Register) expression.left.getResultNumber(),
                     expression.right.getResultNumber()
             ));
-            recycle(expression.right.getResultNumber());
             expression.setResultNumber(expression.left.getResultNumber());
         }
 
@@ -560,8 +538,6 @@ public class Root extends Node {
                     }},
                     register, null
             ));
-            recycle(expression.left.getResultNumber());
-            recycle(expression.right.getResultNumber());
             expression.setResultNumber(register);
         }
 
@@ -709,7 +685,6 @@ public class Root extends Node {
                     operator
             ));
             suffixExpression.setResultNumber(register);
-            recycle(suffixExpression.expression.getResultNumber());
         }
 
         @Override
@@ -853,7 +828,6 @@ public class Root extends Node {
                         null, null,
                         ((SymbolClassType) type).getVariable(field.identifier).getRegisterSize()
                 ));
-                recycle(number);
             }
         }
 

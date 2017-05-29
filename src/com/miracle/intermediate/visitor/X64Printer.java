@@ -1,10 +1,7 @@
 package com.miracle.intermediate.visitor;
 
 import com.miracle.intermediate.Root;
-import com.miracle.intermediate.instruction.Call;
-import com.miracle.intermediate.instruction.Compare;
-import com.miracle.intermediate.instruction.HeapAllocate;
-import com.miracle.intermediate.instruction.Move;
+import com.miracle.intermediate.instruction.*;
 import com.miracle.intermediate.instruction.arithmetic.BinaryArithmetic;
 import com.miracle.intermediate.instruction.arithmetic.UnaryArithmetic;
 import com.miracle.intermediate.instruction.fork.BinaryBranch;
@@ -23,7 +20,7 @@ import java.util.*;
 import static com.miracle.MiracleOption.CallingConvention;
 import static com.miracle.intermediate.number.PhysicalRegister.*;
 
-public class X64Printer implements IRVisitor {
+public class X64Printer implements IRPrinter {
     private StringBuilder builder;
     private Set<BasicBlock> blockProcessed;
     private String builtinPath;
@@ -33,6 +30,7 @@ public class X64Printer implements IRVisitor {
         this.builtinPath = builtinPath;
     }
 
+    @Override
     public String getOutput() throws IOException {
         builder.append(FileUtils.readFileToString(
                 new java.io.File(builtinPath),
@@ -154,8 +152,16 @@ public class X64Printer implements IRVisitor {
          *  Move Instruction:
          *  tar and src cannot be both indirect registers       -> TODO: in Register Allocator
          */
-        builder.append('\t').append("mov").append(' ').append(move.getTarget())
-                .append(", ").append(move.getSource()).append('\n');
+        if (move.getSource().getNumberSize() > move.getTarget().getNumberSize()) {
+            builder.append('\t').append("movsx").append(' ').append(move.getTarget())
+                    .append(", ").append(move.getSource()).append('\n');
+        } else if (move.getSource().getNumberSize() > move.getTarget().getNumberSize()) {
+            builder.append('\t').append("movzx").append(' ').append(move.getTarget())
+                    .append(", ").append(move.getSource()).append('\n');
+        } else {
+            builder.append('\t').append("mov").append(' ').append(move.getTarget())
+                    .append(", ").append(move.getSource()).append('\n');
+        }
     }
 
     @Override
@@ -300,5 +306,10 @@ public class X64Printer implements IRVisitor {
                 .append('\n');
         builder.append('\t').append(binaryBranch.getOperator())
                 .append(' ').append(binaryBranch.branchTrue.name).append('\n');
+    }
+
+    @Override
+    public void visit(PhiInstruction phiInstruction) {
+        throw new RuntimeException("unprocessed phis");
     }
 }

@@ -30,13 +30,27 @@ public class BinaryArithmetic extends Instruction {
     }
 
     @Override
-    public void rename(Map<Number, Register> map) {
+    public void set(Map<Number, Register> map) {
         target = map.getOrDefault(target, target);
         if (target instanceof OffsetRegister) {
-            ((OffsetRegister) target).rename(map);
+            ((OffsetRegister) target).set(map);
         }
         if (map.containsKey(source)) source = map.get(source);
         if (source instanceof OffsetRegister) {
+            ((OffsetRegister) source).set(map);
+        }
+    }
+
+    @Override
+    public void rename(Map<VirtualRegister, VirtualRegister> map) {
+        if (target instanceof VirtualRegister) {
+            target = map.get(target);
+        } else if (target instanceof OffsetRegister) {
+            ((OffsetRegister) target).rename(map);
+        }
+        if (source instanceof VirtualRegister) {
+            source = map.get(source);
+        } else if (source instanceof OffsetRegister) {
             ((OffsetRegister) source).rename(map);
         }
     }

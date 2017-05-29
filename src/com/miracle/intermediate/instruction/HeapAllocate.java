@@ -3,6 +3,7 @@ package com.miracle.intermediate.instruction;
 import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.number.OffsetRegister;
 import com.miracle.intermediate.number.Register;
+import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.visitor.IRVisitor;
 
 import java.util.HashSet;
@@ -36,13 +37,27 @@ public class HeapAllocate extends Instruction {
     }
 
     @Override
-    public void rename(Map<Number, Register> map) {
+    public void set(Map<Number, Register> map) {
         target = map.getOrDefault(target, target);
         if (target instanceof OffsetRegister) {
-            ((OffsetRegister) target).rename(map);
+            ((OffsetRegister) target).set(map);
         }
         if (map.containsKey(number)) number = map.get(number);
         if (number instanceof OffsetRegister) {
+            ((OffsetRegister) number).set(map);
+        }
+    }
+
+    @Override
+    public void rename(Map<VirtualRegister, VirtualRegister> map) {
+        if (target instanceof VirtualRegister) {
+            target = map.get(target);
+        } else if (target instanceof OffsetRegister) {
+            ((OffsetRegister) target).rename(map);
+        }
+        if (number instanceof VirtualRegister) {
+            number = map.get(number);
+        } else if (number instanceof OffsetRegister) {
             ((OffsetRegister) number).rename(map);
         }
     }

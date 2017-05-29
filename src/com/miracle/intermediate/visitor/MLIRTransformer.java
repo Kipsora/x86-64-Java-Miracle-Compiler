@@ -20,7 +20,7 @@ import com.miracle.intermediate.structure.Function;
 import java.util.HashSet;
 import java.util.Set;
 
-public class MLIRTransformer implements IRVisitor {
+public class MLIRTransformer extends BaseIRVisitor {
     private Set<BasicBlock> blockProcessed;
     private int countTmpVars;
 
@@ -29,16 +29,6 @@ public class MLIRTransformer implements IRVisitor {
         countTmpVars = 0;
         blockProcessed = new HashSet<>();
         ir.globalFunction.forEach((key, value) -> value.accept(this));
-    }
-
-    @Override
-    public void visit(BinaryArithmetic binaryArithmetic) {
-
-    }
-
-    @Override
-    public void visit(Move move) {
-
     }
 
     @Override
@@ -164,45 +154,5 @@ public class MLIRTransformer implements IRVisitor {
             }
         }
         block.getSuccBasicBlock().forEach(element -> element.accept(this));
-    }
-
-    @Override
-    public void visit(Call call) {
-
-    }
-
-    @Override
-    public void visit(UnaryArithmetic prefixArithmetic) {
-
-    }
-
-    @Override
-    public void visit(UnaryBranch unaryBranch) {
-
-    }
-
-    @Override
-    public void visit(Return irReturn) {
-
-    }
-
-    @Override
-    public void visit(Jump jump) {
-
-    }
-
-    @Override
-    public void visit(Compare compare) {
-
-    }
-
-    @Override
-    public void visit(HeapAllocate allocate) {
-
-    }
-
-    @Override
-    public void visit(BinaryBranch binaryBranch) {
-
     }
 }

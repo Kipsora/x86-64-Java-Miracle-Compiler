@@ -2,6 +2,7 @@ package com.miracle.intermediate.instruction.fork;
 
 import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.number.Register;
+import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.visitor.IRVisitor;
 
@@ -22,7 +23,12 @@ public class Jump extends Fork {
     }
 
     @Override
-    public void rename(Map<Number, Register> map) {
+    public void set(Map<Number, Register> map) {
+
+    }
+
+    @Override
+    public void rename(Map<VirtualRegister, VirtualRegister> map) {
 
     }
 

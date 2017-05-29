@@ -1,10 +1,7 @@
 package com.miracle.intermediate.visitor;
 
 import com.miracle.intermediate.Root;
-import com.miracle.intermediate.instruction.Call;
-import com.miracle.intermediate.instruction.Compare;
-import com.miracle.intermediate.instruction.HeapAllocate;
-import com.miracle.intermediate.instruction.Move;
+import com.miracle.intermediate.instruction.*;
 import com.miracle.intermediate.instruction.arithmetic.BinaryArithmetic;
 import com.miracle.intermediate.instruction.arithmetic.UnaryArithmetic;
 import com.miracle.intermediate.instruction.fork.BinaryBranch;
@@ -18,9 +15,8 @@ import com.miracle.intermediate.structure.Function;
 import java.util.HashSet;
 import java.util.Set;
 
-public class HLIRTransformer implements IRVisitor {
+public class HLIRTransformer extends BaseIRVisitor {
     private Set<BasicBlock> blockProcessed;
-    private Function curFunction;
 
     @Override
     public void visit(Root ir) {
@@ -29,18 +25,7 @@ public class HLIRTransformer implements IRVisitor {
     }
 
     @Override
-    public void visit(BinaryArithmetic binaryArithmetic) {
-
-    }
-
-    @Override
-    public void visit(Move move) {
-
-    }
-
-    @Override
     public void visit(Function function) {
-        curFunction = function;
         int size = function.getReturns().size();
         if (size == 0) throw new RuntimeException("no return");
         if (size == 1) {
@@ -59,7 +44,6 @@ public class HLIRTransformer implements IRVisitor {
             function.getExitBasicBlock().tail.prepend(new Return(null));
         }
         function.getEntryBasicBlock().accept(this);
-        curFunction = null;
     }
 
     @Override
@@ -91,45 +75,5 @@ public class HLIRTransformer implements IRVisitor {
             throw new RuntimeException("NO FORK STATEMENT");
         }*/
         block.getSuccBasicBlock().forEach(element -> element.accept(this));
-    }
-
-    @Override
-    public void visit(Call call) {
-
-    }
-
-    @Override
-    public void visit(UnaryArithmetic prefixArithmetic) {
-
-    }
-
-    @Override
-    public void visit(UnaryBranch unaryBranch) {
-
-    }
-
-    @Override
-    public void visit(Return irReturn) {
-
-    }
-
-    @Override
-    public void visit(Jump jump) {
-
-    }
-
-    @Override
-    public void visit(Compare compare) {
-
-    }
-
-    @Override
-    public void visit(HeapAllocate allocate) {
-
-    }
-
-    @Override
-    public void visit(BinaryBranch binaryBranch) {
-
     }
 }

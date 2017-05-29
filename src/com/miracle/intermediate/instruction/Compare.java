@@ -3,6 +3,7 @@ package com.miracle.intermediate.instruction;
 import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.number.OffsetRegister;
 import com.miracle.intermediate.number.Register;
+import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.visitor.IRVisitor;
 
 import java.util.HashSet;
@@ -42,18 +43,37 @@ public class Compare extends Instruction {
     }
 
     @Override
-    public void rename(Map<Number, Register> map) {
+    public void set(Map<Number, Register> map) {
         if (map.containsKey(sourceA)) sourceA = map.get(sourceA);
         if (sourceA instanceof OffsetRegister) {
-            ((OffsetRegister) sourceA).rename(map);
+            ((OffsetRegister) sourceA).set(map);
         }
         if (map.containsKey(sourceB)) sourceB = map.get(sourceB);
         if (sourceB instanceof OffsetRegister) {
-            ((OffsetRegister) sourceB).rename(map);
+            ((OffsetRegister) sourceB).set(map);
         }
         target = map.getOrDefault(target, target);
         if (target instanceof OffsetRegister) {
+            ((OffsetRegister) target).set(map);
+        }
+    }
+
+    @Override
+    public void rename(Map<VirtualRegister, VirtualRegister> map) {
+        if (target instanceof VirtualRegister) {
+            target = map.get(target);
+        } else if (target instanceof OffsetRegister) {
             ((OffsetRegister) target).rename(map);
+        }
+        if (sourceA instanceof VirtualRegister) {
+            sourceA = map.get(sourceA);
+        } else if (sourceA instanceof OffsetRegister) {
+            ((OffsetRegister) sourceA).rename(map);
+        }
+        if (sourceB instanceof VirtualRegister) {
+            sourceB = map.get(sourceB);
+        } else if (sourceB instanceof OffsetRegister) {
+            ((OffsetRegister) sourceB).rename(map);
         }
     }
 

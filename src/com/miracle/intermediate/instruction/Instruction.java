@@ -4,6 +4,7 @@ import com.miracle.intermediate.Node;
 import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.number.OffsetRegister;
 import com.miracle.intermediate.number.Register;
+import com.miracle.intermediate.number.VirtualRegister;
 
 import java.util.Map;
 import java.util.Set;
@@ -21,10 +22,12 @@ public abstract class Instruction extends Node {
         set.add(register);
     }
 
-    public abstract void rename(Map<Number, Register> map);
+    public abstract void set(Map<Number, Register> map);
+
+    public abstract void rename(Map<VirtualRegister, VirtualRegister> map);
 
     /**
-     * @return a rename contain registers to be allocated which stores source data
+     * @return a set contain registers to be allocated which stores source data
      * in the instruction, and the second is whether it is forced to be allocated
      * to a specific register
      */

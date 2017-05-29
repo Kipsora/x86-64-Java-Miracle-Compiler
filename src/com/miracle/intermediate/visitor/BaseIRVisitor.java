@@ -1,10 +1,7 @@
 package com.miracle.intermediate.visitor;
 
 import com.miracle.intermediate.Root;
-import com.miracle.intermediate.instruction.Call;
-import com.miracle.intermediate.instruction.Compare;
-import com.miracle.intermediate.instruction.HeapAllocate;
-import com.miracle.intermediate.instruction.Move;
+import com.miracle.intermediate.instruction.*;
 import com.miracle.intermediate.instruction.arithmetic.BinaryArithmetic;
 import com.miracle.intermediate.instruction.arithmetic.UnaryArithmetic;
 import com.miracle.intermediate.instruction.fork.BinaryBranch;
@@ -77,6 +74,11 @@ public class BaseIRVisitor implements IRVisitor {
 
     @Override
     public void visit(BinaryBranch binaryBranch) {
+
+    }
+
+    @Override
+    public void visit(PhiInstruction phiInstruction) {
 
     }
 }
