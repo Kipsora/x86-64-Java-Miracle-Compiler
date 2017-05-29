@@ -1310,14 +1310,7 @@
       <workItem from="1495872558615" duration="4671000" />
       <workItem from="1495881338658" duration="30558000" />
       <workItem from="1495936248896" duration="46619000" />
-      <workItem from="1496028922844" duration="2998000" />
-    </task>
-    <task id="LOCAL-00020" summary="More swift code added &amp; symbol table changed.">
-      <created>1495041212336</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1495041212336</updated>
+      <workItem from="1496028922844" duration="3272000" />
     </task>
     <task id="LOCAL-00021" summary="G4 modified &amp; Bugs fixed.">
       <created>1495042253951</created>
@@ -1655,11 +1648,18 @@
       <option name="project" value="LOCAL" />
       <updated>1496030574091</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="Builtin function has been rewritten.">
+      <created>1496032261896</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1496032261896</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="511840000" />
+    <option name="totallyTimeSpent" value="512114000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">

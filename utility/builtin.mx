@@ -154,7 +154,7 @@ __loop_exit@string.parseInt:
     push rdx
     mov rdi, rdx
     sub rdi, rsi
-    add rdi, 6
+    add rdi, 9
     call malloc
     pop rdx
     pop rsi
@@ -163,7 +163,7 @@ __loop_exit@string.parseInt:
     inc rdx
     mov qword [rax], rdx
     xor rsi, rsi
-    add rdi, 4
+    add rdi, 8
 __loop@string.substring:
     cmp rdx, 0
     je __loop_exit@string.substring
