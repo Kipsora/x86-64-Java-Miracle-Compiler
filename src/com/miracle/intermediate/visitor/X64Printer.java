@@ -1,6 +1,5 @@
 package com.miracle.intermediate.visitor;
 
-import com.miracle.MiracleOption;
 import com.miracle.intermediate.Root;
 import com.miracle.intermediate.instruction.Call;
 import com.miracle.intermediate.instruction.Compare;
@@ -51,15 +50,15 @@ public class X64Printer implements IRVisitor {
         array.forEach(element -> builder.append(element).append(", "));
     }
 
-    private List<Byte> divideStringIntoByte(String value) {
-        List<Byte> list = new ArrayList<>();
+    private List<String> divideStringIntoByte(String value) {
+        List<String> list = new ArrayList<>();
         value = value.substring(1, value.length() - 1);
         for (int i = 0, length = value.length(); i < length; i++) {
             if (i + 1 < value.length() && value.charAt(i) == '\\' && value.charAt(i + 1) == 'n') {
-                list.add((byte) 10);
+                list.add(String.valueOf(10));
                 i++;
             } else {
-                list.add((byte) value.charAt(i));
+                list.add(String.valueOf(value.charAt(i)));
             }
         }
         return list;
@@ -83,12 +82,10 @@ public class X64Printer implements IRVisitor {
                 .append("resw").append(' ').append('1').append('\n');
         builder.append('\n').append("section .data").append('\n');
         ir.globalString.forEach((key, value) -> {
-            builder.append(value.name).append(':').append('\t')
-                    .append("db").append(' ');
-            List<Byte> bytes = divideStringIntoByte(value.value);
-            printNumberWith256Base(bytes.size(), MiracleOption.INT_SIZE);
-            bytes.forEach(element -> builder.append(element).append(", "));
-            builder.append('0').append('\n');
+            List<String> bytes = divideStringIntoByte(value.value);
+            builder.append('\t').append("dq").append(' ').append(bytes.size()).append('\n');
+            builder.append(value.name).append(':').append('\t').append("db").append(' ');
+            builder.append(String.join(", ", bytes)).append('\n');
         });
         builder.append("int$fmt").append(':').append('\t')
                 .append("db").append(' ').append("25H").append(", ")

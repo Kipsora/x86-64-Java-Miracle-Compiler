@@ -1,3 +1,20 @@
+; ******************************************************************
+; *          Miracle Builtin Function Library                      *
+; *  All functions are following calling conventions, see it in    *
+; *  x86-64-linux-abi.                                             *
+; *  1. toString: should protect all caller-save registers         *
+; *  2. getInt: should protect all caller-save registers           *
+; *  3. print: should protect rsi, rdi, rax, rdx                   *
+; *  4. println: should protect rsi, rdi, rax, rdx                 *
+; *  5. strcat: should protect rsi, rdi, rax, rcx, rdx             *
+; *  6. array.size: should protect rdi, rax                        *
+; *  7. string.length: should protect rdi, rax                     *
+; *  8. string.ord: should protect rax, rdi, rsi                   *
+; *  9. string.parseInt: should protect rdi, rdx, rcx, rax         *
+; * 10. string.substring: should protect all caller-save registers *
+; * 11. getString: should protect all caller-save registers        *
+; * 12. strcmp: should protect rcx, rsi, rdi, rax                  *
+; ******************************************************************
 @toString:
     push rbp
     mov rbp, rsp
@@ -8,10 +25,9 @@
 	mov rbx, rdi
 	mov rdi, 30
 	call malloc
-	lea rdi, [rax+29]
+	lea rdi, [rax+30]
 	mov rax, rbx
 	mov rbx, 10
-	mov byte [rdi], 0
 	xor rcx, rcx
 __loop_negative@toString:
 	dec rdi
@@ -25,8 +41,8 @@ __loop_negative@toString:
 	dec rdi
 	mov byte [rdi], 45
 	inc rcx
-	lea rax, [rdi-8]
-	mov qword [rax], rcx
+	mov qword [rdi-8], rcx
+	mov rax, rdi
 	pop rbx
 	leave
 	ret
@@ -34,10 +50,9 @@ __positive@toString:
 	mov rbx, rdi
 	mov rdi, 30
 	call malloc
-	lea rdi, [rax+29]
+	lea rdi, [rax+30]
 	mov rax, rbx
 	mov rbx, 10
-	mov byte [rdi], 0
 	xor rcx, rcx
 __loop_positive@toString:
 	dec rdi
@@ -48,8 +63,8 @@ __loop_positive@toString:
 	mov byte [rdi], dl
 	cmp rax, 0
 	jnz __loop_positive@toString
-	lea rax, [rdi-8]
-	mov qword [rax], rcx
+	mov qword [rdi-8], rcx
+	mov rax, rdi
 	pop rbx
 	leave
 	ret
@@ -61,15 +76,15 @@ __loop_positive@toString:
     mov rax, [rel int$buf]
     ret
 @print:
-    lea rsi, [rdi+8]
-    mov rdx, qword [rdi]
+    mov rsi, rdi
+    mov rdx, qword [rdi-8]
     mov rdi, 1
     mov rax, 1
     syscall
     ret
 @println:
-    lea rsi, [rdi+8]
-    mov rdx, qword [rdi]
+    mov rsi, rdi
+    mov rdx, qword [rdi-8]
     mov rdi, 1
     mov rax, 1
     syscall
@@ -85,21 +100,22 @@ __loop_positive@toString:
     push rbx
     push rdi
     push rsi
-    mov rdi, qword [rdi]
-    add rdi, qword [rsi]
-    add rdi, 9
+    mov rdi, qword [rdi-8]
+    add rdi, qword [rsi-8]
+    add rdi, 8
     call malloc
+    add rax, 8
     pop rsi
     pop rdi
     
-    mov rbx, qword [rdi]
-    mov qword [rax], rbx
+    mov rbx, qword [rdi-8]
+    mov qword [rax-8], rbx
     xor rcx, rcx
 __loop_1@strcat:
     cmp rcx, rbx
     jge __loop_2_init@strcat
-    mov dl, byte [rdi+rcx+8]
-    mov byte [rax+rcx+8], dl
+    mov dl, byte [rdi+rcx]
+    mov byte [rax+rcx], dl
     inc rcx
     jmp __loop_1@strcat
 __loop_2_init@strcat:
@@ -109,8 +125,8 @@ __loop_2_init@strcat:
 __loop_2@strcat:
     cmp rdi, rbx
     jge __loop2_exit@strcat
-    mov dl, byte [rsi+rdi+8]
-    mov byte [rax+rcx+8], dl
+    mov dl, byte [rsi+rdi]
+    mov byte [rax+rcx], dl
     inc rcx
     inc rdi
     jmp __loop_2@strcat
@@ -122,20 +138,26 @@ __loop2_exit@strcat:
     mov rax, qword [rdi-8]
     ret
 @string.length:
-    mov rax, qword [rdi]
+    mov rax, qword [rdi-8]
     ret
 @string.ord:
     xor rax, rax
-    mov al, byte [rdi+rsi+8]
+    mov al, byte [rdi+rsi]
     ret
 @string.parseInt:
-    mov rdx, qword [rdi]
+    mov rdx, qword [rdi-8]
     xor rax, rax
     xor rcx, rcx
 __loop@string.parseInt:
     cmp rdx, 0
     je __loop_exit@string.parseInt
-    mov cl, byte [rdi+8]
+    mov cl, byte [rdi]
+    cmp cl, 45
+    jne __loop_positive@string.parseInt
+    cmp ch, 0
+    jg __loop_exit@string.parseInt
+    inc ch
+__loop_positive@string.parseInt:
     cmp cl, 48
     jl __loop_exit@string.parseInt
     cmp cl, 57
@@ -148,6 +170,10 @@ __loop@string.parseInt:
     dec rdx
     jmp __loop@string.parseInt
 __loop_exit@string.parseInt:
+    cmp ch, 0
+    je __exit@string.parseInt
+    neg rax
+__exit@string.parseInt:
     ret
 @string.substring:
     add rdi, rsi
@@ -156,21 +182,22 @@ __loop_exit@string.parseInt:
     push rdx
     mov rdi, rdx
     sub rdi, rsi
-    add rdi, 9
+    add rdi, 8
     call malloc
+    add rax, 8
     pop rdx
     pop rsi
     pop rdi
     sub rdx, rsi
     inc rdx
-    mov qword [rax], rdx
+    mov qword [rax-8], rdx
     xor rsi, rsi
     add rdi, 8
 __loop@string.substring:
     cmp rdx, 0
     je __loop_exit@string.substring
     mov cl, byte [rdi]
-    mov byte [rax+rsi+8], cl
+    mov byte [rax+rsi], cl
     inc rsi
     inc rdi
     dec rdx
@@ -178,9 +205,10 @@ __loop@string.substring:
 __loop_exit@string.substring:
     ret
 @getString:
-    mov rdi, 256
+    mov rdi, 264     ; 256 + 8
     call malloc
-    lea rsi, [rax+8]
+    add rax, 8
+    mov rsi, rax
     mov rdi, str$fmt
     xor rax, rax
     push rsi
@@ -194,11 +222,9 @@ __loop@getString:
     jmp __loop@getString
 __loop_exit@getString:
     mov qword [rsi-8], rax
-    lea rax, [rsi-8]
+    mov rax, rsi
     ret
 @strcmp: ; cmp(rdi, rsi)
-    add rsi, 8
-    add rdi, 8
 __loop@strcmp:
     mov cl, byte [rsi]
     cmp cl, byte [rdi]
