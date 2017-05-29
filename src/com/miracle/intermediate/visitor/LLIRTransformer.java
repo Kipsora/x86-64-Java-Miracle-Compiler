@@ -56,11 +56,6 @@ public class LLIRTransformer implements IRVisitor {
         curFunction = function;
         //function.parameters.forEach(this::enroll);
         curFunction.getEntryBasicBlock().accept(this);
-        int size = curFunction.getReturns().size();
-        curFunction.getReturns().forEach(element -> {
-            element.append(new Jump(function.getExitBasicBlock()));
-            element.remove();
-        });
         curFunction = null;
     }
 

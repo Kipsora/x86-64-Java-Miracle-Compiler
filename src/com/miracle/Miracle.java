@@ -135,6 +135,7 @@ public class Miracle {
             ASTree astree = getASTree(cstree);
             if (this.isPrintASTree) printASTree(astree);
             Root ir = getIR(astree);
+            ir.accept(new HLIRTransformer());
             if (this.isPrintHLevelIR) printIR(ir);
             //ir.accept(new LivenessAnalyser());
             ir.accept(new MLIRTransformer());

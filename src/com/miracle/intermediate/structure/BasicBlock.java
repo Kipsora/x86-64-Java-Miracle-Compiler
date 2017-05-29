@@ -71,11 +71,6 @@ public class BasicBlock {
         IRVisitor.visit(this);
     }
 
-    public void clearSuccBlock() {
-        succBasicBlock.forEach(element -> element.prevBasicBlock.remove(this));
-        succBasicBlock.clear();
-    }
-
     public class Node {
         public final Instruction instruction;
         private Node prev;

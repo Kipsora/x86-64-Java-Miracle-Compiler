@@ -110,7 +110,6 @@ public class Root extends Node {
 
             if (!curBasicBlock.isForked()) {
                 curBasicBlock.setFork(new Jump(curFunction.getExitBasicBlock()));
-                curBasicBlock.addSuccBasicBlock(curFunction.getExitBasicBlock());
             }
             /*else {
                 curBasicBlock.tail.prepend(new Jump(curFunction.getExitBasicBlock()));
@@ -156,7 +155,6 @@ public class Root extends Node {
 
             if (!curBasicBlock.isForked()) {
                 curBasicBlock.setFork(new Jump(curFunction.getExitBasicBlock()));
-                curBasicBlock.addSuccBasicBlock(curFunction.getExitBasicBlock());
             }
 
             curFunction.getExitBasicBlock().setFork(new Return(null));
@@ -258,8 +256,6 @@ public class Root extends Node {
                 recycle(selection.expression.getResultNumber());
             }
 
-            curBasicBlock.addSuccBasicBlock(passBlock);
-            curBasicBlock.addSuccBasicBlock(failBlock);
             curBasicBlock = passBlock;
             if (selection.branchTrue != null) {
                 selection.branchTrue.accept(this);
@@ -267,7 +263,6 @@ public class Root extends Node {
 
             if (!curBasicBlock.isForked()) {
                 curBasicBlock.setFork(new Jump(bothBlock));
-                curBasicBlock.addSuccBasicBlock(bothBlock);
             }
 
             curBasicBlock = failBlock;
@@ -277,7 +272,6 @@ public class Root extends Node {
 
             if (!curBasicBlock.isForked()) {
                 curBasicBlock.setFork(new Jump(bothBlock));
-                curBasicBlock.addSuccBasicBlock(bothBlock);
             }
 
             curBasicBlock = bothBlock;
@@ -292,7 +286,6 @@ public class Root extends Node {
 
             if (!curBasicBlock.isForked()) {
                 curBasicBlock.setFork(new Jump(condBlock));
-                curBasicBlock.addSuccBasicBlock(condBlock);
             }
 
             curBasicBlock = condBlock;
@@ -301,15 +294,12 @@ public class Root extends Node {
             if (iteration.conditionExpression != null) {
                 iteration.conditionExpression.accept(this);
 
-                curBasicBlock.addSuccBasicBlock(bodyBlock);
-                curBasicBlock.addSuccBasicBlock(exitBlock);
                 curBasicBlock.setFork(new UnaryBranch(
                         iteration.conditionExpression.getResultNumber(),
                         bodyBlock, exitBlock
                 ));
             } else {
                 curBasicBlock.setFork(new Jump(bodyBlock));
-                curBasicBlock.addSuccBasicBlock(bodyBlock);
             }
             BasicBlock oldBodyBlock = loopCondBlock;
             BasicBlock oldExitBlock = loopExitBlock;
@@ -327,7 +317,6 @@ public class Root extends Node {
 
             if (!curBasicBlock.isForked()) {
                 curBasicBlock.setFork(new Jump(condBlock));
-                curBasicBlock.addSuccBasicBlock(condBlock);
             }
 
             curBasicBlock = exitBlock;
@@ -340,7 +329,6 @@ public class Root extends Node {
         public void visit(Break breakLiteral) {
             if (!curBasicBlock.isForked()) {
                 curBasicBlock.setFork(new Jump(loopExitBlock));
-                curBasicBlock.addSuccBasicBlock(loopExitBlock);
             }
         }
 
@@ -348,7 +336,6 @@ public class Root extends Node {
         public void visit(Continue continueLiteral) {
             if (!curBasicBlock.isForked()) {
                 curBasicBlock.setFork(new Jump(loopCondBlock));
-                curBasicBlock.addSuccBasicBlock(loopCondBlock);
             }
         }
 
@@ -357,7 +344,6 @@ public class Root extends Node {
             if (returnLiteral.expression != null) {
                 returnLiteral.expression.accept(this);
             }
-            curBasicBlock.addSuccBasicBlock(curFunction.getExitBasicBlock());
             Return returnStatement;
             if (returnLiteral.expression != null) {
                 returnStatement = new Return(returnLiteral.expression.getResultNumber());
@@ -590,8 +576,6 @@ public class Root extends Node {
             BasicBlock block_fake = new BasicBlock("ss_block_fake_" + String.valueOf(countBlock++), curFunction, false, false);
             BasicBlock block_both = new BasicBlock("ss_block_fake_" + String.valueOf(countBlock++), curFunction, false, false);
             if (!curBasicBlock.isForked()) {
-                curBasicBlock.addSuccBasicBlock(block_fake);
-                curBasicBlock.addSuccBasicBlock(block_true);
                 curBasicBlock.setFork(new UnaryBranch(expression.left.getResultNumber(), block_true, block_fake));
             }
             VirtualRegister register = newVirtualRegister(expression.left.getResultNumber().getNumberSize());
@@ -599,14 +583,12 @@ public class Root extends Node {
                 curBasicBlock = block_true;
                 curBasicBlock.tail.prepend(new Move(register, new Immediate(1, expression.left.getResultNumber().getNumberSize())));
                 curBasicBlock.setFork(new Jump(block_both));
-                curBasicBlock.addSuccBasicBlock(block_both);
 
                 curBasicBlock = block_fake;
                 expression.right.accept(this);
                 curBasicBlock.tail.prepend(new Move(register, expression.right.getResultNumber()));
                 if (!curBasicBlock.isForked()) {
                     curBasicBlock.setFork(new Jump(block_both));
-                    curBasicBlock.addSuccBasicBlock(block_both);
                 }
             } else {
                 curBasicBlock = block_true;
@@ -614,13 +596,11 @@ public class Root extends Node {
                 curBasicBlock.tail.prepend(new Move(register, expression.right.getResultNumber()));
                 if (!curBasicBlock.isForked()) {
                     curBasicBlock.setFork(new Jump(block_both));
-                    curBasicBlock.addSuccBasicBlock(block_both);
                 }
 
                 curBasicBlock = block_fake;
                 curBasicBlock.tail.prepend(new Move(register, new Immediate(0, expression.left.getResultNumber().getNumberSize())));
                 curBasicBlock.setFork(new Jump(block_both));
-                curBasicBlock.addSuccBasicBlock(block_both);
             }
             curBasicBlock = block_both;
             expression.setResultNumber(register);
@@ -791,13 +771,10 @@ public class Root extends Node {
                     BasicBlock newInitExitBlock = new BasicBlock("new_init_exit_" + String.valueOf(countBlock++), curFunction, false, false);
 
                     curBasicBlock.setFork(new Jump(newInitCondBlock));
-                    curBasicBlock.addSuccBasicBlock(newInitCondBlock);
 
                     curBasicBlock = newInitCondBlock;
                     BasicBlock newInitBodyBlock = new BasicBlock("new_init_body_" + String.valueOf(countBlock++), curFunction, false, false);
 
-                    curBasicBlock.addSuccBasicBlock(newInitBodyBlock);
-                    curBasicBlock.addSuccBasicBlock(newInitExitBlock);
                     curBasicBlock.setFork(new BinaryBranch(iterreg, BinaryBranch.Types.LT, expression.getResultNumber(), newInitBodyBlock, newInitExitBlock));
 
                     curBasicBlock = newInitBodyBlock;
@@ -812,7 +789,6 @@ public class Root extends Node {
                             nextNew.getResultNumber()
                     ));
                     curBasicBlock.tail.prepend(new UnaryArithmetic(iterreg, UnaryArithmetic.Types.ADD));
-                    curBasicBlock.addSuccBasicBlock(newInitCondBlock);
                     curBasicBlock.setFork(new Jump(newInitCondBlock));
                     curBasicBlock = newInitExitBlock;
                 }

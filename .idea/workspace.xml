@@ -6,8 +6,14 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a1af29a-b77a-4b8c-9654-4271264bd490" name="Default" comment="Final version builtin function, ready to optimization.">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LivenessAnalysis.java" afterPath="" />
+    <list default="true" id="1a1af29a-b77a-4b8c-9654-4271264bd490" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/HLIRTransformer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LivenessAnalysis.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/Miracle.java" afterPath="$PROJECT_DIR$/src/com/miracle/Miracle.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/Root.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/Root.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/structure/BasicBlock.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/structure/BasicBlock.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LLIRTransformer.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LLIRTransformer.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,47 +46,21 @@
       <file leaf-file-name="Root.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/Root.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-575">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state relative-caret-position="78">
+              <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
               <folding>
-                <marker date="1496047323075" expanded="true" signature="37282:37944" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="38023:38193" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="38272:38558" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="38631:38730" ph="{...}" />
-                <marker date="1496047323075" expanded="false" signature="38790:38805" ph=" { " />
-                <marker date="1496047323075" expanded="false" signature="38861:38871" ph=" }" />
-                <marker date="1496047323075" expanded="true" signature="38930:40009" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="40074:40086" ph="{...}" />
-                <marker date="1496047323075" expanded="false" signature="40115:40130" ph=" { " />
-                <marker date="1496047323075" expanded="false" signature="40192:40202" ph=" }" />
+                <element signature="e#2328#2329#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="X64Printer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java">
+      <file leaf-file-name="BasicBlock.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/structure/BasicBlock.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="86" column="12" lean-forward="false" selection-start-line="86" selection-start-column="12" selection-end-line="86" selection-end-column="12" />
-              <folding>
-                <marker date="1496047323079" expanded="true" signature="3880:3904" ph="{...}" />
-                <marker date="1496047323079" expanded="true" signature="4552:4629" ph="{...}" />
-                <marker date="1496047323079" expanded="true" signature="4710:7013" ph="{...}" />
-                <marker date="1496047323079" expanded="true" signature="7062:7366" ph="{...}" />
-                <marker date="1496047323079" expanded="true" signature="7423:7612" ph="{...}" />
-                <marker date="1496047323079" expanded="false" signature="7660:7671" ph=" { " />
-                <marker date="1496047323079" expanded="false" signature="7705:7711" ph=" }" />
-                <marker date="1496047323079" expanded="true" signature="7767:8884" ph="{...}" />
-                <marker date="1496047323079" expanded="true" signature="8933:10389" ph="{...}" />
-                <marker date="1496047323079" expanded="true" signature="10461:10697" ph="{...}" />
-                <marker date="1496047323079" expanded="true" signature="10760:11176" ph="{...}" />
-                <marker date="1496047323079" expanded="true" signature="11231:11437" ph="{...}" />
-                <marker date="1496047323079" expanded="true" signature="11486:11603" ph="{...}" />
-                <marker date="1496047323079" expanded="true" signature="11658:12190" ph="{...}" />
-                <marker date="1496047323079" expanded="true" signature="12251:12620" ph="{...}" />
-                <marker date="1496047323079" expanded="true" signature="12685:13293" ph="{...}" />
-              </folding>
+            <state relative-caret-position="714">
+              <caret line="73" column="4" lean-forward="false" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -98,43 +78,61 @@
       <file leaf-file-name="LLIRTransformer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LLIRTransformer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+            <state relative-caret-position="223">
+              <caret line="57" column="54" lean-forward="false" selection-start-line="57" selection-start-column="54" selection-end-line="57" selection-end-column="54" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1496047323075" expanded="true" signature="3479:3486" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="3558:3566" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="3629:3637" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="3692:3953" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="4002:4010" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="4065:4073" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="4134:4142" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="4207:4215" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Function.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Function.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/structure/Function.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="22" column="30" lean-forward="false" selection-start-line="22" selection-start-column="30" selection-end-line="22" selection-end-column="30" />
+            <state relative-caret-position="74">
+              <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
               <folding>
                 <element signature="e#1595#1596#0" expanded="true" />
                 <element signature="e#1633#1634#0" expanded="true" />
+                <element signature="e#1717#1718#0" expanded="true" />
                 <element signature="e#1945#1946#0" expanded="true" />
                 <element signature="e#1993#1994#0" expanded="true" />
-                <marker date="1496047323075" expanded="false" signature="1679:1690" ph=" { " />
-                <marker date="1496047323075" expanded="false" signature="1712:1718" ph=" }" />
-                <marker date="1496047323075" expanded="false" signature="1761:1772" ph=" { " />
-                <marker date="1496047323075" expanded="false" signature="1794:1800" ph=" }" />
-                <marker date="1496047323075" expanded="false" signature="1845:1856" ph=" { " />
-                <marker date="1496047323075" expanded="false" signature="1876:1882" ph=" }" />
-                <marker date="1496047323075" expanded="false" signature="2335:2346" ph=" { " />
-                <marker date="1496047323075" expanded="false" signature="2364:2370" ph=" }" />
-                <marker date="1496047323075" expanded="false" signature="2420:2431" ph=" { " />
-                <marker date="1496047323075" expanded="false" signature="2462:2468" ph=" }" />
+                <marker date="1496047687548" expanded="false" signature="1761:1772" ph=" { " />
+                <marker date="1496047687548" expanded="false" signature="1794:1800" ph=" }" />
+                <marker date="1496047687548" expanded="false" signature="1845:1856" ph=" { " />
+                <marker date="1496047687548" expanded="false" signature="1876:1882" ph=" }" />
+                <marker date="1496047687548" expanded="false" signature="2335:2346" ph=" { " />
+                <marker date="1496047687548" expanded="false" signature="2364:2370" ph=" }" />
+                <marker date="1496047687548" expanded="false" signature="2420:2431" ph=" { " />
+                <marker date="1496047687548" expanded="false" signature="2462:2468" ph=" }" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LivenessAnalysis.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LivenessAnalysis.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+              <folding>
+                <element signature="e#991#992#0" expanded="true" />
+                <element signature="e#1068#1069#0" expanded="true" />
+                <element signature="e#1264#1265#0" expanded="true" />
+                <element signature="e#1322#1323#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HLIRTransformer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/HLIRTransformer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="249">
+              <caret line="43" column="13" lean-forward="true" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -150,42 +148,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MLIRTransformer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MLIRTransformer.java">
+      <file leaf-file-name="Miracle.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/miracle/Miracle.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <marker date="1496047323075" expanded="true" signature="3642:8974" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="9023:9031" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="9103:9111" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="9174:9182" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="9237:9245" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="9294:9302" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="9357:9365" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="9426:9434" ph="{...}" />
-                <marker date="1496047323075" expanded="true" signature="9499:9507" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SimpleAllocator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/SimpleAllocator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="181" column="0" lean-forward="false" selection-start-line="181" selection-start-column="0" selection-end-line="181" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Return.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/Return.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="422">
-              <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+            <state relative-caret-position="74">
+              <caret line="137" column="0" lean-forward="false" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -205,8 +172,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>new Linked</find>
-      <find>length</find>
       <find>exter</find>
       <find>variableDeclaration</find>
       <find>Compare</find>
@@ -235,6 +200,8 @@
       <find>db</find>
       <find>enroll</find>
       <find>newNode</find>
+      <find>addSucc</find>
+      <find>returns</find>
     </findStrings>
     <replaceStrings>
       <replace>T</replace>
@@ -266,8 +233,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRDirectAllocator.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/MiracleIRVirtualRegister.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MiracleIRX64Printer.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/BaseVisitor.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/astree/visitor/Printer.java" />
@@ -294,7 +259,6 @@
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/UnaryBranch.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/HeapAllocate.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Instruction.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/Miracle.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/symbol/SymbolArrayType.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/RegisterBuffer.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Move.java" />
@@ -308,15 +272,18 @@
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Compare.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/SimpleAllocator.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MLIRTransformer.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/Root.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/MiracleOption.java" />
         <option value="$PROJECT_DIR$/utility/builtin.mx" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/structure/Function.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Call.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/StackRegister.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LLIRTransformer.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LivenessAnalysis.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/Root.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/structure/BasicBlock.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/Miracle.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LLIRTransformer.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/HLIRTransformer.java" />
       </list>
     </option>
   </component>
@@ -800,6 +767,36 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="intermediate" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="instruction" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="x86-64-Miralce-Java-Compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="miracle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="astree" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -895,7 +892,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Miracle with LowIR">
+  <component name="RunManager" selected="Application.Miracle with HighIR">
     <configuration default="false" name="Miracle" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -1814,7 +1811,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="520619000" />
+    <option name="totallyTimeSpent" value="523110000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1843,13 +1840,13 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24983211" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.62982005" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31491002" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3251928" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46272492" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2159383" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24445938" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1984,25 +1981,25 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/miracle/intermediate/Root.java</url>
-          <line>224</line>
+          <line>222</line>
           <properties />
           <option name="timeStamp" value="305" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/miracle/intermediate/Root.java</url>
-          <line>803</line>
+          <line>780</line>
           <properties />
           <option name="timeStamp" value="310" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/miracle/intermediate/Root.java</url>
-          <line>760</line>
+          <line>740</line>
           <properties />
           <option name="timeStamp" value="311" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/miracle/intermediate/Root.java</url>
-          <line>784</line>
+          <line>764</line>
           <properties />
           <option name="timeStamp" value="312" />
         </line-breakpoint>
@@ -2012,8 +2009,22 @@
           <properties />
           <option name="timeStamp" value="313" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/HLIRTransformer.java</url>
+          <line>72</line>
+          <properties>
+            <option name="lambda-ordinal" value="-1" />
+          </properties>
+          <option name="timeStamp" value="314" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/miracle/Miracle.java</url>
+          <line>137</line>
+          <properties />
+          <option name="timeStamp" value="315" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="314" />
+      <option name="time" value="316" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2022,13 +2033,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/rt.jar!/java/util/function/Consumer.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="11" column="9" lean-forward="false" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/rt.jar!/java/util/Collections.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -2246,20 +2250,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/structure/BasicBlock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/Miracle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="634">
-          <caret line="140" column="26" lean-forward="false" selection-start-line="140" selection-start-column="26" selection-end-line="140" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/astree/statement/expression/Expression.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
@@ -2311,65 +2301,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/Root.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-575">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding>
-            <marker date="1496047323075" expanded="true" signature="37282:37944" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="38023:38193" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="38272:38558" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="38631:38730" ph="{...}" />
-            <marker date="1496047323075" expanded="false" signature="38790:38805" ph=" { " />
-            <marker date="1496047323075" expanded="false" signature="38861:38871" ph=" }" />
-            <marker date="1496047323075" expanded="true" signature="38930:40009" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="40074:40086" ph="{...}" />
-            <marker date="1496047323075" expanded="false" signature="40115:40130" ph=" { " />
-            <marker date="1496047323075" expanded="false" signature="40192:40202" ph=" }" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="86" column="12" lean-forward="false" selection-start-line="86" selection-start-column="12" selection-end-line="86" selection-end-column="12" />
           <folding>
-            <marker date="1496047323079" expanded="true" signature="3880:3904" ph="{...}" />
-            <marker date="1496047323079" expanded="true" signature="4552:4629" ph="{...}" />
-            <marker date="1496047323079" expanded="true" signature="4710:7013" ph="{...}" />
-            <marker date="1496047323079" expanded="true" signature="7062:7366" ph="{...}" />
-            <marker date="1496047323079" expanded="true" signature="7423:7612" ph="{...}" />
-            <marker date="1496047323079" expanded="false" signature="7660:7671" ph=" { " />
-            <marker date="1496047323079" expanded="false" signature="7705:7711" ph=" }" />
-            <marker date="1496047323079" expanded="true" signature="7767:8884" ph="{...}" />
-            <marker date="1496047323079" expanded="true" signature="8933:10389" ph="{...}" />
-            <marker date="1496047323079" expanded="true" signature="10461:10697" ph="{...}" />
-            <marker date="1496047323079" expanded="true" signature="10760:11176" ph="{...}" />
-            <marker date="1496047323079" expanded="true" signature="11231:11437" ph="{...}" />
-            <marker date="1496047323079" expanded="true" signature="11486:11603" ph="{...}" />
-            <marker date="1496047323079" expanded="true" signature="11658:12190" ph="{...}" />
-            <marker date="1496047323079" expanded="true" signature="12251:12620" ph="{...}" />
-            <marker date="1496047323079" expanded="true" signature="12685:13293" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MLIRTransformer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1496047323075" expanded="true" signature="3642:8974" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="9023:9031" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="9103:9111" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="9174:9182" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="9237:9245" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="9294:9302" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="9357:9365" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="9426:9434" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="9499:9507" ph="{...}" />
+            <marker date="1496047687548" expanded="true" signature="3880:3904" ph="{...}" />
+            <marker date="1496047687548" expanded="true" signature="4552:4629" ph="{...}" />
+            <marker date="1496047687548" expanded="true" signature="4710:7013" ph="{...}" />
+            <marker date="1496047687548" expanded="true" signature="7062:7366" ph="{...}" />
+            <marker date="1496047687548" expanded="true" signature="7423:7612" ph="{...}" />
+            <marker date="1496047687548" expanded="false" signature="7660:7671" ph=" { " />
+            <marker date="1496047687548" expanded="false" signature="7705:7711" ph=" }" />
+            <marker date="1496047687548" expanded="true" signature="7767:8884" ph="{...}" />
+            <marker date="1496047687548" expanded="true" signature="8933:10389" ph="{...}" />
+            <marker date="1496047687548" expanded="true" signature="10461:10697" ph="{...}" />
+            <marker date="1496047687548" expanded="true" signature="10760:11176" ph="{...}" />
+            <marker date="1496047687548" expanded="true" signature="11231:11437" ph="{...}" />
+            <marker date="1496047687548" expanded="true" signature="11486:11603" ph="{...}" />
+            <marker date="1496047687548" expanded="true" signature="11658:12190" ph="{...}" />
+            <marker date="1496047687548" expanded="true" signature="12251:12620" ph="{...}" />
+            <marker date="1496047687548" expanded="true" signature="12685:13293" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -2390,14 +2342,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/Printer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/number/StackRegister.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
@@ -2406,51 +2350,102 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LLIRTransformer.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LivenessAnalysis.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+        <state relative-caret-position="225">
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1496047323075" expanded="true" signature="3479:3486" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="3558:3566" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="3629:3637" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="3692:3953" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="4002:4010" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="4065:4073" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="4134:4142" ph="{...}" />
-            <marker date="1496047323075" expanded="true" signature="4207:4215" ph="{...}" />
+            <element signature="e#991#992#0" expanded="true" />
+            <element signature="e#1068#1069#0" expanded="true" />
+            <element signature="e#1264#1265#0" expanded="true" />
+            <element signature="e#1322#1323#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LivenessAnalysis.java">
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/structure/BasicBlock.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        <state relative-caret-position="714">
+          <caret line="73" column="4" lean-forward="false" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="4" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/Printer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/Miracle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="137" column="0" lean-forward="false" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/Root.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <folding>
+            <element signature="e#2328#2329#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/structure/Function.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="22" column="30" lean-forward="false" selection-start-line="22" selection-start-column="30" selection-end-line="22" selection-end-column="30" />
+        <state relative-caret-position="74">
+          <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
           <folding>
             <element signature="e#1595#1596#0" expanded="true" />
             <element signature="e#1633#1634#0" expanded="true" />
+            <element signature="e#1717#1718#0" expanded="true" />
             <element signature="e#1945#1946#0" expanded="true" />
             <element signature="e#1993#1994#0" expanded="true" />
-            <marker date="1496047323075" expanded="false" signature="1679:1690" ph=" { " />
-            <marker date="1496047323075" expanded="false" signature="1712:1718" ph=" }" />
-            <marker date="1496047323075" expanded="false" signature="1761:1772" ph=" { " />
-            <marker date="1496047323075" expanded="false" signature="1794:1800" ph=" }" />
-            <marker date="1496047323075" expanded="false" signature="1845:1856" ph=" { " />
-            <marker date="1496047323075" expanded="false" signature="1876:1882" ph=" }" />
-            <marker date="1496047323075" expanded="false" signature="2335:2346" ph=" { " />
-            <marker date="1496047323075" expanded="false" signature="2364:2370" ph=" }" />
-            <marker date="1496047323075" expanded="false" signature="2420:2431" ph=" { " />
-            <marker date="1496047323075" expanded="false" signature="2462:2468" ph=" }" />
+            <marker date="1496047687548" expanded="false" signature="1761:1772" ph=" { " />
+            <marker date="1496047687548" expanded="false" signature="1794:1800" ph=" }" />
+            <marker date="1496047687548" expanded="false" signature="1845:1856" ph=" { " />
+            <marker date="1496047687548" expanded="false" signature="1876:1882" ph=" }" />
+            <marker date="1496047687548" expanded="false" signature="2335:2346" ph=" { " />
+            <marker date="1496047687548" expanded="false" signature="2364:2370" ph=" }" />
+            <marker date="1496047687548" expanded="false" signature="2420:2431" ph=" { " />
+            <marker date="1496047687548" expanded="false" signature="2462:2468" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/MLIRTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="54" column="50" lean-forward="false" selection-start-line="54" selection-start-column="50" selection-end-line="54" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1496047687548" expanded="true" signature="3642:8974" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LLIRTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="57" column="54" lean-forward="false" selection-start-line="57" selection-start-column="54" selection-end-line="57" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/HLIRTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="43" column="13" lean-forward="true" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
