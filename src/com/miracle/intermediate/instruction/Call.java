@@ -24,12 +24,6 @@ public class Call extends Instruction {
         this.selfRegister = selfRegister;
     }
 
-    public List<Number> getReverseParameters() {
-        List<Number> reverse = new LinkedList<>(parameters);
-        Collections.reverse(reverse);
-        return reverse;
-    }
-
     @Override
     public void accept(IRVisitor IRVisitor) {
         IRVisitor.visit(this);

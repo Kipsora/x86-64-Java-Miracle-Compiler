@@ -82,6 +82,7 @@ public class LLIRTransformer implements IRVisitor {
         }
 
         for (node = block.getHead(); node != block.tail; node = node.getSucc()) {
+            node.instruction.getUseNumbers().forEach(this::enroll);
             node.instruction.getDefNumbers().forEach(this::enroll);
         }
         block.getSuccBasicBlock().forEach(this::visit);

@@ -58,7 +58,7 @@ public class X64Printer implements IRVisitor {
                 list.add(String.valueOf(10));
                 i++;
             } else {
-                list.add(String.valueOf(value.charAt(i)));
+                list.add(String.valueOf((int) value.charAt(i)));
             }
         }
         return list;
@@ -84,8 +84,11 @@ public class X64Printer implements IRVisitor {
         ir.globalString.forEach((key, value) -> {
             List<String> bytes = divideStringIntoByte(value.value);
             builder.append('\t').append("dq").append(' ').append(bytes.size()).append('\n');
-            builder.append(value.name).append(':').append('\t').append("db").append(' ');
-            builder.append(String.join(", ", bytes)).append('\n');
+            builder.append(value.name).append(':').append('\t');
+            if (!bytes.isEmpty()) {
+                builder.append("db").append(' ').append(String.join(", ", bytes));
+            }
+            builder.append('\n');
         });
         builder.append("int$fmt").append(':').append('\t')
                 .append("db").append(' ').append("25H").append(", ")
