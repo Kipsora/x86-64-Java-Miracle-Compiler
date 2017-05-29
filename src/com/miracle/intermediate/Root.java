@@ -442,7 +442,7 @@ public class Root extends Node {
             }
 
             subscript.setResultNumber(new OffsetRegister(
-                    (DirectRegister) tmpBase, 4,
+                    (DirectRegister) tmpBase, 0,
                     (DirectRegister) tmpCoor, size,
                     size
             ));
@@ -805,7 +805,7 @@ public class Root extends Node {
                     nextNew.setScope(newNode.getScope());
                     nextNew.accept(this);
                     curBasicBlock.tail.prepend(new Move(
-                            new OffsetRegister(register, 4,
+                            new OffsetRegister(register, 0,
                                     iterreg, MiracleOption.POINTER_SIZE,
                                     MiracleOption.POINTER_SIZE
                             ),

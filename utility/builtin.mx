@@ -1,15 +1,16 @@
 @toString:
-    push rbp
-    mov rbp, rsp
-    
     cmp rdi, 0
     jge __positive@toString
     neg rdi
-    push rdi
+    
+    mov rbx, rdi
+    
 	mov rdi, 30
 	call malloc
 	lea rdi, [rax+29]
-	pop rax
+	
+	mov rax, rbx
+	
 	mov rsi, 10
 	mov byte [rdi], 0
 	xor rcx, rcx
@@ -30,11 +31,15 @@ __loop_negative@toString:
 	leave
 	ret
 __positive@toString:
-    push rdi
+    
+    mov rbx, rdi
+    
 	mov rdi, 30
 	call malloc
 	lea rdi, [rax+29]
-	pop rax
+	
+	mov rax, rbx
+	
 	mov rsi, 10
 	mov byte [rdi], 0
 	xor rcx, rcx
@@ -49,7 +54,6 @@ __loop_positive@toString:
 	jnz __loop_positive@toString
 	lea rax, [rdi-8]
 	mov qword [rax], rcx
-	leave
 	ret
 @getInt:
     mov rsi, int$buf

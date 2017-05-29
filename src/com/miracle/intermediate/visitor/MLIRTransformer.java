@@ -1,5 +1,6 @@
 package com.miracle.intermediate.visitor;
 
+import com.miracle.MiracleOption;
 import com.miracle.intermediate.Root;
 import com.miracle.intermediate.instruction.Call;
 import com.miracle.intermediate.instruction.Compare;
@@ -60,7 +61,7 @@ public class MLIRTransformer implements IRVisitor {
                 if (((HeapAllocate) it.instruction).getNumber() instanceof Immediate) {
                     number = new Immediate(
                             ((HeapAllocate) it.instruction).getSize() *
-                                    ((Immediate) ((HeapAllocate) it.instruction).getNumber()).value + 4,
+                                    ((Immediate) ((HeapAllocate) it.instruction).getNumber()).value + MiracleOption.INT_SIZE,
                             ((HeapAllocate) it.instruction).getNumber().getNumberSize()
                     );
                 } else {
@@ -82,7 +83,7 @@ public class MLIRTransformer implements IRVisitor {
                     it.prepend(new BinaryArithmetic(
                             BinaryArithmetic.Types.ADD, (Register) number,
                             new Immediate(
-                                    4,
+                                    MiracleOption.INT_SIZE,
                                     ((HeapAllocate) it.instruction).getNumber().getNumberSize()
                             )
                     ));
