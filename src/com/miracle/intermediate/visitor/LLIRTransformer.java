@@ -54,7 +54,6 @@ public class LLIRTransformer implements IRVisitor {
     @Override
     public void visit(Function function) {
         curFunction = function;
-        //function.parameters.forEach(this::enroll);
         curFunction.getEntryBasicBlock().accept(this);
         curFunction = null;
     }
@@ -73,6 +72,15 @@ public class LLIRTransformer implements IRVisitor {
                             PhysicalRegister.getBy16BITName(MiracleOption.CallingConvention.get(i), curFunction.parameters.get(i).size)
                     ));
                 }
+            }
+        }
+        if (block.isFunctionExitBlock && curFunction.getReturnRegister() != null) {
+            if (!(curFunction.getReturnRegister() instanceof PhysicalRegister) ||
+                    !((PhysicalRegister) curFunction.getReturnRegister()).indexName.equals("RAX")) {
+                block.getHead().prepend(new Move(
+                        PhysicalRegister.getBy16BITName("RAX", curFunction.getReturnRegister().size),
+                        curFunction.getReturnRegister()
+                ));
             }
         }
 
