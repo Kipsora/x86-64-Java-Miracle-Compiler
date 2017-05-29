@@ -45,12 +45,6 @@ public class Function {
         return returns;
     }
 
-    public List<Register> getReverseParameters() {
-        List<Register> reverse = new LinkedList<>(parameters);
-        Collections.reverse(reverse);
-        return reverse;
-    }
-
     public BasicBlock getEntryBasicBlock() {
         return entryBasicBlock;
     }
