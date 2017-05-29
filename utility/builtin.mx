@@ -80,6 +80,7 @@ __loop_positive@toString:
 @strcat:
     push rbp
     mov rbp, rsp
+    push rbx
     push rdi
     push rsi
     mov rdi, qword [rdi]
@@ -89,22 +90,22 @@ __loop_positive@toString:
     pop rsi
     pop rdi
     
-    mov rdx, qword [rdi]
-    mov qword [rax], rdx
+    mov rbx, qword [rdi]
+    mov qword [rax], rbx
     xor rcx, rcx
 __loop_1@strcat:
-    cmp rcx, rdx
+    cmp rcx, rbx
     jge __loop_2_init@strcat
     mov dl, byte [rdi+rcx+8]
     mov byte [rax+rcx+8], dl
     inc rcx
     jmp __loop_1@strcat
 __loop_2_init@strcat:
-    mov rdx, qword [rsi]
-    add qword [rax], rdx
+    mov rbx, qword [rsi]
+    add qword [rax], rbx
     xor rdi, rdi
 __loop_2@strcat:
-    cmp rdi, rdx
+    cmp rdi, rbx
     jge __loop2_exit@strcat
     mov dl, byte [rsi+rdi+8]
     mov byte [rax+rcx+8], dl
@@ -112,6 +113,7 @@ __loop_2@strcat:
     inc rdi
     jmp __loop_2@strcat
 __loop2_exit@strcat:
+    pop rbx
     leave
     ret
 @array.size:
