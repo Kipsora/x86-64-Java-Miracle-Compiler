@@ -14,10 +14,19 @@ import com.miracle.intermediate.instruction.fork.UnaryBranch;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
 
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * Material: http://www.cs.colostate.edu/~mstrout/CS553/slides/lecture03.pdf
+ */
 public class LivenessAnalysis implements IRVisitor {
+    private Set<BasicBlock> blockProcessed;
+
     @Override
     public void visit(Root ir) {
-
+        blockProcessed = new HashSet<>();
+        ir.globalFunction.forEach((key, value) -> value.accept(this));
     }
 
     @Override
@@ -32,12 +41,14 @@ public class LivenessAnalysis implements IRVisitor {
 
     @Override
     public void visit(Function function) {
-
+        
     }
 
     @Override
     public void visit(BasicBlock block) {
-
+        if (blockProcessed.contains(block)) return;
+        blockProcessed.add(block);
+        block.getSuccBasicBlock().forEach(element -> element.accept(this));
     }
 
     @Override

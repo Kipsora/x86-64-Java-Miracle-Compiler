@@ -119,8 +119,8 @@ __loop_1@strcat:
     inc rcx
     jmp __loop_1@strcat
 __loop_2_init@strcat:
-    mov rbx, qword [rsi]
-    add qword [rax], rbx
+    mov rbx, qword [rsi-8]
+    add qword [rax-8], rbx
     xor rdi, rdi
 __loop_2@strcat:
     cmp rdi, rbx

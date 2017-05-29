@@ -8,9 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1a1af29a-b77a-4b8c-9654-4271264bd490" name="Default" comment="Final version builtin function, ready to optimization.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Call.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/Call.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LLIRTransformer.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LLIRTransformer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LivenessAnalysis.java" afterPath="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LivenessAnalysis.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utility/builtin.mx" afterPath="$PROJECT_DIR$/utility/builtin.mx" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -99,8 +97,8 @@
       <file leaf-file-name="LivenessAnalysis.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LivenessAnalysis.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="27" column="13" lean-forward="true" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+            <state relative-caret-position="325">
+              <caret line="43" column="8" lean-forward="false" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -244,7 +242,6 @@
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/RegisterCollector.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LLTransformer.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/Node.java" />
-        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LivenessAnalysis.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/Number.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/arithmetic/UnaryArithmetic.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/instruction/fork/Jump.java" />
@@ -274,6 +271,7 @@
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/X64Printer.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/number/StackRegister.java" />
         <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LLIRTransformer.java" />
+        <option value="$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LivenessAnalysis.java" />
       </list>
     </option>
   </component>
@@ -1422,14 +1420,7 @@
       <workItem from="1495872558615" duration="4671000" />
       <workItem from="1495881338658" duration="30558000" />
       <workItem from="1495936248896" duration="46619000" />
-      <workItem from="1496028922844" duration="11087000" />
-    </task>
-    <task id="LOCAL-00026" summary="Tiny bugs fixed.">
-      <created>1495074605831</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1495074605831</updated>
+      <workItem from="1496028922844" duration="11767000" />
     </task>
     <task id="LOCAL-00027" summary="IR added.">
       <created>1495419044533</created>
@@ -1767,11 +1758,18 @@
       <option name="project" value="LOCAL" />
       <updated>1496046483573</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Final version builtin function, ready to optimization.">
+      <created>1496046568156</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1496046568156</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="519929000" />
+    <option name="totallyTimeSpent" value="520609000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -2337,8 +2335,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/miracle/intermediate/visitor/LivenessAnalysis.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="27" column="13" lean-forward="true" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+        <state relative-caret-position="325">
+          <caret line="43" column="8" lean-forward="false" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
           <folding />
         </state>
       </provider>
