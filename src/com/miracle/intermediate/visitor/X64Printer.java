@@ -1,5 +1,6 @@
 package com.miracle.intermediate.visitor;
 
+import com.miracle.MiracleOption;
 import com.miracle.intermediate.Root;
 import com.miracle.intermediate.instruction.Call;
 import com.miracle.intermediate.instruction.Compare;
@@ -85,7 +86,7 @@ public class X64Printer implements IRVisitor {
             builder.append(value.name).append(':').append('\t')
                     .append("db").append(' ');
             List<Byte> bytes = divideStringIntoByte(value.value);
-            printNumberWith256Base(bytes.size(), 4);
+            printNumberWith256Base(bytes.size(), MiracleOption.INT_SIZE);
             bytes.forEach(element -> builder.append(element).append(", "));
             builder.append('0').append('\n');
         });

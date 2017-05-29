@@ -766,7 +766,6 @@ public class Root extends Node {
                     return;
                 }
                 expression.accept(this);
-
                 curBasicBlock.tail.prepend(new HeapAllocate(
                         register, MiracleOption.POINTER_SIZE,
                         expression.getResultNumber()
@@ -774,6 +773,11 @@ public class Root extends Node {
                 curBasicBlock.tail.prepend(new Move(
                         new OffsetRegister(register, 0, null, null, MiracleOption.INT_SIZE),
                         expression.getResultNumber()
+                ));
+                curBasicBlock.tail.prepend(new BinaryArithmetic(
+                        BinaryArithmetic.Types.ADD,
+                        register,
+                        new Immediate(MiracleOption.INT_SIZE, MiracleOption.POINTER_SIZE)
                 ));
                 newNode.setResultNumber(register);
 
