@@ -107,14 +107,10 @@ public class Root extends Node {
             });
             functionDeclaration.body.forEach(element -> element.accept(this));
 
-
             if (!curBasicBlock.isForked()) {
-                curBasicBlock.setFork(new Jump(curFunction.getExitBasicBlock()));
+                curBasicBlock.setFork(new Return(null));
+                curFunction.addReturn(curBasicBlock.tail.getPrev());
             }
-            /*else {
-                curBasicBlock.tail.prepend(new Jump(curFunction.getExitBasicBlock()));
-            }*/
-            curFunction.getExitBasicBlock().setFork(new Return(null));
 
             curFunction = null;
         }
@@ -154,10 +150,8 @@ public class Root extends Node {
             });
 
             if (!curBasicBlock.isForked()) {
-                curBasicBlock.setFork(new Jump(curFunction.getExitBasicBlock()));
+                curBasicBlock.setFork(new Return(null));
             }
-
-            curFunction.getExitBasicBlock().setFork(new Return(null));
 
             ((FunctionDeclaration) astree.getScope().resolve("main"))
                     .getSymbol().getAddress().getEntryBasicBlock().tail
@@ -352,8 +346,8 @@ public class Root extends Node {
             }
             if (!curBasicBlock.isForked()) {
                 curBasicBlock.setFork(returnStatement);
+                curFunction.addReturn(curBasicBlock.tail.getPrev());
             }
-            curFunction.addReturn(curBasicBlock.tail.getPrev());
         }
 
         @Override

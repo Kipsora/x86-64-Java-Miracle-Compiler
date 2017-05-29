@@ -41,6 +41,21 @@ public class HLIRTransformer implements IRVisitor {
     @Override
     public void visit(Function function) {
         curFunction = function;
+        int size = function.getReturns().size();
+        function.getReturns().forEach(element -> {
+            if (size > 1) element.append(new Jump(function.getExitBasicBlock()));
+            if (((Return) element.instruction).getValue() != null) {
+                element.prepend(new Move(
+                        PhysicalRegister.getBy16BITName("RAX", ((Return) element.instruction).getValue().getNumberSize()),
+                        ((Return) element.instruction).getValue()
+                ));
+            }
+            if (size > 1) element.remove();
+            else {
+                ((Return) element.instruction).setValue(null);
+            }
+        });
+        if (size > 1) function.getExitBasicBlock().tail.prepend(new Return(null));
         function.getEntryBasicBlock().accept(this);
         curFunction = null;
     }
@@ -57,7 +72,6 @@ public class HLIRTransformer implements IRVisitor {
                     block.addSuccBasicBlock(((Jump) it.instruction).block);
                 } else if (it.instruction instanceof Return) {
                     flag = true;
-                    block.addSuccBasicBlock(curFunction.getExitBasicBlock());
                 } else if (it.instruction instanceof UnaryBranch) {
                     flag = true;
                     block.addSuccBasicBlock(((UnaryBranch) it.instruction).branchTrue);
@@ -71,9 +85,9 @@ public class HLIRTransformer implements IRVisitor {
                 it.remove();
             }
         }
-        if (!flag) {
+        /*if (!flag) {
             throw new RuntimeException("NO FORK STATEMENT");
-        }
+        }*/
         block.getSuccBasicBlock().forEach(element -> element.accept(this));
     }
 
