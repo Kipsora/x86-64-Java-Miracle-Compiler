@@ -41,6 +41,10 @@ public class HLIRTransformer implements IRVisitor {
         int size = function.getReturns().size();
         function.getReturns().forEach(element -> {
             element.append(new Jump(function.getExitBasicBlock()));
+            element.append(new Move(
+                    function.getReturnRegister(),
+                    ((Return) element.instruction).getValue()
+            ));
             element.remove();
         });
         function.getEntryBasicBlock().accept(this);
@@ -52,20 +56,22 @@ public class HLIRTransformer implements IRVisitor {
         blockProcessed.add(block);
         boolean flag = false;
         for (BasicBlock.Node it = block.getHead(); it != block.tail; it = it.getSucc()) {
-            if (it.instruction instanceof Jump) {
-                flag = true;
-                block.addSuccBasicBlock(((Jump) it.instruction).block);
-            } else if (it.instruction instanceof Return) {
-                flag = true;
-            } else if (it.instruction instanceof UnaryBranch) {
-                flag = true;
-                block.addSuccBasicBlock(((UnaryBranch) it.instruction).branchTrue);
-                block.addSuccBasicBlock(((UnaryBranch) it.instruction).branchFalse);
-            } else if (it.instruction instanceof BinaryBranch) {
-                flag = true;
-                block.addSuccBasicBlock(((BinaryBranch) it.instruction).branchFalse);
-                block.addSuccBasicBlock(((BinaryBranch) it.instruction).branchTrue);
-            } else if (flag) {
+            if (!flag) {
+                if (it.instruction instanceof Jump) {
+                    flag = true;
+                    block.addSuccBasicBlock(((Jump) it.instruction).block);
+                } else if (it.instruction instanceof Return) {
+                    flag = true;
+                } else if (it.instruction instanceof UnaryBranch) {
+                    flag = true;
+                    block.addSuccBasicBlock(((UnaryBranch) it.instruction).branchTrue);
+                    block.addSuccBasicBlock(((UnaryBranch) it.instruction).branchFalse);
+                } else if (it.instruction instanceof BinaryBranch) {
+                    flag = true;
+                    block.addSuccBasicBlock(((BinaryBranch) it.instruction).branchFalse);
+                    block.addSuccBasicBlock(((BinaryBranch) it.instruction).branchTrue);
+                }
+            } else {
                 it.remove();
             }
         }
