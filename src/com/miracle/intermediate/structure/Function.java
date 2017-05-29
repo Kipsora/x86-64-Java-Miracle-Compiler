@@ -72,11 +72,14 @@ public class Function {
     }
 
     public void map(Map<Number, Register> map) {
-        if (selfRegister != null) {
-            selfRegister = (DirectRegister) map.get(selfRegister);
+        if (returnRegister != null) {
+            returnRegister = map.getOrDefault(returnRegister, returnRegister);
         }
-        for (int i = 0, size = map.size(); i < size; i++) {
-            parameters.set(i, map.get(parameters.get(i)));
+        if (selfRegister != null) {
+            selfRegister = (DirectRegister) map.getOrDefault(selfRegister, selfRegister);
+        }
+        for (int i = 0, size = parameters.size(); i < size; i++) {
+            parameters.set(i, map.getOrDefault(parameters.get(i), parameters.get(i)));
         }
     }
 
