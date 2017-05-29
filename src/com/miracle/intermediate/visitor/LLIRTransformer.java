@@ -63,7 +63,7 @@ public class LLIRTransformer implements IRVisitor {
         if (blockProcessed.contains(block)) return;
         blockProcessed.add(block);
 
-        if (block.isFunctionEntryBlock) {
+        if (block.isFunctionEntryBlock()) {
             for (int i = 0; i < curFunction.parameters.size() && i < MiracleOption.CallingConvention.size(); i++) {
                 if (!(curFunction.parameters.get(i) instanceof PhysicalRegister) ||
                         !((PhysicalRegister) curFunction.parameters.get(i)).indexName.equals(MiracleOption.CallingConvention.get(i))) {

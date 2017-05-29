@@ -42,20 +42,22 @@ public class HLIRTransformer implements IRVisitor {
     public void visit(Function function) {
         curFunction = function;
         int size = function.getReturns().size();
-        function.getReturns().forEach(element -> {
-            if (size > 1) element.append(new Jump(function.getExitBasicBlock()));
-            if (((Return) element.instruction).getValue() != null) {
-                element.prepend(new Move(
-                        PhysicalRegister.getBy16BITName("RAX", ((Return) element.instruction).getValue().getNumberSize()),
-                        ((Return) element.instruction).getValue()
-                ));
-            }
-            if (size > 1) element.remove();
-            else {
-                ((Return) element.instruction).setValue(null);
-            }
-        });
-        if (size > 1) function.getExitBasicBlock().tail.prepend(new Return(null));
+        if (size == 0) throw new RuntimeException("no return");
+        if (size == 1) {
+            function.getReturns().iterator().next().block.setFunctionExitBlock();
+        } else {
+            function.getReturns().forEach(element -> {
+                element.append(new Jump(function.getExitBasicBlock()));
+                if (((Return) element.instruction).getValue() != null) {
+                    element.prepend(new Move(
+                            PhysicalRegister.getBy16BITName("RAX", ((Return) element.instruction).getValue().getNumberSize()),
+                            ((Return) element.instruction).getValue()
+                    ));
+                }
+                element.remove();
+            });
+            function.getExitBasicBlock().tail.prepend(new Return(null));
+        }
         function.getEntryBasicBlock().accept(this);
         curFunction = null;
     }

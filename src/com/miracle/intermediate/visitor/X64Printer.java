@@ -175,8 +175,8 @@ public class X64Printer implements IRVisitor {
         if (blockProcessed.contains(block)) return;
         blockProcessed.add(block);
         builder.append(block.name).append(':').append('\n');
-        if (block.isFunctionEntryBlock) {
-            if (block.blockFrom.buffer.getSpillSize() > 0) {
+        if (block.isFunctionEntryBlock()) {
+            if (curFunction.buffer.getSpillSize() > 0) {
                 builder.append('\t').append("push").append(' ').append(RBP.getELF64Name()).append('\n');
                 builder.append('\t').append("mov").append(' ').append(RBP).append(", ")
                         .append(RSP).append('\n');
@@ -184,9 +184,6 @@ public class X64Printer implements IRVisitor {
                         .append(get16Multiplier(block.blockFrom.buffer.getSpillSize()))
                         .append('\n');
             }
-        }
-        if (block.isFunctionExitBlock && block.blockFrom.buffer.getSpillSize() > 0) {
-            builder.append('\t').append("leave").append('\n');
         }
         for (BasicBlock.Node it = block.getHead(); it != block.tail; it = it.getSucc()) {
             it.instruction.accept(this);
@@ -254,6 +251,9 @@ public class X64Printer implements IRVisitor {
          * Return Instruction:
          *   - value must be null                       -> processed in LLIRTransformer
          */
+        if (curFunction.buffer.getSpillSize() > 0) {
+            builder.append('\t').append("leave").append('\n');
+        }
         builder.append('\t').append("ret").append('\n');
     }
 

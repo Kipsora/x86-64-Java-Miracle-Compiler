@@ -151,6 +151,7 @@ public class Root extends Node {
 
             if (!curBasicBlock.isForked()) {
                 curBasicBlock.setFork(new Return(null));
+                curFunction.addReturn(curBasicBlock.tail.getPrev());
             }
 
             ((FunctionDeclaration) astree.getScope().resolve("main"))
