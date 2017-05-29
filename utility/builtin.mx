@@ -176,6 +176,7 @@ __loop_exit@string.parseInt:
 __exit@string.parseInt:
     ret
 @string.substring:
+    inc rdx
     add rdi, rsi
     push rdi
     push rsi
@@ -189,10 +190,8 @@ __exit@string.parseInt:
     pop rsi
     pop rdi
     sub rdx, rsi
-    inc rdx
     mov qword [rax-8], rdx
     xor rsi, rsi
-    add rdi, 8
 __loop@string.substring:
     cmp rdx, 0
     je __loop_exit@string.substring
