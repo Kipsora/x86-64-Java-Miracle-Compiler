@@ -18,7 +18,7 @@ public class SimpleDyer implements GraphDyer {
         });
         vertices.sort((x, y) -> graph.forbidden.get(y).size() - graph.forbidden.get(x).size());
         vertices.forEach(node -> {
-            Set<String> allColor = new HashSet<>(graph.color);
+            List<String> allColor = new LinkedList<>(graph.color);
             graph.forbidden.get(node).forEach(another -> {
                 if (map.containsKey(another) && map.get(another) instanceof PhysicalRegister) {
                     allColor.remove(((PhysicalRegister) map.get(another)).indexName);

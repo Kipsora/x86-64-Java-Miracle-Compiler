@@ -31,12 +31,14 @@ public class SymbolTable {
     private final static SymbolFunctionType __builtin_print = new SymbolFunctionType(__builtin_void, null) {{
         addParameter("x", __builtin_string);
         setAddress("@print");
-        getAddress().buffer.enroll(RDI).enroll(RSI).enroll(RDX);
+        getAddress().buffer.enroll(RDI).enroll(RSI).enroll(RDX).enroll(RCX)
+                .enroll(R8).enroll(R9).enroll(R10).enroll(R11);
     }};
     private final static SymbolFunctionType __builtin_println = new SymbolFunctionType(__builtin_void, null) {{
         addParameter("x", __builtin_string);
         setAddress("@println");
-        getAddress().buffer.enroll(RDI).enroll(RSI).enroll(RDX);
+        getAddress().buffer.enroll(RDI).enroll(RSI).enroll(RDX).enroll(RCX)
+                .enroll(R8).enroll(R9).enroll(R10).enroll(R11);
     }};
     private final static SymbolFunctionType __builtin_getString = new SymbolFunctionType(__builtin_string, null) {{
         setAddress("@getString");

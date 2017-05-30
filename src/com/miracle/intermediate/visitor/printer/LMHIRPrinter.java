@@ -69,6 +69,9 @@ public class LMHIRPrinter implements IRPrinter {
         builder.append("func ").append(function.identifier);
         function.getParameters().forEach(element -> builder.append(' ').append(element));
         builder.append(' ').append('{').append('\n');
+        builder.append("Callee Saved Registers: ");
+        function.buffer.getCalleeSaveRegisters().forEach(element -> builder.append(element).append(' '));
+        builder.append('\n');
         function.getEntryBasicBlock().accept(this);
         builder.append('}').append('\n');
     }
