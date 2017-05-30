@@ -93,6 +93,9 @@ public class Root extends Node {
             curBasicBlock = curFunction.getEntryBasicBlock();
             functionDeclaration.parameters.forEach(element -> {
                 element.accept(this);
+                if (!(element.getAddress() instanceof VirtualRegister)) {
+                    throw new RuntimeException("Unexpected case");
+                }
                 curFunction.addParameter(element.getAddress());
             });
             functionDeclaration.body.forEach(element -> element.accept(this));

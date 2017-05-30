@@ -8,7 +8,9 @@ import com.miracle.exception.CSTreeErrorHandler;
 import com.miracle.exception.ExceptionContainer;
 import com.miracle.intermediate.Root;
 import com.miracle.intermediate.visitor.*;
+import com.miracle.intermediate.visitor.allocator.GlobalAllocator;
 import com.miracle.intermediate.visitor.allocator.SimpleAllocator;
+import com.miracle.intermediate.visitor.allocator.SimpleDyer;
 import com.miracle.intermediate.visitor.irtranser.HLIRTransformer;
 import com.miracle.intermediate.visitor.irtranser.LLIRTransformer;
 import com.miracle.intermediate.visitor.irtranser.MLIRTransformer;
@@ -147,15 +149,11 @@ public class Miracle {
 
     private Root optimize(Root ir) throws IOException {
         ir.accept(new HLIRTransformer());
-        /*if (!isSSADisabled) {
-            ir.accept(new SSAConstructor());
-            ir.accept(new SSAOptimizer());
-            ir.accept(new SSADestructor());
-        }*/
         if (this.isPrintHLevelIR) printIR(ir, new LMHIRPrinter());
         ir.accept(new MLIRTransformer());
         if (this.isPrintMLevelIR) printIR(ir, new LMHIRPrinter());
-        ir.accept(new SimpleAllocator());
+        ir.accept(new LivelinessAnalyser());
+        ir.accept(new GlobalAllocator());
         return ir;
     }
 

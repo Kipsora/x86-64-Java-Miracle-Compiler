@@ -43,15 +43,6 @@ public class X64Printer implements IRPrinter {
         return builder.toString();
     }
 
-    private void printNumberWith256Base(int number, int padding) {
-        List<Integer> array = new LinkedList<>();
-        while (number != 0 || array.size() < padding) {
-            array.add(number % 256);
-            number /= 256;
-        }
-        array.forEach(element -> builder.append(element).append(", "));
-    }
-
     private List<String> divideStringIntoByte(String value) {
         List<String> list = new ArrayList<>();
         value = value.substring(1, value.length() - 1);
@@ -109,7 +100,12 @@ public class X64Printer implements IRPrinter {
 
     @Override
     public void visit(BinaryArithmetic binaryArithmetic) {
-        if (binaryArithmetic.operator.equals(BinaryArithmetic.Types.DIV)) {
+        if (binaryArithmetic.operator.equals(BinaryArithmetic.Types.SHL) ||
+                binaryArithmetic.operator.equals(BinaryArithmetic.Types.SHR)) {
+            builder.append('\t').append("mov").append(' ')
+                    .append(PhysicalRegister.getBy16BITName("RCX", binaryArithmetic.getSource().getNumberSize()))
+                    .append(", ").append(binaryArithmetic.getSource()).append('\n');
+        } else if (binaryArithmetic.operator.equals(BinaryArithmetic.Types.DIV)) {
             /*
              *  Div Instruction:  DIV RAX, src (src != RDX, RAX, imm) RAX /= src
              *    - src cannot be immediate number   -> processed in MLIRTransformer
@@ -118,8 +114,14 @@ public class X64Printer implements IRPrinter {
              *  cdq
              *  idiv src
              */
+            builder.append('\t').append("mov").append(' ')
+                    .append(PhysicalRegister.getBy16BITName("RAX", binaryArithmetic.getSource().getNumberSize()))
+                    .append(", ").append(binaryArithmetic.getTarget()).append('\n');
             builder.append('\t').append("cdq").append('\n');
             builder.append('\t').append("idiv").append(' ').append(binaryArithmetic.getSource()).append('\n');
+            builder.append('\t').append("mov")
+                    .append(' ').append(binaryArithmetic.getTarget())
+                    .append(", ").append(getBy16BITName("RAX", binaryArithmetic.getTarget().size)).append('\n');
         } else if (binaryArithmetic.operator.equals(BinaryArithmetic.Types.MOD)) {
             /*
              *  Div Instruction:  MOD RAX, src RAX /= src
@@ -130,10 +132,13 @@ public class X64Printer implements IRPrinter {
              *  idiv src
              *  mov RAX, RDX
              */
+            builder.append('\t').append("mov").append(' ')
+                    .append(PhysicalRegister.getBy16BITName("RAX", binaryArithmetic.getSource().getNumberSize()))
+                    .append(", ").append(binaryArithmetic.getTarget()).append('\n');
             builder.append('\t').append("cdq").append('\n');
             builder.append('\t').append("idiv").append(' ').append(binaryArithmetic.getSource()).append('\n');
             builder.append('\t').append("mov")
-                    .append(' ').append(getBy16BITName("RAX", binaryArithmetic.getTarget().size))
+                    .append(' ').append(binaryArithmetic.getTarget())
                     .append(", ").append(getBy16BITName("RDX", binaryArithmetic.getTarget().size)).append('\n');
         } else {
             /*
@@ -156,6 +161,7 @@ public class X64Printer implements IRPrinter {
          *  Move Instruction:
          *  tar and src cannot be both indirect registers       -> TODO: in Register Allocator
          */
+        if (move.getSource() == move.getTarget()) return;
         if (move.getSource().getNumberSize() > move.getTarget().getNumberSize()) {
             builder.append('\t').append("movsx").append(' ').append(move.getTarget())
                     .append(", ").append(move.getSource()).append('\n');
@@ -186,20 +192,29 @@ public class X64Printer implements IRPrinter {
         blockProcessed.add(block);
         builder.append(block.name).append(':').append('\n');
         if (block.isFunctionEntryBlock()) {
-            if (curFunction.buffer.getSpillSize() > 0) {
+            if (curFunction.buffer.getSpillSize() > 0 || !curFunction.buffer.getCalleeSaveRegisters().isEmpty()) {
                 builder.append('\t').append("push").append(' ').append(RBP.getELF64Name()).append('\n');
                 builder.append('\t').append("mov").append(' ').append(RBP).append(", ")
                         .append(RSP).append('\n');
-                builder.append('\t').append("sub").append(' ').append(RSP).append(", ")
-                        .append(get16Multiplier(block.blockFrom.buffer.getSpillSize()))
-                        .append('\n');
-                for (int i = 0, size = curFunction.parameters.size(); i < size && i < MiracleOption.CallingConvention.size(); i++) {
-                    builder.append('\t').append("mov").append(' ').append(curFunction.parameters.get(i)).append(", ")
-                            .append(PhysicalRegister.getBy16BITName(
-                                    MiracleOption.CallingConvention.get(i),
-                                    curFunction.parameters.get(i).size
-                            )).append('\n');
+                if (curFunction.buffer.getSpillSize() > 0) {
+                    builder.append('\t').append("sub").append(' ').append(RSP).append(", ")
+                            .append(get16Multiplier(block.blockFrom.buffer.getSpillSize()))
+                            .append('\n');
                 }
+                for (int i = 0, size = curFunction.parameters.size(); i < size && i < MiracleOption.CallingConvention.size(); i++) {
+                    if (!(curFunction.parameters.get(i) instanceof PhysicalRegister) ||
+                            !((PhysicalRegister) curFunction.parameters.get(i)).indexName.equals(MiracleOption.CallingConvention.get(i))) {
+                        builder.append('\t').append("mov").append(' ').append(curFunction.parameters.get(i)).append(", ")
+                                .append(PhysicalRegister.getBy16BITName(
+                                        MiracleOption.CallingConvention.get(i),
+                                        curFunction.parameters.get(i).size
+                                )).append('\n');
+                    }
+                }
+                curFunction.buffer.getCalleeSaveRegisters().forEach(element -> {
+                    builder.append('\t').append("push").append(' ')
+                            .append(element.getELF64Name()).append('\n');
+                });
             }
         }
         for (BasicBlock.Node it = block.getHead(); it != block.tail; it = it.getSucc()) {
@@ -215,13 +230,20 @@ public class X64Printer implements IRPrinter {
          * returnRegister must be null or RAX                    -> TODO: in Register Allocator
          * The last 6 parameters must follow calling conventions -> TODO: in Register Allocator
          */
+        List<PhysicalRegister> registers = new LinkedList<>(call.callerSave);
+        registers.forEach(element -> {
+            if (element.isCallerSave) {
+                builder.append('\t').append("push")
+                        .append(' ').append(element.getELF64Name()).append('\n');
+            }
+        });
         List<Number> parameters = call.parameters;
         int spillSize = 0;
         for (int i = CallingConvention.size(), size = parameters.size(); i < size; i++) {
             spillSize += parameters.get(i).getNumberSize();
         }
         int fitSize = get16Multiplier(spillSize);
-        if (fitSize != 0) {
+        if (fitSize != 0) { // if there are more than 6 args
             builder.append('\t').append("sub").append(' ').append(RSP)
                     .append(", ").append(fitSize).append('\n');
             spillSize = 0;
@@ -250,13 +272,15 @@ public class X64Printer implements IRPrinter {
                             .append(", ").append(parameters.get(i)).append('\n');
                 }
             }
-            for (int i = 0; i < curFunction.parameters.size() && i < MiracleOption.CallingConvention.size(); i++) {
-                if (!(curFunction.parameters.get(i) instanceof PhysicalRegister) ||
-                        !((PhysicalRegister) curFunction.parameters.get(i)).indexName.equals(MiracleOption.CallingConvention.get(i))) {
-                    builder.append("mov").append('\t').append(curFunction.parameters.get(i)).append(", ")
-                            .append(PhysicalRegister.getBy16BITName(MiracleOption.CallingConvention.get(i), curFunction.parameters.get(i).size))
-                            .append('\n');
-                }
+        }
+        for (int i = 0; i < parameters.size() && i < MiracleOption.CallingConvention.size(); i++) {
+            if (!(parameters.get(i) instanceof PhysicalRegister) ||
+                    !((PhysicalRegister) parameters.get(i)).indexName.equals(MiracleOption.CallingConvention.get(i))) {
+                builder.append('\t').append("mov").append(' ')
+                        .append(PhysicalRegister.getBy16BITName(
+                                MiracleOption.CallingConvention.get(i), parameters.get(i).getNumberSize()
+                        ))
+                        .append(", ").append(parameters.get(i)).append('\n');
             }
         }
         builder.append('\t').append("call").append(' ')
@@ -264,6 +288,21 @@ public class X64Printer implements IRPrinter {
         if (fitSize != 0) {
             builder.append('\t').append("add").append(' ').append(RSP)
                     .append(", ").append(fitSize).append('\n');
+        }
+        Collections.reverse(registers);
+        registers.forEach(element -> {
+            if (element.isCallerSave) {
+                builder.append('\t').append("pop")
+                        .append(' ').append(element.getELF64Name()).append('\n');
+            }
+        });
+        if (call.getTarget() != null) {
+            builder.append('\t').append("mov").append(' ')
+                    .append(call.getTarget()).append(", ")
+                    .append(PhysicalRegister.getBy16BITName(
+                            "RAX",
+                            call.getTarget().size
+                    )).append('\n');
         }
     }
 
@@ -295,7 +334,12 @@ public class X64Printer implements IRPrinter {
          * Return Instruction:
          *   - value must be null                       -> processed in LLIRTransformer
          */
-        if (curFunction.buffer.getSpillSize() > 0) {
+        curFunction.buffer.getPhysicalRegisters().forEach(element -> {
+            if (!element.isCallerSave) {
+                builder.append('\t').append("pop").append(' ').append(element.getELF64Name()).append('\n');
+            }
+        });
+        if (curFunction.buffer.getSpillSize() > 0 || !curFunction.buffer.getCalleeSaveRegisters().isEmpty()) {
             builder.append('\t').append("leave").append('\n');
         }
         builder.append('\t').append("ret").append('\n');
@@ -324,11 +368,20 @@ public class X64Printer implements IRPrinter {
     public void visit(HeapAllocate allocate) {
         /*
          *  HeapAllocate Instruction:
-         *    - number must be RDI      -> TODO: in Register Allocator
-         *    - register must be RAX    -> TODO: in Register Allocator
          *    - size must be one        -> processed in MLIRTransformer
          */
+        allocate.callerSave.forEach(element ->
+                builder.append('\t').append("push").append(' ')
+                        .append(element).append('\n')
+        );
         builder.append('\t').append("call").append(' ').append("malloc").append('\n');
+        allocate.callerSave.forEach(element ->
+                builder.append('\t').append("pop").append(' ')
+                        .append(element).append('\n')
+        );
+        builder.append('\t').append("mov").append(' ').append(allocate.getTarget())
+                .append(", ").append(PhysicalRegister.getBy16BITName("RAX", allocate.getTarget().size))
+                .append("\n");
     }
 
     @Override

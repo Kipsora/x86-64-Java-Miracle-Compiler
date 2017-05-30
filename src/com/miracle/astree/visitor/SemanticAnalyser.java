@@ -277,9 +277,6 @@ public class SemanticAnalyser implements ASTreeVisitor {
                         Expression node = callExpression.parameters.get(i);
                         node.accept(this);
                         SymbolType exprType = node.getResultType();
-                        if (argType.get(i) == null) {
-                            System.err.println("Fuck");
-                        }
                         if (argType.get(i) != null && exprType != null && !exprType.isSameType(argType.get(i))) {
                             exceptionContainer.add("function needs parameter of type `" + argType.get(i).toPrintableString() + "`, but `" + exprType.toPrintableString() + "` was found",
                                     node.position);

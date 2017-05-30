@@ -2,6 +2,8 @@ package com.miracle.symbol;
 
 import com.miracle.MiracleOption;
 
+import static com.miracle.intermediate.number.PhysicalRegister.RAX;
+import static com.miracle.intermediate.number.PhysicalRegister.RDI;
 import static com.miracle.symbol.SymbolTable.__builtin_int;
 
 public class SymbolArrayType extends SymbolVariableType {
@@ -15,7 +17,6 @@ public class SymbolArrayType extends SymbolVariableType {
         this.dimension = dimension;
         addMethod("size", new SymbolFunctionType(__builtin_int, this) {{
             setAddress("@array.size");
-            getAddress().buffer.enroll("RAX");
         }});
     }
 

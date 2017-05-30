@@ -55,7 +55,7 @@ public class UnaryBranch extends Branch {
     @Override
     public Set<Number> getUseNumbers() {
         Set<Number> set = new HashSet<>();
-        addToSet(expression, set);
+        addToSet(expression, set, false);
         return set;
     }
 

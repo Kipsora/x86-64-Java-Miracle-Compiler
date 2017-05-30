@@ -1,19 +1,22 @@
 package com.miracle.intermediate.instruction;
 
+import com.miracle.intermediate.RegisterBuffer;
+import com.miracle.intermediate.number.*;
 import com.miracle.intermediate.number.Number;
-import com.miracle.intermediate.number.OffsetRegister;
-import com.miracle.intermediate.number.Register;
-import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.visitor.IRVisitor;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import static com.miracle.intermediate.number.PhysicalRegister.*;
 
 public class HeapAllocate extends Instruction {
     private int size;
     private Register target;
     private Number number;
+    public final Set<PhysicalRegister> callerSave;
 
     public HeapAllocate(Register target,
                         int size,
@@ -21,6 +24,7 @@ public class HeapAllocate extends Instruction {
         this.target = target;
         this.size = size;
         this.number = number;
+        this.callerSave = new HashSet<>(Arrays.asList(RDI, RDX, RCX, R8, R9, R10, R11));
     }
 
     public int getSize() {
@@ -65,14 +69,22 @@ public class HeapAllocate extends Instruction {
     @Override
     public Set<Number> getUseNumbers() {
         Set<Number> set = new HashSet<>();
-        addToSet(number, set);
+        addToSet(number, set, false);
+        if (target instanceof OffsetRegister) {
+            if (((OffsetRegister) target).getRawBase() != null) {
+                set.add(((OffsetRegister) target).getRawBase());
+            }
+            if (((OffsetRegister) target).getRawOffsetB() != null) {
+                set.add(((OffsetRegister) target).getRawOffsetB());
+            }
+        }
         return set;
     }
 
     @Override
     public Set<Number> getDefNumbers() {
         Set<Number> set = new HashSet<>();
-        addToSet(target, set);
+        addToSet(target, set, true);
         return set;
     }
 

@@ -6,10 +6,7 @@ import com.miracle.intermediate.instruction.fork.Fork;
 import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.visitor.IRVisitor;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class BasicBlock {
     public final String name;
@@ -31,6 +28,15 @@ public class BasicBlock {
     public final Set<BasicBlock> DTChildren;
     private BasicBlock idom;
     private int dfsOrder;
+
+    public static class Liveliness {
+        public Set<VirtualRegister> liveIn;
+        public Set<VirtualRegister> liveOut;
+        public List<VirtualRegister> used;
+        public List<VirtualRegister> defined;
+    }
+
+    public final Liveliness liveliness;
 
     public void setDfsOrder(int dfsOrder) {
         this.dfsOrder = dfsOrder;
@@ -79,6 +85,7 @@ public class BasicBlock {
         this.dfSet = new HashSet<>();
         this.phis = new HashMap<>();
         this.DTChildren = new HashSet<>();
+        this.liveliness = new Liveliness();
     }
 
     public boolean isForked() {

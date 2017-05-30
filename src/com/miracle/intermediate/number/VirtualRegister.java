@@ -4,6 +4,15 @@ import com.miracle.astree.statement.declaration.VariableDeclaration;
 
 public class VirtualRegister extends DirectRegister {
     private final VirtualRegister oldName;
+    private Register realName;
+
+    public void setRealName(Register realName) {
+        this.realName = realName;
+    }
+
+    public Register getRealName() {
+        return realName;
+    }
 
     public VirtualRegister newName(String name) {
         return new VirtualRegister(this.name + name, this);
@@ -33,6 +42,9 @@ public class VirtualRegister extends DirectRegister {
 
     @Override
     public String toString() {
+        if (realName != null) {
+            return realName.toString();
+        }
         return getSizeDescriptor() + " $" + name;
     }
 }

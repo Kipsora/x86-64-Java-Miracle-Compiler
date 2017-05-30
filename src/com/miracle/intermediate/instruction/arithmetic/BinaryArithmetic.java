@@ -58,15 +58,15 @@ public class BinaryArithmetic extends Instruction {
     @Override
     public Set<Number> getUseNumbers() {
         Set<Number> set = new HashSet<>();
-        addToSet(source, set);
-        addToSet(target, set);
+        addToSet(source, set, false);
+        addToSet(target, set, false);
         return set;
     }
 
     @Override
     public Set<Number> getDefNumbers() {
         Set<Number> set = new HashSet<>();
-        addToSet(target, set);
+        addToSet(target, set, true);
         return set;
     }
 

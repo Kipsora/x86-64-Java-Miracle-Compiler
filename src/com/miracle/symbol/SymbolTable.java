@@ -6,6 +6,7 @@ import com.miracle.astree.statement.declaration.VariableDeclaration;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.miracle.intermediate.number.PhysicalRegister.*;
 import static com.miracle.symbol.SymbolPrimitiveType.Types.*;
 
 public class SymbolTable {
@@ -18,36 +19,40 @@ public class SymbolTable {
         addParameter("x", __builtin_string);
         addParameter("y", __builtin_string);
         setAddress("@strcat");
-        getAddress().buffer.enroll("RAX").enroll("RDI").enroll("RSI").enroll("RCX").enroll("RDX");
+        getAddress().buffer.enroll(RDI).enroll(RDX).enroll(RCX)
+                .enroll(R8).enroll(R9).enroll(R10).enroll(R11);
     }};
     public final static SymbolFunctionType __builtin_strcmp = new SymbolFunctionType(__builtin_int, null) {{
         addParameter("x", __builtin_string);
         addParameter("y", __builtin_string);
         setAddress("@strcmp");
-        getAddress().buffer.enroll("RAX").enroll("RDI").enroll("RSI");
+        getAddress().buffer.enroll(RDI).enroll(RSI).enroll(RCX);
     }};
     private final static SymbolFunctionType __builtin_print = new SymbolFunctionType(__builtin_void, null) {{
         addParameter("x", __builtin_string);
         setAddress("@print");
-        getAddress().buffer.enroll("RAX").enroll("RDI").enroll("RSI");
+        getAddress().buffer.enroll(RDI).enroll(RSI).enroll(RDX);
     }};
     private final static SymbolFunctionType __builtin_println = new SymbolFunctionType(__builtin_void, null) {{
         addParameter("x", __builtin_string);
         setAddress("@println");
-        getAddress().buffer.enroll("RDI");
+        getAddress().buffer.enroll(RDI).enroll(RSI).enroll(RDX);
     }};
     private final static SymbolFunctionType __builtin_getString = new SymbolFunctionType(__builtin_string, null) {{
         setAddress("@getString");
-        getAddress().buffer.enroll("RAX");
+        getAddress().buffer.enroll(RDI).enroll(RSI).enroll(RDX).enroll(RCX)
+                .enroll(R8).enroll(R9).enroll(R10).enroll(R11);
     }};
     private final static SymbolFunctionType __builtin_getInt = new SymbolFunctionType(__builtin_int, null) {{
         setAddress("@getInt");
-        getAddress().buffer.enroll("RAX").enroll("RSI").enroll("RDI");
+        getAddress().buffer.enroll(RDI).enroll(RSI).enroll(RDX).enroll(RCX)
+                .enroll(R8).enroll(R9).enroll(R10).enroll(R11);
     }};
     private final static SymbolFunctionType __builtin_toString = new SymbolFunctionType(__builtin_string, null) {{
         addParameter("x", __builtin_int);
         setAddress("@toString");
-        getAddress().buffer.enroll("RAX").enroll("RDI").enroll("RBX").enroll("RCX").enroll("RDX");
+        getAddress().buffer.enroll(RDI).enroll(RSI).enroll(RDX).enroll(RCX)
+                .enroll(R8).enroll(R9).enroll(R10).enroll(R11);
     }};
     private final static Map<String, SymbolFunctionType> builtinMethod = new HashMap<String, SymbolFunctionType>() {{
         put("print", __builtin_print);
@@ -66,22 +71,22 @@ public class SymbolTable {
     static {
         __builtin_string.addMethod("length", new SymbolFunctionType(__builtin_int, __builtin_string) {{
             setAddress("@string.length");
-            getAddress().buffer.enroll("RAX").enroll("RDI");
+        }});
+        __builtin_string.addMethod("ord", new SymbolFunctionType(__builtin_int, __builtin_string) {{
+            addParameter("x", __builtin_int);
+            setAddress("@string.ord");
         }});
         __builtin_string.addMethod("substring", new SymbolFunctionType(__builtin_string, __builtin_string) {{
             addParameter("x", __builtin_int);
             addParameter("y", __builtin_int);
             setAddress("@string.substring");
-            getAddress().buffer.enroll("RAX").enroll("RDI").enroll("RSI").enroll("RDX");
+            getAddress().buffer.enroll(RDI).enroll(RSI).enroll(RDX).enroll(RCX)
+                    .enroll(R8).enroll(R9).enroll(R10).enroll(R11);
         }});
         __builtin_string.addMethod("parseInt", new SymbolFunctionType(__builtin_int, __builtin_string) {{
             setAddress("@string.parseInt");
-            getAddress().buffer.enroll("RAX").enroll("RDI");
-        }});
-        __builtin_string.addMethod("ord", new SymbolFunctionType(__builtin_int, __builtin_string) {{
-            addParameter("x", __builtin_int);
-            setAddress("@string.ord");
-            getAddress().buffer.enroll("RAX").enroll("RDI").enroll("RSI");
+            getAddress().buffer.enroll(RDI).enroll(RSI).enroll(RDX).enroll(RCX)
+                    .enroll(R8).enroll(R9).enroll(R10).enroll(R11);
         }});
     }
 

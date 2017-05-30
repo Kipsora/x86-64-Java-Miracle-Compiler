@@ -1,9 +1,7 @@
 package com.miracle.intermediate.visitor.irtranser;
 
 import com.miracle.intermediate.Root;
-import com.miracle.intermediate.instruction.*;
-import com.miracle.intermediate.instruction.arithmetic.BinaryArithmetic;
-import com.miracle.intermediate.instruction.arithmetic.UnaryArithmetic;
+import com.miracle.intermediate.instruction.Move;
 import com.miracle.intermediate.instruction.fork.BinaryBranch;
 import com.miracle.intermediate.instruction.fork.Jump;
 import com.miracle.intermediate.instruction.fork.Return;

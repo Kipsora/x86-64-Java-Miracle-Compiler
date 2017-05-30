@@ -10,8 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class Instruction extends Node {
-    protected static void addToSet(Number register, Set<Number> set) {
-        if (register instanceof OffsetRegister) {
+    protected static void addToSet(Number register, Set<Number> set, boolean isTarget) {
+        if (register == null) return;
+        if (!isTarget && register instanceof OffsetRegister) {
             if (((OffsetRegister) register).getRawBase() != null) {
                 set.add(((OffsetRegister) register).getRawBase());
             }

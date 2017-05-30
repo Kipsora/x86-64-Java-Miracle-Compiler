@@ -1,9 +1,7 @@
 package com.miracle.intermediate.instruction;
 
+import com.miracle.intermediate.number.*;
 import com.miracle.intermediate.number.Number;
-import com.miracle.intermediate.number.OffsetRegister;
-import com.miracle.intermediate.number.Register;
-import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.structure.Function;
 import com.miracle.intermediate.visitor.IRVisitor;
 
@@ -14,6 +12,7 @@ public class Call extends Instruction {
     public final List<Number> parameters;
     private Register target;
     private Register selfRegister;
+    public final Set<PhysicalRegister> callerSave;
 
     public Call(Function function,
                 List<Number> parameters,
@@ -23,6 +22,7 @@ public class Call extends Instruction {
         this.parameters = parameters;
         this.target = target;
         this.selfRegister = selfRegister;
+        this.callerSave = new HashSet<>();
     }
 
     @Override
@@ -78,14 +78,24 @@ public class Call extends Instruction {
     @Override
     public Set<Number> getUseNumbers() {
         Set<Number> registers = new HashSet<>();
-        addToSet(selfRegister, registers);
-        parameters.forEach(element -> addToSet(element, registers));
+        addToSet(selfRegister, registers, false);
+        parameters.forEach(element -> addToSet(element, registers, false));
+        if (target instanceof OffsetRegister) {
+            if (((OffsetRegister) target).getRawOffsetB() != null) {
+                registers.add(((OffsetRegister) target).getRawOffsetB());
+            }
+            if (((OffsetRegister) target).getRawBase() != null) {
+                registers.add(((OffsetRegister) target).getRawBase());
+            }
+        }
         return registers;
     }
 
     @Override
     public Set<Number> getDefNumbers() {
-        return Collections.singleton(target);
+        Set<Number> registers = new HashSet<>();
+        addToSet(target, registers, true);
+        return registers;
     }
 
     public Register getTarget() {

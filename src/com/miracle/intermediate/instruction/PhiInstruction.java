@@ -47,7 +47,7 @@ public class PhiInstruction extends Instruction {
     @Override
     public Set<Number> getDefNumbers() {
         Set<Number> set = new HashSet<>();
-        addToSet(register, set);
+        addToSet(register, set, true);
         return set;
     }
 }

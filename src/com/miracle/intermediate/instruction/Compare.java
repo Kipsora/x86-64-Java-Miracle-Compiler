@@ -80,15 +80,23 @@ public class Compare extends Instruction {
     @Override
     public Set<Number> getUseNumbers() {
         Set<Number> set = new HashSet<>();
-        addToSet(sourceA, set);
-        addToSet(sourceB, set);
+        addToSet(sourceA, set, false);
+        addToSet(sourceB, set, false);
+        if (target instanceof OffsetRegister) {
+            if (((OffsetRegister) target).getRawBase() != null) {
+                set.add(((OffsetRegister) target).getRawBase());
+            }
+            if (((OffsetRegister) target).getRawOffsetB() != null) {
+                set.add(((OffsetRegister) target).getRawOffsetB());
+            }
+        }
         return set;
     }
 
     @Override
     public Set<Number> getDefNumbers() {
         Set<Number> set = new HashSet<>();
-        addToSet(target, set);
+        addToSet(target, set, true);
         return set;
     }
 

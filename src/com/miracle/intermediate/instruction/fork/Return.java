@@ -51,7 +51,7 @@ public class Return extends Fork {
     @Override
     public Set<Number> getUseNumbers() {
         Set<Number> set = new HashSet<>();
-        addToSet(value, set);
+        addToSet(value, set, false);
         return set;
     }
 

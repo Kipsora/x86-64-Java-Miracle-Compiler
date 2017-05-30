@@ -104,8 +104,8 @@ public class BinaryBranch extends Branch {
     @Override
     public Set<Number> getUseNumbers() {
         Set<Number> set = new HashSet<>();
-        addToSet(expressionB, set);
-        addToSet(expressionA, set);
+        addToSet(expressionB, set, false);
+        addToSet(expressionA, set, false);
         return set;
     }
 
