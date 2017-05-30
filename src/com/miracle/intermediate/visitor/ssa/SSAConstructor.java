@@ -1,4 +1,4 @@
-package com.miracle.intermediate.visitor;
+package com.miracle.intermediate.visitor.ssa;
 
 import com.miracle.intermediate.Root;
 import com.miracle.intermediate.instruction.PhiInstruction;
@@ -6,13 +6,23 @@ import com.miracle.intermediate.number.Register;
 import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
+import com.miracle.intermediate.visitor.BaseIRVisitor;
 
 import java.util.*;
 
 public class SSAConstructor extends BaseIRVisitor {
+    private static class SSAId{
+        final Stack<VirtualRegister> stack;
+        int counter;
+
+        private SSAId() {
+            this.stack = new Stack<>();
+        }
+    }
+
     private List<BasicBlock> reversePostOrder;
     private Set<VirtualRegister> globals;
-    private Map<VirtualRegister, Stack<VirtualRegister>> mapRegToSSAId;
+    private Map<VirtualRegister, SSAId> mapRegToSSAId;
     private Map<VirtualRegister, Set<BasicBlock>> blockContain;
     private Function function;
 
@@ -51,7 +61,7 @@ public class SSAConstructor extends BaseIRVisitor {
             for (BasicBlock block : reversePostOrder) {
                 if (block == startNode) continue;
                 BasicBlock newIdom = null;
-                for (BasicBlock predecessor : block.getPrevBasicBlock()) {
+                for (BasicBlock predecessor : block.getPredBasicBlock()) {
                     if (predecessor.getIdom() != null) {
                         newIdom = predecessor;
                         break;
@@ -61,7 +71,7 @@ public class SSAConstructor extends BaseIRVisitor {
                     throw new RuntimeException("Failed to find new IDOM");
                 }
                 BasicBlock oldPredecessor = newIdom;
-                for (BasicBlock predecessor : block.getPrevBasicBlock()) {
+                for (BasicBlock predecessor : block.getPredBasicBlock()) {
                     if (predecessor != oldPredecessor && predecessor.getIdom() != null) {
                         newIdom = getIntersect(predecessor, newIdom);
                     }
@@ -83,8 +93,8 @@ public class SSAConstructor extends BaseIRVisitor {
     private void calcDominanceFrontier() {
         List<BasicBlock> blocks = function.getPostOrder();
         for (BasicBlock block : blocks) {
-            if (block.getPrevBasicBlock().size() > 1) {
-                for (BasicBlock predecessor : block.getPrevBasicBlock()) {
+            if (block.getPredBasicBlock().size() > 1) {
+                for (BasicBlock predecessor : block.getPredBasicBlock()) {
                     BasicBlock runner = predecessor;
                     while (runner != block.getIdom()) {
                         runner.addToDFSet(block);
@@ -158,11 +168,11 @@ public class SSAConstructor extends BaseIRVisitor {
      */
     private void putSSAName(VirtualRegister register, Map<VirtualRegister, VirtualRegister> map) {
         if (!mapRegToSSAId.containsKey(register)) {
-            mapRegToSSAId.put(register, new Stack<>());
+            mapRegToSSAId.put(register, new SSAId());
         }
-        VirtualRegister ssaName = register.newName("_ssa" + String.valueOf(mapRegToSSAId.get(register).size()));
+        VirtualRegister ssaName = register.newName("_ssa" + String.valueOf(mapRegToSSAId.get(register).counter++));
         map.put(register, ssaName);
-        mapRegToSSAId.get(register).push(ssaName);
+        mapRegToSSAId.get(register).stack.push(ssaName);
     }
 
     private void renameRegisters(BasicBlock block) {
@@ -170,11 +180,11 @@ public class SSAConstructor extends BaseIRVisitor {
         function.parameters.forEach(element -> putSSAName((VirtualRegister) element, renameMap));
         function.rename(renameMap);
         block.phis.forEach((key, value) -> putSSAName(key, renameMap));
-        //block.phis.forEach((key, value) -> value.rename(renameMap));
+        block.phis.forEach((key, value) -> value.rename(renameMap));
         for (BasicBlock.Node it = block.getHead(); it != block.tail; it = it.getSucc()) {
             it.instruction.getUseNumbers().forEach(element -> {
                 if (element instanceof VirtualRegister) {
-                    renameMap.put((VirtualRegister) element, mapRegToSSAId.get(element).peek());
+                    renameMap.put((VirtualRegister) element, mapRegToSSAId.get(element).stack.peek());
                 }
             });
             it.instruction.getDefNumbers().stream()
@@ -184,56 +194,35 @@ public class SSAConstructor extends BaseIRVisitor {
         }
         for (BasicBlock successor : block.getSuccBasicBlock()) {
             successor.phis.forEach((key, value) ->
-                    value.args.put(block, mapRegToSSAId.get(key).peek())
+                    value.args.put(block, mapRegToSSAId.get(key).stack.peek())
             );
         }
         block.DTChildren.forEach(this::renameRegisters);
         block.phis.forEach((key, value) ->
                 value.getDefNumbers().forEach(element -> {
                     if (element instanceof VirtualRegister) {
-                        mapRegToSSAId.get(element).pop();
+                        mapRegToSSAId.get(((VirtualRegister) element).getOldName()).stack.pop();
                     }
                 })
         );
         for (BasicBlock.Node it = block.getHead(); it != block.tail; it = it.getSucc()) {
             it.instruction.getDefNumbers().forEach(element -> {
                 if (element instanceof VirtualRegister) {
-                    mapRegToSSAId.get(((VirtualRegister) element).getOldName()).pop();
+                    mapRegToSSAId.get(((VirtualRegister) element).getOldName()).stack.pop();
                 }
             });
         }
     }
 
-    public void printRelation() {
-        reversePostOrder.forEach(element -> {
-            System.err.println("BLOCK: " + element.name);
-            StringBuilder builder = new StringBuilder();
-            builder.append("\tPrev Blocks:");
-            element.getPrevBasicBlock().forEach(block -> builder.append(" ").append(block.name));
-            builder.append('\n');
-            builder.append("\tSucc Blocks:");
-            element.getSuccBasicBlock().forEach(block -> builder.append(" ").append(block.name));
-            builder.append('\n');
-            System.err.print(builder.toString());
-        });
-    }
-
     @Override
     public void visit(Function function) {
         this.function = function;
-        System.err.println("Getting reverse post order...");
         getReversePostOrder();
-        printRelation();
-        System.err.println("Calculating dominance...");
         calcDominance();
-        System.err.println("Calculating dominance frontier...");
         calcDominanceFrontier();
-        System.err.println("Searching global names...");
         findGlobalNames();
-        System.err.println("Rewriting code...");
         insertPHIInsturction();
         mapRegToSSAId = new HashMap<>();
-        System.err.println("Renaming...");
         renameRegisters(function.getEntryBasicBlock());
     }
 }

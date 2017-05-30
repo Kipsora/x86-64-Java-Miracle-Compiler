@@ -1,5 +1,6 @@
 package com.miracle.intermediate.visitor;
 
+import com.miracle.MiracleOption;
 import com.miracle.intermediate.Root;
 import com.miracle.intermediate.instruction.*;
 import com.miracle.intermediate.instruction.arithmetic.BinaryArithmetic;
@@ -8,10 +9,13 @@ import com.miracle.intermediate.instruction.fork.BinaryBranch;
 import com.miracle.intermediate.instruction.fork.Jump;
 import com.miracle.intermediate.instruction.fork.Return;
 import com.miracle.intermediate.instruction.fork.UnaryBranch;
+import com.miracle.intermediate.number.IndirectRegister;
 import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.number.OffsetRegister;
+import com.miracle.intermediate.number.PhysicalRegister;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
+import com.miracle.intermediate.visitor.printer.IRPrinter;
 import org.apache.commons.io.FileUtils;
 
 import java.io.IOException;
@@ -189,6 +193,13 @@ public class X64Printer implements IRPrinter {
                 builder.append('\t').append("sub").append(' ').append(RSP).append(", ")
                         .append(get16Multiplier(block.blockFrom.buffer.getSpillSize()))
                         .append('\n');
+                for (int i = 0, size = curFunction.parameters.size(); i < size && i < MiracleOption.CallingConvention.size(); i++) {
+                    builder.append('\t').append("mov").append(' ').append(curFunction.parameters.get(i)).append(", ")
+                            .append(PhysicalRegister.getBy16BITName(
+                                    MiracleOption.CallingConvention.get(i),
+                                    curFunction.parameters.get(i).size
+                            )).append('\n');
+                }
             }
         }
         for (BasicBlock.Node it = block.getHead(); it != block.tail; it = it.getSucc()) {
@@ -210,23 +221,50 @@ public class X64Printer implements IRPrinter {
             spillSize += parameters.get(i).getNumberSize();
         }
         int fitSize = get16Multiplier(spillSize);
-        builder.append('\t').append("sub").append(' ').append(RSP)
-                .append(", ").append(fitSize).append('\n');
-        spillSize = 0;
-        for (int i = CallingConvention.size(), size = parameters.size(); i < size; i++) {
-            spillSize += parameters.get(i).getNumberSize();
-            builder.append('\t').append("mov").append(' ')
-                    .append(new OffsetRegister(
-                            RSP, fitSize - spillSize,
-                            null, null,
-                            parameters.get(i).getNumberSize()
-                    ))
-                    .append(", ").append(parameters.get(i)).append('\n');
+        if (fitSize != 0) {
+            builder.append('\t').append("sub").append(' ').append(RSP)
+                    .append(", ").append(fitSize).append('\n');
+            spillSize = 0;
+            for (int i = CallingConvention.size(), size = parameters.size(); i < size; i++) {
+                spillSize += parameters.get(i).getNumberSize();
+                if (parameters.get(i) instanceof IndirectRegister) {
+                    builder.append('\t').append("mov").append(' ')
+                            .append(PhysicalRegister.getBy16BITName("RDI", parameters.get(i).getNumberSize()))
+                            .append(", ").append(parameters.get(i)).append('\n');
+                    builder.append('\t').append("mov").append(' ')
+                            .append(new OffsetRegister(
+                                    RSP, fitSize - spillSize,
+                                    null, null,
+                                    parameters.get(i).getNumberSize()
+                            ))
+                            .append(", ")
+                            .append(PhysicalRegister.getBy16BITName("RDI", parameters.get(i).getNumberSize()))
+                            .append('\n');
+                } else {
+                    builder.append('\t').append("mov").append(' ')
+                            .append(new OffsetRegister(
+                                    RSP, fitSize - spillSize,
+                                    null, null,
+                                    parameters.get(i).getNumberSize()
+                            ))
+                            .append(", ").append(parameters.get(i)).append('\n');
+                }
+            }
+            for (int i = 0; i < curFunction.parameters.size() && i < MiracleOption.CallingConvention.size(); i++) {
+                if (!(curFunction.parameters.get(i) instanceof PhysicalRegister) ||
+                        !((PhysicalRegister) curFunction.parameters.get(i)).indexName.equals(MiracleOption.CallingConvention.get(i))) {
+                    builder.append("mov").append('\t').append(curFunction.parameters.get(i)).append(", ")
+                            .append(PhysicalRegister.getBy16BITName(MiracleOption.CallingConvention.get(i), curFunction.parameters.get(i).size))
+                            .append('\n');
+                }
+            }
         }
         builder.append('\t').append("call").append(' ')
                 .append(call.function.identifier).append('\n');
-        builder.append('\t').append("add").append(' ').append(RSP)
-                .append(", ").append(fitSize).append('\n');
+        if (fitSize != 0) {
+            builder.append('\t').append("add").append(' ').append(RSP)
+                    .append(", ").append(fitSize).append('\n');
+        }
     }
 
     @Override
@@ -248,7 +286,7 @@ public class X64Printer implements IRPrinter {
         builder.append('\t').append("cmp").append(' ').append(unaryBranch.getExpression())
                 .append(", ").append(0).append('\n');
         builder.append('\t').append("jnz").append(' ')
-                .append(unaryBranch.branchTrue.name).append('\n');
+                .append(unaryBranch.getBranchTrue().name).append('\n');
     }
 
     @Override
@@ -305,7 +343,7 @@ public class X64Printer implements IRPrinter {
                 .append(", ").append(binaryBranch.getExpressionB())
                 .append('\n');
         builder.append('\t').append(binaryBranch.getOperator())
-                .append(' ').append(binaryBranch.branchTrue.name).append('\n');
+                .append(' ').append(binaryBranch.getBranchTrue().name).append('\n');
     }
 
     @Override

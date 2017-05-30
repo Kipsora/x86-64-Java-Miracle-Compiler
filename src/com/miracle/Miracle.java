@@ -8,6 +8,15 @@ import com.miracle.exception.CSTreeErrorHandler;
 import com.miracle.exception.ExceptionContainer;
 import com.miracle.intermediate.Root;
 import com.miracle.intermediate.visitor.*;
+import com.miracle.intermediate.visitor.allocator.SimpleAllocator;
+import com.miracle.intermediate.visitor.irtranser.HLIRTransformer;
+import com.miracle.intermediate.visitor.irtranser.LLIRTransformer;
+import com.miracle.intermediate.visitor.irtranser.MLIRTransformer;
+import com.miracle.intermediate.visitor.printer.IRPrinter;
+import com.miracle.intermediate.visitor.printer.LMHIRPrinter;
+import com.miracle.intermediate.visitor.ssa.SSAConstructor;
+import com.miracle.intermediate.visitor.ssa.SSADestructor;
+import com.miracle.intermediate.visitor.ssa.SSAOptimizer;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -111,7 +120,7 @@ public class Miracle {
         return astree;
     }
 
-    private Root getIR(ASTree astree) {
+    private Root intermediate(ASTree astree) {
         Root.Builder builder = new Root.Builder();
         astree.accept(builder);
         return builder.build();
@@ -130,21 +139,35 @@ public class Miracle {
         System.exit(0);
     }
 
+    private ASTree semantic() throws IOException {
+        ASTree astree = getASTree(getCSTree());
+        if (this.isPrintASTree) printASTree(astree);
+        return astree;
+    }
+
+    private Root optimize(Root ir) throws IOException {
+        ir.accept(new HLIRTransformer());
+        /*if (!isSSADisabled) {
+            ir.accept(new SSAConstructor());
+            ir.accept(new SSAOptimizer());
+            ir.accept(new SSADestructor());
+        }*/
+        if (this.isPrintHLevelIR) printIR(ir, new LMHIRPrinter());
+        ir.accept(new MLIRTransformer());
+        if (this.isPrintMLevelIR) printIR(ir, new LMHIRPrinter());
+        ir.accept(new SimpleAllocator());
+        return ir;
+    }
+
+    private void generate(Root ir) throws IOException {
+        ir.accept(new LLIRTransformer());
+        if (this.isPrintLLevelIR) printIR(ir, new LMHIRPrinter());
+        printIR(ir, new X64Printer("./utility/builtin.mx"));
+    }
+
     private void run() throws IOException {
         try {
-            MiracleParser.MiracleContext cstree = getCSTree();
-            ASTree astree = getASTree(cstree);
-            if (this.isPrintASTree) printASTree(astree);
-            Root ir = getIR(astree);
-            ir.accept(new HLIRTransformer());
-            if (!isSSADisabled) ir.accept(new SSAConstructor());
-            if (this.isPrintHLevelIR) printIR(ir, new LMHIRPrinter());
-            ir.accept(new MLIRTransformer());
-            if (this.isPrintMLevelIR) printIR(ir, new LMHIRPrinter());
-            ir.accept(new SimpleAllocator());
-            ir.accept(new LLIRTransformer());
-            if (this.isPrintLLevelIR) printIR(ir, new LMHIRPrinter());
-            printIR(ir, new X64Printer("./utility/builtin.mx"));
+            generate(optimize(intermediate(semantic())));
         } catch (RuntimeException e) {
             e.printStackTrace();
         }

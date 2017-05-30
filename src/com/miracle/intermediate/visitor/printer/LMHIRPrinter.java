@@ -1,4 +1,4 @@
-package com.miracle.intermediate.visitor;
+package com.miracle.intermediate.visitor.printer;
 
 import com.miracle.intermediate.Root;
 import com.miracle.intermediate.instruction.*;
@@ -104,8 +104,8 @@ public class LMHIRPrinter implements IRPrinter {
     @Override
     public void visit(UnaryBranch unaryBranch) {
         builder.append('\t').append("jnz").append(' ').append(unaryBranch.getExpression())
-                .append(", ").append(unaryBranch.branchTrue.name)
-                .append(", ").append(unaryBranch.branchFalse.name)
+                .append(", ").append(unaryBranch.getBranchTrue().name)
+                .append(", ").append(unaryBranch.getBranchFalse().name)
                 .append('\n');
     }
 
@@ -142,8 +142,8 @@ public class LMHIRPrinter implements IRPrinter {
         builder.append('\t').append(binaryBranch.getOperator())
                 .append(' ').append(binaryBranch.getExpressionA())
                 .append(' ').append(binaryBranch.getExpressionB())
-                .append(", ").append(binaryBranch.branchTrue.name)
-                .append(", ").append(binaryBranch.branchFalse.name)
+                .append(", ").append(binaryBranch.getBranchTrue().name)
+                .append(", ").append(binaryBranch.getBranchFalse().name)
                 .append('\n');
     }
 

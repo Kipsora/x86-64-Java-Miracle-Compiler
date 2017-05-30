@@ -1,4 +1,4 @@
-package com.miracle.intermediate.visitor;
+package com.miracle.intermediate.visitor.allocator;
 
 import com.miracle.MiracleOption;
 import com.miracle.intermediate.Root;
@@ -13,6 +13,7 @@ import com.miracle.intermediate.number.*;
 import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
+import com.miracle.intermediate.visitor.BaseIRVisitor;
 
 import java.util.*;
 
@@ -21,7 +22,6 @@ public class SimpleAllocator extends BaseIRVisitor {
     private Map<Number, Register> globalRenameMap;
     private Map<Number, Register> localRenameMap;
     private BasicBlock.Node node;
-    private Function curFunction;
 
     private int get16Multiplier(int totalSize) {
         return (totalSize + 15) / 16 * 16;
@@ -87,7 +87,6 @@ public class SimpleAllocator extends BaseIRVisitor {
     @Override
     public void visit(Function function) {
         globalRenameMap = new HashMap<>();
-        curFunction = function;
         int size = 0;
         List<Register> parameters = function.parameters;
         for (int i = MiracleOption.CallingConvention.size(), length = parameters.size(); i < length; i++) {

@@ -1,4 +1,6 @@
-package com.miracle.intermediate.visitor;
+package com.miracle.intermediate.visitor.printer;
+
+import com.miracle.intermediate.visitor.IRVisitor;
 
 import java.io.IOException;
 

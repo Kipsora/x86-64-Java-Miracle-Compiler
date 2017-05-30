@@ -1,4 +1,4 @@
-package com.miracle.intermediate.visitor;
+package com.miracle.intermediate.visitor.irtranser;
 
 import com.miracle.MiracleOption;
 import com.miracle.intermediate.Root;
@@ -18,6 +18,7 @@ import com.miracle.intermediate.number.PhysicalRegister;
 import com.miracle.intermediate.number.StackRegister;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
+import com.miracle.intermediate.visitor.BaseIRVisitor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -44,6 +45,7 @@ public class LLIRTransformer extends BaseIRVisitor {
     @Override
     public void visit(Function function) {
         curFunction = function;
+        function.parameters.forEach(this::enroll);
         curFunction.getEntryBasicBlock().accept(this);
         curFunction = null;
     }
@@ -52,18 +54,6 @@ public class LLIRTransformer extends BaseIRVisitor {
     public void visit(BasicBlock block) {
         if (blockProcessed.contains(block)) return;
         blockProcessed.add(block);
-
-        if (block.isFunctionEntryBlock()) {
-            for (int i = 0; i < curFunction.parameters.size() && i < MiracleOption.CallingConvention.size(); i++) {
-                if (!(curFunction.parameters.get(i) instanceof PhysicalRegister) ||
-                        !((PhysicalRegister) curFunction.parameters.get(i)).indexName.equals(MiracleOption.CallingConvention.get(i))) {
-                    block.getHead().prepend(new Move(
-                            curFunction.parameters.get(i),
-                            PhysicalRegister.getBy16BITName(MiracleOption.CallingConvention.get(i), curFunction.parameters.get(i).size)
-                    ));
-                }
-            }
-        }
 
         for (node = block.getHead(); node != block.tail; node = node.getSucc()) {
             node.instruction.getUseNumbers().forEach(this::enroll);

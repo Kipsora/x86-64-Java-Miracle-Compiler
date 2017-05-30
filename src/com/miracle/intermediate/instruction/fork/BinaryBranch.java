@@ -13,9 +13,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class BinaryBranch extends Fork {
-    public final BasicBlock branchTrue;
-    public final BasicBlock branchFalse;
+public class BinaryBranch extends Branch {
     private Types operator;
     private Number expressionA;
     private Number expressionB;
@@ -25,11 +23,10 @@ public class BinaryBranch extends Fork {
                         Number expressionB,
                         BasicBlock branchTrue,
                         BasicBlock branchFalse) {
+        super(branchTrue, branchFalse);
         this.expressionA = expressionA;
         this.operator = fromASTreeTypes(operator);
         this.expressionB = expressionB;
-        this.branchTrue = branchTrue;
-        this.branchFalse = branchFalse;
     }
 
     public BinaryBranch(Number expressionA,
@@ -37,11 +34,10 @@ public class BinaryBranch extends Fork {
                         Number expressionB,
                         BasicBlock branchTrue,
                         BasicBlock branchFalse) {
+        super(branchTrue, branchFalse);
         this.expressionA = expressionA;
         this.operator = operator;
         this.expressionB = expressionB;
-        this.branchTrue = branchTrue;
-        this.branchFalse = branchFalse;
     }
 
     public static Types fromASTreeTypes(BinaryExpression.OPERATOR operator) {

@@ -23,7 +23,7 @@ public class BasicBlock {
 
     private boolean isForked;
 
-    private Set<BasicBlock> prevBasicBlock = new HashSet<>();
+    private Set<BasicBlock> predBasicBlock = new HashSet<>();
     private Set<BasicBlock> succBasicBlock = new HashSet<>();
 
     public final Set<BasicBlock> dfSet;
@@ -85,8 +85,8 @@ public class BasicBlock {
         return isForked;
     }
 
-    public Set<BasicBlock> getPrevBasicBlock() {
-        return prevBasicBlock;
+    public Set<BasicBlock> getPredBasicBlock() {
+        return predBasicBlock;
     }
 
     public Set<BasicBlock> getSuccBasicBlock() {
@@ -103,11 +103,11 @@ public class BasicBlock {
 
     public void addSuccBasicBlock(BasicBlock block) {
         succBasicBlock.add(block);
-        block.prevBasicBlock.add(this);
+        block.predBasicBlock.add(this);
     }
 
     public void addPredBasicBlock(BasicBlock block) {
-        prevBasicBlock.add(block);
+        predBasicBlock.add(block);
         block.succBasicBlock.add(this);
     }
 
@@ -121,6 +121,11 @@ public class BasicBlock {
 
     public void addToDFSet(BasicBlock block) {
         dfSet.add(block);
+    }
+
+    public void removeSucc(BasicBlock block) {
+        this.succBasicBlock.remove(block);
+        block.predBasicBlock.remove(this);
     }
 
     public class Node {

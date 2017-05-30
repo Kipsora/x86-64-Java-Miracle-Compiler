@@ -1,4 +1,4 @@
-package com.miracle.intermediate.visitor;
+package com.miracle.intermediate.visitor.irtranser;
 
 import com.miracle.intermediate.Root;
 import com.miracle.intermediate.instruction.*;
@@ -11,6 +11,7 @@ import com.miracle.intermediate.instruction.fork.UnaryBranch;
 import com.miracle.intermediate.number.PhysicalRegister;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
+import com.miracle.intermediate.visitor.BaseIRVisitor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +28,9 @@ public class HLIRTransformer extends BaseIRVisitor {
     @Override
     public void visit(Function function) {
         int size = function.getReturns().size();
-        if (size == 0) throw new RuntimeException("no return");
+        if (size == 0) {
+            throw new RuntimeException("no return");
+        }
         if (size == 1) {
             function.getReturns().iterator().next().block.setFunctionExitBlock();
         } else {
@@ -60,20 +63,20 @@ public class HLIRTransformer extends BaseIRVisitor {
                     flag = true;
                 } else if (it.instruction instanceof UnaryBranch) {
                     flag = true;
-                    block.addSuccBasicBlock(((UnaryBranch) it.instruction).branchTrue);
-                    block.addSuccBasicBlock(((UnaryBranch) it.instruction).branchFalse);
+                    block.addSuccBasicBlock(((UnaryBranch) it.instruction).getBranchTrue());
+                    block.addSuccBasicBlock(((UnaryBranch) it.instruction).getBranchFalse());
                 } else if (it.instruction instanceof BinaryBranch) {
                     flag = true;
-                    block.addSuccBasicBlock(((BinaryBranch) it.instruction).branchFalse);
-                    block.addSuccBasicBlock(((BinaryBranch) it.instruction).branchTrue);
+                    block.addSuccBasicBlock(((BinaryBranch) it.instruction).getBranchFalse());
+                    block.addSuccBasicBlock(((BinaryBranch) it.instruction).getBranchTrue());
                 }
             } else {
                 it.remove();
             }
         }
-        /*if (!flag) {
+        if (!flag) {
             throw new RuntimeException("NO FORK STATEMENT");
-        }*/
+        }
         block.getSuccBasicBlock().forEach(element -> element.accept(this));
     }
 }

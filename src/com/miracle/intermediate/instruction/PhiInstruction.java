@@ -37,9 +37,6 @@ public class PhiInstruction extends Instruction {
     @Override
     public void rename(Map<VirtualRegister, VirtualRegister> map) {
         register = map.get(register);
-        for (Map.Entry<BasicBlock, VirtualRegister> entry : args.entrySet()) {
-            args.put(entry.getKey(), map.get(entry.getValue()));
-        }
     }
 
     @Override

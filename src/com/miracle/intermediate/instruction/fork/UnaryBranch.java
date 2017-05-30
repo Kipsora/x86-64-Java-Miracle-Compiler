@@ -12,17 +12,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class UnaryBranch extends Fork {
-    public final BasicBlock branchTrue;
-    public final BasicBlock branchFalse;
+public class UnaryBranch extends Branch {
     private Number expression;
 
     public UnaryBranch(Number expression,
                        BasicBlock branchTrue,
                        BasicBlock branchFalse) {
+        super(branchTrue, branchFalse);
         this.expression = expression;
-        this.branchTrue = branchTrue;
-        this.branchFalse = branchFalse;
     }
 
     public Number getExpression() {

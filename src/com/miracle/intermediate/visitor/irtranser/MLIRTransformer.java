@@ -1,4 +1,4 @@
-package com.miracle.intermediate.visitor;
+package com.miracle.intermediate.visitor.irtranser;
 
 import com.miracle.MiracleOption;
 import com.miracle.intermediate.Root;
@@ -16,6 +16,7 @@ import com.miracle.intermediate.number.*;
 import com.miracle.intermediate.number.Number;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
+import com.miracle.intermediate.visitor.BaseIRVisitor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -89,7 +90,7 @@ public class MLIRTransformer extends BaseIRVisitor {
                     it.prepend(new Move(register, ((UnaryBranch) (it.instruction)).getExpression()));
                     ((UnaryBranch) it.instruction).setExpression(register);
                 }
-                it.append(new Jump(((UnaryBranch) it.instruction).branchFalse));
+                it.append(new Jump(((UnaryBranch) it.instruction).getBranchFalse()));
             } else if (it.instruction instanceof BinaryBranch) {
                 if ((((BinaryBranch) it.instruction).getExpressionA() instanceof IndirectRegister &&
                         ((BinaryBranch) it.instruction).getExpressionB() instanceof IndirectRegister)) {
@@ -112,7 +113,7 @@ public class MLIRTransformer extends BaseIRVisitor {
                 if (((BinaryBranch) it.instruction).getExpressionA() instanceof Immediate) {
                     ((BinaryBranch) it.instruction).swapExpressions();
                 }
-                it.append(new Jump(((BinaryBranch) it.instruction).branchFalse));
+                it.append(new Jump(((BinaryBranch) it.instruction).getBranchFalse()));
             } else if (it.instruction instanceof Compare) {
                 if ((((Compare) it.instruction).getSourceA() instanceof IndirectRegister &&
                         ((Compare) it.instruction).getSourceB() instanceof IndirectRegister)) {
