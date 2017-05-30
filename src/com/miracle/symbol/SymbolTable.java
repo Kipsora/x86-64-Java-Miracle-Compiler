@@ -73,10 +73,12 @@ public class SymbolTable {
     static {
         __builtin_string.addMethod("length", new SymbolFunctionType(__builtin_int, __builtin_string) {{
             setAddress("@string.length");
+            getAddress().buffer.enroll(RDI).enroll(RSI);
         }});
         __builtin_string.addMethod("ord", new SymbolFunctionType(__builtin_int, __builtin_string) {{
             addParameter("x", __builtin_int);
             setAddress("@string.ord");
+            getAddress().buffer.enroll(RDI).enroll(RSI);
         }});
         __builtin_string.addMethod("substring", new SymbolFunctionType(__builtin_string, __builtin_string) {{
             addParameter("x", __builtin_int);
