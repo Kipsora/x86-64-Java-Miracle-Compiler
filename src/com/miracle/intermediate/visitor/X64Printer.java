@@ -274,11 +274,13 @@ public class X64Printer implements IRPrinter {
         for (int i = 0; i < parameters.size() && i < MiracleOption.CallingConvention.size(); i++) {
             if (!(parameters.get(i) instanceof PhysicalRegister) ||
                     !((PhysicalRegister) parameters.get(i)).indexName.equals(MiracleOption.CallingConvention.get(i))) {
-                builder.append('\t').append("mov").append(' ')
-                        .append(PhysicalRegister.getBy16BITName(
-                                MiracleOption.CallingConvention.get(i), parameters.get(i).getNumberSize()
-                        ))
-                        .append(", ").append(parameters.get(i)).append('\n');
+                builder.append('\t').append("push").append(' ').append(parameters.get(i)).append('\n');
+            }
+        }
+        for (int i = Math.min(parameters.size() - 1, MiracleOption.CallingConvention.size() - 1); i >= 0; i--) {
+            if (!(parameters.get(i) instanceof PhysicalRegister) ||
+                    !((PhysicalRegister) parameters.get(i)).indexName.equals(MiracleOption.CallingConvention.get(i))) {
+                builder.append('\t').append("pop").append(' ').append(PhysicalRegister.getBy16BITName(MiracleOption.CallingConvention.get(i), parameters.get(i).getNumberSize())).append('\n');
             }
         }
         builder.append('\t').append("call").append(' ')
