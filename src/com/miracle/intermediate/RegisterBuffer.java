@@ -5,15 +5,17 @@ import com.miracle.intermediate.number.StackRegister;
 import org.antlr.v4.parse.GrammarTreeVisitor;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class RegisterBuffer {
-    private final Set<PhysicalRegister> physical = new HashSet<>();
+    private final List<PhysicalRegister> physical = new LinkedList<>();
     private final Set<StackRegister> stack = new HashSet<>();
     private int spillSize;
 
-    public Set<PhysicalRegister> getPhysicalRegisters() {
+    public List<PhysicalRegister> getPhysicalRegisters() {
         return physical;
     }
 
@@ -29,12 +31,12 @@ public class RegisterBuffer {
         register.setOffset(spillSize);
     }
 
-    public Set<PhysicalRegister> getCalleeSaveRegisters() {
-        return physical.stream().filter(element -> !element.isCallerSave).collect(Collectors.toSet());
+    public List<PhysicalRegister> getCalleeSaveRegisters() {
+        return physical.stream().distinct().filter(element -> !element.isCallerSave).collect(Collectors.toList());
     }
 
-    public Set<PhysicalRegister> getCallerSaveRegisters() {
-        return physical.stream().filter(element -> element.isCallerSave).collect(Collectors.toSet());
+    public List<PhysicalRegister> getCallerSaveRegisters() {
+        return physical.stream().distinct().filter(element -> element.isCallerSave).collect(Collectors.toList());
     }
 
     public int getSpillSize() {

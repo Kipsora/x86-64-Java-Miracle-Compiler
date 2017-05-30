@@ -152,6 +152,23 @@ public class MLIRTransformer extends BaseIRVisitor {
                     ((Call) it.instruction).parameters.add(0, ((Call) it.instruction).getSelfRegister());
                     ((Call) it.instruction).setSelfRegister(null);
                 }
+            } else if (it.instruction instanceof Move) {
+                if (((Move) it.instruction).getSource() instanceof OffsetRegister &&
+                        ((Move) it.instruction).getSource() instanceof OffsetRegister) {
+                    VirtualRegister register = new VirtualRegister(
+                            ".aux" + String.valueOf(countTmpVars++),
+                            ((Move) it.instruction).getSource().getNumberSize()
+                    );
+                    it.prepend(new Move(
+                            register,
+                            ((Move) it.instruction).getSource()
+                    ));
+                    it.prepend(new Move(
+                            ((Move) it.instruction).getTarget(),
+                            register
+                    ));
+                    it.remove();
+                }
             }
         }
         block.getSuccBasicBlock().forEach(element -> element.accept(this));

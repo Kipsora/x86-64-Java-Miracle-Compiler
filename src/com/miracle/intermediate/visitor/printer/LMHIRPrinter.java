@@ -92,6 +92,8 @@ public class LMHIRPrinter implements IRPrinter {
                 .append("self=").append(call.getSelfRegister())
                 .append(' ').append(call.function.identifier);
         call.parameters.forEach(element -> builder.append(' ').append(element));
+        builder.append(" ").append("Caller Save Registers:");
+        call.callerSave.forEach(element -> builder.append(' ').append(element));
         builder.append('\n');
     }
 

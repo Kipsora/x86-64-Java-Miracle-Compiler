@@ -9,10 +9,8 @@ import com.miracle.intermediate.instruction.fork.BinaryBranch;
 import com.miracle.intermediate.instruction.fork.Jump;
 import com.miracle.intermediate.instruction.fork.Return;
 import com.miracle.intermediate.instruction.fork.UnaryBranch;
-import com.miracle.intermediate.number.IndirectRegister;
+import com.miracle.intermediate.number.*;
 import com.miracle.intermediate.number.Number;
-import com.miracle.intermediate.number.OffsetRegister;
-import com.miracle.intermediate.number.PhysicalRegister;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
 import com.miracle.intermediate.visitor.printer.IRPrinter;
@@ -201,6 +199,10 @@ public class X64Printer implements IRPrinter {
                             .append(get16Multiplier(block.blockFrom.buffer.getSpillSize()))
                             .append('\n');
                 }
+                curFunction.buffer.getCalleeSaveRegisters().forEach(element -> {
+                    builder.append('\t').append("push").append(' ')
+                            .append(element.getELF64Name()).append('\n');
+                });
                 for (int i = 0, size = curFunction.parameters.size(); i < size && i < MiracleOption.CallingConvention.size(); i++) {
                     if (!(curFunction.parameters.get(i) instanceof PhysicalRegister) ||
                             !((PhysicalRegister) curFunction.parameters.get(i)).indexName.equals(MiracleOption.CallingConvention.get(i))) {
@@ -211,10 +213,6 @@ public class X64Printer implements IRPrinter {
                                 )).append('\n');
                     }
                 }
-                curFunction.buffer.getCalleeSaveRegisters().forEach(element -> {
-                    builder.append('\t').append("push").append(' ')
-                            .append(element.getELF64Name()).append('\n');
-                });
             }
         }
         for (BasicBlock.Node it = block.getHead(); it != block.tail; it = it.getSucc()) {
@@ -334,10 +332,10 @@ public class X64Printer implements IRPrinter {
          * Return Instruction:
          *   - value must be null                       -> processed in LLIRTransformer
          */
-        curFunction.buffer.getPhysicalRegisters().forEach(element -> {
-            if (!element.isCallerSave) {
-                builder.append('\t').append("pop").append(' ').append(element.getELF64Name()).append('\n');
-            }
+        List<PhysicalRegister> registers = new LinkedList<>(curFunction.buffer.getCalleeSaveRegisters());
+        Collections.reverse(registers);
+        registers.forEach(element -> {
+            builder.append('\t').append("pop").append(' ').append(element.getELF64Name()).append('\n');
         });
         if (curFunction.buffer.getSpillSize() > 0 || !curFunction.buffer.getCalleeSaveRegisters().isEmpty()) {
             builder.append('\t').append("leave").append('\n');
