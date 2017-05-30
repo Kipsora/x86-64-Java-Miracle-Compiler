@@ -370,14 +370,16 @@ public class X64Printer implements IRPrinter {
          *  HeapAllocate Instruction:
          *    - size must be one        -> processed in MLIRTransformer
          */
-        allocate.callerSave.forEach(element ->
+        List<PhysicalRegister> list  = new LinkedList<>(allocate.callerSave);
+        list.forEach(element ->
                 builder.append('\t').append("push").append(' ')
                         .append(element).append('\n')
         );
         builder.append('\t').append("mov").append(' ').append("rdi").append(", ")
                 .append(allocate.getNumber()).append('\n');
         builder.append('\t').append("call").append(' ').append("malloc").append('\n');
-        allocate.callerSave.forEach(element ->
+        Collections.reverse(list);
+        list.forEach(element ->
                 builder.append('\t').append("pop").append(' ')
                         .append(element).append('\n')
         );
