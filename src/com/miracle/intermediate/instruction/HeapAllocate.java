@@ -24,7 +24,7 @@ public class HeapAllocate extends Instruction {
         this.target = target;
         this.size = size;
         this.number = number;
-        this.callerSave = new HashSet<>(Arrays.asList(RDI, RDX, RCX, R8, R9, R10, R11));
+        this.callerSave = new HashSet<>(Arrays.asList(RDI, RDX, RSI, RCX, R8, R9, R10, R11));
     }
 
     public int getSize() {

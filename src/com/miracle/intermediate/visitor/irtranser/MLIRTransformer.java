@@ -153,8 +153,8 @@ public class MLIRTransformer extends BaseIRVisitor {
                     ((Call) it.instruction).setSelfRegister(null);
                 }
             } else if (it.instruction instanceof Move) {
-                if (((Move) it.instruction).getSource() instanceof OffsetRegister &&
-                        ((Move) it.instruction).getSource() instanceof OffsetRegister) {
+                if (((Move) it.instruction).getSource() instanceof IndirectRegister &&
+                        ((Move) it.instruction).getSource() instanceof IndirectRegister) {
                     VirtualRegister register = new VirtualRegister(
                             ".aux" + String.valueOf(countTmpVars++),
                             ((Move) it.instruction).getSource().getNumberSize()
