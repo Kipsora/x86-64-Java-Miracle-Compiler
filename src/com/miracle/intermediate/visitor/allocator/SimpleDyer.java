@@ -13,8 +13,6 @@ public class SimpleDyer implements GraphDyer {
         List<Register> vertices = new LinkedList<>(graph.vertices);
         graph.preColor.forEach((key, value) -> {
             vertices.remove(key);
-            //graph.forbidden.get(key).forEach(element -> graph.forbidden.get(element).remove(key));
-            //graph.forbidden.get(key).clear();
             if (value instanceof StackRegister) {
                 map.put(key, (Register) value);
             } else {
