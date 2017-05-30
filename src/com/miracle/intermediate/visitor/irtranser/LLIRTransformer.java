@@ -1,5 +1,6 @@
 package com.miracle.intermediate.visitor.irtranser;
 
+import com.miracle.MiracleOption;
 import com.miracle.intermediate.Root;
 import com.miracle.intermediate.instruction.Call;
 import com.miracle.intermediate.instruction.HeapAllocate;
@@ -59,6 +60,11 @@ public class LLIRTransformer extends BaseIRVisitor {
                     ((Call) node.instruction).callerSave.addAll(
                             ((Call) node.instruction).function.buffer.getCallerSaveRegisters()
                     );
+                    for (int i = 0, size = ((Call) node.instruction).parameters.size(); i < size && i < MiracleOption.CallingConvention.size(); i++) {
+                        ((Call) node.instruction).callerSave.add(
+                                PhysicalRegister.getBy16BITName(MiracleOption.CallingConvention.get(i), ((Call) node.instruction).parameters.get(i).getNumberSize())
+                        );
+                    }
                     ((Call) node.instruction).callerSave.retainAll(live);
                 } else if (node.instruction instanceof HeapAllocate) {
                     ((HeapAllocate) node.instruction).callerSave.retainAll(live);
