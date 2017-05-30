@@ -3,10 +3,8 @@ package com.miracle.intermediate.visitor.allocator;
 import com.miracle.MiracleOption;
 import com.miracle.intermediate.Root;
 import com.miracle.intermediate.instruction.Instruction;
+import com.miracle.intermediate.number.*;
 import com.miracle.intermediate.number.Number;
-import com.miracle.intermediate.number.Register;
-import com.miracle.intermediate.number.StackRegister;
-import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
 import com.miracle.intermediate.visitor.BaseIRVisitor;
@@ -15,6 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static com.miracle.intermediate.number.PhysicalRegister.*;
 
 public class GlobalAllocator extends BaseIRVisitor {
     private int get16Multiplier(int totalSize) {
@@ -47,7 +47,7 @@ public class GlobalAllocator extends BaseIRVisitor {
             }
         }
         for (BasicBlock block : function.getPostOrder()) {
-            Set<VirtualRegister> live = new HashSet<VirtualRegister>() {{
+            Set<Register> live = new HashSet<Register>() {{
                 block.liveliness.liveOut.forEach(this::add);
             }};
             for (BasicBlock.Node it = block.tail.getPrev(); it != block.getHead().getPrev(); it = it.getPrev()) {
@@ -77,10 +77,24 @@ public class GlobalAllocator extends BaseIRVisitor {
                 }
                 int oldSize = get16Multiplier(size);
                 size = 0;
-                for (int i = 0, length = parameters.size(); i < length; i++) {
+                for (int i = parameters.size() - 1; i >= 0; i--) {
+                    if (i >= MiracleOption.CallingConvention.size()) continue;
+                    Register register = parameters.get(i);
+                    graph.addVertex(PhysicalRegister.getBy16BITName(MiracleOption.CallingConvention.get(i), register.size));
+                }
+                for (int i = parameters.size() - 1; i >= 0; i--) {
+                    if (i >= MiracleOption.CallingConvention.size()) continue;
+                    Register register = parameters.get(i);
+                    live.forEach(element ->
+                            graph.setForbidden((VirtualRegister) register, element)
+                    );
+                    live.remove(register);
+                    live.add(PhysicalRegister.getBy16BITName(MiracleOption.CallingConvention.get(i), register.size));
+                    graph.addPreColor(PhysicalRegister.getBy16BITName(MiracleOption.CallingConvention.get(i), register.size), MiracleOption.CallingConvention.get(i));
+                }
+                for (int i = 0; i < parameters.size(); i++) {
                     Register register = parameters.get(i);
                     if (i < MiracleOption.CallingConvention.size()) {
-
                     } else {
                         size += register.size;
                         StackRegister stackRegister = new StackRegister(register.size);
@@ -88,10 +102,6 @@ public class GlobalAllocator extends BaseIRVisitor {
                         graph.addPreColor((VirtualRegister) function.parameters.get(i), stackRegister);
                     }
                 }
-
-                function.parameters.forEach(arg -> live.forEach(
-                        element -> graph.setForbidden((VirtualRegister) arg, element)
-                ));
             }
         }
         new SimpleDyer().color(graph).forEach((key, value) ->

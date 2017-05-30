@@ -22,9 +22,9 @@ public class InterferenceGraph {
         add("R11");
     }};
 
-    public final Set<VirtualRegister> vertices;
-    public final Map<VirtualRegister, Set<VirtualRegister>> forbidden;
-    public final Map<VirtualRegister, Register> preColor;
+    public final Set<Register> vertices;
+    public final Map<Register, Set<Register>> forbidden;
+    public final Map<Register, Object> preColor;
 
     InterferenceGraph() {
         vertices = new HashSet<>();
@@ -32,12 +32,12 @@ public class InterferenceGraph {
         preColor = new HashMap<>();
     }
 
-    public void addVertex(VirtualRegister x) {
+    public void addVertex(Register x) {
         vertices.add(x);
         forbidden.put(x, new HashSet<>());
     }
 
-    public void setForbidden(VirtualRegister x, VirtualRegister y) {
+    public void setForbidden(Register x, Register y) {
         if (x == y) {
             return;
         }
@@ -45,7 +45,7 @@ public class InterferenceGraph {
         forbidden.get(y).add(x);
     }
 
-    public void addPreColor(VirtualRegister register, StackRegister color) {
+    public void addPreColor(Register register, Object color) {
         preColor.put(register, color);
     }
 }

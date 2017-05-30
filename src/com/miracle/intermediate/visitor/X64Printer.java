@@ -159,7 +159,7 @@ public class X64Printer implements IRPrinter {
          *  Move Instruction:
          *  tar and src cannot be both indirect registers       -> TODO: in Register Allocator
          */
-        if (move.getSource() == move.getTarget()) return;
+        if (move.getSource().toString().equals(move.getTarget().toString())) return;
         if (move.getSource().getNumberSize() > move.getTarget().getNumberSize()) {
             builder.append('\t').append("movsx").append(' ').append(move.getTarget())
                     .append(", ").append(move.getSource()).append('\n');

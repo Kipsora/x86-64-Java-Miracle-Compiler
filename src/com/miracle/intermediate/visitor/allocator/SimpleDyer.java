@@ -9,12 +9,17 @@ public class SimpleDyer implements GraphDyer {
     @Override
     public Map<Number, Register> color(InterferenceGraph graph) {
         Map<Number, Register> map = new HashMap<>();
-        List<VirtualRegister> vertices = new LinkedList<>(graph.vertices);
+        Map<Number, String> adj = new HashMap<>();
+        List<Register> vertices = new LinkedList<>(graph.vertices);
         graph.preColor.forEach((key, value) -> {
             vertices.remove(key);
-            graph.forbidden.get(key).forEach(element -> graph.forbidden.get(element).remove(key));
-            graph.forbidden.get(key).clear();
-            map.put(key, value);
+            //graph.forbidden.get(key).forEach(element -> graph.forbidden.get(element).remove(key));
+            //graph.forbidden.get(key).clear();
+            if (value instanceof StackRegister) {
+                map.put(key, (Register) value);
+            } else {
+                adj.put(key, (String) value);
+            }
         });
         vertices.sort((x, y) -> graph.forbidden.get(y).size() - graph.forbidden.get(x).size());
         vertices.forEach(node -> {
@@ -22,6 +27,9 @@ public class SimpleDyer implements GraphDyer {
             graph.forbidden.get(node).forEach(another -> {
                 if (map.containsKey(another) && map.get(another) instanceof PhysicalRegister) {
                     allColor.remove(((PhysicalRegister) map.get(another)).indexName);
+                }
+                if (adj.containsKey(another)) {
+                    allColor.remove(adj.get(another));
                 }
             });
             if (allColor.isEmpty()) {
