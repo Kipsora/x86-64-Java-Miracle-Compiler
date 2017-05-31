@@ -103,7 +103,7 @@ public class X64Printer implements IRPrinter {
             builder.append('\t').append("mov").append(' ')
                     .append(PhysicalRegister.getBy16BITName("RCX", binaryArithmetic.getSource().getNumberSize()))
                     .append(", ").append(binaryArithmetic.getSource()).append('\n');
-            builder.append('\t').append("shl").append(' ')
+            builder.append('\t').append(binaryArithmetic.operator).append(' ')
                     .append(binaryArithmetic.getTarget()).append(", ")
                     .append(PhysicalRegister.getBy16BITName("RCX", 1)).append('\n');
         } else if (binaryArithmetic.operator.equals(BinaryArithmetic.Types.DIV)) {
