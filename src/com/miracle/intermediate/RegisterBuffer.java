@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class RegisterBuffer {
     private final List<PhysicalRegister> physical = new LinkedList<>();
     private final Set<StackRegister> stack = new HashSet<>();
-    private final Set<PhysicalRegister> physicalSet = new HashSet<>();
+    private final Set<String> physicalSet = new HashSet<>();
     private int spillSize;
 
     public List<PhysicalRegister> getPhysicalRegisters() {
@@ -21,9 +21,9 @@ public class RegisterBuffer {
     }
 
     public RegisterBuffer enroll(PhysicalRegister register) {
-        if (physicalSet.contains(register)) return this;
+        if (physicalSet.contains(register.indexName)) return this;
         physical.add(register);
-        physicalSet.add(register);
+        physicalSet.add(register.indexName);
         return this;
     }
 

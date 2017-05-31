@@ -1,10 +1,8 @@
 package com.miracle.intermediate.instruction.arithmetic;
 
 import com.miracle.intermediate.instruction.Instruction;
+import com.miracle.intermediate.number.*;
 import com.miracle.intermediate.number.Number;
-import com.miracle.intermediate.number.OffsetRegister;
-import com.miracle.intermediate.number.Register;
-import com.miracle.intermediate.number.VirtualRegister;
 import com.miracle.intermediate.visitor.IRVisitor;
 
 import java.util.HashSet;
@@ -80,6 +78,10 @@ public class BinaryArithmetic extends Instruction {
 
     public Register getTarget() {
         return target;
+    }
+
+    public void setTarget(PhysicalRegister target) {
+        this.target = target;
     }
 
     public enum Types {

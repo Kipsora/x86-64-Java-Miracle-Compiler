@@ -130,4 +130,9 @@ public class PhysicalRegister extends DirectRegister {// name array: 1 bit, 4 bi
     public String getELF64Name() {
         return indexName.toLowerCase();
     }
+
+    @Override
+    public boolean isIndirect() {
+        return false;
+    }
 }

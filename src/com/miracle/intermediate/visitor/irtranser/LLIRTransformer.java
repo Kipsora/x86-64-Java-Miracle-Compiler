@@ -98,14 +98,40 @@ public class LLIRTransformer extends BaseIRVisitor {
             node.instruction.accept(this);
             node.instruction.getUseNumbers().forEach(element -> {
                 if (element instanceof OffsetRegister) {
-                    if (((OffsetRegister) element).getRawBase() instanceof IndirectRegister) {
+                    if (((OffsetRegister) element).getRawBase() instanceof IndirectRegister ||
+                            (((OffsetRegister) element).getRawBase() instanceof VirtualRegister &&
+                                    ((VirtualRegister) ((OffsetRegister) element).getRawBase()).getRealName() instanceof IndirectRegister)) {
                         node.prepend(new Move(
                                 PhysicalRegister.getBy16BITName("RAX", ((OffsetRegister) element).getRawBase().size),
                                 ((OffsetRegister) element).getRawBase()
                         ));
                         ((OffsetRegister) element).setBase(PhysicalRegister.getBy16BITName("RAX", ((OffsetRegister) element).getBase().size));
                     }
-                    if (((OffsetRegister) element).getRawOffsetB() instanceof IndirectRegister) {
+                    if (((OffsetRegister) element).getRawOffsetB() instanceof IndirectRegister ||
+                            (((OffsetRegister) element).getRawOffsetB() instanceof VirtualRegister &&
+                                    ((VirtualRegister) ((OffsetRegister) element).getRawOffsetB()).getRealName() instanceof IndirectRegister)) {
+                        node.prepend(new Move(
+                                PhysicalRegister.getBy16BITName("RDX", ((OffsetRegister) element).getRawOffsetB().size),
+                                ((OffsetRegister) element).getRawOffsetB()
+                        ));
+                        ((OffsetRegister) element).setOffsetB(PhysicalRegister.getBy16BITName("RDX", ((OffsetRegister) element).getRawOffsetB().size));
+                    }
+                }
+            });
+            node.instruction.getDefNumbers().forEach(element -> {
+                if (element instanceof OffsetRegister) {
+                    if (((OffsetRegister) element).getRawBase() instanceof IndirectRegister ||
+                            (((OffsetRegister) element).getRawBase() instanceof VirtualRegister &&
+                                    ((VirtualRegister) ((OffsetRegister) element).getRawBase()).getRealName() instanceof IndirectRegister)) {
+                        node.prepend(new Move(
+                                PhysicalRegister.getBy16BITName("RAX", ((OffsetRegister) element).getRawBase().size),
+                                ((OffsetRegister) element).getRawBase()
+                        ));
+                        ((OffsetRegister) element).setBase(PhysicalRegister.getBy16BITName("RAX", ((OffsetRegister) element).getBase().size));
+                    }
+                    if (((OffsetRegister) element).getRawOffsetB() instanceof IndirectRegister ||
+                            (((OffsetRegister) element).getRawOffsetB() instanceof VirtualRegister &&
+                                    ((VirtualRegister) ((OffsetRegister) element).getRawOffsetB()).getRealName() instanceof IndirectRegister)) {
                         node.prepend(new Move(
                                 PhysicalRegister.getBy16BITName("RDX", ((OffsetRegister) element).getRawOffsetB().size),
                                 ((OffsetRegister) element).getRawOffsetB()

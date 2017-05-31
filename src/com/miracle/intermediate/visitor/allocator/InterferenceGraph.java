@@ -15,11 +15,10 @@ public class InterferenceGraph {
         add("RDI");
         add("R13");
         add("R8");
-        add("R14");
         add("R9");
-        add("R15");
         add("R10");
         add("R11");
+        add("R14");
     }};
 
     public final Set<Register> vertices;

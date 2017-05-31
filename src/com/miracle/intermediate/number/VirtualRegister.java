@@ -47,4 +47,13 @@ public class VirtualRegister extends DirectRegister {
         }
         return getSizeDescriptor() + " $" + name;
     }
+
+    @Override
+    public boolean isIndirect() {
+        if (realName == null) {
+            return false;
+        } else {
+            return realName.isIndirect();
+        }
+    }
 }

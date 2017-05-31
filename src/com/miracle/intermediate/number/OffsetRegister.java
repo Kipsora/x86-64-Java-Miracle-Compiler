@@ -71,6 +71,7 @@ public class OffsetRegister extends IndirectRegister { // memory in stack/heap
         return size;
     }
 
+
     public void setOffsetB(PhysicalRegister offsetB) {
         this.offsetB = offsetB;
     }

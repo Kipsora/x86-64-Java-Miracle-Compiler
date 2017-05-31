@@ -149,10 +149,41 @@ public class X64Printer implements IRPrinter {
              *     >>, <<: target must be physical registers        -> TODO: in Register Allocator
              *     *: source cannot be indirect registers           -> TODO: in Register Allocator
              */
-            builder.append('\t').append(binaryArithmetic.operator)
-                    .append(' ').append(binaryArithmetic.getTarget())
-                    .append(", ").append(binaryArithmetic.getSource())
-                    .append('\n');
+            if (binaryArithmetic.operator.equals(BinaryArithmetic.Types.MUL)
+                    && binaryArithmetic.getTarget().isIndirect()) {
+                builder.append('\t').append("mov").append(' ')
+                        .append(PhysicalRegister.getBy16BITName("RAX", binaryArithmetic.getTarget().size))
+                        .append(", ").append(binaryArithmetic.getTarget()).append("\n");
+                builder.append('\t').append(binaryArithmetic.operator)
+                        .append(' ').append(PhysicalRegister.getBy16BITName("RAX", binaryArithmetic.getTarget().size))
+                        .append(", ").append(binaryArithmetic.getSource())
+                        .append('\n');
+                builder.append('\t').append("mov").append(' ').append(binaryArithmetic.getTarget())
+                        .append(", ")
+                        .append(PhysicalRegister.getBy16BITName("RAX", binaryArithmetic.getTarget().size))
+                        .append("\n");
+            } else {
+                if (binaryArithmetic.getSource() instanceof Register
+                        && ((Register) binaryArithmetic.getSource()).isIndirect()
+                        && binaryArithmetic.getTarget().isIndirect()) {
+                    builder.append('\t').append("mov").append(' ')
+                            .append(PhysicalRegister.getBy16BITName("RAX", binaryArithmetic.getTarget().size))
+                            .append(", ").append(binaryArithmetic.getTarget()).append("\n");
+                    builder.append('\t').append(binaryArithmetic.operator)
+                            .append(' ').append(PhysicalRegister.getBy16BITName("RAX", binaryArithmetic.getTarget().size))
+                            .append(", ").append(binaryArithmetic.getSource())
+                            .append('\n');
+                    builder.append('\t').append("mov").append(' ').append(binaryArithmetic.getTarget())
+                            .append(", ")
+                            .append(PhysicalRegister.getBy16BITName("RAX", binaryArithmetic.getTarget().size))
+                            .append("\n");
+                } else {
+                    builder.append('\t').append(binaryArithmetic.operator)
+                            .append(' ').append(binaryArithmetic.getTarget())
+                            .append(", ").append(binaryArithmetic.getSource())
+                            .append('\n');
+                }
+            }
         }
     }
 
@@ -163,12 +194,11 @@ public class X64Printer implements IRPrinter {
          *  tar and src cannot be both indirect registers       -> TODO: in Register Allocator
          */
         if (move.getSource().toString().equals(move.getTarget().toString())) return;
-        if (move.getSource().getNumberSize() > move.getTarget().getNumberSize()) {
-            builder.append('\t').append("movsx").append(' ').append(move.getTarget())
+        if (move.getSource() instanceof Register && ((Register) move.getSource()).isIndirect() && move.getTarget().isIndirect()) {
+            builder.append('\t').append("mov").append(' ').append(PhysicalRegister.getBy16BITName("R15", move.getSource().getNumberSize()))
                     .append(", ").append(move.getSource()).append('\n');
-        } else if (move.getSource().getNumberSize() > move.getTarget().getNumberSize()) {
-            builder.append('\t').append("movzx").append(' ').append(move.getTarget())
-                    .append(", ").append(move.getSource()).append('\n');
+            builder.append('\t').append("mov").append(' ').append(move.getTarget())
+                    .append(", ").append(PhysicalRegister.getBy16BITName("R15", move.getSource().getNumberSize())).append('\n');
         } else {
             builder.append('\t').append("mov").append(' ').append(move.getTarget())
                     .append(", ").append(move.getSource()).append('\n');
@@ -361,10 +391,21 @@ public class X64Printer implements IRPrinter {
          *   - srcA, srcB cannot be both immediate number   -> processed in MLIRTransformer
          *   - srcA, srcB cannot be both indirect registers -> TODO: in Register Allocator
          */
-        builder.append('\t').append("cmp").append(' ').append(compare.getSourceA())
-                .append(", ").append(compare.getSourceB()).append('\n');
-        builder.append('\t').append(compare.getOperator()).append(' ')
-                .append(compare.getTarget()).append('\n');
+        if (compare.getSourceA() instanceof Register &&
+                ((Register) compare.getSourceA()).isIndirect()) {
+            builder.append('\t').append("mov").append(' ')
+                    .append(PhysicalRegister.getBy16BITName("RAX", ((Register) compare.getSourceA()).size))
+                    .append(", ").append(compare.getSourceA()).append('\n');
+            builder.append('\t').append("cmp").append(' ').append(PhysicalRegister.getBy16BITName("RAX", ((Register) compare.getSourceA()).size))
+                    .append(", ").append(compare.getSourceB()).append('\n');
+            builder.append('\t').append(compare.getOperator()).append(' ')
+                    .append(compare.getTarget()).append('\n');
+        } else {
+            builder.append('\t').append("cmp").append(' ').append(compare.getSourceA())
+                    .append(", ").append(compare.getSourceB()).append('\n');
+            builder.append('\t').append(compare.getOperator()).append(' ')
+                    .append(compare.getTarget()).append('\n');
+        }
     }
 
     @Override
@@ -398,10 +439,20 @@ public class X64Printer implements IRPrinter {
          *   - expA and expB cannot be both immediate number   -> processed in MLIRTransformer
          *   - expA and expB cannot be both indirect registers -> TODO: in Register Allocator
          */
-        builder.append('\t').append("cmp")
-                .append(' ').append(binaryBranch.getExpressionA())
-                .append(", ").append(binaryBranch.getExpressionB())
-                .append('\n');
+
+        if (binaryBranch.getExpressionA() instanceof Register &&
+                ((Register) binaryBranch.getExpressionA()).isIndirect()) {
+            builder.append('\t').append("mov").append(' ')
+                    .append(PhysicalRegister.getBy16BITName("RAX", ((Register) binaryBranch.getExpressionA()).size))
+                    .append(", ").append(binaryBranch.getExpressionA()).append('\n');
+            builder.append('\t').append("cmp").append(' ').append(PhysicalRegister.getBy16BITName("RAX", ((Register) binaryBranch.getExpressionA()).size))
+                    .append(", ").append(binaryBranch.getExpressionB()).append('\n');
+        } else {
+            builder.append('\t').append("cmp")
+                    .append(' ').append(binaryBranch.getExpressionA())
+                    .append(", ").append(binaryBranch.getExpressionB())
+                    .append('\n');
+        }
         builder.append('\t').append(binaryBranch.getOperator())
                 .append(' ').append(binaryBranch.getBranchTrue().name).append('\n');
     }

@@ -12,6 +12,8 @@ public abstract class Register extends Number {
         return size;
     }
 
+    public abstract boolean isIndirect();
+
     String getSizeDescriptor() {
         if (size == 1) {
             return "byte";
