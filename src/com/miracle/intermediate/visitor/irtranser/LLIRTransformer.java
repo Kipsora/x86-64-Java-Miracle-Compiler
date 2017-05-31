@@ -52,8 +52,8 @@ public class LLIRTransformer extends BaseIRVisitor {
                 }};
                 for (node = block.tail.getPrev(); node != block.getHead().getPrev(); node = node.getPrev()) {
                     if (node.instruction instanceof Call) {
-                        if (((Call) node.instruction).function.identifier.equals("pd")) {
-                            System.err.print("F");
+                        if (((Call) node.instruction).function.identifier.equals("@strcat")) {
+                            //System.err.print("F");
                         }
 
                         ((Call) node.instruction).function.buffer.getCallerSaveRegisters().forEach(
@@ -61,7 +61,7 @@ public class LLIRTransformer extends BaseIRVisitor {
                         );
                         for (int i = 0, size = ((Call) node.instruction).parameters.size(); i < size && i < MiracleOption.CallingConvention.size(); i++) {
                             ((Call) node.instruction).callerSave.add(
-                                    MiracleOption.CallingConvention.get(i)
+                                    PhysicalRegister.getBy16BITName(MiracleOption.CallingConvention.get(i), 1).getELF64Name()
                             );
                         }
                         ((Call) node.instruction).callerSave.retainAll(live);
