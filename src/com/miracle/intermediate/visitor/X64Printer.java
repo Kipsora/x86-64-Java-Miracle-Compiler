@@ -48,6 +48,12 @@ public class X64Printer implements IRPrinter {
             if (i + 1 < value.length() && value.charAt(i) == '\\' && value.charAt(i + 1) == 'n') {
                 list.add(String.valueOf(10));
                 i++;
+            } else if (i + 1 < value.length() && value.charAt(i) == '\\' && value.charAt(i + 1) == '\"') {
+                list.add(String.valueOf(34));
+                i++;
+            } else if (i + 1 < value.length() && value.charAt(i) == '\\' && value.charAt(i + 1) == '\\') {
+                list.add(String.valueOf(92));
+                i++;
             } else {
                 list.add(String.valueOf((int) value.charAt(i)));
             }
