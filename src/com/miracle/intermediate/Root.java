@@ -635,7 +635,19 @@ public class Root extends Node {
                     break;
                 case REV:
                     operator = UnaryArithmetic.Types.REV;
-                    break;
+                    if (number instanceof Immediate) {
+                        prefixExpression.setResultNumber(new Immediate(
+                                ~((Immediate) number).value,
+                                number.getNumberSize()
+                        ));
+                        return;
+                    } else {
+                        VirtualRegister register = newVirtualRegister(number.getNumberSize());
+                        curBasicBlock.tail.prepend(new Move(register, number));
+                        curBasicBlock.tail.prepend(new UnaryArithmetic(register, operator));
+                        prefixExpression.setResultNumber(register);
+                        return;
+                    }
                 case NEGATIVE:
                     operator = UnaryArithmetic.Types.MINUS;
                     if (number instanceof Immediate) {
@@ -644,8 +656,13 @@ public class Root extends Node {
                                 number.getNumberSize()
                         ));
                         return;
+                    } else {
+                        VirtualRegister register = newVirtualRegister(number.getNumberSize());
+                        curBasicBlock.tail.prepend(new Move(register, number));
+                        curBasicBlock.tail.prepend(new UnaryArithmetic(register, operator));
+                        prefixExpression.setResultNumber(register);
+                        return;
                     }
-                    break;
                 case NEGATE:
                     VirtualRegister register = newVirtualRegister(number.getNumberSize());
                     curBasicBlock.tail.prepend(new Compare(
