@@ -18,7 +18,9 @@ import com.miracle.intermediate.structure.BasicBlock;
 import com.miracle.intermediate.structure.Function;
 import com.miracle.intermediate.visitor.BaseIRVisitor;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class MLIRTransformer extends BaseIRVisitor {
@@ -151,7 +153,21 @@ public class MLIRTransformer extends BaseIRVisitor {
                 if (((Call) it.instruction).getSelfRegister() != null) {
                     ((Call) it.instruction).parameters.add(0, ((Call) it.instruction).getSelfRegister());
                     ((Call) it.instruction).setSelfRegister(null);
+
                 }
+                Map<Number, Register> localMap = new HashMap<>();
+                for (int i = 0, size = ((Call) it.instruction).parameters.size(); i < size; i++) {
+                    Number element = ((Call) it.instruction).parameters.get(i);
+                    if (element instanceof OffsetRegister) {
+                        VirtualRegister register = new VirtualRegister(
+                                ".aux" + String.valueOf(countTmpVars++),
+                                ((OffsetRegister) element).size
+                        );
+                        it.prepend(new Move(register, element));
+                        localMap.put(element, register);
+                    }
+                }
+                it.instruction.set(localMap);
             } else if (it.instruction instanceof Move) {
                 if (((Move) it.instruction).getSource() instanceof IndirectRegister &&
                         ((Move) it.instruction).getSource() instanceof IndirectRegister) {
