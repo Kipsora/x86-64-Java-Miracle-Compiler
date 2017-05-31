@@ -195,10 +195,10 @@ public class X64Printer implements IRPrinter {
          */
         if (move.getSource().toString().equals(move.getTarget().toString())) return;
         if (move.getSource() instanceof Register && ((Register) move.getSource()).isIndirect() && move.getTarget().isIndirect()) {
-            builder.append('\t').append("mov").append(' ').append(PhysicalRegister.getBy16BITName("R15", move.getSource().getNumberSize()))
+            builder.append('\t').append("mov").append(' ').append(PhysicalRegister.getBy16BITName("RCX", move.getSource().getNumberSize()))
                     .append(", ").append(move.getSource()).append('\n');
             builder.append('\t').append("mov").append(' ').append(move.getTarget())
-                    .append(", ").append(PhysicalRegister.getBy16BITName("R15", move.getSource().getNumberSize())).append('\n');
+                    .append(", ").append(PhysicalRegister.getBy16BITName("RCX", move.getSource().getNumberSize())).append('\n');
         } else {
             builder.append('\t').append("mov").append(' ').append(move.getTarget())
                     .append(", ").append(move.getSource()).append('\n');
@@ -261,12 +261,10 @@ public class X64Printer implements IRPrinter {
          * returnRegister must be null or RAX                    -> TODO: in Register Allocator
          * The last 6 parameters must follow calling conventions -> TODO: in Register Allocator
          */
-        List<PhysicalRegister> registers = new LinkedList<>(call.callerSave);
+        List<String> registers = new LinkedList<>(call.callerSave);
         registers.forEach(element -> {
-            if (element.isCallerSave) {
-                builder.append('\t').append("push")
-                        .append(' ').append(element.getELF64Name()).append('\n');
-            }
+            builder.append('\t').append("push")
+                    .append(' ').append(element).append('\n');
         });
         List<Number> parameters = call.parameters;
         int spillSize = 0;
@@ -324,10 +322,8 @@ public class X64Printer implements IRPrinter {
         }
         Collections.reverse(registers);
         registers.forEach(element -> {
-            if (element.isCallerSave) {
-                builder.append('\t').append("pop")
-                        .append(' ').append(element.getELF64Name()).append('\n');
-            }
+            builder.append('\t').append("pop")
+                    .append(' ').append(element).append('\n');
         });
         if (call.getTarget() != null) {
             builder.append('\t').append("mov").append(' ')
@@ -414,7 +410,7 @@ public class X64Printer implements IRPrinter {
          *  HeapAllocate Instruction:
          *    - size must be one        -> processed in MLIRTransformer
          */
-        List<PhysicalRegister> list  = new LinkedList<>(allocate.callerSave);
+        List<String> list  = new LinkedList<>(allocate.callerSave);
         list.forEach(element ->
                 builder.append('\t').append("push").append(' ')
                         .append(element).append('\n')

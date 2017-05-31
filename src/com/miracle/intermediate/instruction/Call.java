@@ -12,7 +12,7 @@ public class Call extends Instruction {
     public final List<Number> parameters;
     private Register target;
     private Register selfRegister;
-    public final Set<PhysicalRegister> callerSave;
+    public final Set<String> callerSave;
 
     public Call(Function function,
                 List<Number> parameters,

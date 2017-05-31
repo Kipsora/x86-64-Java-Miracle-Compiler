@@ -1,9 +1,6 @@
 package com.miracle.intermediate.visitor.allocator;
 
-import com.miracle.intermediate.number.PhysicalRegister;
 import com.miracle.intermediate.number.Register;
-import com.miracle.intermediate.number.StackRegister;
-import com.miracle.intermediate.number.VirtualRegister;
 
 import java.util.*;
 
@@ -18,7 +15,6 @@ public class InterferenceGraph {
         add("R9");
         add("R10");
         add("R11");
-        add("R14");
     }};
 
     public final Set<Register> vertices;

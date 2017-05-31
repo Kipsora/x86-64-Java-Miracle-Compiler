@@ -43,21 +43,25 @@ public class LLIRTransformer extends BaseIRVisitor {
         ir.globalFunction.forEach((key, value) -> value.accept(this));
         ir.globalFunction.forEach((key, curFunction) -> {
             for (BasicBlock block : curFunction.getPostOrder()) {
-                Set<PhysicalRegister> live = new HashSet<PhysicalRegister>() {{
+                Set<String> live = new HashSet<String>() {{
                     block.liveliness.liveOut.forEach(element -> {
                         if (element.getRealName() instanceof PhysicalRegister) {
-                            add((PhysicalRegister) element.getRealName());
+                            add(((PhysicalRegister) element.getRealName()).getELF64Name());
                         }
                     });
                 }};
                 for (node = block.tail.getPrev(); node != block.getHead().getPrev(); node = node.getPrev()) {
                     if (node.instruction instanceof Call) {
-                        ((Call) node.instruction).callerSave.addAll(
-                                ((Call) node.instruction).function.buffer.getCallerSaveRegisters()
+                        if (((Call) node.instruction).function.identifier.equals("pd")) {
+                            System.err.print("F");
+                        }
+
+                        ((Call) node.instruction).function.buffer.getCallerSaveRegisters().forEach(
+                                element -> ((Call) node.instruction).callerSave.add(element.getELF64Name())
                         );
                         for (int i = 0, size = ((Call) node.instruction).parameters.size(); i < size && i < MiracleOption.CallingConvention.size(); i++) {
                             ((Call) node.instruction).callerSave.add(
-                                    PhysicalRegister.getBy16BITName(MiracleOption.CallingConvention.get(i), ((Call) node.instruction).parameters.get(i).getNumberSize())
+                                    MiracleOption.CallingConvention.get(i)
                             );
                         }
                         ((Call) node.instruction).callerSave.retainAll(live);
@@ -66,12 +70,12 @@ public class LLIRTransformer extends BaseIRVisitor {
                     }
                     node.instruction.getDefNumbers().forEach(element -> {
                         if (element instanceof VirtualRegister && ((VirtualRegister) element).getRealName() instanceof PhysicalRegister) {
-                            live.remove(((VirtualRegister) element).getRealName());
+                            live.remove(((PhysicalRegister) ((VirtualRegister) element).getRealName()).getELF64Name());
                         }
                     });
                     node.instruction.getUseNumbers().forEach(element -> {
                         if (element instanceof VirtualRegister && ((VirtualRegister) element).getRealName() instanceof PhysicalRegister) {
-                            live.add((PhysicalRegister) ((VirtualRegister) element).getRealName());
+                            live.add(((PhysicalRegister) ((VirtualRegister) element).getRealName()).getELF64Name());
                         }
                     });
                 }
@@ -102,19 +106,19 @@ public class LLIRTransformer extends BaseIRVisitor {
                             (((OffsetRegister) element).getRawBase() instanceof VirtualRegister &&
                                     ((VirtualRegister) ((OffsetRegister) element).getRawBase()).getRealName() instanceof IndirectRegister)) {
                         node.prepend(new Move(
-                                PhysicalRegister.getBy16BITName("RAX", ((OffsetRegister) element).getRawBase().size),
+                                PhysicalRegister.getBy16BITName("R14", ((OffsetRegister) element).getRawBase().size),
                                 ((OffsetRegister) element).getRawBase()
                         ));
-                        ((OffsetRegister) element).setBase(PhysicalRegister.getBy16BITName("RAX", ((OffsetRegister) element).getBase().size));
+                        ((OffsetRegister) element).setBase(PhysicalRegister.getBy16BITName("R14", ((OffsetRegister) element).getBase().size));
                     }
                     if (((OffsetRegister) element).getRawOffsetB() instanceof IndirectRegister ||
                             (((OffsetRegister) element).getRawOffsetB() instanceof VirtualRegister &&
                                     ((VirtualRegister) ((OffsetRegister) element).getRawOffsetB()).getRealName() instanceof IndirectRegister)) {
                         node.prepend(new Move(
-                                PhysicalRegister.getBy16BITName("RDX", ((OffsetRegister) element).getRawOffsetB().size),
+                                PhysicalRegister.getBy16BITName("R15", ((OffsetRegister) element).getRawOffsetB().size),
                                 ((OffsetRegister) element).getRawOffsetB()
                         ));
-                        ((OffsetRegister) element).setOffsetB(PhysicalRegister.getBy16BITName("RDX", ((OffsetRegister) element).getRawOffsetB().size));
+                        ((OffsetRegister) element).setOffsetB(PhysicalRegister.getBy16BITName("R15", ((OffsetRegister) element).getRawOffsetB().size));
                     }
                 }
             });
@@ -124,19 +128,19 @@ public class LLIRTransformer extends BaseIRVisitor {
                             (((OffsetRegister) element).getRawBase() instanceof VirtualRegister &&
                                     ((VirtualRegister) ((OffsetRegister) element).getRawBase()).getRealName() instanceof IndirectRegister)) {
                         node.prepend(new Move(
-                                PhysicalRegister.getBy16BITName("RAX", ((OffsetRegister) element).getRawBase().size),
+                                PhysicalRegister.getBy16BITName("R14", ((OffsetRegister) element).getRawBase().size),
                                 ((OffsetRegister) element).getRawBase()
                         ));
-                        ((OffsetRegister) element).setBase(PhysicalRegister.getBy16BITName("RAX", ((OffsetRegister) element).getBase().size));
+                        ((OffsetRegister) element).setBase(PhysicalRegister.getBy16BITName("R14", ((OffsetRegister) element).getBase().size));
                     }
                     if (((OffsetRegister) element).getRawOffsetB() instanceof IndirectRegister ||
                             (((OffsetRegister) element).getRawOffsetB() instanceof VirtualRegister &&
                                     ((VirtualRegister) ((OffsetRegister) element).getRawOffsetB()).getRealName() instanceof IndirectRegister)) {
                         node.prepend(new Move(
-                                PhysicalRegister.getBy16BITName("RDX", ((OffsetRegister) element).getRawOffsetB().size),
+                                PhysicalRegister.getBy16BITName("R15", ((OffsetRegister) element).getRawOffsetB().size),
                                 ((OffsetRegister) element).getRawOffsetB()
                         ));
-                        ((OffsetRegister) element).setOffsetB(PhysicalRegister.getBy16BITName("RDX", ((OffsetRegister) element).getRawOffsetB().size));
+                        ((OffsetRegister) element).setOffsetB(PhysicalRegister.getBy16BITName("R15", ((OffsetRegister) element).getRawOffsetB().size));
                     }
                 }
             });

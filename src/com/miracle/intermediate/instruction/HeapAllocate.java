@@ -16,7 +16,7 @@ public class HeapAllocate extends Instruction {
     private int size;
     private Register target;
     private Number number;
-    public final Set<PhysicalRegister> callerSave;
+    public final Set<String> callerSave;
 
     public HeapAllocate(Register target,
                         int size,
@@ -24,7 +24,7 @@ public class HeapAllocate extends Instruction {
         this.target = target;
         this.size = size;
         this.number = number;
-        this.callerSave = new HashSet<>(Arrays.asList(RDI, RDX, RSI, RCX, R8, R9, R10, R11));
+        this.callerSave = new HashSet<>(Arrays.asList("rdi", "rdx", "rsi", "rcx", "r8", "r9", "r10", "r11"));
     }
 
     public int getSize() {
