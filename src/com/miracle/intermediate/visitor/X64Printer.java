@@ -278,7 +278,8 @@ public class X64Printer implements IRPrinter {
             spillSize = 0;
             for (int i = CallingConvention.size(), size = parameters.size(); i < size; i++) {
                 spillSize += parameters.get(i).getNumberSize();
-                if (parameters.get(i) instanceof IndirectRegister) {
+                if (parameters.get(i) instanceof Register &&
+                        ((Register) parameters.get(i)).isIndirect()) {
                     builder.append('\t').append("mov").append(' ')
                             .append(PhysicalRegister.getBy16BITName("RDI", parameters.get(i).getNumberSize()))
                             .append(", ").append(parameters.get(i)).append('\n');
